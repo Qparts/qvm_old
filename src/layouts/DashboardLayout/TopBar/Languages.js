@@ -46,11 +46,11 @@ function Languages() {
   const currentLang = LANGS.find((_lang) => _lang.value === langStorage);
 
   const handleChangeLanguage = (lng) => {
-    i18n.changeLanguage(lng);
     if (lng == 'ar')
       selectDirection('rtl');
     else
       selectDirection('ltr');
+    i18n.changeLanguage(lng);
     setOpen(false);
   };
 
