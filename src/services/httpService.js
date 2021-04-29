@@ -1,7 +1,6 @@
 import axios from "axios";
 import { LoaderService } from "./common/utilService";
 import { toast } from "react-toastify";
-import links from "../constants/links";
 import authService from "./authService";
 import { createBrowserHistory } from "history";
 
