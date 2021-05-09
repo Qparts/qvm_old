@@ -43,6 +43,9 @@ function updateInvoiceTemplate(data) {
 }
 
 
+
+
+
 function getNewToken() {
   return new Promise((resolve, reject) => {
     const loginObject = JSON.parse(localStorage.getItem("loginObject"));
@@ -72,5 +75,5 @@ export default {
   forgetPassword,
   resetPassword,
   validatePasswordResetToken,
-  updateInvoiceTemplate
+  updateInvoiceTemplate,
 };

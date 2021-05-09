@@ -1,16 +1,19 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify-icons/eva/eye-fill';
 import eyeOffFill from '@iconify-icons/eva/eye-off-fill';
 import { emailError, passwordError } from 'src/utils/helpError';
+import { useSelector } from 'react-redux';
+import { Select, MenuItem } from "@material-ui/core";
 import {
   Box,
   Grid,
   TextField,
   IconButton,
-  InputAdornment
+  InputAdornment,
+  NativeSelect
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 
@@ -23,30 +26,25 @@ RegisterForm.propTypes = {
 function RegisterForm({ formik }) {
   const [showPassword, setShowPassword] = useState(false);
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { countries } = useSelector(
+    (state) => state.authJwt
+  );
+
+
+
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-        <Grid container spacing={2}>
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label="First name"
-              {...getFieldProps('firstName')}
-              error={Boolean(touched.firstName && errors.firstName)}
-              helperText={touched.firstName && errors.firstName}
-            />
-          </Grid>
-          <Grid item xs={6}>
-            <TextField
-              fullWidth
-              label="Last name"
-              {...getFieldProps('lastName')}
-              error={Boolean(touched.lastName && errors.lastName)}
-              helperText={touched.lastName && errors.lastName}
-            />
-          </Grid>
-        </Grid>
+
+        <TextField
+          fullWidth
+          name="email"
+          label="Company Name"
+          {...getFieldProps('companyName')}
+          error={Boolean(touched.companyName && errors.companyName)}
+          helperText={touched.companyName && errors.companyName}
+        />
 
         <Box sx={{ mb: 3 }} />
         <TextField
@@ -65,6 +63,54 @@ function RegisterForm({ formik }) {
           }
         />
         <Box sx={{ mb: 3 }} />
+
+        <Grid container spacing={2}>
+          <Grid item xs={5} >
+            <Select
+              labelId="countryId"
+              id="countryId"
+              name="countryId"
+              {...getFieldProps('countryId')}
+            >
+              {countries.map((country) => (
+                <MenuItem
+                  key={country.id}
+                  value={country.id}
+                >
+                  (+{country.countryCode}) {document.body.dir === "rtl" ? country.nameAr : country.name}
+                </MenuItem>
+              ))}
+            </Select>
+          </Grid>
+
+          <Grid item xs={7}>
+
+            <TextField
+              fullWidth
+              name="phone"
+              label="Phone"
+              {...getFieldProps('phone')}
+              error={Boolean(touched.phone && errors.phone)}
+              helperText={touched.phone && errors.phone}
+            />
+          </Grid>
+
+        </Grid>
+
+
+        <Box sx={{ mb: 3 }} />
+
+        <TextField
+          fullWidth
+          name="name"
+          label="Name"
+          {...getFieldProps('name')}
+          error={Boolean(touched.name && errors.name)}
+          helperText={touched.name && errors.name}
+        />
+
+        <Box sx={{ mb: 3 }} />
+
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}

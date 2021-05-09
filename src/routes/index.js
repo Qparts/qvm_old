@@ -125,6 +125,11 @@ const routes = [
   },
   {
     exact: true,
+    path: PATH_PAGE.auth.confirm,
+    component: lazy(() => import('src/views/auth/ConfirmView'))
+  },
+  {
+    exact: true,
     path: '/404',
     component: lazy(() => import('src/views/errors/Page404View'))
   },

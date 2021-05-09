@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register, logout } from 'src/redux/slices/authJwt';
+import { login, register, logout ,verify} from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -32,15 +32,23 @@ export default function useAuth(method = 'jwt') {
           })
         ),
 
-      register: ({ email, password, firstName, lastName }) =>
+      register: ({ email, password, mobile, companyName, name, countryId }) =>
         dispatch(
           register({
             email: email,
             password: password,
-            firstName: firstName,
-            lastName: lastName
+            mobile: mobile,
+            companyName: companyName,
+            name: name,
+            countryId: countryId,
+            regionId: "1",
+            cityId: "1",
           })
         ),
+
+      verify: ({ email, code }) => dispatch(
+        verify({ email, code })
+      ),
 
       logout: () => dispatch(logout()),
 

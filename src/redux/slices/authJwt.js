@@ -1,6 +1,9 @@
 import jwtDecode from 'jwt-decode';
 // import axios from 'src/utils/axios';
 import axios from 'axios';
+import auth from "../../services/authService";
+import locationService from "../../services/locationService";
+
 
 import { createSlice } from '@reduxjs/toolkit';
 
@@ -9,7 +12,9 @@ import { createSlice } from '@reduxjs/toolkit';
 const initialState = {
   isLoading: false,
   isAuthenticated: false,
-  user: {}
+  user: {},
+  countries: [],
+  error: ''
 };
 
 const slice = createSlice({
@@ -26,6 +31,7 @@ const slice = createSlice({
       state.isLoading = false;
       state.isAuthenticated = action.payload.isAuthenticated;
       state.user = action.payload.user;
+      state.countries = action.payload.countries;
     },
 
     // LOGIN
@@ -36,8 +42,25 @@ const slice = createSlice({
 
     // REGISTER
     registerSuccess(state, action) {
-      state.isAuthenticated = true;
-      state.user = action.payload.user;
+      state.isAuthenticated = false;
+      // state.user = action.payload.user;
+      state.error = ''
+    },
+
+    registerFail(state, action) {
+      state.isAuthenticated = false;
+      state.error = action.payload;
+    },
+
+    // REGISTER
+    verifySuccess(state, action) {
+      state.isAuthenticated = false;
+      state.error = ''
+    },
+
+    verifyFail(state, action) {
+      state.isAuthenticated = false;
+      state.error = action.payload;
     },
 
     // LOGOUT
@@ -82,9 +105,8 @@ export function login({ email, password }) {
       email,
       password
     };
-    const url = 'http://qtest.fareed9.com:3000/subscriber/login';
-    // const url = '/api/account/login';
-    const response = await axios.post(url, body);
+    const response = await auth.login(email, password);
+
     const { jwt: accessToken } = response.data;
     const user = response.data;
     setSession(accessToken);
@@ -95,19 +117,41 @@ export function login({ email, password }) {
 
 // ----------------------------------------------------------------------
 
-export function register({ email, password, firstName, lastName }) {
+export function register({ email, password, mobile, companyName, name, countryId, regionId, cityId }) {
   return async (dispatch) => {
-    const response = await axios.post('/api/account/register', {
-      email,
-      password,
-      firstName,
-      lastName
-    });
-    const { accessToken, user } = response.data;
+    try {
+      const response = await auth.signup({
+        email, password, mobile, companyName, name, countryId, regionId, cityId
+      });
+      // const { accessToken, user } = response.data;
 
-    window.localStorage.setItem('accessToken', accessToken);
-    dispatch(slice.actions.registerSuccess({ user }));
+      // window.localStorage.setItem('accessToken', accessToken);
+      dispatch(slice.actions.registerSuccess());
+    } catch (error) {
+      dispatch(slice.actions.registerFail(error.response.data));
+      console.log("initialState", initialState);
+    }
+
   };
+}
+
+
+// ----------------------------------------------------------------------
+
+export function verify({ email, code }) {
+  return async (dispatch) => {
+    try {
+      const response = await auth.
+        signupVerify({
+          code: code,
+          email: email
+        });
+      console.log("response", response);
+      dispatch(slice.actions.verifySuccess());
+    } catch (error) {
+      dispatch(slice.actions.verifyFail(error.response.data));
+    }
+  }
 }
 
 // ----------------------------------------------------------------------
@@ -125,6 +169,11 @@ export function getInitialize() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
 
+    //load countries
+
+    let { data: countries } = await locationService.getCountries();
+
+
     try {
       const accessToken = window.localStorage.getItem('accessToken');
 
@@ -135,14 +184,16 @@ export function getInitialize() {
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
-            user: JSON.parse(user)
+            user: JSON.parse(user),
+            countries: countries
           })
         );
       } else {
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: false,
-            user: null
+            user: null,
+            countries: countries
           })
         );
       }

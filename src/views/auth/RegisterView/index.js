@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import * as Yup from 'yup';
 import Section from './Section';
 import { useFormik } from 'formik';
@@ -10,12 +10,14 @@ import useAuth from 'src/hooks/useAuth';
 import RegisterForm from './RegisterForm';
 import { PATH_PAGE } from 'src/routes/paths';
 import closeFill from '@iconify-icons/eva/close-fill';
-import { Link as RouterLink } from 'react-router-dom';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import SocialLogin from 'src/views/auth/LoginView/SocialLogin';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Link, Hidden, Container, Typography } from '@material-ui/core';
+import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import helper from 'src/utils/helper';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -58,26 +60,58 @@ function RegisterView() {
   const { method, register } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const history = useHistory();
+  const [loaded, setLoaded] = useState(false);
+  const [email, setEmail] = useState('');
+  const { countries, error: registerError } = useSelector(
+    (state) => state.authJwt
+  );
+
+
+
+  const goToVerification = () => {
+    if (registerError == '') {
+      enqueueSnackbar('Login success', {
+        variant: 'success',
+        action: (key) => (
+          <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+            <Icon icon={closeFill} />
+          </MIconButton>
+        )
+      });
+
+      history.push(
+        PATH_PAGE.auth.verify,
+        { email: email }
+      );
+    }
+  }
+
+
+  useEffect(() => {
+    if (loaded)
+      goToVerification();
+  }, [loaded])
+
 
   const RegisterSchema = Yup.object().shape({
-    firstName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('First name required'),
-    lastName: Yup.string()
-      .min(2, 'Too Short!')
-      .max(50, 'Too Long!')
-      .required('Last name required'),
+    companyName: Yup.string().required('Company Name is required'),
+    name: Yup.string().required('Name is required'),
+    phone: Yup.string().required('Phone is required'),
     email: Yup.string()
       .email('Email must be a valid email address')
       .required('Email is required'),
     password: Yup.string().required('Password is required')
   });
 
+
+
   const formik = useFormik({
     initialValues: {
-      firstName: '',
-      lastName: '',
+      companyName: '',
+      name: '',
+      countryId: 1,
+      phone: '',
       email: '',
       password: ''
     },
@@ -87,20 +121,23 @@ function RegisterView() {
         await register({
           email: values.email,
           password: values.password,
-          firstName: values.firstName,
-          lastName: values.lastName
+          mobile: helper.reconstructPhone(values.countryId, values.phone, countries),
+          companyName: values.companyName,
+          name: values.name,
+          countryId: values.countryId,
+          regionId: "1",
+          cityId: "1",
         });
-        enqueueSnackbar('Login success', {
-          variant: 'success',
-          action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
-          )
-        });
+
+
+
+
         if (isMountedRef.current) {
           setSubmitting(false);
         }
+
+        setEmail(values.email);
+        setLoaded(true);
       } catch (error) {
         console.error(error);
         if (isMountedRef.current) {
@@ -149,15 +186,17 @@ function RegisterView() {
             </Box>
             <Box
               component="img"
-              src={`/static/icons/${
-                method === 'firebase' ? 'ic_firebase' : 'ic_jwt'
-              }.png`}
+              src={`/static/icons/${method === 'firebase' ? 'ic_firebase' : 'ic_jwt'
+                }.png`}
               sx={{ width: 32, height: 32 }}
             />
           </Box>
 
           {method === 'firebase' && <SocialLogin />}
 
+
+          {registerError && <Alert severity="error"> {registerError} </Alert>}
+          <Box sx={{ mb: 3 }} />
           <RegisterForm formik={formik} />
 
           <Typography

@@ -18,7 +18,8 @@ export const PATH_PAGE = {
     register: path(ROOTS.auth, '/register'),
     registerUnprotected: path(ROOTS.auth, '/register-unprotected'),
     resetPassword: path(ROOTS.auth, '/reset-password'),
-    verify: path(ROOTS.auth, '/verify')
+    verify: path(ROOTS.auth, '/verify'),
+    confirm: path(ROOTS.auth, '/confirm')
   },
 };
 
