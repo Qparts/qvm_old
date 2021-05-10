@@ -5,11 +5,12 @@ import Page from 'src/components/Page';
 import useAuth from 'src/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
 import { PATH_PAGE } from 'src/routes/paths';
-import ResetPasswordForm from './ResetPasswordForm';
-import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
+import ForgotPasswordForm from './ForgotPasswordForm';
+import { Link as RouterLink } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Container, Typography, Hidden } from '@material-ui/core';
+import { Box, Button, Container, Typography, Hidden, Link } from '@material-ui/core';
+
 import { useSelector } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
@@ -38,54 +39,41 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function ResetPasswordView() {
+function ForgotPasswordView() {
   const classes = useStyles();
-  const { resetPassword, validateResetToken } = useAuth();
+  const { forgotPassword } = useAuth();
   const isMountedRef = useIsMountedRef();
   const [sent, setSent] = useState(false);
   const [loaded, setLoaded] = useState(false);
-  const location = useLocation();
-  const codeParam = new URLSearchParams(location.search).get("code");
-  const [validated, setValidated] = useState(false);
-  const history = useHistory();
   const { t } = useTranslation();
-
-  const { error: resetPasswordError, validResetToken } = useSelector(
+  const { error: forgetPasswordError } = useSelector(
     (state) => state.authJwt
   );
 
 
   useEffect(() => {
-    (async () => {
-      await validateResetToken(codeParam);
-      setValidated(true);
-    })()
-
-  }, [])
-
-
-
-  useEffect(() => {
-    if (loaded && resetPasswordError == '') {
-      history.push(PATH_PAGE.auth.login);
+    if (loaded && forgetPasswordError == '') {
+      setSent(true);
     }
   }, [loaded])
 
   const ResetPasswordSchema = Yup.object().shape({
-    password: Yup.string()
-      .required(t("forgotPassword.error.require.newPassword"))
+    email: Yup.string()
+      .email(t("forgotPassword.error.invalid.email"))
+      .required(t("forgotPassword.error.require.email"))
   });
 
   const formik = useFormik({
     initialValues: {
-      password: ''
+      email: ''
     },
     validationSchema: ResetPasswordSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await resetPassword({ code: codeParam, newPassword: values.password });
+        await forgotPassword(values.email);
         setLoaded(true);
         if (isMountedRef.current) {
+          // setSent(true);
           setSubmitting(false);
         }
       } catch (error) {
@@ -101,6 +89,7 @@ function ResetPasswordView() {
     <Page title="Reset Password | Minimal UI" className={classes.root}>
 
       <header className={classes.header}>
+
         <Hidden smDown>
           <Typography variant="body2" sx={{ mt: { md: -4 } }}>
             <Languages />
@@ -109,11 +98,17 @@ function ResetPasswordView() {
       </header>
 
       <Container>
-        {validated && <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-          {validResetToken ? (
+        <Box sx={{ maxWidth: 480, mx: 'auto' }}>
+          {!sent ? (
             <>
+              <Typography variant="h3" gutterBottom>
+                {t("forgotPassword.title")}
+              </Typography>
+              <Typography sx={{ color: 'text.secondary', mb: 5 }}>
+                {t("forgotPassword.message")}
+              </Typography>
 
-              <ResetPasswordForm formik={formik} />
+              <ForgotPasswordForm formik={formik} />
 
               <Button
                 fullWidth
@@ -127,8 +122,20 @@ function ResetPasswordView() {
             </>
           ) : (
             <Box sx={{ textAlign: 'center' }}>
+              <Box
+                component="img"
+                alt="sent email"
+                src="/static/icons/ic_email_sent.svg"
+                sx={{ mb: 5, mx: 'auto' }}
+              />
               <Typography variant="h3" gutterBottom>
-                {t("forgotPassword.invalidRequest")}
+                {t("forgotPassword.successRequest")}
+              </Typography>
+              <Typography>
+                {t("forgotPassword.confirmMessage")} &nbsp;
+                <strong>{formik.values.email}</strong>
+                <br />
+                {t("verification.checkEmail")}
               </Typography>
 
               <Button
@@ -142,10 +149,10 @@ function ResetPasswordView() {
               </Button>
             </Box>
           )}
-        </Box>}
+        </Box>
       </Container>
     </Page>
   );
 }
 
-export default ResetPasswordView;
+export default ForgotPasswordView;

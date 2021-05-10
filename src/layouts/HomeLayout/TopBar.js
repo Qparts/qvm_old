@@ -26,6 +26,7 @@ import {
   ListItemText
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import Languages from '../DashboardLayout/TopBar/Languages';
 
 // ----------------------------------------------------------------------
 
@@ -109,6 +110,7 @@ function TopBar() {
           {link.title}
         </Link>
       ))}
+
     </div>
   );
 
@@ -185,6 +187,8 @@ function TopBar() {
             </MIconButton>
             {renderMenuMobile}
           </Hidden>
+
+          <Languages />
         </Container>
       </Toolbar>
       {offset && (

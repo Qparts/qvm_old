@@ -115,6 +115,11 @@ const routes = [
   },
   {
     exact: true,
+    path: PATH_PAGE.auth.forgotPassword,
+    component: lazy(() => import('src/views/auth/ForgotPasswordView'))
+  },
+  {
+    exact: true,
     path: PATH_PAGE.auth.resetPassword,
     component: lazy(() => import('src/views/auth/ResetPasswordView'))
   },

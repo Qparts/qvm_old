@@ -14,7 +14,8 @@ const initialState = {
   isAuthenticated: false,
   user: {},
   countries: [],
-  error: ''
+  error: '',
+  validResetToken: false
 };
 
 const slice = createSlice({
@@ -38,8 +39,13 @@ const slice = createSlice({
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.user = action.payload.user;
+      state.error = ''
     },
-
+    loginFail(state, action) {
+      state.isAuthenticated = false;
+      state.user = null;
+      state.error = action.payload
+    },
     // REGISTER
     registerSuccess(state, action) {
       state.isAuthenticated = false;
@@ -62,6 +68,35 @@ const slice = createSlice({
       state.isAuthenticated = false;
       state.error = action.payload;
     },
+    // resetPassword
+    forgotPasswordSuccess(state, action) {
+      state.error = ''
+    },
+
+    forgotPasswordFail(state, action) {
+      state.error = action.payload;
+    },
+
+    // validate reset token
+    validateResetTokenSuccess(state, action) {
+      state.error = '';
+      state.validResetToken = true
+    },
+
+    validateResetTokenFail(state, action) {
+      state.error = action.payload;
+      state.validResetToken = false
+    },
+
+    // validate reset token
+    resetPasswordSuccess(state, action) {
+      state.error = '';
+    },
+
+    resetPasswordFail(state, action) {
+      state.error = action.payload;
+    },
+
 
     // LOGOUT
     logoutSuccess(state) {
@@ -101,17 +136,17 @@ const setSession = (accessToken) => {
 
 export function login({ email, password }) {
   return async (dispatch) => {
-    const body = {
-      email,
-      password
-    };
-    const response = await auth.login(email, password);
+    try {
+      const response = await auth.login(email, password);
+      const { jwt: accessToken } = response.data;
+      const user = response.data;
+      setSession(accessToken);
+      localStorage.setItem('user', JSON.stringify(user));
+      dispatch(slice.actions.loginSuccess({ user }));
+    } catch (error) {
+      dispatch(slice.actions.loginFail(error.response.data));
+    }
 
-    const { jwt: accessToken } = response.data;
-    const user = response.data;
-    setSession(accessToken);
-    localStorage.setItem('user', JSON.stringify(user));
-    dispatch(slice.actions.loginSuccess({ user }));
   };
 }
 
@@ -129,11 +164,11 @@ export function register({ email, password, mobile, companyName, name, countryId
       dispatch(slice.actions.registerSuccess());
     } catch (error) {
       dispatch(slice.actions.registerFail(error.response.data));
-      console.log("initialState", initialState);
     }
 
   };
 }
+
 
 
 // ----------------------------------------------------------------------
@@ -160,6 +195,50 @@ export function logout() {
   return async (dispatch) => {
     setSession(null);
     dispatch(slice.actions.logoutSuccess());
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function forgotPassword(email) {
+  return async (dispatch) => {
+    try {
+      await auth.forgetPassword({
+        email, email
+      });
+      dispatch(slice.actions.forgotPasswordSuccess());
+    } catch (error) {
+      dispatch(slice.actions.forgotPasswordFail(error.response.data));
+    }
+
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function validateResetToken(token) {
+  return async (dispatch) => {
+    try {
+      await auth.validatePasswordResetToken(token);
+      dispatch(slice.actions.validateResetTokenSuccess());
+    } catch (error) {
+      dispatch(slice.actions.validateResetTokenFail(error.response.data));
+    }
+
+  };
+}
+
+// ----------------------------------------------------------------------
+
+export function resetPassword({ code, newPassword }) {
+  return async (dispatch) => {
+    try {
+      await auth.resetPassword({ code, newPassword });
+      dispatch(slice.actions.resetPasswordSuccess());
+    } catch (error) {
+      dispatch(slice.actions.resetPasswordFail(error.response.data));
+    }
+
   };
 }
 

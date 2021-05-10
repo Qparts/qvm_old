@@ -1,9 +1,11 @@
-import React, {  } from 'react';
+import React, { } from 'react';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Typography } from '@material-ui/core';
+import { Box, Container, Typography, Hidden } from '@material-ui/core';
+import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
+import { useTranslation } from 'react-i18next';
 
 
 // ----------------------------------------------------------------------
@@ -31,23 +33,25 @@ const useStyles = makeStyles((theme) => ({
 
 function ConfirmView(props) {
   const classes = useStyles();
-
+  const { t } = useTranslation();
   return (
     <Page title="Verify | Minimal UI" className={classes.root}>
       <header className={classes.header}>
-        <RouterLink to="/">
-          <Logo />
-        </RouterLink>
+        <Hidden smDown>
+          <Typography variant="body2" sx={{ mt: { md: -4 } }}>
+            <Languages />
+          </Typography>
+        </Hidden>
       </header>
 
       <Container>
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
 
           <Typography variant="h3" gutterBottom>
-            THANK YOU FOR REGISTRATION IN QSTOCK
+            {t("confirmation.title")}
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            Your request have been sent, Your application will be reviewed by our team we will contact with you soon.
+            {t("confirmation.message")}
           </Typography>
 
 

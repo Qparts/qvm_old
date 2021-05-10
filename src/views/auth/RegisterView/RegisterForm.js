@@ -16,6 +16,7 @@ import {
   NativeSelect
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +27,7 @@ RegisterForm.propTypes = {
 function RegisterForm({ formik }) {
   const [showPassword, setShowPassword] = useState(false);
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
+  const { t } = useTranslation();
   const { countries } = useSelector(
     (state) => state.authJwt
   );
@@ -40,7 +42,7 @@ function RegisterForm({ formik }) {
         <TextField
           fullWidth
           name="email"
-          label="Company Name"
+          label={t("signup.companyName")}
           {...getFieldProps('companyName')}
           error={Boolean(touched.companyName && errors.companyName)}
           helperText={touched.companyName && errors.companyName}
@@ -51,7 +53,7 @@ function RegisterForm({ formik }) {
           fullWidth
           name="email"
           type="email"
-          label="Email address"
+          label={t("signup.email")}
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -64,7 +66,7 @@ function RegisterForm({ formik }) {
         />
         <Box sx={{ mb: 3 }} />
 
-        <Grid container spacing={2}>
+        <Grid container >
           <Grid item xs={5} >
             <Select
               labelId="countryId"
@@ -88,7 +90,7 @@ function RegisterForm({ formik }) {
             <TextField
               fullWidth
               name="phone"
-              label="Phone"
+              label={t("signup.phone")}
               {...getFieldProps('phone')}
               error={Boolean(touched.phone && errors.phone)}
               helperText={touched.phone && errors.phone}
@@ -103,7 +105,7 @@ function RegisterForm({ formik }) {
         <TextField
           fullWidth
           name="name"
-          label="Name"
+          label={t("signup.name")}
           {...getFieldProps('name')}
           error={Boolean(touched.name && errors.name)}
           helperText={touched.name && errors.name}
@@ -114,7 +116,7 @@ function RegisterForm({ formik }) {
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label="Password"
+          label={t("signup.password")}
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
@@ -145,7 +147,7 @@ function RegisterForm({ formik }) {
             variant="contained"
             pending={isSubmitting}
           >
-            Register
+            {t("signup.signup")}
           </LoadingButton>
         </Box>
       </Form>

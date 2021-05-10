@@ -18,6 +18,8 @@ import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/co
 import { MIconButton } from 'src/theme';
 import helper from 'src/utils/helper';
 import { useSelector } from 'react-redux';
+import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +65,7 @@ function RegisterView() {
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
   const [email, setEmail] = useState('');
+  const { t } = useTranslation();
   const { countries, error: registerError } = useSelector(
     (state) => state.authJwt
   );
@@ -89,19 +92,22 @@ function RegisterView() {
 
 
   useEffect(() => {
-    if (loaded)
+    if (loaded){
       goToVerification();
+      setLoaded(false);
+    }
+     
   }, [loaded])
 
 
   const RegisterSchema = Yup.object().shape({
-    companyName: Yup.string().required('Company Name is required'),
-    name: Yup.string().required('Name is required'),
-    phone: Yup.string().required('Phone is required'),
+    companyName: Yup.string().required(t("signup.error.require.companyName")),
+    name: Yup.string().required(t("signup.error.require.name")),
+    phone: Yup.string().required(t("signup.error.require.phone")),
     email: Yup.string()
-      .email('Email must be a valid email address')
-      .required('Email is required'),
-    password: Yup.string().required('Password is required')
+      .email(t("signup.error.invalid.email"))
+      .required(t("signup.error.require.email")),
+    password: Yup.string().required(t("signup.error.require.password"))
   });
 
 
@@ -156,15 +162,16 @@ function RegisterView() {
         </RouterLink>
         <Hidden smDown>
           <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-            Already have an account? &nbsp;
+            {t("signup.haveAccount")} &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_PAGE.auth.login}
             >
-              Login
+              {t("signin.login")}
             </Link>
+            <Languages />
           </Typography>
         </Hidden>
       </header>
@@ -178,24 +185,20 @@ function RegisterView() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Get started absolutely free.
-              </Typography>
-              <Typography sx={{ color: 'text.secondary' }}>
-                Free forever. No credit card needed.
+                {t("signup.title")}
               </Typography>
             </Box>
             <Box
               component="img"
-              src={`/static/icons/${method === 'firebase' ? 'ic_firebase' : 'ic_jwt'
-                }.png`}
-              sx={{ width: 32, height: 32 }}
+              src={`/static/icons/QVM-logo.png`}
+              sx={{ width: 50, height: 50 }}
             />
           </Box>
 
           {method === 'firebase' && <SocialLogin />}
 
 
-          {registerError && <Alert severity="error"> {registerError} </Alert>}
+          {registerError && <Alert severity="error"> {t(registerError)} </Alert>}
           <Box sx={{ mb: 3 }} />
           <RegisterForm formik={formik} />
 
@@ -204,13 +207,13 @@ function RegisterView() {
             align="center"
             sx={{ color: 'text.secondary', mt: 3 }}
           >
-            By register, I agree to Manimal&nbsp;
+            {t("signup.confirmMessagePart1")}&nbsp;
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              Terms of Service
+              {t("signup.termsConfirmation")}
             </Link>
-            &nbsp;and&nbsp;
+            &nbsp;{t("signup.confirmMessagePart2")}&nbsp;
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              Privacy Policy
+              {t("signup.policyConfirmation")}
             </Link>
             .
           </Typography>

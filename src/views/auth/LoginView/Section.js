@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -25,11 +26,12 @@ Section.propTypes = {
 
 function Section({ className }) {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Card className={clsx(classes.root, className)}>
       <Typography variant="h3" sx={{ px: 5, mt: 5, mb: 15 }}>
-        Hi, Welcome Back
+        {t("common.welcomeBack")}
       </Typography>
       <img src="/static/illustrations/illustration_login.svg" alt="login" />
     </Card>

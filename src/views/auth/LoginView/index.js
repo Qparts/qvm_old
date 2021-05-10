@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import Section from './Section';
 import { useFormik } from 'formik';
@@ -24,6 +24,9 @@ import {
   Typography
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import { useSelector } from 'react-redux';
+import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -66,12 +69,31 @@ function LoginView() {
   const { method, login } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [loaded, setLoaded] = useState(false);
+  const { t } = useTranslation();
+  const { error: loginError } = useSelector(
+    (state) => state.authJwt
+  );
+
+
+  useEffect(() => {
+    if (loaded && loginError == '') {
+      enqueueSnackbar('Login success', {
+        variant: 'success',
+        action: (key) => (
+          <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+            <Icon icon={closeFill} />
+          </MIconButton>
+        )
+      });
+    }
+  }, [loaded])
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email('Email must be a valid email address')
-      .required('Email is required'),
-    password: Yup.string().required('Password is required')
+      .email(t("signin.error.invalid.email"))
+      .required(t("signin.error.require.email")),
+    password: Yup.string().required(t("signin.error.require.password"))
   });
 
   const formik = useFormik({
@@ -87,14 +109,9 @@ function LoginView() {
           email: values.email,
           password: values.password
         });
-        enqueueSnackbar('Login success', {
-          variant: 'success',
-          action: (key) => (
-            <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-              <Icon icon={closeFill} />
-            </MIconButton>
-          )
-        });
+
+        setLoaded(true);
+
         if (isMountedRef.current) {
           setSubmitting(false);
         }
@@ -111,6 +128,7 @@ function LoginView() {
 
   return (
     <Page title="Login | Minimal-UI" className={classes.root}>
+
       <header className={classes.header}>
         <RouterLink to="/">
           <Logo />
@@ -122,15 +140,17 @@ function LoginView() {
               mt: { md: -2 }
             }}
           >
-            Don’t have an account? &nbsp;
+            {t("signin.noAccount")} &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_PAGE.auth.register}
             >
-              Get started
+              {t("signin.registerNow")}
             </Link>
+
+            <Languages />
           </Typography>
         </Hidden>
       </header>
@@ -144,29 +164,25 @@ function LoginView() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                Sign in to Minimal
+                {t("signin.title")}
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                Enter your details below.
+                {t("common.enterDetails")}
               </Typography>
             </Box>
-            <Tooltip title={method === 'firebase' ? 'Firebase' : 'JWT'}>
+            <Tooltip title={'QVM'}>
               <Box
                 component="img"
-                src={`/static/icons/${
-                  method === 'firebase' ? 'ic_firebase' : 'ic_jwt'
-                }.png`}
-                sx={{ width: 32, height: 32 }}
+                src={`/static/icons/QVM-logo.png`}
+                sx={{ width: 50, height: 50 }}
               />
             </Tooltip>
           </Box>
 
-          {method === 'firebase' && <SocialLogin />}
 
-          <Alert severity="info" sx={{ mb: 5 }}>
-            Use email : <strong>demo@minimals.cc</strong> / password :
-            <strong>&nbsp;demo1234</strong>
-          </Alert>
+          {loginError != '' && <Alert severity="error" sx={{ mb: 5 }}>
+            {loginError}
+          </Alert>}
 
           <LoginForm formik={formik} />
 

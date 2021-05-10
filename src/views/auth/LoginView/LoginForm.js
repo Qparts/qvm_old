@@ -17,6 +17,7 @@ import {
   FormControlLabel
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -35,6 +36,8 @@ function LoginForm({ formik }) {
     getFieldProps
   } = formik;
 
+  const { t } = useTranslation();
+
   const handleShowPassword = () => {
     setShowPassword((show) => !show);
   };
@@ -45,7 +48,7 @@ function LoginForm({ formik }) {
         <TextField
           fullWidth
           type="email"
-          label="Email address"
+          label={t("common.email")}
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -60,7 +63,7 @@ function LoginForm({ formik }) {
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label="Password"
+          label={t("signin.password")}
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
@@ -95,15 +98,15 @@ function LoginForm({ formik }) {
                 checked={values.remember}
               />
             }
-            label="Remember me"
+            label={t("signin.rememberMe")}
           />
 
           <Link
             component={RouterLink}
             variant="subtitle2"
-            to={PATH_PAGE.auth.resetPassword}
+            to={PATH_PAGE.auth.forgotPassword}
           >
-            Forgot password?
+            {t("signin.forgetPassword")}
           </Link>
         </Box>
 
@@ -114,7 +117,7 @@ function LoginForm({ formik }) {
           variant="contained"
           pending={isSubmitting}
         >
-          Login
+          {t("signin.login")}
         </LoadingButton>
       </Form>
     </FormikProvider>

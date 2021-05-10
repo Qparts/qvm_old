@@ -4,19 +4,17 @@ import { Form, FormikProvider } from 'formik';
 import { emailError } from 'src/utils/helpError';
 import { Box, TextField } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
-import { passwordError } from 'src/utils/helpError';
 import { useTranslation } from 'react-i18next';
-
 
 // ----------------------------------------------------------------------
 
-ResetPasswordForm.propTypes = {
+ForgotPasswordForm.propTypes = {
   formik: PropTypes.object.isRequired
 };
 
 // ----------------------------------------------------------------------
 
-function ResetPasswordForm({ formik }) {
+function ForgotPasswordForm({ formik }) {
   const { errors, touched, isSubmitting, handleSubmit, getFieldProps } = formik;
   const { t } = useTranslation();
 
@@ -25,15 +23,16 @@ function ResetPasswordForm({ formik }) {
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <TextField
           fullWidth
-          {...getFieldProps('password')}
-          label={t("forgotPassword.newPassword")}
+          {...getFieldProps('email')}
+          type="email"
+          label={t("forgotPassword.email")}
           error={
-            Boolean(touched.password && errors.password) ||
-            passwordError(errors.afterSubmit).error
+            Boolean(touched.email && errors.email) ||
+            emailError(errors.afterSubmit).error
           }
           helperText={
-            (touched.password && errors.password) ||
-            passwordError(errors.afterSubmit).helperText
+            (touched.email && errors.email) ||
+            emailError(errors.afterSubmit).helperText
           }
         />
         <Box sx={{ mt: 3 }}>
@@ -52,4 +51,4 @@ function ResetPasswordForm({ formik }) {
   );
 }
 
-export default ResetPasswordForm;
+export default ForgotPasswordForm;

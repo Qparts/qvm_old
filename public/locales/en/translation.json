@@ -1,11 +1,107 @@
 {
-  "demo": {
-    "title": "English",
-    "introduction": "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.",
-    "WelcomeBack": "Welcome back"
+  "home": "Home",
+  "catalog": "Catalog",
+  "Subscriber already registered": "Subscriber already registered",
+  "common": {
+    "enterDetails": "Enter your details below",
+    "email": "Email Address",
+    "welcomeBack": "Hi, Welcome Back",
+    "back" : "Back"
   },
-  "sideMenu": {
-    "home": "Home",
-    "catalog": "Catalog"
+  "signin": {
+    "title": "Sign into QVM Vendor Market Place",
+    "password": "Password",
+    "login": "Login",
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot Password?",
+    "noAccount": "Don't have account?",
+    "registerNow": "Register now",
+
+    "error": {
+      "require": {
+        "email": "Email Is Required",
+        "password": "Password Is Required"
+      },
+      "invalid": {
+        "email": "Email Is Invalid",
+        "password": "Password Is Invalid"
+      }
+    }
+  },
+  "signup": {
+    "title": "Signup Request in",
+    "haveAccount": "Already have an account?",
+    "signup": "Signup",
+    "companyName": "Company Name",
+    "email": "Email",
+    "name": "Name",
+    "phone": "Mobile",
+    "password": "Password",
+    "confirmMessagePart1": "By registering you agree on QVM  and QVM ",
+    "termsConfirmation": "Terms of Use",
+    "policyConfirmation": "Privacy Policy",
+    "confirmMessagePart2": " and QVM ",
+    "defination": "You can access huge numbers of auto spare parts and deal with great number of vendors",
+    "service1": "Parts Catalog",
+    "service2": "Spare Parts Availability & Price Information",
+    "service3": "Multiple Brand Alternatives",
+    "service4": "Special Offers",
+    "service5": "Issuing and Receiving Purchase Oders (*soon)",
+
+    "error": {
+      "require": {
+        "companyName": "Company Name Is Required",
+        "email": "Email Is Required",
+        "name": "Name Is Required",
+        "phone": "Mobile Is Required",
+        "password": "Password Is Required"
+      },
+      "invalid": {
+        "email": "Email Is Invalid",
+        "phone": "Mobile Is Invalid",
+        "password": "Password Is Invalid"
+      }
+    }
+  },
+  "verification": {
+    "checkEmail": "Please check your email!",
+    "verificationMessage": "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.",
+    "code": "Verification Code",
+    "verify": "Verify",
+    "error": {
+      "require": {
+        "code": "Verification Code Is Required"
+      },
+      "invalid": {
+        "code": "Verification Code Is Invalid"
+      }
+    }
+  },
+  "confirmation": {
+    "title": "THANK YOU FOR REGISTRATION IN QVM",
+    "message": "Your request have been sent, Your application will be reviewed by our team we will contact with you soon."
+  },
+
+  "forgotPassword": {
+    "title": "Forgot your password?",
+    "message": "Please enter the email address associated with your account and We will email you a link to reset your password.",
+    "email": "Email",
+    "password": "Password",
+    "resetPassword" : "Reset Password",
+    "successRequest" : "Request sent successfully",
+    "confirmMessage" : "We have sent a confirmation email to",
+    "newPassword" : "New Password",
+    "invalidRequest" : "The request is not available",
+    "error": {
+      "require": {
+        "email": "Email Is Required",
+        "password": "Password Is Required",
+        "newPassword" : "New Password Is Required"
+      },
+      "invalid": {
+        "email": "Email Is Invalid",
+        "password": "Password Is Invalid"
+      }
+    }
   }
 }

@@ -4,6 +4,7 @@ import { LoadingButton } from '@material-ui/lab';
 import maxLengthCheck from 'src/utils/maxLengthCheck';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, OutlinedInput, FormHelperText } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -34,6 +35,8 @@ function VerifyCodeForm({ formik }) {
     getFieldProps
   } = formik;
 
+  const { t } = useTranslation();
+
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -54,7 +57,7 @@ function VerifyCodeForm({ formik }) {
         </Box>
 
         <FormHelperText error={!isValid} style={{ textAlign: 'right' }}>
-          {!isValid && 'Code is required'}
+          {!isValid && t("verification.error.require.code")}
         </FormHelperText>
 
         <Box sx={{ mt: 3 }}>
@@ -65,7 +68,7 @@ function VerifyCodeForm({ formik }) {
             variant="contained"
             pending={isSubmitting}
           >
-            Verify
+            {t("verification.verify")}
           </LoadingButton>
         </Box>
       </Form>
