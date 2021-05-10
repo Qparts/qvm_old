@@ -27,14 +27,15 @@ import {
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
 const MENU_LINKS = [
-  { title: 'Home', icon: homeFill, href: '/' },
-  { title: 'Prices', icon: roundStreetview, href: PATH_HOME.dashboard },
-  { title: 'Contact Us', icon: roundSpeed, href: PATH_HOME.dashboard },
-  { title: 'Login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
+  { title: 'home', icon: homeFill, href: '/' },
+  { title: 'prices', icon: roundStreetview, href: PATH_HOME.dashboard },
+  { title: 'contactUs', icon: roundSpeed, href: PATH_HOME.dashboard },
+  { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
 
 const APP_BAR_MOBILE = 64;
@@ -90,6 +91,7 @@ function TopBar() {
   const offset = useOffSetTop(100);
   const [openMenu, setOpenMenu] = useState(false);
   const isHome = pathname === '/';
+  const { t } = useTranslation();
 
   const renderMenuDesktop = (
     <div>
@@ -107,7 +109,7 @@ function TopBar() {
           // })}
           sx={{ mr: 5, color: 'text.primary' }}
         >
-          {link.title}
+          {t(link.title)}
         </Link>
       ))}
 
@@ -172,7 +174,7 @@ function TopBar() {
             target="_blank"
             href={PATH_PAGE.auth.register}
           >
-            Sign Up
+            {t("registeration")}
           </Button>
 
           <Hidden mdUp>

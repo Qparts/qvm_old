@@ -1,6 +1,10 @@
 {
   "home": "الصفحه الرئيسيه",
   "catalog": "كاتالوج القطع",
+  "prices": "الاسعار",
+  "contactUs": "اتصل بنا",
+  "login": "تسجيل دخول",
+  "registeration": "إنشاء حساب",
   "Subscriber already registered": "المشترك مسجل بالفعل",
   "common": {
     "enterDetails": "أدخل التفاصيل الخاصة بك أدناه",
