@@ -31,7 +31,6 @@ function CarFilter() {
     const dispatch = useDispatch();
     const { filters, selectedCatalog, selectedModel, filterKeysMap } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
-    // const [filterKeysMap, setFilterKeysMap] = useState(new Map());
 
 
     return (
@@ -57,7 +56,6 @@ function CarFilter() {
                                                 {t(keyItem)} : {filterKeysMap.get(keyItem).value}
                                                 <ClearIcon
                                                     onClick={() => {
-                                                        // filterKeysMap.delete(keyItem);
                                                         dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, keyItem, null));
                                                     }}
                                                 />
@@ -79,10 +77,6 @@ function CarFilter() {
                                                             id={filter.key}
                                                             name={filter.key}
                                                             onChange={(event) => {
-                                                                // filterKeysMap.set(
-                                                                //     filter.key,
-                                                                //     JSON.parse(event.target.value)
-                                                                // );
                                                                 dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, filter.key, JSON.parse(event.target.value)));
                                                             }}
                                                         >

@@ -10,6 +10,9 @@ import {
 import CatalogSearch from './CatalogSearch';
 import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
+import LoadingScreen from 'src/components/LoadingScreen';
+import LoadingOverlay from "react-loading-overlay";
+// import { Roller } from "react-spinners-css";
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 
 function CatalogView() {
     const classes = useStyles();
-    const { showCarInfo } = useSelector((state) => state.catalogs);
+    const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
 
 
@@ -42,15 +45,38 @@ function CatalogView() {
             title="Catalog"
             className={classes.root}
         >
-            <Container >
-                <Box sx={{ pb: 5 }}>
-                    <Typography variant="h4">{t("catalogTab.title")}</Typography>
-                </Box>
-                {showCarInfo == true ?
-                    <CarDetails /> :
-                    <CatalogSearch />
+
+            <LoadingOverlay
+                active={isLoading}
+                styles={{
+                    wrapper: {
+                        width: "100%",
+                        height: "100%",
+                    },
+                }}
+                spinner={
+                    <LoadingScreen />
+
                 }
-            </Container>
+            >
+                <Container >
+                    {/* {isLoading &&
+                        <div style={{}}>
+                            <LoadingScreen />
+
+                        </div>
+                    } */}
+                    <Box sx={{ pb: 5 }}>
+                        <Typography variant="h4">{t("catalogTab.title")}</Typography>
+                    </Box>
+                    {showCarInfo == true ?
+                        <CarDetails /> :
+                        <CatalogSearch />
+                    }
+
+                </Container>
+            </LoadingOverlay>
+
         </Page>
     );
 }

@@ -58,7 +58,7 @@ function LoadingScreen({ className, ...other }) {
           repeatDelay: 1
         }}
       >
-        <Logo sx={{ height: 64 }} />
+        {/* <Logo sx={{ height: 64 }} /> */}
       </motion.div>
 
       <motion.div

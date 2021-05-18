@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme) => ({
 function CatalogSearch() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { catalogs, models, selectedCatalog, selectedModel } = useSelector((state) => state.catalogs);
+    const { catalogs, models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
 
     useEffect(() => {
