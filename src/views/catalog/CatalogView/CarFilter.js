@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import Accordion from '@material-ui/core/Accordion';
@@ -29,12 +29,13 @@ const useStyles = makeStyles(() => ({
 function CarFilter() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { filters, selectedCatalog, selectedModel } = useSelector((state) => state.catalogs);
+    const { filters, selectedCatalog, selectedModel, filterKeysMap } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
-    const [filterKeysMap, setFilterKeysMap] = useState(new Map());
+    // const [filterKeysMap, setFilterKeysMap] = useState(new Map());
+
 
     return (
-        <Grid container spacing={3}>
+        <Grid container spacing={1}>
             <Grid item xs={12} md={12} lg={12}>
                 <Card >
                     <CardContent className={classes.cardContent}>
@@ -52,12 +53,12 @@ function CarFilter() {
                                 <div className="" >
                                     {Array.from(filterKeysMap.keys()).map((keyItem) => {
                                         return (
-                                            <div className="badge badge-pill badge-light ">
+                                            <div className="badge badge-pill badge-light " key={keyItem}>
                                                 {t(keyItem)} : {filterKeysMap.get(keyItem).value}
                                                 <ClearIcon
                                                     onClick={() => {
-                                                        filterKeysMap.delete(keyItem);
-                                                        dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel));
+                                                        // filterKeysMap.delete(keyItem);
+                                                        dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, keyItem, null));
                                                     }}
                                                 />
                                             </div>
@@ -71,18 +72,18 @@ function CarFilter() {
                                             !filterKeysMap.has(filter.key) && (
                                                 <Grid item xs={12} sm={4} md={3} key={filter.key}>
                                                     <FormControl required style={{ width: "100%" }}>
-                                                        <InputLabel id={filter.key}>{t(filter.key)}</InputLabel>
+                                                        <InputLabel id={filter.key}>{t("catalogTab." + filter.key)}</InputLabel>
                                                         <Select
                                                             native={true}
                                                             labelId={filter.key}
                                                             id={filter.key}
                                                             name={filter.key}
                                                             onChange={(event) => {
-                                                                filterKeysMap.set(
-                                                                    filter.key,
-                                                                    JSON.parse(event.target.value)
-                                                                );
-                                                                dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel));
+                                                                // filterKeysMap.set(
+                                                                //     filter.key,
+                                                                //     JSON.parse(event.target.value)
+                                                                // );
+                                                                dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, filter.key, JSON.parse(event.target.value)));
                                                             }}
                                                         >
                                                             <option aria-label="None" value="" />

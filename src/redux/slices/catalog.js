@@ -67,6 +67,7 @@ const slice = createSlice({
         handleFilterChangeSuccess(state, action) {
             state.isLoading = false;
             state.filters = action.payload.filters;
+            state.filterKeysMap = action.payload.filterKeysMap;
             state.error = '';
         },
 
@@ -119,7 +120,9 @@ const slice = createSlice({
         disappearBreadcrumbs(state) {
             state.showCarInfo = false;
             state.cars = [];
+            state.filterKeysMap = new Map();
         },
+
 
 
 
@@ -213,12 +216,18 @@ export function getCarByVin(query) {
 }
 
 
-export function handleFilterChange(filterKeysMap, selectedCatalog, selectedModel) {
+export function handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, key, item) {
     return async (dispatch) => {
         dispatch(slice.actions.startLoading());
         try {
+            let newMap = new Map(filterKeysMap);
+            if (item)
+                newMap.set(key, item);
+            else
+                newMap.delete(key);
+
             let params = "";
-            filterKeysMap.forEach((mapItem) => {
+            newMap.forEach((mapItem) => {
                 params = params + mapItem.idx + ",";
             });
 
@@ -235,7 +244,7 @@ export function handleFilterChange(filterKeysMap, selectedCatalog, selectedModel
                 selectedModel.id,
                 params.substring(0, params.length - 1)
             );
-            dispatch(slice.actions.handleFilterChangeSuccess({ filters: filters }));
+            dispatch(slice.actions.handleFilterChangeSuccess({ filters: filters, filterKeysMap: newMap }));
         } catch (error) {
             dispatch(slice.actions.hasError(error.response.data));
         }
