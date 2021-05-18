@@ -33,7 +33,7 @@ export const PATH_APP = {
   general: {
     root: path(ROOTS.app, '/dashboard'),
     dashboard: path(ROOTS.app, '/dashboard'),
-    catalog: path(ROOTS.app, '/management/user'),
+    catalog: path(ROOTS.app, '/catalog'),
   },
 
   management: {
@@ -45,6 +45,7 @@ export const PATH_APP = {
       list: path(ROOTS.app, '/management/user/list'),
       account: path(ROOTS.app, '/management/user/account')
     },
+    // catalog : path(ROOTS.app, '/catalog')
   },
 };
 

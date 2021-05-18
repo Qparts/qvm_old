@@ -1,6 +1,6 @@
 {
   "home": "Home",
-  "catalog": "Catalog",
+  "catalog": "Parts Catalog",
   "prices": "Prices",
   "contactUs": "Contact Us",
   "login": "Login",
@@ -10,7 +10,8 @@
     "enterDetails": "Enter your details below",
     "email": "Email Address",
     "welcomeBack": "Hi, Welcome Back",
-    "back": "Back"
+    "back": "Back",
+    "search" : "Search"
   },
   "signin": {
     "title": "Sign into QVM Vendor Market Place",
@@ -107,5 +108,49 @@
         "password": "Password Is Invalid"
       }
     }
+  },
+  "catalogTab": {
+    "title": "Parts Catalog",
+    "catalog" : "Catalog",
+    "carDetails" : "Car Details",
+    "catalogDetails" : "Catalog Details",
+    "catalogSearch" : "Catalog Search",
+    "browCatalog" : "Browse Catalog",
+    "backToCatalog": "Back To Part Catalog",
+    "vinTitle": "Find Catalog by VIN number",
+    "listTitle": "Find Catalog from List",
+    "brand": "Brand",
+    "model": "Car Model",
+    "year": "Year",
+    "sales_region": "Region",
+    "car_name": "Name",
+    "steering": "Steering",
+    "body": "Body type",
+    "trans_type": "Transmission type",
+    "engine": "Engine",
+    "series": "Series",
+    "grade": "Grade",
+    "wheel_drive": "Wheel drive",
+    "spec_catalog": "Catalog",
+    "spec_vin_part": "Model code/Vin",
+    "spec_model_date": "Production start (not for USA)",
+    "spec_modification": "Restriction",
+    "body_type": "Body Type",
+    "spec_series": "Series",
+    "body_code": "Body",
+    "modification": "Modification",
+    "transmission": "Transmission",
+    "grade_code": "Grade Code",
+    "engine_code": "Engine",
+    "spec_model": "Model name",
+    "modificationId": "Modification",
+    "partDetails": "Part Details",
+    "referenceNumber": "Reference Number",
+    "partNumber": "Part Number",
+    "partName": "Part Name",
+    "details": "Details",
+    "searchButton": "search by catalog",
+    "showResults": "show results",
+    "description": "You can find the parts you are searching for from the car catalog, start now"
   }
 }

@@ -4,13 +4,15 @@
   "prices": "الاسعار",
   "contactUs": "اتصل بنا",
   "login": "تسجيل دخول",
+
   "registeration": "إنشاء حساب",
   "Subscriber already registered": "المشترك مسجل بالفعل",
   "common": {
     "enterDetails": "أدخل التفاصيل الخاصة بك أدناه",
     "email": "البريد الإلكتروني",
     "welcomeBack": "مرحبا ، مرحبا بعودتك",
-    "back" : "العوده"
+    "back": "العوده",
+    "search": "بحث"
   },
   "signin": {
     "title": "تسجيل دخول لمنصة التجار",
@@ -92,21 +94,65 @@
     "message": "يرجى إدخال عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك عبر البريد الإلكتروني رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
     "email": "البريدالالكترونى",
     "password": "كلمه المرور",
-    "resetPassword" : "إعادة تعيين كلمة المرور",
-    "successRequest" : "تم إرسال الطلب بنجاح",
-    "confirmMessage" : "لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى",
-    "newPassword" : "كلمةالمرور الجديدة",
-    "invalidRequest" : "الطلب غير متاح",
+    "resetPassword": "إعادة تعيين كلمة المرور",
+    "successRequest": "تم إرسال الطلب بنجاح",
+    "confirmMessage": "لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى",
+    "newPassword": "كلمةالمرور الجديدة",
+    "invalidRequest": "الطلب غير متاح",
     "error": {
       "require": {
         "email": " البريدالالكترومى مطلوب",
         "password": "كلمةالمرور مطلوبه",
-        "newPassword" : "كلمةالمرورالجديدة مطلوبه"
+        "newPassword": "كلمةالمرورالجديدة مطلوبه"
       },
       "invalid": {
         "email": "البريدالالكترونى خاطئ",
         "password": "كلمةالمرور يجب ألا تقل عن 8 أحرف"
       }
     }
+  },
+  "catalogTab": {
+    "title": "كاتالوج القطع",
+    "catalog": "كاتالوج",
+    "carDetails": "تفاصيل السيارة",
+    "catalogDetails": "تفاصيل الكتالوج",
+    "catalogSearch": "بحث الكتالوج",
+    "browCatalog" : "تصفح الكتالوج",
+    "backToCatalog": "العوده الى كاتالوج القطع",
+    "vinTitle": " ابحث عن الكتالوج برقم الهيكل",
+    "listTitle": "اختر الكاتالوج من القائمة",
+    "brand": "صنف السيارة",
+    "model": "الموديل",
+    "year": "السنة",
+    "sales_region": "المنطقة",
+    "car_name": "الإسم",
+    "steering": "جهة القيادة",
+    "body": "البودي",
+    "trans_type": "ناقل الحركة",
+    "engine": "المحرك",
+    "series": "السلسلة",
+    "grade": "الدرجة",
+    "wheel_drive": "نوع دفع العجلات",
+    "spec_catalog": "الكاتالوج",
+    "spec_vin_part": "مواصفات الهيكل",
+    "spec_model_date": "سنة صنع الموديل",
+    "spec_modification": "مواصفات التعديل",
+    "body_type": "البودي",
+    "spec_series": "السلسلة",
+    "body_code": "البودي",
+    "modification": "مواصفات التعديل",
+    "transmission": "ناقل الحركة",
+    "grade_code": "كود الدرجة",
+    "engine_code": "المحرك",
+    "spec_model": "الموديل",
+    "modificationId": "مواصفات التعديل",
+    "partDetails": "تفاصيل القطعة",
+    "referenceNumber": "الرقم المرجعي",
+    "partNumber": "رقم القطعة",
+    "partName": "اسم القطعة",
+    "details": "التفاصيل",
+    "searchButton": "البحث عن طريق الكتالوج",
+    "showResults": "أظهر النتائج",
+    "description": "يمكنك الوصول للقطعه التي تبحث عنها من كتالوج السياره ابدأ الآن"
   }
 }

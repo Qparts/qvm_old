@@ -25,6 +25,12 @@ const AppRoutes = {
       component: () => <Redirect to={PATH_APP.general.root} />
     },
 
+    {
+      exact: true,
+      path: PATH_APP.general.catalog,
+      component: lazy(() => import('src/views/catalog/CatalogView'))
+    },
+
 
     // MANAGEMENT : USER
     // ----------------------------------------------------------------------
@@ -48,6 +54,7 @@ const AppRoutes = {
       path: PATH_APP.management.user.account,
       component: lazy(() => import('src/views/user/AccountView'))
     },
+
     {
       exact: true,
       path: PATH_APP.management.user.root,

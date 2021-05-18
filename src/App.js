@@ -7,7 +7,6 @@ import { store, persistor } from './redux/store';
 import routes, { renderRoutes } from 'src/routes';
 import ScrollToTop from 'src/components/ScrollToTop';
 import LoadingScreen from 'src/components/LoadingScreen';
-// import GoogleAnalytics from 'src/components/GoogleAnalytics';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import NotistackProvider from 'src/components/NotistackProvider';
 import { PersistGate } from 'redux-persist/lib/integration/react';

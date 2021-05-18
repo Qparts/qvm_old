@@ -34,6 +34,8 @@ Welcome.propTypes = {
 
 function Welcome({ displayName, className, ...other }) {
   const classes = useStyles();
+  const { t } = useTranslation();
+
 
   return (
     <Card className={clsx(classes.root, className)} {...other}>
