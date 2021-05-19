@@ -141,7 +141,7 @@ export function login({ email, password }) {
       const { jwt: accessToken } = response.data;
       const user = response.data;
       setSession(accessToken);
-      localStorage.setItem('user', JSON.stringify(user));
+      localStorage.setItem('loginObject', JSON.stringify(user));
       dispatch(slice.actions.loginSuccess({ user }));
     } catch (error) {
       dispatch(slice.actions.loginFail(error.response.data));
@@ -247,19 +247,14 @@ export function resetPassword({ code, newPassword }) {
 export function getInitialize() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
-
-    //load countries
-
-    let { data: countries } = await locationService.getCountries();
-
-
     try {
+      //load countries
+      let { data: countries } = await locationService.getCountries();
       const accessToken = window.localStorage.getItem('accessToken');
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
-        const user = localStorage.getItem('user');
-        // const response = await axios.get('/api/account/my-account');
+        const user = localStorage.getItem('loginObject');
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
