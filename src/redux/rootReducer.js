@@ -6,6 +6,7 @@ import authJwtReducer from './slices/authJwt';
 import settingsReducer from './slices/settings';
 import notificationsReducer from './slices/notifications';
 import catalogReducer from './slices/catalog';
+import partSearchReducer from './slices/partSearch';
 
 // ----------------------------------------------------------------------
 
@@ -29,7 +30,9 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
   notifications: notificationsReducer,
   authJwt: persistReducer(authPersistConfig, authJwtReducer),
-  catalogs : catalogReducer
+  catalogs : catalogReducer,
+  PartSearch : partSearchReducer
+
 });
 
 export { rootPersistConfig, rootReducer };

@@ -7,6 +7,10 @@ function getCountries() {
   return http.get(locationUrl.getCountries);
 }
 
+function searchLocation(query) {
+  return http.post(locationUrl.postSearchLocation, { query });
+}
 export default {
   getCountries,
+  searchLocation
 };

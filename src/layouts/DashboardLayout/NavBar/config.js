@@ -39,14 +39,23 @@ const navConfig = [
       }
     ]
   },
+  {
+    items: [
+      {
+        title: 'partSearch',
+        icon: ICONS.user,
+        href: PATH_APP.general.partSearch,
+      },
 
+    ]
+  },
 
   {
     items: [
       {
         title: 'catalog',
         icon: ICONS.user,
-        href:  PATH_APP.general.catalog,
+        href: PATH_APP.general.catalog,
       },
 
     ]

@@ -18,11 +18,16 @@ const AppRoutes = {
       path: PATH_APP.general.dashboard,
       component: lazy(() => import('src/views/general/DashboardAppView'))
     },
-  
+
     {
       exact: true,
       path: PATH_APP.root,
       component: () => <Redirect to={PATH_APP.general.root} />
+    },
+    {
+      exact: true,
+      path: PATH_APP.general.partSearch,
+      component: lazy(() => import('src/views/partSearch/PartSearchView'))
     },
 
     {

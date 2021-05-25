@@ -34,6 +34,7 @@ export const PATH_APP = {
     root: path(ROOTS.app, '/dashboard'),
     dashboard: path(ROOTS.app, '/dashboard'),
     catalog: path(ROOTS.app, '/catalog'),
+    partSearch: path(ROOTS.app, '/partSearch'),
   },
 
   management: {
