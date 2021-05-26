@@ -7,6 +7,11 @@ import settingsReducer from './slices/settings';
 import notificationsReducer from './slices/notifications';
 import catalogReducer from './slices/catalog';
 import partSearchReducer from './slices/partSearch';
+import quotationsReportReducer from './slices/quotationsReport';
+import specialOfferReducer from './slices/specialOffer';
+import replacementsReducer from './slices/replacements';
+import stockUploadReducer from './slices/stockUpload';
+import specialOfferUploadReducer from './slices/specialOfferUpload';
 
 // ----------------------------------------------------------------------
 
@@ -30,8 +35,13 @@ const rootReducer = combineReducers({
   settings: settingsReducer,
   notifications: notificationsReducer,
   authJwt: persistReducer(authPersistConfig, authJwtReducer),
-  catalogs : catalogReducer,
-  PartSearch : partSearchReducer
+  catalogs: catalogReducer,
+  PartSearch: partSearchReducer,
+  quotationsReport: quotationsReportReducer,
+  specialOffer: specialOfferReducer,
+  replacements: replacementsReducer,
+  stockUpload: stockUploadReducer,
+  specialOfferUpload: specialOfferUploadReducer
 
 });
 

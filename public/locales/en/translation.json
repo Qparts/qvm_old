@@ -5,7 +5,12 @@
   "contactUs": "Contact Us",
   "login": "Login",
   "registeration": "Sign Up",
-  "partSearch" : "Search Parts",
+  "partSearch": "Search Parts",
+  "quotationsReport": "Quotations Report",
+  "specialOffer": "Special Offers",
+  "replacements": "Replacements",
+  "specialOfferUpload": "Special Offer Upload",
+  "stockUpload": "Stock Upload",
   "Subscriber already registered": "Subscriber already registered",
   "common": {
     "enterDetails": "Enter your details below",
@@ -185,9 +190,31 @@
     "startSearchNow": "Start Search Now",
     "searchEmptyMessage": "In the largest assembly of spare parts dealers in the Middle East, get spare parts easier ",
     "details": "Details",
-    "productDetails" : "Product Details",
-    "noOptions":"No Options",
-    "selectLocation" : "Filter results by location",
-    "searchByPartNO" : "Search by part number"
+    "productDetails": "Product Details",
+    "noOptions": "No Options",
+    "selectLocation": "Filter results by location",
+    "searchByPartNO": "Search by part number"
+  },
+  "QuotationsReportTab": {
+    "title": "Quotations Report"
+  },
+  "specialOfferTab": {
+    "title": "Special Offers",
+    "offerDueDate": "Offer End Date",
+    "partsNo": "Parts Number"
+  },
+  "replacementsTab": {
+    "replacements": "Replacements",
+    "title": "Replacement Parts Search",
+    "brand": "Brand",
+    "partNumber": "Part Number",
+    "description": "Description",
+    "applicableParts": "Applicable OEM Parts"
+  },
+  "specialOfferUploadTab": {
+    "title": "Special Offer Upload"
+  },
+  "stockUploadTab": {
+    "title": "Stock Upload"
   }
 }

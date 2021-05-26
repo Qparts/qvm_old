@@ -49,7 +49,46 @@ const navConfig = [
 
     ]
   },
+  {
+    items: [
+      {
+        title: 'replacements',
+        icon: ICONS.user,
+        href: PATH_APP.general.replacements,
+      },
 
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'stockUpload',
+        icon: ICONS.user,
+        href: PATH_APP.general.stockUpload,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'specialOfferUpload',
+        icon: ICONS.user,
+        href: PATH_APP.general.specialOfferUpload,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'specialOffer',
+        icon: ICONS.user,
+        href: PATH_APP.general.specialOffer,
+      },
+
+    ]
+  },
   {
     items: [
       {
@@ -59,7 +98,17 @@ const navConfig = [
       },
 
     ]
-  }
+  },
+  {
+    items: [
+      {
+        title: 'quotationsReport',
+        icon: ICONS.user,
+        href: PATH_APP.general.quotationsReport,
+      },
+
+    ]
+  },
 ];
 
 export default navConfig;

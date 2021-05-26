@@ -5,7 +5,12 @@
   "contactUs": "اتصل بنا",
   "login": "تسجيل دخول",
   "partSearch": "بحث القطع",
+  "quotationsReport": "تقرير التسعيرات",
+  "specialOffer": "عروض خاصة",
   "registeration": "إنشاء حساب",
+  "replacements": "البدائل",
+  "specialOfferUpload": "رفع العروض الخاصة",
+  "stockUpload": "رفع المخزون",
   "Subscriber already registered": "المشترك مسجل بالفعل",
   "common": {
     "enterDetails": "أدخل التفاصيل الخاصة بك أدناه",
@@ -189,7 +194,28 @@
     "productDetails": "تفاصيل المنتج",
     "noOptions": "لا توجد خيارات متاحه",
     "selectLocation": "تصنيف النتائج بحسب الموقع",
-    "searchByPartNO" : "إبحث برقم قطعة"
-
+    "searchByPartNO": "إبحث برقم قطعة"
+  },
+  "QuotationsReportTab": {
+    "title": "تقرير التسعيرات"
+  },
+  "specialOfferTab": {
+    "title": "عروض خاصة",
+    "offerDueDate": "تاريخ انتهاء العرض",
+    "partsNo": "رقم القطعة"
+  },
+  "replacementsTab": {
+    "replacements": "البدائل",
+    "title": "بحث القطع البديلة",
+    "brand": "الصنف",
+    "partNumber": "رقم القطعة",
+    "description": "الوصف",
+    "applicableParts": "القطع الأصلية المتوافقة"
+  },
+  "specialOfferUploadTab": {
+    "title": "رفع العروض الخاصة"
+  },
+  "stockUploadTab": {
+    "title": "رفع المخزون"
   }
 }

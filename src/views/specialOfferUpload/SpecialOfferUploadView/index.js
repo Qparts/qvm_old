@@ -5,15 +5,11 @@ import { useSelector } from 'react-redux';
 import {
     Box,
     Container,
-    Typography,
-    Divider
+    Typography
 } from '@material-ui/core';
-import CatalogSearch from './CatalogSearch';
-import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-// import { Roller } from "react-spinners-css";
 
 // ----------------------------------------------------------------------
 
@@ -35,15 +31,15 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function CatalogView() {
+function SpecialOfferUpload() {
     const classes = useStyles();
-    const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
+    const { isLoading } = useSelector((state) => state.specialOfferUpload);
     const { t } = useTranslation();
 
 
     return (
         <Page
-            title={t("catalogTab.title")}
+            title={t("specialOfferUploadTab.title")}
             className={classes.root}
         >
 
@@ -62,13 +58,10 @@ function CatalogView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("catalogTab.title")}</Typography>
-                        <Divider />
+                        <Typography variant="h4">{t("specialOfferUploadTab.title")}</Typography>
+                        <hr />
                     </Box>
-                    {showCarInfo == true ?
-                        <CarDetails /> :
-                        <CatalogSearch />
-                    }
+
 
                 </Container>
             </LoadingOverlay>
@@ -77,4 +70,4 @@ function CatalogView() {
     );
 }
 
-export default CatalogView;
+export default SpecialOfferUpload;
