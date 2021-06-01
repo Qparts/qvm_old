@@ -23,12 +23,14 @@ import {
   MenuItem,
   Container,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Fab
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
-
+import { red } from '@material-ui/core/colors';
+import { pxToRem } from 'src/utils/formatFontSize';
 // ----------------------------------------------------------------------
 
 const MENU_LINKS = [
@@ -57,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.common.white
   },
   isDesktopActive: {
-    color: theme.palette.primary.main
+    color: theme.palette.secondary.lighter
   },
   isMobileActive: {
     color: theme.palette.primary.main,
@@ -69,16 +71,19 @@ const useStyles = makeStyles((theme) => ({
   },
   onScroll: {
     '& $toolbar': {
-      backgroundColor: theme.palette.background.default
+      backgroundColor: theme.palette.secondary.darker
     },
-    '& $isHome': {
-      color: theme.palette.text.primary
-    },
+    // '& $isHome': {
+    //   color: theme.palette.text.primary
+    // },
     [theme.breakpoints.up('md')]: {
       '& $toolbar': {
         height: APP_BAR_DESKTOP - 20
       }
     }
+  },
+  navButton: {
+    fontSize: pxToRem(17),
   }
 }));
 
@@ -101,12 +106,12 @@ function TopBar() {
           to={link.href}
           key={link.title}
           underline="none"
-          variant="subtitle2"
+          variant="subtitle1"
           component={RouterLink}
           activeClassName={classes.isDesktopActive}
-          // className={clsx({
-          //   [classes.isHome]: isHome
-          // })}
+           className={clsx({
+             [classes.isHome]: isHome
+           })}
           sx={{ mr: 5, color: 'text.primary' }}
         >
           {t(link.title)}
@@ -172,7 +177,9 @@ function TopBar() {
             variant="contained"
             component={Link}
             target="_blank"
+            size="large"
             href={PATH_PAGE.auth.register}
+            className={classes.navButton}
           >
             {t("registeration")}
           </Button>
