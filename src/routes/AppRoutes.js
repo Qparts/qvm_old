@@ -58,6 +58,11 @@ const AppRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.general.specialOfferDetails,
+      component: lazy(() => import('src/views/specialOffer/SpecialOfferView'))
+    },
+    {
+      exact: true,
       path: PATH_APP.general.quotationsReport,
       component: lazy(() => import('src/views/quotationsReport/QuotationsReportView'))
     },

@@ -1,4 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { cacheMissingCompanies, getCachedCompany, getMissingCompaniesFromAPI } from 'src/services/common/utilService';
 import locationService from 'src/services/locationService';
 import partSearchService from 'src/services/partSearchService';
 import constants from 'src/utils/constants';
@@ -100,11 +101,23 @@ const slice = createSlice({
 
             let index = state.locationFilters.findIndex(e => e.type == locationFilter.type && e.object.id == locationFilter.object.id);
             state.locationFilters.splice(index, 1);
+        },
 
-            // state.locationFilters = state.locationFilters.filter(e => {
-            //     return e.type != locationFilter.type && e.object.id != locationFilter.object.id;
-            // });
-
+        cleanup(state) {
+            state.isLoading = false;
+            state.error = '';
+            state.productResult = [];
+            state.productInfoResult = [];
+            state.locationOptions = [];
+            state.locationFilters = [];
+            state.filter = "";
+            state.companies = null;
+            state.searchSize = 0;
+            state.selectedPart = null;
+            state.selectedProduct = null;
+            state.page = 0;
+            state.query = "";
+            state.locationQuery = ""
         },
 
         resetLocationfilter(state) {
@@ -144,7 +157,8 @@ export const {
     resetLocationfilter,
     setSelectedProduct,
     handleChangePage,
-    handleChangeRowsPerPage
+    handleChangeRowsPerPage,
+    cleanup
 } = slice.actions;
 
 
@@ -183,6 +197,7 @@ export function partSearch(query, offset, max, filter, locationFilters = []) {
             cacheMissingCompanies(recentCompanyData, tempCompanies);
 
             let newCompanies = new Map([...cachedCompanies, ...tempCompanies]);
+
 
             dispatch(slice.actions.partSearchSuccess({ productResult: result, companies: newCompanies, query: query }));
         } catch (error) {
@@ -237,41 +252,44 @@ export function searchLocation(query) {
             dispatch(slice.actions.hasError(error.response?.data));
         }
     };
-}
-
-export const getCachedCompany = (recentCompanyData, selectedCompanies, cachedCompanies) => {
-    const companyMapData = new Map(recentCompanyData);
-    if (companyMapData != null && companyMapData.size) {
-        for (let item of selectedCompanies) {
-            if (companyMapData.has(item)) {
-                cachedCompanies.set(item, companyMapData.get(item));
-                selectedCompanies.delete(item);
-            }
-        }
-    }
-}
+};
 
 
-export const getMissingCompaniesFromAPI = async (tempCompanies, selectedCompanies) => {
-    if (selectedCompanies.size > 0) {
-        const array = [...selectedCompanies];
-        const companiesIds = array.join();
-
-        const { data: companies } = await partSearchService.getCompanies({ companyId: companiesIds });
-        for (let compnay of companies) {
-            tempCompanies.set(compnay.id, compnay);
-        }
-
-    }
-}
 
 
-export const cacheMissingCompanies = (recentCompanyData, tempCompanies) => {
-    if (recentCompanyData != null && recentCompanyData.length) {
-        const existComapny = recentCompanyData;
-        SaveData(constants.COMPANYIES, Array.from(new Map([...existComapny, ...tempCompanies]).entries()));
-    } else {
-        SaveData(constants.COMPANYIES, Array.from(tempCompanies.entries()));
+// export const getCachedCompany = (recentCompanyData, selectedCompanies, cachedCompanies) => {
+//     const companyMapData = new Map(recentCompanyData);
+//     if (companyMapData != null && companyMapData.size) {
+//         for (let item of selectedCompanies) {
+//             if (companyMapData.has(item)) {
+//                 cachedCompanies.set(item, companyMapData.get(item));
+//                 selectedCompanies.delete(item);
+//             }
+//         }
+//     }
+// }
 
-    }
-}
+
+// export const getMissingCompaniesFromAPI = async (tempCompanies, selectedCompanies) => {
+//     if (selectedCompanies.size > 0) {
+//         const array = [...selectedCompanies];
+//         const companiesIds = array.join();
+
+//         const { data: companies } = await partSearchService.getCompanies({ companyId: companiesIds });
+//         for (let compnay of companies) {
+//             tempCompanies.set(compnay.id, compnay);
+//         }
+
+//     }
+// }
+
+
+// export const cacheMissingCompanies = (recentCompanyData, tempCompanies) => {
+//     if (recentCompanyData != null && recentCompanyData.length) {
+//         const existComapny = recentCompanyData;
+//         SaveData(constants.COMPANYIES, Array.from(new Map([...existComapny, ...tempCompanies]).entries()));
+//     } else {
+//         SaveData(constants.COMPANYIES, Array.from(tempCompanies.entries()));
+
+//     }
+// }

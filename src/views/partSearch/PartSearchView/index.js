@@ -1,5 +1,5 @@
 import Page from 'src/components/Page';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -15,6 +15,7 @@ import AvailabilityPartsSection from './AvailabilityPartsSection';
 import PartSearchSection from './PartSearchSection';
 import ProductInfoSection from './ProductInfoSection';
 import LocationFilterSection from './LocationFilterSection';
+import { cleanup } from 'src/redux/slices/partSearch';
 
 
 // ----------------------------------------------------------------------
@@ -43,7 +44,11 @@ function PartSearchView() {
     const dispatch = useDispatch();
     const { isLoading } = useSelector((state) => state.PartSearch);
 
-
+    useEffect(() => {
+        return ()=>{
+            dispatch(cleanup())
+        }
+     }, []);
 
     return (
         <Page

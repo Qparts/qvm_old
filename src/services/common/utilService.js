@@ -1,20 +1,67 @@
-import { BehaviorSubject } from 'rxjs';
+import constants from 'src/utils/constants';
+import { GetData, SaveData } from 'src/utils/LocalStorage';
+import partSearchService from '../partSearchService';
 
 
-const loaderSubject = new BehaviorSubject(false);
-const notificationSubject = new BehaviorSubject({ pendingItems: 0 });
+export function getAvaliableCompanies(selectedCompanies) {
+    return async () => {
+        try {
+
+            const recentCompanyData = await GetData(constants.COMPANYIES);
+            var cachedCompanies = new Map();
+
+            getCachedCompany(recentCompanyData, selectedCompanies, cachedCompanies);
+
+            var tempCompanies = new Map();
+            await getMissingCompaniesFromAPI(tempCompanies, selectedCompanies);
+
+            cacheMissingCompanies(recentCompanyData, tempCompanies);
+
+            let newCompanies = new Map([...cachedCompanies, ...tempCompanies]);
+
+            return newCompanies;
+
+        } catch (error) {
+            console.log(error);
+            return null;
+        }
+    };
+}
 
 
+export const getCachedCompany = (recentCompanyData, selectedCompanies, cachedCompanies) => {
+    const companyMapData = new Map(recentCompanyData);
+    if (companyMapData != null && companyMapData.size) {
+        for (let item of selectedCompanies) {
+            if (companyMapData.has(item)) {
+                cachedCompanies.set(item, companyMapData.get(item));
+                selectedCompanies.delete(item);
+            }
+        }
+    }
+}
 
 
-export const LoaderService = {
-    sendLoad: (load) => loaderSubject.next(load),
-    clearLoad: () => loaderSubject.next(),
-    getLoad: () => loaderSubject.asObservable()
-};
+export const getMissingCompaniesFromAPI = async (tempCompanies, selectedCompanies) => {
+    if (selectedCompanies.size > 0) {
+        const array = [...selectedCompanies];
+        const companiesIds = array.join();
 
-export const NotificationService = {
-    setNotification: (notificationObject) => notificationSubject.next(notificationObject),
-    getNotification : () => notificationSubject.asObservable(),
-};
+        const { data: companies } = await partSearchService.getCompanies({ companyId: companiesIds });
+        for (let compnay of companies) {
+            tempCompanies.set(compnay.id, compnay);
+        }
 
+    }
+}
+
+
+export const cacheMissingCompanies = (recentCompanyData, tempCompanies) => {
+    if (recentCompanyData != null && recentCompanyData.length) {
+        const existComapny = recentCompanyData;
+        SaveData(constants.COMPANYIES, Array.from(new Map([...existComapny, ...tempCompanies]).entries()));
+    } else {
+        SaveData(constants.COMPANYIES, Array.from(tempCompanies.entries()));
+
+    }
+}

@@ -39,6 +39,7 @@ export const PATH_APP = {
     specialOfferUpload: path(ROOTS.app, '/special-offer-upload'),
     catalog: path(ROOTS.app, '/catalog'),
     specialOffer: path(ROOTS.app, '/special-offer'),
+    specialOfferDetails: path(ROOTS.app, '/special-offer/:id'),
     quotationsReport: path(ROOTS.app, '/quotations-report'),
   },
 

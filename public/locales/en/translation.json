@@ -17,7 +17,8 @@
     "email": "Email Address",
     "welcomeBack": "Hi, Welcome Back",
     "back": "Back",
-    "search": "Search"
+    "search": "Search",
+    "sar": "SAR"
   },
   "signin": {
     "title": "Sign into QVM Vendor Market Place",
@@ -201,7 +202,9 @@
   "specialOfferTab": {
     "title": "Special Offers",
     "offerDueDate": "Offer End Date",
-    "partsNo": "Parts Number"
+    "partsNo": "Parts Number",
+    "startIn": "Start in",
+    "expiresIn": "Expires in"
   },
   "replacementsTab": {
     "replacements": "Replacements",
@@ -216,5 +219,27 @@
   },
   "stockUploadTab": {
     "title": "Stock Upload"
+  },
+  "offerDetails": {
+    "offerNo": "Offer Number",
+    "partsNo": "Parts Number",
+    "category": "Category",
+    "quantity": "Quantity",
+    "price": "Price",
+    "search": "Search",
+    "noData": "No Data Found!!",
+    "partNo": "Part Number",
+    "brand": "Brand"
+  },
+  "setting": {
+    "name" : "Name" ,
+    "country" : "Country",
+    "region" : "Region",
+    "city" : "City",
+    "addUser": "Add User",
+    "addBranch": "Add Branch",
+    "insertUserError": "Email or mobile already exist",
+    "emailMode": "Registration verification code is sent to the new user by email, enter the code they received below",
+    "mobilMode": "Registration verification code is sent to the new user mobile number, enter the code that received below"
   }
 }

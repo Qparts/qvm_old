@@ -52,7 +52,7 @@ const customer = {
 
 const location = {
   getCountries: `${LOCATION_SERVICE}/countries`,
-  postSearchLocation : `${LOCATION_SERVICE}/search-locations`
+  postSearchLocation: `${LOCATION_SERVICE}/search-locations`
 };
 
 const stock = {
@@ -109,6 +109,9 @@ const catalog = {
 const product = {
   productSearch: `${PRODUCT_SERVICE}/search-company-product`,
   productInfoSearch: `${PRODUCT_SERVICE}/search-product`,
+  getProductReplacement: `${PRODUCT_SERVICE}/search-replacement-product`,
+  getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
+  specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`
 }
 
 

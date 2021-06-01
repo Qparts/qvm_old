@@ -11,9 +11,13 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import searchFill from '@iconify-icons/eva/search-fill';
+import { Icon } from '@iconify/react';
 import {
     TextField,
     Typography,
+    OutlinedInput,
+    InputAdornment
 } from '@material-ui/core';
 import Datatable from 'src/components/table/DataTable';
 import { useTranslation } from 'react-i18next';
@@ -74,7 +78,7 @@ function AvailabilityPartsSection() {
         }, 300)
 
         return () => clearTimeout(delayDebounceFn)
-    }, [searchTerm])
+    }, [searchTerm]);
 
 
     return (
@@ -90,18 +94,25 @@ function AvailabilityPartsSection() {
                     <Typography>{t("searchTab.availability")}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
-                    <div className="row d-flex justify-content-center">
-                        <TextField
-                            onChange={(e) => {
-                                dispatch(setFilter({ filter: e.target.value }));
-                                setSearchTerm(e.target.value);
-                            }}
-                            value={filter}
-                            name="partNumber"
-                            type="text"
-                            label={t("searchTab.searchByPartNO")}
-                        />
-                    </div>
+                    <OutlinedInput
+                        style={{ margin: 10 }}
+                        value={filter}
+                        onChange={(e) => {
+                            dispatch(setFilter({ filter: e.target.value }));
+                            setSearchTerm(e.target.value);
+                        }}
+                        placeholder={t("searchTab.searchByPartNO")}
+                        startAdornment={
+                            <InputAdornment position="start">
+                                <Box
+                                    component={Icon}
+                                    icon={searchFill}
+                                    sx={{ color: 'text.disabled' }}
+                                />
+                            </InputAdornment>
+                        }
+                        className={classes.search}
+                    />
                     <Box sx={{ mb: 3 }} />
 
                     <Datatable

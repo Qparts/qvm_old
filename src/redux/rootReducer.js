@@ -12,6 +12,8 @@ import specialOfferReducer from './slices/specialOffer';
 import replacementsReducer from './slices/replacements';
 import stockUploadReducer from './slices/stockUpload';
 import specialOfferUploadReducer from './slices/specialOfferUpload';
+import branchesReducer from './slices/branches';
+
 
 // ----------------------------------------------------------------------
 
@@ -41,8 +43,8 @@ const rootReducer = combineReducers({
   specialOffer: specialOfferReducer,
   replacements: replacementsReducer,
   stockUpload: stockUploadReducer,
-  specialOfferUpload: specialOfferUploadReducer
-
+  specialOfferUpload: specialOfferUploadReducer,
+  branches: branchesReducer
 });
 
 export { rootPersistConfig, rootReducer };

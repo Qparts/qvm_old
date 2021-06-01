@@ -1,7 +1,7 @@
 import Page from 'src/components/Page';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import {
     Box,
     Container,
@@ -13,6 +13,7 @@ import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
+import { cleanup } from 'src/redux/slices/catalog';
 // import { Roller } from "react-spinners-css";
 
 // ----------------------------------------------------------------------
@@ -37,9 +38,15 @@ const useStyles = makeStyles((theme) => ({
 
 function CatalogView() {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
 
+    useEffect(() => {
+        return () => {
+            dispatch(cleanup())
+        }
+    }, []);
 
     return (
         <Page

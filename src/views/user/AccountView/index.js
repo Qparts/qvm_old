@@ -24,6 +24,10 @@ import {
 } from 'src/redux/slices/user';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Tab, Box, Tabs } from '@material-ui/core';
+import StoreMallDirectorySharpIcon from '@material-ui/icons/StoreMallDirectorySharp';
+import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
+import BrancheItemsSection from './Branch/BrancheItemsSection';
+import BrancheView from './Branch';
 
 // ----------------------------------------------------------------------
 
@@ -38,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AccountView() {
   const classes = useStyles();
-  const [currentTab, setCurrentTab] = useState('general');
+  const [currentTab, setCurrentTab] = useState('branches');
   const dispatch = useDispatch();
   const {
     cards,
@@ -70,32 +74,37 @@ function AccountView() {
 
   const ACCOUNT_TABS = [
     {
-      value: 'general',
+      value: 'branches',
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
-      component: <General />
+      component: <BrancheView />
     },
-    {
-      value: 'billing',
-      icon: <Icon icon={roundReceipt} width={20} height={20} />,
-      component: (
-        <Billing cards={cards} addressBook={addressBook} invoices={invoices} />
-      )
-    },
-    {
-      value: 'notifications',
-      icon: <Icon icon={bellFill} width={20} height={20} />,
-      component: <Notifications notifications={notifications} />
-    },
-    {
-      value: 'social_links',
-      icon: <Icon icon={shareFill} width={20} height={20} />,
-      component: <SocialLinks myProfile={myProfile} />
-    },
-    {
-      value: 'change_password',
-      icon: <Icon icon={roundVpnKey} width={20} height={20} />,
-      component: <ChangePassword />
-    }
+    // {
+    //   value: 'general',
+    //   icon: <Icon icon={roundAccountBox} width={20} height={20} />,
+    //   component: <General />
+    // },
+    // {
+    //   value: 'billing',
+    //   icon: <Icon icon={roundReceipt} width={20} height={20} />,
+    //   component: (
+    //     <Billing cards={cards} addressBook={addressBook} invoices={invoices} />
+    //   )
+    // },
+    // {
+    //   value: 'notifications',
+    //   icon: <Icon icon={bellFill} width={20} height={20} />,
+    //   component: <Notifications notifications={notifications} />
+    // },
+    // {
+    //   value: 'social_links',
+    //   icon: <Icon icon={shareFill} width={20} height={20} />,
+    //   component: <SocialLinks myProfile={myProfile} />
+    // },
+    // {
+    //   value: 'change_password',
+    //   icon: <Icon icon={roundVpnKey} width={20} height={20} />,
+    //   component: <ChangePassword />
+    // }
   ];
 
   const handleChangeTab = (event, newValue) => {
@@ -108,7 +117,7 @@ function AccountView() {
       className={classes.root}
     >
       <Container>
-        <HeaderDashboard
+        {/* <HeaderDashboard
           heading="Account"
           links={[
             { name: 'Dashboard', href: PATH_APP.root },
@@ -116,7 +125,7 @@ function AccountView() {
             { name: 'User', href: PATH_APP.management.user.root },
             { name: 'Account Settings' }
           ]}
-        />
+        /> */}
 
         <Tabs
           value={currentTab}

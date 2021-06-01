@@ -6,12 +6,20 @@ const subURL = links.subscriber;
 
 
 
-const productSearch = ({ query, offset, max, filter , locationFilters }) => {
-    return http.post(productUrl.productSearch, { query, offset, max, filter , locationFilters });
+const productSearch = ({ query, offset, max, filter, locationFilters }) => {
+    return http.post(productUrl.productSearch, { query, offset, max, filter, locationFilters });
 };
 
 const productInfoSearch = ({ query, filter }) => {
     return http.post(productUrl.productInfoSearch, { query, filter });
+};
+
+const getPartReplacements = (query) => {
+    return http.post(productUrl.getProductReplacement, { query });
+};
+
+const getSpecialOffersLive = () => {
+    return http.get(productUrl.getSpecialOffersLive);
 };
 
 const getCompanies = ({ companyId }) => {
@@ -19,8 +27,14 @@ const getCompanies = ({ companyId }) => {
 };
 
 
+
+
+
+
 export default {
     productSearch,
     productInfoSearch,
-    getCompanies
+    getCompanies,
+    getPartReplacements,
+    getSpecialOffersLive
 };
