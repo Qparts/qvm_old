@@ -6,7 +6,8 @@ import { useTranslation } from 'react-i18next';
 import Datatable from 'src/components/table/DataTable';
 import 'react-slideshow-image/dist/styles.css'
 import { loadBranches } from 'src/redux/slices/branches';
-
+import PersonAddIcon from '@material-ui/icons/PersonAdd';
+import Button from "src/components/button/CustomButton";
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +34,26 @@ function BrancheItemsSection() {
         dispatch(loadBranches(countries));
     }, [])
 
+    const noChildComponent = () => {
+        return (
+            <div className="text-center py-4">
+                <PersonAddIcon fontSize="large" color="disabled" />
+                <h6 className="pt-2">
+                    you didn't add users to this branch yet
+                </h6>
+
+
+                <Button
+                    className="round"
+                    color="primary"
+                    className="mx-2"
+                    round
+                >
+                    Add User
+                </Button>
+            </div>
+        )
+    }
 
     return (
 
@@ -61,8 +82,26 @@ function BrancheItemsSection() {
 
                 ]}
 
-                hasChild={false}
+                childData="users"
+                childHeader={[
+                    {
+                        name: t("Name"),
+                        attr: 'name',
+                    },
+                    {
+                        name: t("Phone"),
+                        attr: 'mobile',
+                    },
+                    {
+                        name: t("Email"),
+                        attr: 'email',
+
+                    }]}
+                hasChild={true}
                 datatable={branches}
+                showChildNumbers={true}
+                noChildComponent = {noChildComponent}
+                childTitle="Users"
                 page={page}
                 isLazy={false}
             />
