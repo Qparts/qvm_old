@@ -124,6 +124,26 @@ const slice = createSlice({
         },
 
 
+        cleanup(state) {
+            state.isLoading = false;
+            state.error = '';
+            state.catalogs = [];
+            state.models = [];
+            state.filters = [];
+            state.selectedCatalog = null;
+            state.selectedModel = null;
+            state.selectedCar = null;
+            state.cars = [];
+            state.groups = [];
+            state.groupsStack = [];
+            state.part = null;
+            state.fromList = false;
+            state.showCarInfo = false;
+            state.filterKeysMap = new Map();
+            state.partCoordinates = [];
+            state.backToCarInfo = true;
+        }
+
 
 
     }
@@ -137,6 +157,7 @@ export default slice.reducer;
 // Actions
 export const {
     disappearBreadcrumbs,
+    cleanup
 } = slice.actions;
 
 export function getCatalogs() {

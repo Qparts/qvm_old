@@ -39,18 +39,76 @@ const navConfig = [
       }
     ]
   },
+  {
+    items: [
+      {
+        title: 'partSearch',
+        icon: ICONS.user,
+        href: PATH_APP.general.partSearch,
+      },
 
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'replacements',
+        icon: ICONS.user,
+        href: PATH_APP.general.replacements,
+      },
 
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'stockUpload',
+        icon: ICONS.user,
+        href: PATH_APP.general.stockUpload,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'specialOfferUpload',
+        icon: ICONS.user,
+        href: PATH_APP.general.specialOfferUpload,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'specialOffer',
+        icon: ICONS.user,
+        href: PATH_APP.general.specialOffer,
+      },
+
+    ]
+  },
   {
     items: [
       {
         title: 'catalog',
         icon: ICONS.user,
-        href:  PATH_APP.general.catalog,
+        href: PATH_APP.general.catalog,
       },
 
     ]
-  }
+  },
+  {
+    items: [
+      {
+        title: 'quotationsReport',
+        icon: ICONS.user,
+        href: PATH_APP.general.quotationsReport,
+      },
+
+    ]
+  },
 ];
 
 export default navConfig;

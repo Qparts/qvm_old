@@ -5,16 +5,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     Box,
     Container,
-    Typography,
-    Divider
+    Typography
 } from '@material-ui/core';
-import CatalogSearch from './CatalogSearch';
-import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import { cleanup } from 'src/redux/slices/catalog';
-// import { Roller } from "react-spinners-css";
+import PartReplacementsSearchSection from './PartReplacementsSearchSection';
+import ReplacementItemSection from './ReplacementItemSection';
+import { cleanup } from 'src/redux/slices/replacements';
+
 
 // ----------------------------------------------------------------------
 
@@ -36,11 +35,11 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function CatalogView() {
+function ReplacementsView() {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const { partReplacements = [], isLoading, error } = useSelector((state) => state.replacements);
 
     useEffect(() => {
         return () => {
@@ -50,7 +49,7 @@ function CatalogView() {
 
     return (
         <Page
-            title={t("catalogTab.title")}
+            title={t("replacementsTab.title")}
             className={classes.root}
         >
 
@@ -69,12 +68,43 @@ function CatalogView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("catalogTab.title")}</Typography>
-                        <Divider />
+                        <Typography variant="h4">{t("replacementsTab.title")}</Typography>
+                        <hr />
                     </Box>
-                    {showCarInfo == true ?
-                        <CarDetails /> :
-                        <CatalogSearch />
+
+                    <PartReplacementsSearchSection />
+
+                    <Box sx={{ mb: 6 }} />
+
+                    <div className="row">
+                        {
+                            partReplacements.map((replacementItem, index) => {
+                                return (
+                                    <div className="col-md-6" key={index}>
+                                        <ReplacementItemSection replacementItem={replacementItem} />
+                                        <Box sx={{ mb: 6 }} />
+                                    </div>
+
+                                )
+                            })
+                        }
+                    </div>
+
+
+                    {
+                        error != null && error == 'Search limit exceeded!' &&
+
+                        <div className="row d-flex justify-content-center">
+
+
+
+                            <div className="col-md-6">
+
+                                <Typography variant="h3" gutterBottom>
+                                    {error}
+                                </Typography>
+                            </div>
+                        </div>
                     }
 
                 </Container>
@@ -84,4 +114,4 @@ function CatalogView() {
     );
 }
 
-export default CatalogView;
+export default ReplacementsView;

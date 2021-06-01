@@ -5,13 +5,20 @@
   "contactUs": "Contact Us",
   "login": "Login",
   "registeration": "Sign Up",
+  "partSearch": "Search Parts",
+  "quotationsReport": "Quotations Report",
+  "specialOffer": "Special Offers",
+  "replacements": "Replacements",
+  "specialOfferUpload": "Special Offer Upload",
+  "stockUpload": "Stock Upload",
   "Subscriber already registered": "Subscriber already registered",
   "common": {
     "enterDetails": "Enter your details below",
     "email": "Email Address",
     "welcomeBack": "Hi, Welcome Back",
     "back": "Back",
-    "search" : "Search"
+    "search": "Search",
+    "sar": "SAR"
   },
   "signin": {
     "title": "Sign into QVM Vendor Market Place",
@@ -111,11 +118,11 @@
   },
   "catalogTab": {
     "title": "Parts Catalog",
-    "catalog" : "Catalog",
-    "carDetails" : "Car Details",
-    "catalogDetails" : "Catalog Details",
-    "catalogSearch" : "Catalog Search",
-    "browCatalog" : "Browse Catalog",
+    "catalog": "Catalog",
+    "carDetails": "Car Details",
+    "catalogDetails": "Catalog Details",
+    "catalogSearch": "Catalog Search",
+    "browCatalog": "Browse Catalog",
     "backToCatalog": "Back To Part Catalog",
     "vinTitle": "Find Catalog by VIN number",
     "listTitle": "Find Catalog from List",
@@ -152,5 +159,87 @@
     "searchButton": "search by catalog",
     "showResults": "show results",
     "description": "You can find the parts you are searching for from the car catalog, start now"
+  },
+  "searchTab": {
+    "title": "Search Parts",
+    "search": "Search",
+    "result": "search result for",
+    "part": "part",
+    "partNo": "Part Number",
+    "purchase": "Purchase",
+    "category": "Category",
+    "balance": "Balance",
+    "code": "Code",
+    "account": "Account",
+    "availability": "Availability",
+    "averagePrice": "Average market price",
+    "productInfo": "Product information",
+    "city": "City",
+    "branch": "Branch",
+    "contacts": "Contacts",
+    "isAvailable": "Available",
+    "name": "Name",
+    "phone": "Mobile",
+    "email": "Email",
+    "brand": "Brand",
+    "companyName": "Company Name",
+    "price": "Price",
+    "availabilityTitle": "Availability details",
+    "descripition": "Description",
+    "NoContact": "no contacts found",
+    "offer": "offer",
+    "startSearchNow": "Start Search Now",
+    "searchEmptyMessage": "In the largest assembly of spare parts dealers in the Middle East, get spare parts easier ",
+    "details": "Details",
+    "productDetails": "Product Details",
+    "noOptions": "No Options",
+    "selectLocation": "Filter results by location",
+    "searchByPartNO": "Search by part number"
+  },
+  "QuotationsReportTab": {
+    "title": "Quotations Report"
+  },
+  "specialOfferTab": {
+    "title": "Special Offers",
+    "offerDueDate": "Offer End Date",
+    "partsNo": "Parts Number",
+    "startIn": "Start in",
+    "expiresIn": "Expires in"
+  },
+  "replacementsTab": {
+    "replacements": "Replacements",
+    "title": "Replacement Parts Search",
+    "brand": "Brand",
+    "partNumber": "Part Number",
+    "description": "Description",
+    "applicableParts": "Applicable OEM Parts"
+  },
+  "specialOfferUploadTab": {
+    "title": "Special Offer Upload"
+  },
+  "stockUploadTab": {
+    "title": "Stock Upload"
+  },
+  "offerDetails": {
+    "offerNo": "Offer Number",
+    "partsNo": "Parts Number",
+    "category": "Category",
+    "quantity": "Quantity",
+    "price": "Price",
+    "search": "Search",
+    "noData": "No Data Found!!",
+    "partNo": "Part Number",
+    "brand": "Brand"
+  },
+  "setting": {
+    "name" : "Name" ,
+    "country" : "Country",
+    "region" : "Region",
+    "city" : "City",
+    "addUser": "Add User",
+    "addBranch": "Add Branch",
+    "insertUserError": "Email or mobile already exist",
+    "emailMode": "Registration verification code is sent to the new user by email, enter the code they received below",
+    "mobilMode": "Registration verification code is sent to the new user mobile number, enter the code that received below"
   }
 }

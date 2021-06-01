@@ -5,16 +5,18 @@ import { useSelector, useDispatch } from 'react-redux';
 import {
     Box,
     Container,
-    Typography,
-    Divider
+    Divider,
+    Typography
 } from '@material-ui/core';
-import CatalogSearch from './CatalogSearch';
-import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import { cleanup } from 'src/redux/slices/catalog';
-// import { Roller } from "react-spinners-css";
+import AvailabilityPartsSection from './AvailabilityPartsSection';
+import PartSearchSection from './PartSearchSection';
+import ProductInfoSection from './ProductInfoSection';
+import LocationFilterSection from './LocationFilterSection';
+import { cleanup } from 'src/redux/slices/partSearch';
+
 
 // ----------------------------------------------------------------------
 
@@ -36,21 +38,21 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function CatalogView() {
+function PartSearchView() {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
+    const dispatch = useDispatch();
+    const { isLoading } = useSelector((state) => state.PartSearch);
 
     useEffect(() => {
-        return () => {
+        return ()=>{
             dispatch(cleanup())
         }
-    }, []);
+     }, []);
 
     return (
         <Page
-            title={t("catalogTab.title")}
+            title={t("searchTab.title")}
             className={classes.root}
         >
 
@@ -68,14 +70,23 @@ function CatalogView() {
                 }
             >
                 <Container >
+
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("catalogTab.title")}</Typography>
+                        <Typography variant="h4">{t("searchTab.title")}</Typography>
                         <Divider />
                     </Box>
-                    {showCarInfo == true ?
-                        <CarDetails /> :
-                        <CatalogSearch />
-                    }
+
+                    <PartSearchSection />
+                    <Box sx={{ mb: 6 }} />
+
+                    <LocationFilterSection />
+                    <Box sx={{ mb: 6 }} />
+
+                    <AvailabilityPartsSection />
+
+                    <Box sx={{ mb: 6 }} />
+
+                    <ProductInfoSection />
 
                 </Container>
             </LoadingOverlay>
@@ -84,4 +95,4 @@ function CatalogView() {
     );
 }
 
-export default CatalogView;
+export default PartSearchView;

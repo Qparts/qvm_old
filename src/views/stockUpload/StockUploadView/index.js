@@ -1,20 +1,15 @@
 import Page from 'src/components/Page';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
     Box,
     Container,
-    Typography,
-    Divider
+    Typography
 } from '@material-ui/core';
-import CatalogSearch from './CatalogSearch';
-import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import { cleanup } from 'src/redux/slices/catalog';
-// import { Roller } from "react-spinners-css";
 
 // ----------------------------------------------------------------------
 
@@ -36,21 +31,15 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function CatalogView() {
+function StockUploadView() {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
+    const { isLoading } = useSelector((state) => state.stockUpload);
     const { t } = useTranslation();
 
-    useEffect(() => {
-        return () => {
-            dispatch(cleanup())
-        }
-    }, []);
 
     return (
         <Page
-            title={t("catalogTab.title")}
+            title={t("stockUploadTab.title")}
             className={classes.root}
         >
 
@@ -69,13 +58,10 @@ function CatalogView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("catalogTab.title")}</Typography>
-                        <Divider />
+                        <Typography variant="h4">{t("stockUploadTab.title")}</Typography>
+                        <hr />
                     </Box>
-                    {showCarInfo == true ?
-                        <CarDetails /> :
-                        <CatalogSearch />
-                    }
+
 
                 </Container>
             </LoadingOverlay>
@@ -84,4 +70,4 @@ function CatalogView() {
     );
 }
 
-export default CatalogView;
+export default StockUploadView;

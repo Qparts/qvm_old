@@ -6,6 +6,7 @@ const LOCATION_SERVICE = `${BASE_URL}/location`;
 
 const UPLOAD_SERVICE = `${BASE_URL}/upload`;
 const CATALOG_SERVICE = `${BASE_URL}/catalog`;
+const PRODUCT_SERVICE = `${BASE_URL}/product`;
 
 const subscriber = {
   postLogin: `${SUBSCRIBER_SERVICE}/login`,
@@ -21,6 +22,7 @@ const subscriber = {
   putResetPassword: `${SUBSCRIBER_SERVICE}/reset-password`,
   getResetPassword: (token) => `${SUBSCRIBER_SERVICE}/reset-password/${token}`,
   putInvoiceTemplate: `${SUBSCRIBER_SERVICE}/invoice-template`,
+  getCompanies: `${SUBSCRIBER_SERVICE}/companies/`,
 };
 
 const upload = {
@@ -50,6 +52,7 @@ const customer = {
 
 const location = {
   getCountries: `${LOCATION_SERVICE}/countries`,
+  postSearchLocation: `${LOCATION_SERVICE}/search-locations`
 };
 
 const stock = {
@@ -96,12 +99,22 @@ const stock = {
 const catalog = {
   getCatalogs: `${CATALOG_SERVICE}/catalogs`,
   getModels: (catalogid) => `${CATALOG_SERVICE}/models?catalogid=${catalogid}`,
-  getCars: (catalogId, modelId, params) => `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${params != null ?'params='+params : ''} `,
+  getCars: (catalogId, modelId, params) => `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''} `,
   getCarByVIN: (vin) => `${CATALOG_SERVICE}/cars/vin?query=${vin}`,
-  getFilters: (catalogId, modelId, params) => `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${params != null ?'params='+params : ''} `,
-  getGroups: (catalogId, carId, groupId, criterias) => `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${groupId?'groupid='+groupId : ''}&${criterias != null ?'criterias='+criterias : ''} `,
-  getPart: (catalogId, carId, groupId, criterias) => `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${groupId?'groupid='+groupId : ''}&${criterias != null ?'criterias='+criterias : ''} `,
+  getFilters: (catalogId, modelId, params) => `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''} `,
+  getGroups: (catalogId, carId, groupId, criterias) => `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''}&${criterias != null ? 'criterias=' + criterias : ''} `,
+  getPart: (catalogId, carId, groupId, criterias) => `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''}&${criterias != null ? 'criterias=' + criterias : ''} `,
+};
+
+const product = {
+  productSearch: `${PRODUCT_SERVICE}/search-company-product`,
+  productInfoSearch: `${PRODUCT_SERVICE}/search-product`,
+  getProductReplacement: `${PRODUCT_SERVICE}/search-replacement-product`,
+  getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
+  specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`
 }
+
+
 export default {
   subscriber,
   customer,
@@ -109,5 +122,6 @@ export default {
   stock,
   setting,
   upload,
-  catalog
+  catalog,
+  product
 };

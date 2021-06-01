@@ -33,7 +33,14 @@ export const PATH_APP = {
   general: {
     root: path(ROOTS.app, '/dashboard'),
     dashboard: path(ROOTS.app, '/dashboard'),
+    partSearch: path(ROOTS.app, '/part-search'),
+    replacements: path(ROOTS.app, '/replacements'),
+    stockUpload: path(ROOTS.app, '/stock-upload'),
+    specialOfferUpload: path(ROOTS.app, '/special-offer-upload'),
     catalog: path(ROOTS.app, '/catalog'),
+    specialOffer: path(ROOTS.app, '/special-offer'),
+    specialOfferDetails: path(ROOTS.app, '/special-offer/:id'),
+    quotationsReport: path(ROOTS.app, '/quotations-report'),
   },
 
   management: {

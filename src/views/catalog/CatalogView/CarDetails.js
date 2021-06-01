@@ -63,11 +63,11 @@ function CarDetails() {
 
             <Grid item xs={12} md={12} lg={12}>
                 {groups.length == 0 ?
-                    <>
+                    <div style={{ width: '98%' }}>
                         {fromList && <CarFilter />}
                         <Box sx={{ mt: 3 }} />
                         <CarItems />
-                    </> :
+                    </div> :
                     <>
                         {part == null ?
                             <GroupItems />

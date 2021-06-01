@@ -31,48 +31,61 @@ function CarItems() {
 
         <Grid container spacing={3}>
 
-            <Grid item xs={11} md={11} lg={11}>
-                <Card >
+            <Grid item xs={12} md={12} lg={12}>
+                <Card style={{ overflowX: 'scroll' }}>
                     <CardHeader title={t("catalogTab.carDetails")} />
                     <CardContent className={classes.cardContent}>
-                        {cars.map((car) => (
-                            <div key={car.id} className="table-responsive-lg">
-                                {fromList ? (
-                                    <>
-                                        <h4 style={{ fontSize: "14px" }}>{car.name}</h4>
-                                        <h4 style={{ fontSize: "14px" }}>{car.modelName}</h4>
-                                        <h4 style={{ fontSize: "14px" }}>{car.description}</h4>
-                                    </>
-                                ) : (
-                                    <>
-                                        <h4 style={{ fontSize: "14px" }}>{car.brand}</h4>
-                                        <h4 style={{ fontSize: "14px" }}>{car.catalogId}</h4>
-                                        <h4 style={{ fontSize: "14px" }}>{car.title}</h4>
-                                    </>
-                                )}
+                        <div>
+                            <table className="table table-bordered mt-3 catalog-result">
+                                <thead>
+                                    <tr>
+                                        <th>{t("Brand")}</th>
+                                        <th>{t("Description")}</th>
 
-                                {car.parameters.map((param) => (
-                                    <h4 key={param.key} style={{ fontSize: "14px" }}>
-                                        {param.name} : {param.value}
-                                    </h4>
-                                ))}
+                                        {cars[0].parameters.map((param) => (
+                                            <th key={param.key}> {t("catalogTab." + param.key)}</th>
+                                        ))}
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
 
-                                <Button
-                                    variant="contained"
-                                    color="primary"
-                                    simple
-                                    component="span"
-                                    onClick={() => {
-                                        const catalogId = fromList ? selectedCatalog.id : car.catalogId;
-                                        const carId = fromList ? car.id : car.carId;
-                                        dispatch(getGroups(catalogId, carId, null, null, car));
-                                    }}
-                                >
-                                    {t("catalogTab.browCatalog")}
-                                </Button>
-                                <hr />
-                            </div>
-                        ))}
+                                    {cars.map((car) => (
+
+                                        <tr onClick={() => {
+                                            const catalogId = fromList ? selectedCatalog.id : car.catalogId;
+                                            const carId = fromList ? car.id : car.carId;
+                                            dispatch(getGroups(catalogId, carId, null, null, car));
+                                        }}>
+                                            <td>{fromList ? car.modelName : car.brand}</td>
+                                            <td>{fromList ? car.description : car.title}</td>
+                                            {car.parameters.map((param) => (
+                                                <td key={param.key}>{param.value}</td>
+                                            ))}
+                                            <td>
+                                                <div className="position-relative catalog-link">
+                                                    <Button
+                                                        variant="contained"
+                                                        color="primary"
+                                                        simple
+                                                        component="span"
+                                                        onClick={() => {
+                                                            const catalogId = fromList ? selectedCatalog.id : car.catalogId;
+                                                            const carId = fromList ? car.id : car.carId;
+                                                            dispatch(getGroups(catalogId, carId, null, null, car));
+                                                        }}
+                                                    >
+                                                        {t("catalogTab.browCatalog")}
+                                                    </Button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                    ))}
+
+                                </tbody>
+                            </table>
+                        </div>
 
                     </CardContent >
                 </Card>

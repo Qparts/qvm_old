@@ -43,6 +43,11 @@ function updateInvoiceTemplate(data) {
 }
 
 
+const getCompanies = ({ companyId }) => {
+  return http.get(authUrl.getCompanies + companyId);
+};
+
+
 
 
 
@@ -76,4 +81,5 @@ export default {
   resetPassword,
   validatePasswordResetToken,
   updateInvoiceTemplate,
+  getCompanies
 };

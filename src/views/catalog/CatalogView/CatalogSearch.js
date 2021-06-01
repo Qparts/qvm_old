@@ -1,5 +1,4 @@
 import SearchBox from './../../../components/SearchBox';
-// import SearchBox from 'src/components/SearchBox';
 import Button from "./../../../components/button/CustomButton";
 
 import React, { useEffect } from 'react';
