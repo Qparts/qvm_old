@@ -137,6 +137,7 @@ function SpecialOfferDetails({ specialOfferId }) {
                         isLazy={true}
                         size={searchSize}
                         rowsPerPage={constants.MAX}
+                        hasPagination={true}
 
                     />
 

@@ -152,6 +152,7 @@ function AvailabilityPartsSection() {
                         maps={[companies]}
                         size={searchSize}
                         rowsPerPage={rowsPerPage}
+                        hasPagination={true}
 
                     />
 
