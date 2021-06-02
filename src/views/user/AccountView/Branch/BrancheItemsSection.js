@@ -115,7 +115,7 @@ function BrancheItemsSection() {
                 datatable={branches}
                 showChildNumbers={true}
                 noChildComponent={noChildComponent}
-                childTitle={t("setting.users")}
+                childTitle={t("Users")}
                 page={page}
                 isLazy={false}
             />

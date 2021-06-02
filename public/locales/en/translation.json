@@ -244,7 +244,7 @@
   "Email or mobile already exist": "Email or mobile already exist",
   "emailMode": "Registration verification code is sent to the new user by email, enter the code they received below",
   "mobilMode": "Registration verification code is sent to the new user mobile number, enter the code that received below",
-  "users": "Users",
+  "Users": "Users",
   "Add New Branch": "Add New Branch",
   "Add New User": "Add New User",
   "Create" : "Create",
