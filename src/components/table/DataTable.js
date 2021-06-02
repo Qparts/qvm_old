@@ -12,8 +12,13 @@ import Paper from '@material-ui/core/Paper';
 import Button from "../button/CustomButton";
 import constants from 'src/utils/constants';
 import TablePagination from '@material-ui/core/TablePagination';
-import { tableCellClasses } from '@material-ui/core/TableCell';
-import { experimentalStyled as styled } from '@material-ui/core/styles';
+import helper from 'src/utils/helper';
+import Scrollbars from '../Scrollbars';
+import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
+import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import Collapse from '@material-ui/core/Collapse';
+import IconButton from '@material-ui/core/IconButton';
+
 
 
 // ----------------------------------------------------------------------
@@ -23,34 +28,113 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const StyledTableCell = styled(TableCell)(({ theme }) => ({
-    [`&.${tableCellClasses.head}`]: {
-        backgroundColor: theme.palette.common.black,
-        color: theme.palette.common.white,
-    },
-    [`&.${tableCellClasses.body}`]: {
-        fontSize: 14,
-    },
-}));
 
-const StyledTableRow = styled(TableRow)(({ theme }) => ({
-    '&:nth-of-type(odd)': {
-        backgroundColor: theme.palette.action.hover,
-    },
-    // hide last border
-    '&:last-child td, &:last-child th': {
-        border: 0,
-    },
-}));
+const getValue = (object, path) => {
+    return path
+        .replace(/\[/g, '.')
+        .replace(/\]/g, '')
+        .split('.')
+        .reduce((o, k) => (o || {})[k], object);
+};
 
+const getCellValue = (item, headerItem, maps) => {
+    let value = maps != null && maps.length && headerItem.isMapped ?
+        maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
+            maps[headerItem.mapIndex].get(getValue(item, headerItem.attr))[headerItem.mappedAttribute]
+            : getValue(item, headerItem.attr)
+        : headerItem.isBooleanOp ? getValue(item, headerItem.attr) ?
+            headerItem.Result.positiveValue :
+            headerItem.Result.negativeValue
+            :
+            (getValue(item, headerItem.attr));
+
+    if (headerItem.type == 'number') {
+        value = helper.ccyFormat(value);
+    }
+
+    if (headerItem.label)
+        value = value + ' ' + headerItem.label;
+    return value;
+}
+
+
+// ----------------------------------------------------------------------
+
+
+
+function Row({ header, title, item, maps, childData = [], childHeader, showChildNumbers, noChildComponent }) {
+    const [open, setOpen] = React.useState(false);
+
+    return (
+        <React.Fragment>
+            <TableRow >
+                {header.map((headerItem, j) => {
+
+                    return (
+                        <TableCell key={j}>
+
+                            {
+                                getCellValue(item, headerItem, maps)
+                            }
+
+                        </TableCell>
+                    );
+                })}
+
+                <TableCell>
+                    <IconButton
+                        className="add-btn px-2"
+                        aria-label="expand row"
+                        size="small"
+                        onClick={() => {
+                            setOpen(!open);
+                        }}
+                    >
+                        <span className="t-cell">
+                            {title} {showChildNumbers ? "(" + childData.length + ")" : ""}
+                        </span> {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+
+                    </IconButton>
+
+                </TableCell>
+            </TableRow>
+            <TableRow>
+                <TableCell className="p-0 t-collapse" colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box margin={1}>
+                            {childData.length == 0 ?
+                                noChildComponent
+                                :
+                                <Datatable
+                                    header={childHeader}
+                                    hasChild={false}
+                                    datatable={childData}
+                                    page={0}
+                                    isLazy={false}
+                                />
+
+                            }
+
+                        </Box>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
+        </React.Fragment>
+    );
+}
 // ----------------------------------------------------------------------
 
 function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.MAX,
     actions = [], error, onSelectedPage, onRowSelect,
-    maps, size = datatable.length, isLazy = true, hasPagination = true, onRowsPerPageChange }) {
+    maps, size = datatable.length, isLazy = true, hasPagination = false,
+    onRowsPerPageChange, hasChild = false, childData, childHeader,
+    showChildNumbers, childTitle, noChildComponent }) {
 
     const classes = useStyles();
     const dispatch = useDispatch();
+
+    const [open, setOpen] = React.useState(false);
+
 
     const [state, setState] = useState({
         data: isLazy == true ? datatable : datatable.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
@@ -80,25 +164,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
 
     }, [rowsPerPage])
 
-    const getValue = (object, path) => {
-        return path
-            .replace(/\[/g, '.')
-            .replace(/\]/g, '')
-            .split('.')
-            .reduce((o, k) => (o || {})[k], object);
-    };
 
-    const getCellValue = (item, headerItem) => {
-        return maps != null && maps.length && headerItem.isMapped ?
-            maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
-                maps[headerItem.mapIndex].get(getValue(item, headerItem.attr))[headerItem.mappedAttribute]
-                : getValue(item, headerItem.attr)
-            : headerItem.isBooleanOp ? getValue(item, headerItem.attr) ?
-                headerItem.Result.positiveValue :
-                headerItem.Result.negativeValue
-                :
-                (getValue(item, headerItem.attr))
-    }
 
     const changePagehandler = (event, newPage) => {
         if (onSelectedPage)
@@ -114,70 +180,82 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     return (
         <Box sx={{ width: '100%' }}>
             <Paper sx={{ width: '100%', mb: 2 }}>
-                <TableContainer component={Paper}>
-                    <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                        <TableHead>
-                            <StyledTableRow>
-                                {header.map((item, i) => {
-                                    return (
-                                        <StyledTableCell key={i}>{item.name}</StyledTableCell>
-                                    );
-                                })}
+                <Scrollbars>
+                    <TableContainer component={Paper}>
+                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead>
+                                <TableRow>
 
-                                {actions.map((actionItem, i) => {
-                                    return (
-                                        <StyledTableCell key={i}>
-                                            {actionItem.name}
-                                        </StyledTableCell>
-                                    );
-                                })}
-
-                            </StyledTableRow>
-                        </TableHead>
-                        <TableBody>
-                            {
-
-                                state.data
-                                    .map((item, i) => {
+                                    {header.map((item, i) => {
                                         return (
-                                            <StyledTableRow key={i}>
-                                                {header.map((headerItem, j) => {
-                                                    return (
-                                                        <StyledTableCell key={j}>
-
-                                                            {
-                                                                getCellValue(item, headerItem)
-                                                            }
-
-                                                        </StyledTableCell>
-                                                    );
-                                                })}
-
-                                                {actions.map((actionItem, index) => {
-
-                                                    return (
-                                                        <StyledTableCell key={index}>
-                                                            <Button
-                                                                variant="contained"
-                                                                color="primary"
-                                                                round
-                                                                onClick={() => actionItem.action(JSON.stringify(item))}
-                                                            >
-                                                                {actionItem.name}
-                                                            </Button>
-                                                        </StyledTableCell>
-
-                                                    );
-                                                })}
-
-                                            </StyledTableRow>
+                                            <TableCell key={i}>{item.name}</TableCell>
                                         );
+                                    })}
+
+                                    {actions.map((actionItem, i) => {
+                                        return (
+                                            <TableCell key={i}>
+                                                {actionItem.name}
+                                            </TableCell>
+                                        );
+                                    })}
+                                    {hasChild && <TableCell />}
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                {state.data
+                                    .map((item, i) => {
+                                        if (hasChild)
+                                            return (<Row
+                                                header={header}
+                                                childHeader={childHeader}
+                                                childData={item[childData]}
+                                                title={childTitle}
+                                                item={item}
+                                                maps={maps}
+                                                showChildNumbers={showChildNumbers}
+                                                noChildComponent={noChildComponent}
+                                            ></Row>)
+                                        else
+                                            return (
+                                                <TableRow key={i}>
+                                                    {header.map((headerItem, j) => {
+                                                        return (
+                                                            <TableCell key={j}>
+
+                                                                {
+                                                                    getCellValue(item, headerItem, maps)
+                                                                }
+
+                                                            </TableCell>
+                                                        );
+                                                    })}
+
+                                                    {actions.map((actionItem, index) => {
+                                                        return (
+                                                            <TableCell key={index}>
+                                                                <Button
+                                                                    variant="contained"
+                                                                    color="primary"
+                                                                    round
+                                                                    onClick={() => actionItem.action(JSON.stringify(item))}
+                                                                >
+                                                                    {actionItem.name}
+                                                                </Button>
+                                                            </TableCell>
+
+                                                        );
+                                                    })}
+
+                                                </TableRow>
+                                            );
                                     })
 
-                            }
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                                }
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
+                </Scrollbars>
 
                 {hasPagination && <TablePagination
                     rowsPerPageOptions={[]}
@@ -187,6 +265,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                     page={state.page}
                     onPageChange={changePagehandler}
                 />}
+
 
             </Paper>
         </Box>
