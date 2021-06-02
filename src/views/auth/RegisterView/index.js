@@ -135,9 +135,6 @@ function RegisterView() {
           cityId: "1",
         });
 
-
-
-
         if (isMountedRef.current) {
           setSubmitting(false);
         }

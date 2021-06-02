@@ -55,9 +55,9 @@ function CarDetails() {
                     <Link color="inherit"
                         onClick={() => dispatch(disappearBreadcrumbs())}
                     >
-                        {t("catalogTab.catalogSearch")}
+                        {t("Catalog Search")}
                     </Link>
-                    <Typography color="textPrimary">{t("catalogTab.catalogDetails")}</Typography>
+                    <Typography color="textPrimary">{t("Catalog Details")}</Typography>
                 </Breadcrumbs>
             }
 

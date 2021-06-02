@@ -1,0 +1,85 @@
+import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import 'react-slideshow-image/dist/styles.css'
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import {
+    Grid,
+} from '@material-ui/core';
+import { useSnackbar } from 'notistack';
+import { addUser } from 'src/redux/slices/branches';
+import { useFormik } from 'formik';
+import * as Yup from 'yup';
+import AddUserForm from './AddUserForm';
+import helper from 'src/utils/helper';
+// ----------------------------------------------------------------------
+
+const useStyles = makeStyles((theme) => ({
+    root: {}
+}));
+
+// ----------------------------------------------------------------------
+
+function AddUser(props) {
+    const classes = useStyles();
+    const dispatch = useDispatch();
+    const { t } = useTranslation();
+    const isMountedRef = useIsMountedRef();
+    const { enqueueSnackbar } = useSnackbar();
+    const [loaded, setLoaded] = useState(false);
+    const { countries } = useSelector(
+        (state) => state.authJwt
+    );
+
+
+    const userSchema = Yup.object().shape({
+        name: Yup.string().required(t("signup.error.require.name")),
+        phone: Yup.string().required(t("signup.error.require.phone")),
+        branch: Yup.string().required(t("branch is required")),
+        email: Yup.string()
+            .email(t("signup.error.invalid.email"))
+            .required(t("signup.error.require.email")),
+        password: Yup.string().required(t("signup.error.require.password"))
+    });
+
+    const formik = useFormik({
+        initialValues: {
+            name: '',
+            countryId: 1,
+            phone: '',
+            email: '',
+            password: '',
+            branch: props.selectedBranch ? props.selectedBranch.id : 0
+        },
+        validationSchema: userSchema,
+        onSubmit: async (values, { setErrors, setSubmitting }) => {
+            try {
+                dispatch(addUser(values.email, helper.reconstructPhone(values.countryId, values.phone, countries),
+                    values.countryId, values.password, values.name, values.branch))
+                if (isMountedRef.current) {
+                    setSubmitting(false);
+                }
+                setLoaded(true);
+            } catch (error) {
+                if (isMountedRef.current) {
+                    setErrors({ afterSubmit: error.code || error.message });
+                    setSubmitting(false);
+                }
+            }
+        }
+    });
+
+    return (
+
+        <Grid container >
+            <AddUserForm formik={formik} closePopup={props.setAddUserIsOpen}
+                selectedBranch={props.selectedBranch}
+                setSelectedBranch={props.setSelectedBranch}
+            />
+        </Grid>
+
+    );
+}
+
+export default AddUser;

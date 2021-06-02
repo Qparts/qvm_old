@@ -39,7 +39,7 @@ function QuotationsReportView() {
 
     return (
         <Page
-            title={t("QuotationsReportTab.title")}
+            title={t("Quotations Report")}
             className={classes.root}
         >
 
@@ -58,7 +58,7 @@ function QuotationsReportView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("QuotationsReportTab.title")}</Typography>
+                        <Typography variant="h4">{t("Quotations Report")}</Typography>
                         <hr />
                     </Box>
 

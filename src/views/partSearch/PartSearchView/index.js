@@ -52,7 +52,7 @@ function PartSearchView() {
 
     return (
         <Page
-            title={t("searchTab.title")}
+            title={t("Search Parts")}
             className={classes.root}
         >
 
@@ -72,7 +72,7 @@ function PartSearchView() {
                 <Container >
 
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("searchTab.title")}</Typography>
+                        <Typography variant="h4">{t("Search Parts")}</Typography>
                         <Divider />
                     </Box>
 

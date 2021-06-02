@@ -6,6 +6,7 @@ import locationService from "../../services/locationService";
 
 
 import { createSlice } from '@reduxjs/toolkit';
+import settingService from 'src/services/settingService';
 
 // ----------------------------------------------------------------------
 
@@ -13,6 +14,7 @@ const initialState = {
   isLoading: false,
   isAuthenticated: false,
   user: {},
+  loginObject: null,
   countries: [],
   error: '',
   validResetToken: false
@@ -32,6 +34,7 @@ const slice = createSlice({
       state.isLoading = false;
       state.isAuthenticated = action.payload.isAuthenticated;
       state.user = action.payload.user;
+      state.loginObject = action.payload.user;
       state.countries = action.payload.countries;
     },
 
@@ -39,6 +42,7 @@ const slice = createSlice({
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.user = action.payload.user;
+      state.loginObject = action.payload.user;
       state.error = ''
     },
     loginFail(state, action) {
@@ -97,6 +101,10 @@ const slice = createSlice({
       state.error = action.payload;
     },
 
+    updateLoginObject(state, action) {
+      state.loginObject = action.payload.loginObject;
+      localStorage.setItem("loginObject", JSON.stringify(action.payload.loginObject));
+    },
 
     // LOGOUT
     logoutSuccess(state) {
@@ -110,6 +118,14 @@ const slice = createSlice({
 export default slice.reducer;
 
 // ----------------------------------------------------------------------
+
+// Actions
+export const {
+  updateLoginObject,
+} = slice.actions;
+
+// ----------------------------------------------------------------------
+
 
 const isValidToken = (accessToken) => {
   if (!accessToken) {
@@ -235,6 +251,29 @@ export function resetPassword({ code, newPassword }) {
     try {
       await auth.resetPassword({ code, newPassword });
       dispatch(slice.actions.resetPasswordSuccess());
+    } catch (error) {
+      dispatch(slice.actions.resetPasswordFail(error.response.data));
+    }
+
+  };
+}
+
+
+// ----------------------------------------------------------------------
+
+export function refreshToken() {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const loginUser = JSON.parse(localStorage.getItem("loginObject"));
+      const refreshJwt = loginUser.refreshJwt;
+      const token = loginUser.jwt;
+      const { data: loginObject } = await settingService.refreshToken(
+        token,
+        refreshJwt
+      );
+      loginObject.refreshJwt = refreshJwt;
+      dispatch(slice.actions.updateLoginObject({ loginObject: loginObject }));
     } catch (error) {
       dispatch(slice.actions.resetPasswordFail(error.response.data));
     }

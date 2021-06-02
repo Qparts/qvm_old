@@ -103,7 +103,7 @@ function Row({ header, title, item, maps, childData = [], childHeader, showChild
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
                             {childData.length == 0 ?
-                                noChildComponent
+                                noChildComponent(item)
                                 :
                                 <Datatable
                                     header={childHeader}
@@ -215,6 +215,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                 maps={maps}
                                                 showChildNumbers={showChildNumbers}
                                                 noChildComponent={noChildComponent}
+                                                key={i}
                                             ></Row>)
                                         else
                                             return (

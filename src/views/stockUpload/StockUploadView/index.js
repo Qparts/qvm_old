@@ -58,7 +58,7 @@ function StockUploadView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("stockUploadTab.title")}</Typography>
+                        <Typography variant="h4">{t("Stock Upload")}</Typography>
                         <hr />
                     </Box>
 

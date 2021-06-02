@@ -1,19 +1,7 @@
-import General from './General';
-import Billing from './Billing';
 import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
-import SocialLinks from './SocialLinks';
-import { capitalCase } from 'change-case';
-import Notifications from './Notifications';
-import { PATH_APP } from 'src/routes/paths';
-import ChangePassword from './ChangePassword';
 import React, { useState, useEffect } from 'react';
-import bellFill from '@iconify-icons/eva/bell-fill';
-import shareFill from '@iconify-icons/eva/share-fill';
 import { useDispatch, useSelector } from 'react-redux';
-import roundVpnKey from '@iconify-icons/ic/round-vpn-key';
-import roundReceipt from '@iconify-icons/ic/round-receipt';
-import { HeaderDashboard } from 'src/layouts/Common';
 import roundAccountBox from '@iconify-icons/ic/round-account-box';
 import {
   getCards,
@@ -24,10 +12,8 @@ import {
 } from 'src/redux/slices/user';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Tab, Box, Tabs } from '@material-ui/core';
-import StoreMallDirectorySharpIcon from '@material-ui/icons/StoreMallDirectorySharp';
-import StoreMallDirectoryIcon from '@material-ui/icons/StoreMallDirectory';
-import BrancheItemsSection from './Branch/BrancheItemsSection';
 import BrancheView from './Branch';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -42,8 +28,10 @@ const useStyles = makeStyles((theme) => ({
 
 function AccountView() {
   const classes = useStyles();
-  const [currentTab, setCurrentTab] = useState('branches');
+  const [currentTab, setCurrentTab] = useState('Branches');
   const dispatch = useDispatch();
+  const { t } = useTranslation();
+
   const {
     cards,
     invoices,
@@ -74,7 +62,7 @@ function AccountView() {
 
   const ACCOUNT_TABS = [
     {
-      value: 'branches',
+      value: 'Branches',
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
       component: <BrancheView />
     },
@@ -139,7 +127,7 @@ function AccountView() {
             <Tab
               disableRipple
               key={tab.value}
-              label={capitalCase(tab.value)}
+              label={t(tab.value)}
               icon={tab.icon}
               value={tab.value}
             />

@@ -90,7 +90,7 @@ function SpecialOfferDetails({ specialOfferId }) {
                             dispatch(setFilter({ filter: e.target.value }));
                             setSearchTerm(e.target.value);
                         }}
-                        placeholder={t("searchTab.searchByPartNO")}
+                        placeholder={t("Search by part number")}
                         startAdornment={
                             <InputAdornment position="start">
                                 <Box
@@ -109,19 +109,19 @@ function SpecialOfferDetails({ specialOfferId }) {
                     <Datatable
                         header={[
                             {
-                                name: t("offerDetails.partNo"),
+                                name: t("Part Number"),
                                 attr: 'partNumber',
                             },
                             {
-                                name: t("offerDetails.brand"),
+                                name: t("Brand"),
                                 attr: 'brandName',
                             },
                             {
-                                name: t("offerDetails.quantity"),
+                                name: t("Quantity"),
                                 attr: 'stock.length',
                             },
                             {
-                                name: t("offerDetails.price"),
+                                name: t("Price"),
                                 attr: 'offers[0].offerPrice',
                                 type: 'number',
                                 label: t("common.sar")
