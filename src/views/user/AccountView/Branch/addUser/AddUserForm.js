@@ -184,7 +184,8 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
                 pending={isSubmitting}
                 onClick={() => {
                   dispatch(cleanup());
-                  setSelectedBranch(null);
+                  if (setSelectedBranch)
+                    setSelectedBranch(null);
                   closePopup(false)
                 }}
               >
