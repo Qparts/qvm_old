@@ -27,10 +27,7 @@ function HomeSections() {
   const { t } = useTranslation();
   return (
     <Box className={classes.root}>
-        Hello
-        <h2 className="sass">
-          SASS
-        </h2>
+    
     </Box>
   );
 }
