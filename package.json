@@ -13,10 +13,10 @@
     "@fullcalendar/react": "^4.4.2",
     "@fullcalendar/timegrid": "^4.4.2",
     "@fullcalendar/timeline": "^4.4.2",
-    "@material-ui/core": "^4.11.4",
+    "@material-ui/core": "5.0.0-alpha.26",
     "@material-ui/data-grid": "^4.0.0-alpha.29",
     "@material-ui/icons": "^5.0.0-alpha.26",
-    "@material-ui/lab": "^5.0.0-alpha.26",
+    "@material-ui/lab": "5.0.0-alpha.26",
     "@material-ui/utils": "^5.0.0-alpha.26",
     "@react-google-maps/api": "^1.13.0",
     "@react-pdf/renderer": "^1.6.12",
@@ -60,6 +60,7 @@
     "lodash": "^4.17.19",
     "mapbox-gl": "^2.1.1",
     "match-sorter": "^6.3.0",
+    "node-sass": "4.14.1",
     "notistack": "^1.0.4-alpha.0",
     "nprogress": "^0.2.0",
     "numeral": "^2.0.6",
@@ -126,7 +127,9 @@
     "build:testing": "env-cmd -f .env.testing react-scripts build",
     "build:prod": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext js,jsx src/",
+    "lint:fix": "eslint --fix --ext js,jsx src/"
   },
   "eslintConfig": {
     "extends": [
@@ -138,9 +141,11 @@
     "production": [
       ">0.2%",
       "not dead",
+      "ie 11",
       "not op_mini all"
     ],
     "development": [
+      "ie 11",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
