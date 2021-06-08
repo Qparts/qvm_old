@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, {  } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import { useTranslation } from 'react-i18next';
-import Datatable from 'src/components/table/DataTable';
 import 'react-slideshow-image/dist/styles.css'
-import helper from 'src/utils/helper';
 import BrancheItemsSection from './BrancheItemsSection';
 import BrancheActionsSection from './BrancheActionsSection';
-import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 
 
 

@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Container, Tab, Box, Tabs } from '@material-ui/core';
 import BrancheView from './Branch';
 import { useTranslation } from 'react-i18next';
+import SubscriptionView from './Subscription';
 
 // ----------------------------------------------------------------------
 
@@ -28,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AccountView() {
   const classes = useStyles();
-  const [currentTab, setCurrentTab] = useState('Branches');
+  const [currentTab, setCurrentTab] = useState('branches');
   const dispatch = useDispatch();
   const { t } = useTranslation();
 
@@ -62,37 +63,17 @@ function AccountView() {
 
   const ACCOUNT_TABS = [
     {
-      value: 'Branches',
+      value: 'branches',
+      label: t("Branches"),
       icon: <Icon icon={roundAccountBox} width={20} height={20} />,
       component: <BrancheView />
     },
-    // {
-    //   value: 'general',
-    //   icon: <Icon icon={roundAccountBox} width={20} height={20} />,
-    //   component: <General />
-    // },
-    // {
-    //   value: 'billing',
-    //   icon: <Icon icon={roundReceipt} width={20} height={20} />,
-    //   component: (
-    //     <Billing cards={cards} addressBook={addressBook} invoices={invoices} />
-    //   )
-    // },
-    // {
-    //   value: 'notifications',
-    //   icon: <Icon icon={bellFill} width={20} height={20} />,
-    //   component: <Notifications notifications={notifications} />
-    // },
-    // {
-    //   value: 'social_links',
-    //   icon: <Icon icon={shareFill} width={20} height={20} />,
-    //   component: <SocialLinks myProfile={myProfile} />
-    // },
-    // {
-    //   value: 'change_password',
-    //   icon: <Icon icon={roundVpnKey} width={20} height={20} />,
-    //   component: <ChangePassword />
-    // }
+    {
+      value: 'Subscription Information',
+      label: t("Subscription Information"),
+      icon: <Icon icon={roundAccountBox} width={20} height={20} />,
+      component: <SubscriptionView />
+    },
   ];
 
   const handleChangeTab = (event, newValue) => {
@@ -105,16 +86,6 @@ function AccountView() {
       className={classes.root}
     >
       <Container>
-        {/* <HeaderDashboard
-          heading="Account"
-          links={[
-            { name: 'Dashboard', href: PATH_APP.root },
-            { name: 'Management', href: PATH_APP.management.root },
-            { name: 'User', href: PATH_APP.management.user.root },
-            { name: 'Account Settings' }
-          ]}
-        /> */}
-
         <Tabs
           value={currentTab}
           scrollButtons="auto"
@@ -127,7 +98,7 @@ function AccountView() {
             <Tab
               disableRipple
               key={tab.value}
-              label={t(tab.value)}
+              label={tab.label}
               icon={tab.icon}
               value={tab.value}
             />

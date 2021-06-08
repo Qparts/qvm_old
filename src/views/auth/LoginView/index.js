@@ -24,9 +24,10 @@ import {
   Typography
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch} from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
+import { getInitialize } from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -68,6 +69,7 @@ function LoginView() {
   const classes = useStyles();
   const { method, login } = useAuth();
   const isMountedRef = useIsMountedRef();
+  const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
@@ -109,6 +111,8 @@ function LoginView() {
           email: values.email,
           password: values.password
         });
+
+        await dispatch(getInitialize());
 
         setLoaded(true);
 

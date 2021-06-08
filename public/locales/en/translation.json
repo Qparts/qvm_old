@@ -140,11 +140,7 @@
       }
     }
   },
-  "catalogTab": {
-    
-  },
-
-
+  "catalogTab": {},
 
   "Parts Catalog": "Parts Catalog",
   "Car Details": "Car Details",
@@ -207,9 +203,7 @@
   "Filter results by location": "Filter results by location",
   "Search by part number": "Search by part number",
 
-
   "Quotations Report": "Quotations Report",
-
 
   "Special Offers": "Special Offers",
   "Offer End Date": "Offer End Date",
@@ -247,9 +241,37 @@
   "Users": "Users",
   "Add New Branch": "Add New Branch",
   "Add New User": "Add New User",
-  "Create" : "Create",
-  "Cancel" : "Cancel",
-  "phone": "Mobile"
+  "Create": "Create",
+  "Cancel": "Cancel",
+  "phone": "Mobile",
+  "Upgrade to Premium": "Upgrade to Premium",
+  "pay": "Pay ",
+  "Months": "Months",
+  "Save": "Save ",
+  "Subscrip": "SUBSCRIP",
+  "Premium Plan": "Premium Plan ",
+  "Subscription Price": "Subscription Price",
+  "Promotion Discount": "Promotion Discount",
+  "VAT Amount": "VAT Amount",
+  "Total Amount": "Total Amount",
+  "Has Promotion": "Do you have a promotion code?",
+  "Promotion Code": "Enter promotion code",
+  "Active Discount": "ACTIVATE DISCOUNT",
+  "Payment Method": "Payment Method",
+  "Submit Order": "Submit Order",
+  "Month": "a Month",
+  "Year": "a year",
+  "SAR": "SAR",
+  "Subscription Information": "Subscription Information",
+  "Features": "Features",
+  "Subscription History": "Subscription History",
+  "Current Plan": "Current Plan",
+  "Days" : "Days",
+  "Checkout": "Checkout",
+  "Attach Transfer Receipt" : "Attach Transfer Receipt",
+  "IBAN" : "IBAN",
+  "Account Number":"Account Number",
+  "Bank" :"Bank",
+  "Account Name":"Account Name"
 
-  
 }

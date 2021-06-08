@@ -8,7 +8,7 @@ import helper from 'src/utils/helper';
 
 const initialState = {
     isLoading: false,
-    branches: JSON.parse(localStorage.getItem("loginObject")).company.branches,
+    branches: JSON.parse(localStorage.getItem("loginObject"))?.company.branches,
     verificationMode: null,
     verifiedEmail: null,
     error: null,

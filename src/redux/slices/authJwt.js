@@ -1,5 +1,4 @@
 import jwtDecode from 'jwt-decode';
-// import axios from 'src/utils/axios';
 import axios from 'axios';
 import auth from "../../services/authService";
 import locationService from "../../services/locationService";
@@ -7,6 +6,7 @@ import locationService from "../../services/locationService";
 
 import { createSlice } from '@reduxjs/toolkit';
 import settingService from 'src/services/settingService';
+import planService from 'src/services/planService';
 
 // ----------------------------------------------------------------------
 
@@ -17,6 +17,10 @@ const initialState = {
   loginObject: null,
   countries: [],
   error: '',
+  availablePlans: [],
+  currentPlan: null,
+  premiumPlan: null,
+  planFeatures: [],
   validResetToken: false
 };
 
@@ -36,6 +40,10 @@ const slice = createSlice({
       state.user = action.payload.user;
       state.loginObject = action.payload.user;
       state.countries = action.payload.countries;
+      state.currentPlan = action.payload.currentPlan;
+      state.planFeatures = action.payload.planFeatures;
+      state.availablePlans = action.payload.availablePlans;
+      state.premiumPlan = action.payload.premiumPlan;
     },
 
     // LOGIN
@@ -281,24 +289,31 @@ export function refreshToken() {
   };
 }
 
+
 // ----------------------------------------------------------------------
 
 export function getInitialize() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      //load countries
       let { data: countries } = await locationService.getCountries();
       const accessToken = window.localStorage.getItem('accessToken');
-
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
-        const user = localStorage.getItem('loginObject');
+        const { data: plans } = await planService.getPlans();
+        const { data: planFeatures } = await planService.getPlansFeatures();
+        const loginObject = JSON.parse(localStorage.getItem('loginObject'));
+        let currentPlan = getCurrentPlan(plans, loginObject.company.subscriptions[0].planId)
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
-            user: JSON.parse(user),
-            countries: countries
+            user: loginObject,
+            loginObject: loginObject,
+            countries: countries,
+            currentPlan: currentPlan,
+            planFeatures: planFeatures,
+            availablePlans: plans,
+            premiumPlan: plans.find(e => e.name == 'Premium Plan')
           })
         );
       } else {
@@ -306,18 +321,38 @@ export function getInitialize() {
           slice.actions.getInitialize({
             isAuthenticated: false,
             user: null,
-            countries: countries
+            loginObject: null,
+            countries: countries,
+            currentPlan: null,
+            planFeatures: [],
+            availablePlans: [],
           })
         );
       }
     } catch (error) {
-      console.error(error);
       dispatch(
         slice.actions.getInitialize({
           isAuthenticated: false,
-          user: null
+          user: null,
+          currentPlan: null,
+          planFeatures: [],
+          availablePlans: []
         })
       );
     }
   };
+}
+
+// ----------------------------------------------------------------------
+
+
+const getCurrentPlan = (plans, planId) => {
+  if (plans && plans.length > 0) {
+    for (let p of plans) {
+      if (p.id == planId) {
+        return p;
+      }
+    }
+  }
+  return null;
 }
