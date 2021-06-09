@@ -124,7 +124,7 @@ function SpecialOfferDetails({ specialOfferId }) {
                                 name: t("Price"),
                                 attr: 'offers[0].offerPrice',
                                 type: 'number',
-                                label: t("common.sar")
+                                label: t("SAR")
 
                             }
                         ]}

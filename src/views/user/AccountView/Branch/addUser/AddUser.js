@@ -34,13 +34,13 @@ function AddUser(props) {
 
 
     const userSchema = Yup.object().shape({
-        name: Yup.string().required(t("signup.error.require.name")),
-        phone: Yup.string().required(t("signup.error.require.phone")),
+        name: Yup.string().required(t("Name Is Required")),
+        phone: Yup.string().required(t("Mobile Is Required")),
         branch: Yup.string().required(t("branch is required")),
         email: Yup.string()
-            .email(t("signup.error.invalid.email"))
-            .required(t("signup.error.require.email")),
-        password: Yup.string().required(t("signup.error.require.password"))
+            .email(t("Email Is Invalid"))
+            .required(t("Email Is Required")),
+        password: Yup.string().required(t("Password Is Required"))
     });
 
     const formik = useFormik({

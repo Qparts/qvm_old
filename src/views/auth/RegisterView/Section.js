@@ -27,14 +27,14 @@ function Section({ className }) {
   return (
     <Card className={clsx(classes.root, className)}>
       <Typography variant="h3" sx={{ px: 5, mt: 5, mb: 15 }}>
-        {t("signup.defination")}
+        {t("You can access huge numbers of auto spare parts and deal with great number of vendors")}
       </Typography>
       <Typography variant="h3" sx={{ px: 5, mb: 15 }}>
-        <ListItemText primary={t("signup.service1")} />
-        <ListItemText primary={t("signup.service2")} />
-        <ListItemText primary={t("signup.service3")} />
-        <ListItemText primary={t("signup.service4")} />
-        <ListItemText primary={t("signup.service5")} />
+        <ListItemText primary={t("Parts Catalog")} />
+        <ListItemText primary={t("Spare Parts Availability & Price Information")} />
+        <ListItemText primary={t("Multiple Brand Alternatives")} />
+        <ListItemText primary={t("Special Offers")} />
+        <ListItemText primary={t("Issuing and Receiving Purchase Oders (*soon)")} />
       </Typography>
     </Card>
   );

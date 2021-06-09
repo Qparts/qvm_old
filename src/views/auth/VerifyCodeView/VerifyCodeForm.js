@@ -57,7 +57,7 @@ function VerifyCodeForm({ formik, closePopup }) {
         </Box>
 
         <FormHelperText error={!isValid} style={{ textAlign: 'right' }}>
-          {!isValid && t("verification.error.require.code")}
+          {!isValid && t("Verification Code Is Required")}
         </FormHelperText>
         {closePopup ?
 
@@ -73,7 +73,7 @@ function VerifyCodeForm({ formik, closePopup }) {
                   variant="contained"
                   pending={isSubmitting}
                 >
-                  {t("verification.verify")}
+                  {t("Verify")}
                 </LoadingButton>
               </div>
 
@@ -101,7 +101,7 @@ function VerifyCodeForm({ formik, closePopup }) {
               variant="contained"
               pending={isSubmitting}
             >
-              {t("verification.verify")}
+              {t("Verify")}
             </LoadingButton>
           </Box>}
       </Form>

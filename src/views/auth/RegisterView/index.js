@@ -101,13 +101,13 @@ function RegisterView() {
 
 
   const RegisterSchema = Yup.object().shape({
-    companyName: Yup.string().required(t("signup.error.require.companyName")),
-    name: Yup.string().required(t("signup.error.require.name")),
-    phone: Yup.string().required(t("signup.error.require.phone")),
+    companyName: Yup.string().required(t("Company Name Is Required")),
+    name: Yup.string().required(t("Name Is Required")),
+    phone: Yup.string().required(t("Mobile Is Required")),
     email: Yup.string()
-      .email(t("signup.error.invalid.email"))
-      .required(t("signup.error.require.email")),
-    password: Yup.string().required(t("signup.error.require.password"))
+      .email(t("Email Is Invalid"))
+      .required(t("Email Is Required")),
+    password: Yup.string().required(t("Password Is Required"))
   });
 
 
@@ -159,14 +159,14 @@ function RegisterView() {
         </RouterLink>
         <Hidden smDown>
           <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-            {t("signup.haveAccount")} &nbsp;
+            {t("Already have an account?")} &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_PAGE.auth.login}
             >
-              {t("signin.login")}
+              {t("Login")}
             </Link>
             <Languages />
           </Typography>
@@ -182,7 +182,7 @@ function RegisterView() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                {t("signup.title")}
+                {t("Signup Request in")}
               </Typography>
             </Box>
             <Box
@@ -204,13 +204,13 @@ function RegisterView() {
             align="center"
             sx={{ color: 'text.secondary', mt: 3 }}
           >
-            {t("signup.confirmMessagePart1")}&nbsp;
+            {t("By registering you agree on QVM  and QVM")}&nbsp;
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("signup.termsConfirmation")}
+              {t("Terms of Use")}
             </Link>
-            &nbsp;{t("signup.confirmMessagePart2")}&nbsp;
+            &nbsp;{t("and QVM")}&nbsp;
             <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("signup.policyConfirmation")}
+              {t("Privacy Policy")}
             </Link>
             .
           </Typography>

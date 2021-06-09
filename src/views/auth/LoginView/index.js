@@ -93,9 +93,9 @@ function LoginView() {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email(t("signin.error.invalid.email"))
-      .required(t("signin.error.require.email")),
-    password: Yup.string().required(t("signin.error.require.password"))
+      .email(t("Email Is Invalid"))
+      .required(t("Email Is Required")),
+    password: Yup.string().required(t("Password Is Required"))
   });
 
   const formik = useFormik({
@@ -144,14 +144,14 @@ function LoginView() {
               mt: { md: -2 }
             }}
           >
-            {t("signin.noAccount")} &nbsp;
+            {t("Don't have account?")} &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_PAGE.auth.register}
             >
-              {t("signin.registerNow")}
+              {t("Register now")}
             </Link>
 
             <Languages />
@@ -168,10 +168,10 @@ function LoginView() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                {t("signin.title")}
+                {t("Sign into QVM Vendor Market Place")}
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                {t("common.enterDetails")}
+                {t("Enter your details below")}
               </Typography>
             </Box>
             <Tooltip title={'QVM'}>

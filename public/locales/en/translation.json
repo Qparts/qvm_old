@@ -11,136 +11,76 @@
   "replacements": "Replacements",
   "specialOfferUpload": "Special Offer Upload",
   "stockUpload": "Stock Upload",
+
+  
   "Subscriber already registered": "Subscriber already registered",
-  "common": {
-    "enterDetails": "Enter your details below",
-    "email": "Email Address",
-    "welcomeBack": "Hi, Welcome Back",
-    "back": "Back",
-    "search": "Search",
-    "sar": "SAR",
-    "noData": "No Data Found!!",
-    "details": "details",
-    "catalog": "Parts Catalog",
-    "offers": "Offers",
-    "en": "English",
-    "ar": "Arabic",
-    "purchaseOrder": "Purchase Order",
-    "switchTo": "Switch To ",
-    "startin": "Start in",
-    "expiresIn": "Expires in",
-    "months": "Months",
-    "year": "Year",
-    "month": "Month",
-    "close": "Close",
-    "attachFile": "Attach File",
-    "checkout": "Checkout",
-    "name": "Name",
-    "country": "Country",
-    "region": "Region",
-    "city": "City",
-    "phone": "Mobile",
-    "accountType": "Account Type",
-    "choose": "--Choose--",
-    "more": "More Offers"
-  },
-  "signin": {
-    "title": "Sign into QVM Vendor Market Place",
-    "password": "Password",
-    "login": "Login",
-    "rememberMe": "Remember me",
-    "forgetPassword": "Forgot Password?",
-    "noAccount": "Don't have account?",
-    "registerNow": "Register now",
+  "Enter your details below": "Enter your details below",
+  "Email Address": "Email Address",
+  "Hi, Welcome Back": "Hi, Welcome Back",
+  "Back": "Back",
+  "No Data Found!!": "No Data Found!!",
+  "Offers": "Offers",
+  "English": "English",
+  "Arabic": "Arabic",
+  "Purchase Order": "Purchase Order",
+  "Switch To": "Switch To ",
+  "Close": "Close",
+  "Attach File": "Attach File",
+  "Account Type": "Account Type",
+  "--Choose--": "--Choose--",
+  "More Offers": "More Offers",
 
-    "error": {
-      "require": {
-        "email": "Email Is Required",
-        "password": "Password Is Required"
-      },
-      "invalid": {
-        "email": "Email Is Invalid",
-        "password": "Password Is Invalid"
-      }
-    }
-  },
-  "signup": {
-    "title": "Signup Request in",
-    "haveAccount": "Already have an account?",
-    "signup": "Signup",
-    "companyName": "Company Name",
-    "email": "Email",
-    "name": "Name",
-    "phone": "Mobile",
-    "password": "Password",
-    "confirmMessagePart1": "By registering you agree on QVM  and QVM ",
-    "termsConfirmation": "Terms of Use",
-    "policyConfirmation": "Privacy Policy",
-    "confirmMessagePart2": " and QVM ",
-    "defination": "You can access huge numbers of auto spare parts and deal with great number of vendors",
-    "service1": "Parts Catalog",
-    "service2": "Spare Parts Availability & Price Information",
-    "service3": "Multiple Brand Alternatives",
-    "service4": "Special Offers",
-    "service5": "Issuing and Receiving Purchase Oders (*soon)",
+  "Sign into QVM Vendor Market Place": "Sign into QVM Vendor Market Place",
+  "Password": "Password",
+  "Login": "Login",
+  "Remember me": "Remember me",
+  "Forgot Password?": "Forgot Password?",
+  "Don't have account?": "Don't have account?",
+  "Register now": "Register now",
+  "Email Is Required": "Email Is Required",
+  "Password Is Required": "Password Is Required",
+  "Email Is Invalid": "Email Is Invalid",
+  "Password Is Invalid": "Password Is Invalid",
 
-    "error": {
-      "require": {
-        "companyName": "Company Name Is Required",
-        "email": "Email Is Required",
-        "name": "Name Is Required",
-        "phone": "Mobile Is Required",
-        "password": "Password Is Required"
-      },
-      "invalid": {
-        "email": "Email Is Invalid",
-        "phone": "Mobile Is Invalid",
-        "password": "Password Is Invalid"
-      }
-    }
-  },
-  "verification": {
-    "checkEmail": "Please check your email!",
-    "verificationMessage": "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.",
-    "code": "Verification Code",
-    "verify": "Verify",
-    "error": {
-      "require": {
-        "code": "Verification Code Is Required"
-      },
-      "invalid": {
-        "code": "Verification Code Is Invalid"
-      }
-    }
-  },
-  "confirmation": {
-    "title": "THANK YOU FOR REGISTRATION IN QVM",
-    "message": "Your request have been sent, Your application will be reviewed by our team we will contact with you soon."
-  },
+  "Signup Request in": "Signup Request in",
+  "Already have an account?": "Already have an account?",
+  "Signup": "Signup",
+  "By registering you agree on QVM  and QVM": "By registering you agree on QVM  and QVM ",
+  "Terms of Use": "Terms of Use",
+  "Privacy Policy": "Privacy Policy",
+  "and QVM": " and QVM ",
+  "You can access huge numbers of auto spare parts and deal with great number of vendors": "You can access huge numbers of auto spare parts and deal with great number of vendors",
+  "Spare Parts Availability & Price Information": "Spare Parts Availability & Price Information",
+  "Multiple Brand Alternatives": "Multiple Brand Alternatives",
+  "Issuing and Receiving Purchase Oders (*soon)": "Issuing and Receiving Purchase Oders (*soon)",
+  "Company Name Is Required": "Company Name Is Required",
+  "Name Is Required": "Name Is Required",
+  "Mobile Is Required": "Mobile Is Required",
+  "Mobile Is Invalid": "Mobile Is Invalid",
+  "password": "Password Is Invalid",
 
-  "forgotPassword": {
-    "title": "Forgot your password?",
-    "message": "Please enter the email address associated with your account and We will email you a link to reset your password.",
-    "email": "Email",
-    "password": "Password",
-    "resetPassword": "Reset Password",
-    "successRequest": "Request sent successfully",
-    "confirmMessage": "We have sent a confirmation email to",
-    "newPassword": "New Password",
-    "invalidRequest": "The request is not available",
-    "error": {
-      "require": {
-        "email": "Email Is Required",
-        "password": "Password Is Required",
-        "newPassword": "New Password Is Required"
-      },
-      "invalid": {
-        "email": "Email Is Invalid",
-        "password": "Password Is Invalid"
-      }
-    }
-  },
-  "catalogTab": {},
+  "Please check your email!": "Please check your email!",
+  "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.": "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.",
+  "Verification Code": "Verification Code",
+  "Verify": "Verify",
+  "Verification Code Is Required": "Verification Code Is Required",
+  "Verification Code Is Invalid": "Verification Code Is Invalid",
+
+  "THANK YOU FOR REGISTRATION IN QVM": "THANK YOU FOR REGISTRATION IN QVM",
+  "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.": "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.",
+ 
+
+
+  "Forgot your password?": "Forgot your password?",
+  "Please enter the email address associated with your account and We will email you a link to reset your password.": "Please enter the email address associated with your account and We will email you a link to reset your password.",
+  "Reset Password": "Reset Password",
+  "Request sent successfully": "Request sent successfully",
+  "We have sent a confirmation email to": "We have sent a confirmation email to",
+  "New Password": "New Password",
+  "The request is not available": "The request is not available",
+  "New Password Is Required": "New Password Is Required",
+
+
 
   "Parts Catalog": "Parts Catalog",
   "Car Details": "Car Details",
@@ -266,12 +206,11 @@
   "Features": "Features",
   "Subscription History": "Subscription History",
   "Current Plan": "Current Plan",
-  "Days" : "Days",
+  "Days": "Days",
   "Checkout": "Checkout",
-  "Attach Transfer Receipt" : "Attach Transfer Receipt",
-  "IBAN" : "IBAN",
-  "Account Number":"Account Number",
-  "Bank" :"Bank",
-  "Account Name":"Account Name"
-
+  "Attach Transfer Receipt": "Attach Transfer Receipt",
+  "IBAN": "IBAN",
+  "Account Number": "Account Number",
+  "Bank": "Bank",
+  "Account Name": "Account Name"
 }

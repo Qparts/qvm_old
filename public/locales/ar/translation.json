@@ -11,136 +11,72 @@
   "replacements": "البدائل",
   "specialOfferUpload": "رفع العروض الخاصة",
   "stockUpload": "رفع المخزون",
+
   "Subscriber already registered": "المشترك مسجل بالفعل",
-  "common": {
-    "enterDetails": "أدخل التفاصيل الخاصة بك أدناه",
-    "email": "البريد الإلكتروني",
-    "welcomeBack": "مرحبا ، مرحبا بعودتك",
-    "back": "العوده",
-    "search": "بحث",
-    "noData": "لا توجد بيانات !!",
-    "details": "التفاصيل",
-    "catalog": "كاتالوج القطع",
-    "offers": "العروض",
-    "purchaseOrder": "أمر شراء",
-    "en": "الانجليزيه",
-    "ar": "العربيه",
-    "switchTo": " التبديل إلى",
-    "startin": "يبداء في",
-    "expiresIn": "ينتهي في",
-    "sar": "ريال سعودي",
-    "months": "أشهر",
-    "year": "سنة",
-    "month": "شهر",
-    "close": "اغلاق",
-    "attachFile": "ارفاق ملف",
-    "checkout": "إتمام عملية الشراء",
-    "name": "الإسم",
-    "country": "الدولة",
-    "region": "المنطقة",
-    "city": "المدينة",
-    "phone": "رقم الجوال",
-    "accountType": "نوع الحساب",
-    "choose": "--اختر--",
-    "more": "المزيد من العروض"
-  },
-  "signin": {
-    "title": "تسجيل دخول لمنصة التجار",
-    "password": "كلمه المرور",
-    "login": "تسجيل الدخول",
-    "rememberMe": "تذكرنى",
-    "forgetPassword": "هل نسيت كلمة المرور؟",
-    "noAccount": "ليس لديك حساب؟",
-    "registerNow": "سجل الان",
+  "Enter your details below": "أدخل التفاصيل الخاصة بك أدناه",
+  "Email Address": "البريد الإلكتروني",
+  "Hi, Welcome Back": "مرحبا ، مرحبا بعودتك",
+  "Back": "العوده",
+  "No Data Found!!": "لا توجد بيانات !!",
+  "Offers": "العروض",
+  "Purchase Order": "أمر شراء",
+  "English": "الانجليزيه",
+  "Arabic": "العربيه",
+  "Switch To": " التبديل إلى",
+  "Close": "اغلاق",
+  "Attach File": "ارفاق ملف",
+  "Account Type": "نوع الحساب",
+  "--Choose--": "--اختر--",
+  "More Offers": "المزيد من العروض",
 
-    "error": {
-      "require": {
-        "email": " البريدالالكترومى مطلوب",
-        "password": "كلمةالمرور مطلوبه"
-      },
-      "invalid": {
-        "email": "البريدالالكترونى خاطئ",
-        "password": "كلمةالمرور يجب ألا تقل عن 8 أحرف"
-      }
-    }
-  },
-  "signup": {
-    "title": "طلب التسجيل في منصة التجار",
-    "haveAccount": "لديك حساب بالفعل؟",
-    "signup": "التسجيل",
-    "companyName": "اسم الشركة",
-    "email": "البريدالالكترونى",
-    "name": "الإسم",
-    "phone": "رقم الجوال",
-    "password": "كلمةالمرور",
-    "confirmMessagePart1": "عن طريق إنشاء حساب ، فإنك توافق على ",
-    "termsConfirmation": "اتفاقية الاستخدام",
-    "policyConfirmation": "سياسة الخصوصية",
-    "confirmMessagePart2": " منصة التجار QVM و ",
-    "defination": "يمكنك الوصول إلى أكبر عدد من قطع غيار السيارات و التعامل مع أكبر عدد من الموردين",
+  "Sign into QVM Vendor Market Place": "تسجيل دخول لمنصة التجار",
+  "Password": "كلمه المرور",
+  "Login": "تسجيل الدخول",
+  "Remember me": "تذكرنى",
+  "Forgot Password?": "هل نسيت كلمة المرور؟",
+  "Don't have account?": "ليس لديك حساب؟",
+  "Register now": "سجل الان",
 
-    "service1": "كاتالوج القطع",
-    "service2": "بإمكانك معرفة مكان توفر القطعة وسعرها",
-    "service3": "بدائل متعددة من البراندات",
-    "service4": "عروض خاصة",
-    "service5": "اصدار و استقبال امر شراء",
+  "Email Is Required": " البريدالالكترومى مطلوب",
+  "Password Is Required": "كلمةالمرور مطلوبه",
+  "Email Is Invalid": "البريدالالكترونى خاطئ",
+  "Password Is Invalid": "كلمةالمرور يجب ألا تقل عن 8 أحرف",
 
-    "error": {
-      "require": {
-        "companyName": "اسم الشركة مطلوب",
-        "email": " البريد الالكترومى مطلوب",
-        "name": "الإسم مطلوب",
-        "phone": "رقم الجوال مطلوب",
-        "password": "كلمةالمرور مطلوبه"
-      },
-      "invalid": {
-        "email": "البريد الالكترونى خاطئ",
-        "phone": "رقم الجوال خاطئ",
-        "password": "كلمة المرور يجب ألا تقل عن 8 أحرف"
-      }
-    }
-  },
-  "verification": {
-    "checkEmail": "تفقد بريدك الالكتروني من فضلك!",
-    "verificationMessage": "لقد أرسلنا عبر البريد الإلكتروني رمز تأكيد مكونًا من 4 أرقام إلى {{email}} ، يرجى إدخال الرمز في المربع أدناه للتحقق من بريدك الإلكتروني.",
-    "code": "رمز التحقق",
-    "verify": "تحقق",
-    "error": {
-      "require": {
-        "code": "رمز التحقق مطلوب"
-      },
-      "invalid": {
-        "code": "رمز التحقق خاطئ"
-      }
-    }
-  },
-  "confirmation": {
-    "title": "شكرا لك على التسجيل في QVM",
-    "message": "تم إرسال طلبك ، وسيقوم فريقنا بمراجعة طلبك وسنتواصل معك قريبًا."
-  },
+  "Signup Request in": "طلب التسجيل في منصة التجار",
+  "Already have an account?": "لديك حساب بالفعل؟",
+  "Signup": "التسجيل",
+  "By registering you agree on QVM  and QVM": "عن طريق إنشاء حساب ، فإنك توافق على ",
+  "Terms of Use": "اتفاقية الاستخدام",
+  "Privacy Policy": "سياسة الخصوصية",
+  "and QVM": " منصة التجار QVM و ",
+  "You can access huge numbers of auto spare parts and deal with great number of vendors": "يمكنك الوصول إلى أكبر عدد من قطع غيار السيارات و التعامل مع أكبر عدد من الموردين",
+  "Spare Parts Availability & Price Information": "بإمكانك معرفة مكان توفر القطعة وسعرها",
+  "Multiple Brand Alternatives": "بدائل متعددة من البراندات",
+  "Issuing and Receiving Purchase Oders (*soon)": "اصدار و استقبال امر شراء",
+  "Company Name Is Required": "اسم الشركة مطلوب",
+  "email": " البريد الالكترومى مطلوب",
+  "Name Is Required": "الإسم مطلوب",
+  "Mobile Is Required": "رقم الجوال مطلوب",
+  "Mobile Is Invalid": "رقم الجوال خاطئ",
+  "password": "كلمة المرور يجب ألا تقل عن 8 أحرف",
 
-  "forgotPassword": {
-    "title": "هل نسيت رقمك السري؟",
-    "message": "يرجى إدخال عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك عبر البريد الإلكتروني رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
-    "email": "البريدالالكترونى",
-    "password": "كلمه المرور",
-    "resetPassword": "إعادة تعيين كلمة المرور",
-    "successRequest": "تم إرسال الطلب بنجاح",
-    "confirmMessage": "لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى",
-    "newPassword": "كلمةالمرور الجديدة",
-    "invalidRequest": "الطلب غير متاح",
-    "error": {
-      "require": {
-        "email": " البريدالالكترومى مطلوب",
-        "password": "كلمةالمرور مطلوبه",
-        "newPassword": "كلمةالمرورالجديدة مطلوبه"
-      },
-      "invalid": {
-        "email": "البريدالالكترونى خاطئ",
-        "password": "كلمةالمرور يجب ألا تقل عن 8 أحرف"
-      }
-    }
-  },
+  "Please check your email!": "تفقد بريدك الالكتروني من فضلك!",
+  "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.": "لقد أرسلنا عبر البريد الإلكتروني رمز تأكيد مكونًا من 4 أرقام إلى {{email}} ، يرجى إدخال الرمز في المربع أدناه للتحقق من بريدك الإلكتروني.",
+  "Verification Code": "رمز التحقق",
+  "Verify": "تحقق",
+  "Verification Code Is Required": "رمز التحقق مطلوب",
+  "Verification Code Is Invalid": "رمز التحقق خاطئ",
+  "THANK YOU FOR REGISTRATION IN QVM": "شكرا لك على التسجيل في QVM",
+  "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.": "تم إرسال طلبك ، وسيقوم فريقنا بمراجعة طلبك وسنتواصل معك قريبًا.",
+
+  "Forgot your password?": "هل نسيت رقمك السري؟",
+  "Please enter the email address associated with your account and We will email you a link to reset your password.": "يرجى إدخال عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك عبر البريد الإلكتروني رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
+  "Reset Password": "إعادة تعيين كلمة المرور",
+  "Request sent successfully": "تم إرسال الطلب بنجاح",
+  "We have sent a confirmation email to": "لقد أرسلنا رسالة تأكيد بالبريد الإلكتروني إلى",
+  "New Password": "كلمةالمرور الجديدة",
+  "The request is not available": "الطلب غير متاح",
+  "New Password Is Required": "كلمةالمرورالجديدة مطلوبه",
 
   "Catalog": "كاتالوج القطع",
   "Parts Catalog": "كاتالوج القطع",
@@ -213,6 +149,7 @@
   "Expires in": "ينتهي في ",
 
   "Replacement Parts Search": "بحث القطع البديلة",
+  "Description": "الوصف",
   "Applicable OEM Parts": "القطع الأصلية المتوافقة",
 
   "Special Offer Upload": "رفع العروض الخاصة",
@@ -262,16 +199,15 @@
   "Months": "أشهر",
   "Year": "سنة",
   "SAR": "ريال سعودي",
-  "Subscription Information" : " الإشتراك",
+  "Subscription Information": " الإشتراك",
   "Features": "المميزات",
-  "Subscription History" :"الاشتراكات السابقة",
+  "Subscription History": "الاشتراكات السابقة",
   "Current Plan": "الباقة الحالية",
-  "Days" : "Days",
+  "Days": "Days",
   "Checkout": "إتمام عملية الشراء",
-  "Attach Transfer Receipt" : "ارفق صورة وصل التحويل",
-  "IBAN" : "رقم الايبان",
-  "Account Number":"رقم الحساب",
-  "Bank" :"البنك",
-  "Account Name":"اسم الحساب"
-
+  "Attach Transfer Receipt": "ارفق صورة وصل التحويل",
+  "IBAN": "رقم الايبان",
+  "Account Number": "رقم الحساب",
+  "Bank": "البنك",
+  "Account Name": "اسم الحساب"
 }

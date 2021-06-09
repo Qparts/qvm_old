@@ -48,10 +48,10 @@ function ConfirmView(props) {
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
 
           <Typography variant="h3" gutterBottom>
-            {t("confirmation.title")}
+            {t("THANK YOU FOR REGISTRATION IN QVM")}
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            {t("confirmation.message")}
+            {t("Your request have been sent, Your application will be reviewed by our team we will contact with you soon.")}
           </Typography>
 
 

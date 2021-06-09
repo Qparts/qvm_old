@@ -36,7 +36,7 @@ export default function SearchTable(props) {
       <div className="input-group d-flex align-items-end row">
         <div className="col">
           <CustomInput
-            labelText={t("common.search")}
+            labelText={t("Search")}
             id="query"
             value={query}
             inputProps={{

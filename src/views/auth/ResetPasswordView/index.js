@@ -73,7 +73,7 @@ function ResetPasswordView() {
 
   const ResetPasswordSchema = Yup.object().shape({
     password: Yup.string()
-      .required(t("forgotPassword.error.require.newPassword"))
+      .required(t("New Password Is Required"))
   });
 
   const formik = useFormik({
@@ -122,13 +122,13 @@ function ResetPasswordView() {
                 to={PATH_PAGE.auth.login}
                 sx={{ mt: 1 }}
               >
-                {t("common.back")}
+                {t("Back")}
               </Button>
             </>
           ) : (
             <Box sx={{ textAlign: 'center' }}>
               <Typography variant="h3" gutterBottom>
-                {t("forgotPassword.invalidRequest")}
+                {t("The request is not available")}
               </Typography>
 
               <Button
@@ -138,7 +138,7 @@ function ResetPasswordView() {
                 to={PATH_PAGE.auth.login}
                 sx={{ mt: 5 }}
               >
-                {t("common.back")}
+                {t("Back")}
               </Button>
             </Box>
           )}

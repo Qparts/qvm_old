@@ -41,7 +41,7 @@ function CarDetails() {
                             dispatch(handleBackAction(part, selectedCatalog, selectedCar, fromList, groupsStack, backToCarInfo));
                         }}
                     >
-                        {t("common.back")}
+                        {t("Back")}
                     </Button>
                 </div>
 

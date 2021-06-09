@@ -50,7 +50,7 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
           fullWidth
           name="email"
           type="email"
-          label={t("signup.email")}
+          label={t("Email")}
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -87,7 +87,7 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
             <TextField
               fullWidth
               name="phone"
-              label={t("signup.phone")}
+              label={t("Mobile")}
               {...getFieldProps('phone')}
               error={Boolean(touched.phone && errors.phone)}
               helperText={touched.phone && errors.phone}
@@ -102,7 +102,7 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
         <TextField
           fullWidth
           name="name"
-          label={t("signup.name")}
+          label={t("Name")}
           {...getFieldProps('name')}
           error={Boolean(touched.name && errors.name)}
           helperText={touched.name && errors.name}
@@ -136,7 +136,7 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label={t("signup.password")}
+          label={t("Password")}
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (

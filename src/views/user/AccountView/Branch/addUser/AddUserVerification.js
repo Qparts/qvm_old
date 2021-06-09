@@ -49,10 +49,10 @@ function AddUserVerification(props) {
 
 
     const VerifyCodeSchema = Yup.object().shape({
-        code1: Yup.number().required(t("verification.error.require.code")),
-        code2: Yup.number().required(t("verification.error.require.code")),
-        code3: Yup.number().required(t("verification.error.require.code")),
-        code4: Yup.number().required(t("verification.error.require.code")),
+        code1: Yup.number().required(t("Verification Code Is Required")),
+        code2: Yup.number().required(t("Verification Code Is Required")),
+        code3: Yup.number().required(t("Verification Code Is Required")),
+        code4: Yup.number().required(t("Verification Code Is Required")),
     });
 
     const formik = useFormik({
