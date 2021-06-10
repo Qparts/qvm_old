@@ -3,8 +3,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
-import { Box } from '@material-ui/core';
-
+import { Box, Typography } from '@material-ui/core';
+import helper from 'src/utils/helper';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
@@ -29,7 +31,7 @@ function PlanFeaturesSection() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { planFeatures, currentPlan } = useSelector(
+    const { planFeatures, currentPlan, loginObject } = useSelector(
         (state) => state.authJwt
     );
 
@@ -39,6 +41,26 @@ function PlanFeaturesSection() {
     return (
 
         <>
+            { currentPlan.name == 'Premium Plan' &&
+                <>
+                    <Box sx={{ mt: 3 }} />
+
+                    <Card sx={{ minWidth: 275, backgroundColor: '#eeeee4' }}>
+                        <CardContent>
+                            <Typography align="justify" variant="h5">
+                                {t("Subscrip Date")}
+                            </Typography>
+                            <Typography align="justify" sx={{ fontSize: 14 }} color="text.secondary" >
+                                {t("Start in")} {helper.toDate(loginObject.company.subscriptions[0].startDate)}
+                        /  {t("Expires in")} {helper.toDate(loginObject.company.subscriptions[0].endDate)}
+                            </Typography>
+
+                        </CardContent>
+                    </Card>
+                </>
+            }
+
+
             <Box sx={{ mt: 3 }} />
             <div className="row">
                 {t("Features")}

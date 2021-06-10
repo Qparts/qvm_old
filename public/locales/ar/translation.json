@@ -209,5 +209,10 @@
   "IBAN": "رقم الايبان",
   "Account Number": "رقم الحساب",
   "Bank": "البنك",
-  "Account Name": "اسم الحساب"
+  "Account Name": "اسم الحساب",
+  "Promotion discount applied" : "تم اضافة الخصم الترويجي :",
+  "Basic Plan" : "الباقة الأساسية",
+  "Active" : "صالحة",
+  "Subscrip Date" : "تاريخ الإشتراك"
+
 }

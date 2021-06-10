@@ -212,5 +212,9 @@
   "IBAN": "IBAN",
   "Account Number": "Account Number",
   "Bank": "Bank",
-  "Account Name": "Account Name"
+  "Account Name": "Account Name",
+  "Promotion discount applied" : "Promotion discount applied :",
+  "Basic Plan" : "Basic Plan",
+  "Active" : "Active",
+  "Subscrip Date" : "Subscrip Date"
 }

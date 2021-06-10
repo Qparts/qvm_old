@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -18,6 +18,7 @@ import Datatable from 'src/components/table/DataTable';
 
 import ImageUploader from 'react-images-upload';
 import { InputLabel } from '@material-ui/core';
+import constants from 'src/utils/constants';
 
 // ----------------------------------------------------------------------
 
@@ -51,13 +52,14 @@ function PremiumPlanSubscription({ planDuration }) {
         { id: 2, name: 'Credit/Debit Card', nameAr: 'بطاقة بنكية أو إئتمانية' },
     ];
 
-    const banckAccounts = [
-        {
-            bankName: 'HSBC', bankNameAr: 'HSBC', accountNumber: '123456789012',
-            iban: '123445678901234', accountName: 'شركة تطبيق قطع للتجارة',
-            accountNameAr: 'شركة تطبيق قطع للتجارة'
-        },
-    ]
+    const [banckAccounts, setBanckAccounts] = useState([]);
+    // const banckAccounts = [
+    //     {
+    //         bankName: 'HSBC', bankNameAr: 'HSBC', accountNumber: '123456789012',
+    //         iban: '123445678901234', accountName: 'شركة تطبيق قطع للتجارة',
+    //         accountNameAr: 'شركة تطبيق قطع للتجارة'
+    //     },
+    // ]
     const [paymentMethod, setPaymentMethod] = useState(2);
 
 
@@ -68,13 +70,25 @@ function PremiumPlanSubscription({ planDuration }) {
     const { themeDirection } = useSelector((state) => state.settings);
 
     const [discount, setDiscount] = useState(0);
+    const [promotion, setPromotion] = useState(null);
     const [code, setCode] = useState('');
 
 
+    useEffect(() => {
+
+        (async () => {
+            const { data: bancks } = await planService.getBancks();
+            setBanckAccounts(bancks);
+        })()
+
+    }, [])
+
+
     const handleSubmit = async ({ code }) => {
-        const promResponse = await planService.activePromtion(code, premiumPlan.id, planDuration.id);
-        if (promResponse.ok)
-            setDiscount(promResponse.data.discountPercentage);
+        const { data: promotionValue } = await planService.activePromtion(code, premiumPlan.id, planDuration.id);
+        if (promotionValue) {
+            setPromotion(promotionValue);
+        }
     }
 
     const callbackFunc = (response) => {
@@ -85,11 +99,19 @@ function PremiumPlanSubscription({ planDuration }) {
         setReceipt(picture[0])
     }
 
+    const price = planDuration ?
+        Math.round(((premiumPlan.price / 360) - (planDuration.discountPercentage * (premiumPlan.price / 360))) * planDuration.calculationDays)
+        : 0;
+
+    const planPrice = price - (promotion != null ? promotion.discountPercentage * price : 0);
+
+    const vatAmount = planDuration ?
+        planPrice * constants.VATAMOUNT : 0;
 
     const totalAmount = planDuration ?
-        Math.round(((premiumPlan.price / 360) - (planDuration.discountPercentage * (premiumPlan.price / 360))) * planDuration.calculationDays)
-        - Math.round(discount * (Math.round(((premiumPlan.price / 360) - (planDuration.discountPercentage * (premiumPlan.price / 360))) * planDuration.calculationDays)))
+        planPrice + vatAmount
         : 0;
+
 
 
     return (
@@ -107,9 +129,7 @@ function PremiumPlanSubscription({ planDuration }) {
 
                         <div className="col-md-6">
                             <Typography variant="subtitle2">
-                                {Math.round(((premiumPlan.price / 360) -
-                                    (planDuration.discountPercentage * (premiumPlan.price / 360))) * planDuration.calculationDays)+" "}
-                                {t('SAR')}
+                                {planPrice}   {t('SAR')}
                             </Typography>
                         </div>
 
@@ -121,11 +141,21 @@ function PremiumPlanSubscription({ planDuration }) {
 
                         <div className="col-md-6">
                             <Typography variant="subtitle2">
-                                {Math.round(discount * (Math.round(((premiumPlan.price / 360) - (planDuration.discountPercentage * (premiumPlan.price / 360))) *
-                                    planDuration.calculationDays)))}  {t('SAR')}
+                                {Math.round(promotion != null ? promotion.discountPercentage * price : 0)}  {t('SAR')}
                             </Typography>
                         </div>
 
+
+                        <div className="col-md-6">
+                            <Typography variant="subtitle2">{t("VAT Amount")}
+                            </Typography>
+                        </div>
+
+                        <div className="col-md-6">
+                            <Typography variant="subtitle2">
+                                {vatAmount}  {t('SAR')}
+                            </Typography>
+                        </div>
 
 
                         <div className="col-md-6">
@@ -141,27 +171,34 @@ function PremiumPlanSubscription({ planDuration }) {
 
                         <Box sx={{ mb: 6 }} />
 
+                        {promotion == null ?
+                            <>
+                                <TextField
+                                    style={{ width: '50%', margin: 10 }}
+                                    name="promotionCode"
+                                    label={t("Promotion Code")}
+                                    value={code}
+                                    onChange={(e) => {
+                                        setCode(e.target.value);
+                                    }}
+                                />
 
-                        <TextField
-                            style={{ width: '50%', margin: 10 }}
-                            name="promotionCode"
-                            label={t("Promotion Code")}
-                            value={code}
-                            onChange={(e) => {
-                                setCode(e.target.value);
-                            }}
-                        />
 
+                                <LoadingButton
+                                    style={{ width: '40%', margin: 10 }}
+                                    fullWidth
+                                    variant="contained"
+                                    size="large"
+                                    onClick={() => handleSubmit({ code: code })}
+                                >
+                                    {t("Active Discount")}
+                                </LoadingButton>
+                            </>
+                            :
+                            <Typography variant="subtitle2">{t("Promotion discount applied")}  {promotion.promoCode}
+                            </Typography>
 
-                        <LoadingButton
-                            style={{ width: '40%', margin: 10 }}
-                            fullWidth
-                            variant="contained"
-                            size="large"
-                            onClick={() => handleSubmit({ code: code })}
-                        >
-                            {t("Active Discount")}
-                        </LoadingButton>
+                        }
 
                         <Box sx={{ mb: 6 }} />
                         <TextField
@@ -202,11 +239,11 @@ function PremiumPlanSubscription({ planDuration }) {
                                     header={[
                                         {
                                             name: t("Bank"),
-                                            attr: 'bankName',
+                                            attr: themeDirection == 'ltr' ? 'name' : 'nameAr',
                                         },
                                         {
                                             name: t("Account Number"),
-                                            attr: 'accountNumber'
+                                            attr: 'account'
                                         },
                                         {
                                             name: t("IBAN"),
@@ -214,7 +251,7 @@ function PremiumPlanSubscription({ planDuration }) {
                                         },
                                         {
                                             name: t("Account Name"),
-                                            attr: 'accountName'
+                                            attr: 'owner'
                                         }
 
                                     ]}

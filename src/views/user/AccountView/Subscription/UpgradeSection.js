@@ -47,10 +47,10 @@ function UpgradeSection() {
         <>
             <div className="row">
                 <div className="col-md-6">
-                    <Typography align="justify" >
+                    <Typography align="justify" variant="h5">
                         {t("Current Plan")}
                     </Typography>
-                    <Typography align="justify" >
+                    <Typography align="justify" variant="subtitle1" >
                         {themeDirection == 'ltr' ? currentPlan.name : currentPlan.nameAr}
                     </Typography>
                 </div>

@@ -2,6 +2,7 @@ import http from "./httpService";
 import links from "../constants/links";
 
 const planUrl = links.plan;
+const invoiceUrl = links.invoice;
 
 
 
@@ -13,6 +14,9 @@ const getPlansFeatures = () => {
   return http.get(planUrl.getPlansFeatures);
 };
 
+const getBancks = () => {
+  return http.get(invoiceUrl.getBanks);
+};
 
 const activePromtion = (code, plan, duration) => {
   let serviceUrl = planUrl.getPromtion;
@@ -25,5 +29,6 @@ const activePromtion = (code, plan, duration) => {
 export default {
   getPlans,
   getPlansFeatures,
-  activePromtion
+  activePromtion,
+  getBancks
 };
