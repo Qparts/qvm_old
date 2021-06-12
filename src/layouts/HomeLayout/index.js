@@ -2,12 +2,10 @@ import React from 'react';
 import TopBar from './TopBar';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import HomeSections from './HomeSections';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
   root: { height: '100%' },
-  content: { height: '100%' }
 }));
 
 // ----------------------------------------------------------------------
@@ -22,9 +20,6 @@ function HomeLayout({ children }) {
   return (
     <div className={classes.root}>
       <TopBar />
-      <div className={classes.content}>
-        <HomeSections/>
-      </div>
     </div>
   );
 }

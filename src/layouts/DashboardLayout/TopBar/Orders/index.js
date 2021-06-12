@@ -1,9 +1,11 @@
+import { Icon } from '@iconify/react';
 import Scrollbars from 'src/components/Scrollbars';
-import NotificationItem from './NotificationItem';
+import OrderCom from './Orders';
 import PopoverMenu from 'src/components/PopoverMenu';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useRef, useState, useEffect } from 'react';
+import doneAllFill from '@iconify-icons/eva/done-all-fill';
 import {
   markAllAsRead,
   getNotifications
@@ -20,7 +22,7 @@ import {
   ListSubheader
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
-import { Note } from '../../../../icons/icons';
+import { Orders } from '../../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +63,7 @@ function Notifications() {
         color={isOpen ? 'primary' : 'default'}
       >
         <Badge badgeContent={totalUnRead} color="error">
-          <Note width='24' height='24' fill='#7E8D99' />
+          <Orders width='24' height='24' fill='#7E8D99' fillArr='#F20505'/>
         </Badge>
       </MIconButton>
 
@@ -82,6 +84,7 @@ function Notifications() {
           {totalUnRead > 0 && (
             <Tooltip title=" Mark all as read">
               <MIconButton color="primary" onClick={handleMarkAllAsRead}>
+                <Icon icon={doneAllFill} width={20} height={20} />
               </MIconButton>
             </Tooltip>
           )}
@@ -104,7 +107,7 @@ function Notifications() {
               }
             >
               {notifications.slice(0, 2).map((notification) => (
-                <NotificationItem
+                <OrderCom
                   key={notification.id}
                   notification={notification}
                 />
@@ -124,7 +127,7 @@ function Notifications() {
               }
             >
               {notifications.slice(2, 5).map((notification) => (
-                <NotificationItem
+                <OrderCom
                   key={notification.id}
                   notification={notification}
                 />

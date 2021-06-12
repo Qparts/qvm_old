@@ -1,17 +1,44 @@
 {
   "home": "الرئيسية",
-  "catalog": "كاتالوج القطع",
+  "catalog": "كاتالوج",
   "prices": "الاسعار",
   "contactUs": "اتصل بنا",
   "login": "تسجيل دخول",
-  "partSearch": "بحث القطع",
-  "quotationsReport": "تقرير التسعيرات",
-  "specialOffer": "عروض خاصة",
   "registeration": "إنشاء حساب",
-  "replacements": "البدائل",
-  "specialOfferUpload": "رفع العروض الخاصة",
+  "orders": "طلبات",
+  "reports": "تقارير",
+  "offers": "عروض",
+  "settings": "إعدادات",
+  "advertise now": "إعلن معنا",
   "stockUpload": "رفع المخزون",
   "Subscriber already registered": "المشترك مسجل بالفعل",
+  "qvm orders": "الطلبات من خلال المنصة",
+  "daily searches": "عمليات البحث اليومى",
+  "qvm parts": "عدد القطع على المنصة",
+  "latest offers": "آخر العروض",
+  "see all offers": "تصفح كل العروض",
+  "end of offer": "نهاية العرض",
+  "parts number": "عدد القطع",
+  "discount": "قيمة الخصم",
+  "The offer time has passed": "مضى من وقت العرض",
+  "The most searched parts on QVM": "قطع الغيار الاكثر بحثا على المنصة",
+  "Find the parts you need": "إبحث عن القطع التى تحتاجها",
+  "Part No": "القطعة",
+  "Lowest price": "أقل سعر",
+  "quantity": "الكمية",
+  "Most searched catalog": "الكتالوج الاكثر بحثا",
+  "Structure No": "رقم الهيكل",
+  "Search the catalog": "إبحث عن الكتالوج",
+  "order": "طلب",
+  "branch": "فرع",
+  "user": "مستخدم",
+  "basic": "الباقة الأساسية",
+  "upgrade to premium": "الترقية للباقة المميزة",
+  "use basic": "إستخدم الباقة الأساسية",
+  "attempts out of": "محاولات من",
+  "parts number in your stock": "عدد القطع فى مخزونك",
+  "upload stock": "رفع المخزون",
+  "search attempts": "محاولات بحث",
   "common": {
     "enterDetails": "أدخل التفاصيل الخاصة بك أدناه",
     "email": "البريد الإلكتروني",
@@ -28,7 +55,6 @@
     "forgetPassword": "هل نسيت كلمة المرور؟",
     "noAccount": "ليس لديك حساب؟",
     "registerNow": "سجل الان",
-
     "error": {
       "require": {
         "email": " البريدالالكترومى مطلوب",
@@ -54,13 +80,11 @@
     "policyConfirmation": "سياسة الخصوصية",
     "confirmMessagePart2": " منصة التجار QVM و ",
     "defination": "يمكنك الوصول إلى أكبر عدد من قطع غيار السيارات و التعامل مع أكبر عدد من الموردين",
-
     "service1": "كاتالوج القطع",
     "service2": "بإمكانك معرفة مكان توفر القطعة وسعرها",
     "service3": "بدائل متعددة من البراندات",
     "service4": "عروض خاصة",
     "service5": "اصدار و استقبال امر شراء",
-
     "error": {
       "require": {
         "companyName": "اسم الشركة مطلوب",
@@ -94,7 +118,6 @@
     "title": "شكرا لك على التسجيل في QVM",
     "message": "تم إرسال طلبك ، وسيقوم فريقنا بمراجعة طلبك وسنتواصل معك قريبًا."
   },
-
   "forgotPassword": {
     "title": "هل نسيت رقمك السري؟",
     "message": "يرجى إدخال عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك عبر البريد الإلكتروني رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",

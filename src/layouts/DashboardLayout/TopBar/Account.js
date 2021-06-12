@@ -3,7 +3,6 @@ import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
 import useAuth from 'src/hooks/useAuth';
 import { PATH_APP } from 'src/routes/paths';
-import MyAvatar from 'src/components/MyAvatar';
 import React, { useRef, useState } from 'react';
 import homeFill from '@iconify-icons/eva/home-fill';
 import PopoverMenu from 'src/components/PopoverMenu';
@@ -14,6 +13,7 @@ import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import { User } from '../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -92,7 +92,7 @@ function Account() {
         onClick={handleOpen}
         className={clsx(classes.btnAvatar, { [classes.isSelected]: isOpen })}
       >
-        <MyAvatar />
+        <User width='24' height='24' fill='#7E8D99' />
       </MIconButton>
 
       <PopoverMenu
@@ -103,10 +103,10 @@ function Account() {
       >
         <Box sx={{ my: 2, px: 2.5 }}>
           <Typography variant="subtitle1" noWrap>
-            {user.displayName}
+            {user.length > 0 ? user.subscriber.name : ''}
           </Typography>
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user.email}
+            {user.length > 0 ? user.subscriber.email : ''}
           </Typography>
         </Box>
 
