@@ -5,7 +5,7 @@ import { Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify-icons/eva/eye-fill';
 import eyeOffFill from '@iconify-icons/eva/eye-off-fill';
 import { emailError, passwordError } from 'src/utils/helpError';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Select, MenuItem } from "@material-ui/core";
 import {
   Box,
@@ -13,23 +13,31 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  NativeSelect
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
+import { cleanup } from 'src/redux/slices/branches';
 
 // ----------------------------------------------------------------------
 
-RegisterForm.propTypes = {
+AddUserForm.propTypes = {
   formik: PropTypes.object.isRequired
 };
 
-function RegisterForm({ formik }) {
+function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) {
   const [showPassword, setShowPassword] = useState(false);
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  const { themeDirection } = useSelector((state) => state.settings);
+
   const { countries } = useSelector(
     (state) => state.authJwt
+  );
+
+  const { branches } = useSelector(
+    (state) => state.branches
   );
 
 
@@ -38,17 +46,6 @@ function RegisterForm({ formik }) {
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-
-        <TextField
-          fullWidth
-          name="email"
-          label={t("Company Name")}
-          {...getFieldProps('companyName')}
-          error={Boolean(touched.companyName && errors.companyName)}
-          helperText={touched.companyName && errors.companyName}
-        />
-
-        <Box sx={{ mb: 3 }} />
         <TextField
           fullWidth
           name="email"
@@ -66,7 +63,7 @@ function RegisterForm({ formik }) {
         />
         <Box sx={{ mb: 3 }} />
 
-        <Grid container >
+        <Grid container spacing={4}>
           <Grid item xs={5} >
             <Select
               labelId="countryId"
@@ -79,7 +76,7 @@ function RegisterForm({ formik }) {
                   key={country.id}
                   value={country.id}
                 >
-                  (+{country.countryCode}) {document.body.dir === "rtl" ? country.nameAr : country.name}
+                  (+{country.countryCode}) {themeDirection === "rtl" ? country.nameAr : country.name}
                 </MenuItem>
               ))}
             </Select>
@@ -114,13 +111,36 @@ function RegisterForm({ formik }) {
         <Box sx={{ mb: 3 }} />
 
         <TextField
+          select
+          fullWidth
+          label={t("Branch")}
+          placeholder={t("Branch")}
+          // defaultValue={selectedBranch ? selectedBranch.id : 0}
+          disabled={selectedBranch != null}
+          {...getFieldProps('branch')}
+          SelectProps={{ native: true }}
+          error={Boolean(touched.branch && errors.branch)}
+          helperText={touched.branch && errors.branch}
+        >
+          <option value="" />
+          {branches.map((option) => (
+            <option key={option.id} value={option.id}>
+              {option.branchName}
+            </option>
+          ))}
+        </TextField>
+
+
+        <Box sx={{ mb: 3 }} />
+
+        <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
           label={t("Password")}
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
-              <InputAdornment>
+              <InputAdornment position="start">
                 <IconButton
                   edge="end"
                   onClick={() => setShowPassword((prev) => !prev)}
@@ -139,20 +159,47 @@ function RegisterForm({ formik }) {
             passwordError(errors.afterSubmit).helperText
           }
         />
+
         <Box sx={{ mt: 3 }}>
-          <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-            pending={isSubmitting}
-          >
-            {t("Signup")}
-          </LoadingButton>
+
+          <div className="row">
+
+            <div className="col-md-6">
+              <LoadingButton
+                fullWidth
+                size="large"
+                type="submit"
+                variant="contained"
+                pending={isSubmitting}
+              >
+                {t("Create")}
+              </LoadingButton>
+            </div>
+
+            <div className="col-md-6">
+              <LoadingButton
+                fullWidth
+                size="large"
+                variant="contained"
+                pending={isSubmitting}
+                onClick={() => {
+                  dispatch(cleanup());
+                  if (setSelectedBranch)
+                    setSelectedBranch(null);
+                  closePopup(false)
+                }}
+              >
+                {t("Cancel")}
+              </LoadingButton>
+
+            </div>
+
+          </div>
         </Box>
+
       </Form>
     </FormikProvider>
   );
 }
 
-export default RegisterForm;
+export default AddUserForm;

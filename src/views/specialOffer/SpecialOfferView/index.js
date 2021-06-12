@@ -58,7 +58,7 @@ function SpecialOfferView(props) {
 
     return (
         <Page
-            title={t("specialOfferTab.title")}
+            title={t("Special Offers")}
             className={classes.root}
         >
 
@@ -77,7 +77,7 @@ function SpecialOfferView(props) {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        {selectedOffer == null || offerId == null ? <Typography variant="h4">{t("specialOfferTab.title")}</Typography> :
+                        {selectedOffer == null || offerId == null ? <Typography variant="h4">{t("Special Offers")}</Typography> :
                             <>
                                 <div className="row">
                                     <div className="col-12">
@@ -95,11 +95,11 @@ function SpecialOfferView(props) {
                                     </Typography>
                                     <CalendarTodayRoundedIcon />
                                     <Typography style={{ marginLeft: 20, marginRight: 20 }}>
-                                        {t("specialOfferTab.startIn")}  {helper.toDate(selectedOffer.endDate)}
+                                        {t("Start in")}  {helper.toDate(selectedOffer.endDate)}
                                     </Typography>
 
                                     <Typography style={{ marginLeft: 20, marginRight: 20 }}>
-                                        {t("specialOfferTab.expiresIn")}  {helper.toDate(selectedOffer.endDate)}
+                                        {t("Expires in")}  {helper.toDate(selectedOffer.endDate)}
                                     </Typography>
 
                                 </div>

@@ -33,7 +33,7 @@ function CarItems() {
 
             <Grid item xs={12} md={12} lg={12}>
                 <Card style={{ overflowX: 'scroll' }}>
-                    <CardHeader title={t("catalogTab.carDetails")} />
+                    <CardHeader title={t("Car Details")} />
                     <CardContent className={classes.cardContent}>
                         <div>
                             <table className="table table-bordered mt-3 catalog-result">
@@ -75,7 +75,7 @@ function CarItems() {
                                                             dispatch(getGroups(catalogId, carId, null, null, car));
                                                         }}
                                                     >
-                                                        {t("catalogTab.browCatalog")}
+                                                        {t("Browse Catalog")}
                                                     </Button>
                                                 </div>
                                             </td>

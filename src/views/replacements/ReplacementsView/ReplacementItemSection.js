@@ -50,7 +50,7 @@ function ReplacementItemSection({ replacementItem }) {
 
                     <div className="row">
                         <div className="col-md-6">
-                            {t("searchTab.partNo")}
+                            {t("Part Number")}
                         </div>
 
                         <div className="col-md-6">
@@ -58,7 +58,7 @@ function ReplacementItemSection({ replacementItem }) {
                         </div>
 
                         <div className="col-md-6">
-                            {t("searchTab.brand")}
+                            {t("Brand")}
                         </div>
 
                         <div className="col-md-6">
@@ -66,7 +66,7 @@ function ReplacementItemSection({ replacementItem }) {
                         </div>
 
                         <div className="col-md-6">
-                            {t("searchTab.descripition")}
+                            {t("Description")}
                         </div>
 
                         <div className="col-md-6">
@@ -92,11 +92,11 @@ function ReplacementItemSection({ replacementItem }) {
                     <Datatable
                         header={[
                             {
-                                name: t("searchTab.partNo"),
+                                name: t("Part Number"),
                                 attr: 'articleNumber',
                             },
                             {
-                                name: t("searchTab.brand"),
+                                name: t("Brand"),
                                 attr: 'mfrName'
                             }
 
@@ -107,6 +107,8 @@ function ReplacementItemSection({ replacementItem }) {
                         page={page}
                         isLazy={false}
                         rowsPerPage={rowsPerPage}
+                        hasPagination={true}
+
                     />
 
                 </CardContent >

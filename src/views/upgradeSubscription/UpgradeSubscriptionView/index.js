@@ -10,6 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
+import PremiumPlanDurationSection from './PremiumPlanDurationSection';
 
 // ----------------------------------------------------------------------
 
@@ -31,15 +32,17 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function StockUploadView() {
+function UpgradeSubscriptionView() {
     const classes = useStyles();
     const { isLoading } = useSelector((state) => state.stockUpload);
     const { t } = useTranslation();
-
+    const { planFeatures, currentPlan } = useSelector(
+        (state) => state.authJwt
+    );
 
     return (
         <Page
-            title={t("stockUploadTab.title")}
+            title={t("Upgrade to Premium")}
             className={classes.root}
         >
 
@@ -58,11 +61,11 @@ function StockUploadView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("Stock Upload")}</Typography>
+                        <Typography variant="h4">{t("Upgrade to Premium")}</Typography>
                         <hr />
                     </Box>
 
-
+                    <PremiumPlanDurationSection />
                 </Container>
             </LoadingOverlay>
 
@@ -70,4 +73,4 @@ function StockUploadView() {
     );
 }
 
-export default StockUploadView;
+export default UpgradeSubscriptionView;

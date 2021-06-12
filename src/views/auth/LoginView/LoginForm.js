@@ -48,7 +48,7 @@ function LoginForm({ formik }) {
         <TextField
           fullWidth
           type="email"
-          label={t("common.email")}
+          label={t("Email Address")}
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -63,7 +63,7 @@ function LoginForm({ formik }) {
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label={t("signin.password")}
+          label={t("Password")}
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
@@ -98,7 +98,7 @@ function LoginForm({ formik }) {
                 checked={values.remember}
               />
             }
-            label={t("signin.rememberMe")}
+            label={t("Remember me")}
           />
 
           <Link
@@ -106,8 +106,9 @@ function LoginForm({ formik }) {
             variant="subtitle2"
             to={PATH_PAGE.auth.forgotPassword}
           >
-            {t("signin.forgetPassword")}
+            {t("Forgot Password?")}
           </Link>
+
         </Box>
 
         <LoadingButton
@@ -117,7 +118,7 @@ function LoginForm({ formik }) {
           variant="contained"
           pending={isSubmitting}
         >
-          {t("signin.login")}
+          {t("Login")}
         </LoadingButton>
       </Form>
     </FormikProvider>

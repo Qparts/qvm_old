@@ -23,4 +23,5 @@ function HomeLayout({ children }) {
     </div>
   );
 }
+
 export default HomeLayout;

@@ -68,7 +68,7 @@ function ReplacementsView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("replacementsTab.title")}</Typography>
+                        <Typography variant="h4">{t("Replacement Parts Search")}</Typography>
                         <hr />
                     </Box>
 

@@ -39,7 +39,7 @@ function SpecialOfferUpload() {
 
     return (
         <Page
-            title={t("specialOfferUploadTab.title")}
+            title={t("Special Offer Upload")}
             className={classes.root}
         >
 
@@ -58,7 +58,7 @@ function SpecialOfferUpload() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("specialOfferUploadTab.title")}</Typography>
+                        <Typography variant="h4">{t("Special Offer Upload")}</Typography>
                         <hr />
                     </Box>
 

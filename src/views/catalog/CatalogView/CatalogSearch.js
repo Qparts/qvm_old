@@ -55,7 +55,7 @@ function CatalogSearch() {
 
             <Grid item xs={6} md={6} lg={6}>
                 <Card >
-                    <CardHeader title={t("catalogTab.vinTitle")} />
+                    <CardHeader title={t("Find Catalog by VIN number")} />
                     <CardContent className={classes.cardContent}>
                         <SearchBox handleSubmit={handleQuerySubmit} />
                     </CardContent >
@@ -66,12 +66,12 @@ function CatalogSearch() {
 
             <Grid item xs={6} md={6} lg={6}>
                 <Card >
-                    <CardHeader title={t("catalogTab.listTitle")} />
+                    <CardHeader title={t("Find Catalog from List")} />
                     <CardContent className={classes.cardContent}>
 
                         <div className="mt-form">
                             <FormControl required className="w-100">
-                                <InputLabel id="catalog-id">{t("catalogTab.catalog")}</InputLabel>
+                                <InputLabel id="catalog-id">{t("Catalog")}</InputLabel>
                                 <Select
                                     native={true}
                                     labelId="catalog-id"
@@ -97,7 +97,7 @@ function CatalogSearch() {
 
                         <div className="mt-form">
                             <FormControl required className="w-100">
-                                <InputLabel id="model-id">{t("catalogTab.model")}</InputLabel>
+                                <InputLabel id="model-id">{t("Car Model")}</InputLabel>
                                 <Select
                                     native={true}
                                     labelId="model-id"
@@ -127,7 +127,7 @@ function CatalogSearch() {
                             disabled={selectedCatalog == null || selectedModel == null}
                             onClick={getCars}
                         >
-                            {t("catalogTab.carDetails")}
+                            {t("Car Details")}
                         </Button>
 
                     </CardContent>

@@ -59,8 +59,8 @@ function ForgotPasswordView() {
 
   const ResetPasswordSchema = Yup.object().shape({
     email: Yup.string()
-      .email(t("forgotPassword.error.invalid.email"))
-      .required(t("forgotPassword.error.require.email"))
+      .email(t("Email Is Invalid"))
+      .required(t("Email Is Required"))
   });
 
   const formik = useFormik({
@@ -102,10 +102,10 @@ function ForgotPasswordView() {
           {!sent ? (
             <>
               <Typography variant="h3" gutterBottom>
-                {t("forgotPassword.title")}
+                {t("Forgot your password?")}
               </Typography>
               <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                {t("forgotPassword.message")}
+                {t("Please enter the email address associated with your account and We will email you a link to reset your password.")}
               </Typography>
 
               <ForgotPasswordForm formik={formik} />
@@ -117,7 +117,7 @@ function ForgotPasswordView() {
                 to={PATH_PAGE.auth.login}
                 sx={{ mt: 1 }}
               >
-                {t("common.back")}
+                {t("Back")}
               </Button>
             </>
           ) : (
@@ -129,13 +129,13 @@ function ForgotPasswordView() {
                 sx={{ mb: 5, mx: 'auto' }}
               />
               <Typography variant="h3" gutterBottom>
-                {t("forgotPassword.successRequest")}
+                {t("Request sent successfully")}
               </Typography>
               <Typography>
-                {t("forgotPassword.confirmMessage")} &nbsp;
+                {t("We have sent a confirmation email to")} &nbsp;
                 <strong>{formik.values.email}</strong>
                 <br />
-                {t("verification.checkEmail")}
+                {t("Please check your email!")}
               </Typography>
 
               <Button
@@ -145,7 +145,7 @@ function ForgotPasswordView() {
                 to={PATH_PAGE.auth.login}
                 sx={{ mt: 5 }}
               >
-                {t("common.back")}
+                {t("Back")}
               </Button>
             </Box>
           )}

@@ -38,7 +38,7 @@ function ProductDetails() {
                         <CardContent>
                             <div className="row">
                                 <div className="col-md-6">
-                                    {t("searchTab.partNo")}
+                                    {t("Part Number")}
                                 </div>
 
                                 <div className="col-md-6">
@@ -46,7 +46,7 @@ function ProductDetails() {
                                 </div>
 
                                 <div className="col-md-6">
-                                    {t("searchTab.brand")}
+                                    {t("Brand")}
                                 </div>
 
                                 <div className="col-md-6">
@@ -54,7 +54,7 @@ function ProductDetails() {
                                 </div>
 
                                 <div className="col-md-6">
-                                    {t("searchTab.descripition")}
+                                    {t("Description")}
                                 </div>
 
                                 <div className="col-md-6">
@@ -62,7 +62,7 @@ function ProductDetails() {
                                 </div>
 
                                 <div className="col-md-6">
-                                   { t("searchTab.averagePrice")}
+                                   { t("Average market price")}
                                 </div>
 
                                 <div className="col-md-6">

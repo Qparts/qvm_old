@@ -1,11 +1,12 @@
 import jwtDecode from 'jwt-decode';
-// import axios from 'src/utils/axios';
 import axios from 'axios';
 import auth from "../../services/authService";
 import locationService from "../../services/locationService";
 
 
 import { createSlice } from '@reduxjs/toolkit';
+import settingService from 'src/services/settingService';
+import planService from 'src/services/planService';
 
 // ----------------------------------------------------------------------
 
@@ -13,8 +14,13 @@ const initialState = {
   isLoading: false,
   isAuthenticated: false,
   user: {},
+  loginObject: null,
   countries: [],
   error: '',
+  availablePlans: [],
+  currentPlan: null,
+  premiumPlan: null,
+  planFeatures: [],
   validResetToken: false
 };
 
@@ -32,13 +38,19 @@ const slice = createSlice({
       state.isLoading = false;
       state.isAuthenticated = action.payload.isAuthenticated;
       state.user = action.payload.user;
+      state.loginObject = action.payload.user;
       state.countries = action.payload.countries;
+      state.currentPlan = action.payload.currentPlan;
+      state.planFeatures = action.payload.planFeatures;
+      state.availablePlans = action.payload.availablePlans;
+      state.premiumPlan = action.payload.premiumPlan;
     },
 
     // LOGIN
     loginSuccess(state, action) {
       state.isAuthenticated = true;
       state.user = action.payload.user;
+      state.loginObject = action.payload.user;
       state.error = ''
     },
     loginFail(state, action) {
@@ -97,6 +109,10 @@ const slice = createSlice({
       state.error = action.payload;
     },
 
+    updateLoginObject(state, action) {
+      state.loginObject = action.payload.loginObject;
+      localStorage.setItem("loginObject", JSON.stringify(action.payload.loginObject));
+    },
 
     // LOGOUT
     logoutSuccess(state) {
@@ -110,6 +126,14 @@ const slice = createSlice({
 export default slice.reducer;
 
 // ----------------------------------------------------------------------
+
+// Actions
+export const {
+  updateLoginObject,
+} = slice.actions;
+
+// ----------------------------------------------------------------------
+
 
 const isValidToken = (accessToken) => {
   if (!accessToken) {
@@ -242,24 +266,54 @@ export function resetPassword({ code, newPassword }) {
   };
 }
 
+
+// ----------------------------------------------------------------------
+
+export function refreshToken() {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      const loginUser = JSON.parse(localStorage.getItem("loginObject"));
+      const refreshJwt = loginUser.refreshJwt;
+      const token = loginUser.jwt;
+      const { data: loginObject } = await settingService.refreshToken(
+        token,
+        refreshJwt
+      );
+      loginObject.refreshJwt = refreshJwt;
+      dispatch(slice.actions.updateLoginObject({ loginObject: loginObject }));
+    } catch (error) {
+      dispatch(slice.actions.resetPasswordFail(error.response.data));
+    }
+
+  };
+}
+
+
 // ----------------------------------------------------------------------
 
 export function getInitialize() {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      //load countries
       let { data: countries } = await locationService.getCountries();
       const accessToken = window.localStorage.getItem('accessToken');
-
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
-        const user = localStorage.getItem('loginObject');
+        const { data: plans } = await planService.getPlans();
+        const { data: planFeatures } = await planService.getPlansFeatures();
+        const loginObject = JSON.parse(localStorage.getItem('loginObject'));
+        let currentPlan = getCurrentPlan(plans, loginObject.company.subscriptions[0].planId)
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
-            user: JSON.parse(user),
-            countries: countries
+            user: loginObject,
+            loginObject: loginObject,
+            countries: countries,
+            currentPlan: currentPlan,
+            planFeatures: planFeatures,
+            availablePlans: plans,
+            premiumPlan: plans.find(e => e.name == 'Premium Plan')
           })
         );
       } else {
@@ -267,18 +321,38 @@ export function getInitialize() {
           slice.actions.getInitialize({
             isAuthenticated: false,
             user: null,
-            countries: countries
+            loginObject: null,
+            countries: countries,
+            currentPlan: null,
+            planFeatures: [],
+            availablePlans: [],
           })
         );
       }
     } catch (error) {
-      console.error(error);
       dispatch(
         slice.actions.getInitialize({
           isAuthenticated: false,
-          user: null
+          user: null,
+          currentPlan: null,
+          planFeatures: [],
+          availablePlans: []
         })
       );
     }
   };
+}
+
+// ----------------------------------------------------------------------
+
+
+const getCurrentPlan = (plans, planId) => {
+  if (plans && plans.length > 0) {
+    for (let p of plans) {
+      if (p.id == planId) {
+        return p;
+      }
+    }
+  }
+  return null;
 }

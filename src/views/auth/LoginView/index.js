@@ -24,9 +24,10 @@ import {
   Typography
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
-import { useSelector } from 'react-redux';
+import { useSelector , useDispatch} from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
+import { getInitialize } from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -68,6 +69,7 @@ function LoginView() {
   const classes = useStyles();
   const { method, login } = useAuth();
   const isMountedRef = useIsMountedRef();
+  const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
@@ -91,9 +93,9 @@ function LoginView() {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email(t("signin.error.invalid.email"))
-      .required(t("signin.error.require.email")),
-    password: Yup.string().required(t("signin.error.require.password"))
+      .email(t("Email Is Invalid"))
+      .required(t("Email Is Required")),
+    password: Yup.string().required(t("Password Is Required"))
   });
 
   const formik = useFormik({
@@ -109,6 +111,8 @@ function LoginView() {
           email: values.email,
           password: values.password
         });
+
+        await dispatch(getInitialize());
 
         setLoaded(true);
 
@@ -140,14 +144,14 @@ function LoginView() {
               mt: { md: -2 }
             }}
           >
-            {t("signin.noAccount")} &nbsp;
+            {t("Don't have account?")} &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_PAGE.auth.register}
             >
-              {t("signin.registerNow")}
+              {t("Register now")}
             </Link>
 
             <Languages />
@@ -164,10 +168,10 @@ function LoginView() {
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
               <Typography variant="h4" gutterBottom>
-                {t("signin.title")}
+                {t("Sign into QVM Vendor Market Place")}
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                {t("common.enterDetails")}
+                {t("Enter your details below")}
               </Typography>
             </Box>
             <Tooltip title={'QVM'}>
