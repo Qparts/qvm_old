@@ -10,7 +10,7 @@ import {
     Typography, Alert, OutlinedInput,
     TextField
 } from '@material-ui/core';
-import planService from 'src/services/planService';
+import paymentService from 'src/services/paymentService';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { GoSell } from "@tap-payments/gosell";
 import { LoadingButton } from '@material-ui/lab';
@@ -19,6 +19,9 @@ import Datatable from 'src/components/table/DataTable';
 import ImageUploader from 'react-images-upload';
 import { InputLabel } from '@material-ui/core';
 import constants from 'src/utils/constants';
+import uploadService from 'src/services/uploadService';
+import helper from 'src/utils/helper';
+import { Redirect } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -53,13 +56,7 @@ function PremiumPlanSubscription({ planDuration }) {
     ];
 
     const [banckAccounts, setBanckAccounts] = useState([]);
-    // const banckAccounts = [
-    //     {
-    //         bankName: 'HSBC', bankNameAr: 'HSBC', accountNumber: '123456789012',
-    //         iban: '123445678901234', accountName: 'شركة تطبيق قطع للتجارة',
-    //         accountNameAr: 'شركة تطبيق قطع للتجارة'
-    //     },
-    // ]
+
     const [paymentMethod, setPaymentMethod] = useState(2);
 
 
@@ -69,35 +66,13 @@ function PremiumPlanSubscription({ planDuration }) {
 
     const { themeDirection } = useSelector((state) => state.settings);
 
+    const { countries } = useSelector(
+        (state) => state.authJwt
+    );
+
     const [discount, setDiscount] = useState(0);
     const [promotion, setPromotion] = useState(null);
     const [code, setCode] = useState('');
-
-
-    useEffect(() => {
-
-        (async () => {
-            const { data: bancks } = await planService.getBancks();
-            setBanckAccounts(bancks);
-        })()
-
-    }, [])
-
-
-    const handleSubmit = async ({ code }) => {
-        const { data: promotionValue } = await planService.activePromtion(code, premiumPlan.id, planDuration.id);
-        if (promotionValue) {
-            setPromotion(promotionValue);
-        }
-    }
-
-    const callbackFunc = (response) => {
-        console.log(response);
-    }
-
-    const onAttach = (picture) => {
-        setReceipt(picture[0])
-    }
 
     const price = planDuration ?
         Math.round(((premiumPlan.price / 360) - (planDuration.discountPercentage * (premiumPlan.price / 360))) * planDuration.calculationDays)
@@ -111,6 +86,65 @@ function PremiumPlanSubscription({ planDuration }) {
     const totalAmount = planDuration ?
         planPrice + vatAmount
         : 0;
+
+
+    useEffect(() => {
+
+        (async () => {
+            const { data: bancks } = await paymentService.getBancks();
+            setBanckAccounts(bancks);
+        })()
+
+    }, [])
+
+
+    const handleSubmit = async ({ code }) => {
+        const { data: promotionValue } = await paymentService.activePromtion(code, premiumPlan.id, planDuration.id);
+        if (promotionValue) {
+            setPromotion(promotionValue);
+        }
+    }
+
+    const callbackFunc = (response) => {
+        console.log(response);
+    }
+
+    const onAttach = async (picture) => {
+        setReceipt(picture[0]);
+        const formData = new FormData();
+        formData.append("id", loginObject.subscriber.id);
+        formData.append("file", picture[0]);
+        await uploadService.uploadBanckReceipt(formData);
+    }
+
+
+    const submitPaymentOrder = async () => {
+        let country = countries.find((e) => e.id === loginObject.company.countryId);
+        const { data: payment } = await paymentService.paymentOrder(
+            {
+                salesType: "S",
+                paymentMethod: "C",
+                planId: premiumPlan.id,
+                promoId: promotion ? promotion.id : 0,
+                durationId: planDuration.id,
+                calculationDays: planDuration.calculationDays,
+                actualDays: planDuration.actualDays,
+                baseAmount: price,
+                planDiscount: planDuration.discountPercentage * (premiumPlan.price / 360),
+                promoDiscount: promotion != null ? promotion.discountPercentage * price : 0,
+                vatPercentage: .15,
+                startDate: (new Date()).getTime(),
+                countryId: loginObject.company.countryId,
+                description: `Subscription Fees - Plan ID: ${premiumPlan.id} , Duration ID: ${planDuration.id}`,
+                country: country.name,
+                firstName: loginObject.subscriber.name,
+                lastName: loginObject.subscriber.name,
+                email: loginObject.subscriber.email,
+                countryCode: country.countryCode
+            })
+
+        window.location = payment.url;
+    }
 
 
 
@@ -226,7 +260,7 @@ function PremiumPlanSubscription({ planDuration }) {
                                 variant="contained"
                                 size="large"
                                 onClick={() => {
-                                    GoSell.openPaymentPage();
+                                    submitPaymentOrder();
                                 }}
                             >
                                 {t("Checkout")}

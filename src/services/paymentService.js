@@ -26,9 +26,19 @@ const activePromtion = (code, plan, duration) => {
   return http.get(serviceUrl);
 }
 
+const paymentOrder = (data) => {
+  return http.post(invoiceUrl.paymentOrder , data);
+};
+
+const updatePaymentOrder = (data) => {
+  return http.put(invoiceUrl.paymentOrder , data);
+};
+
 export default {
   getPlans,
   getPlansFeatures,
   activePromtion,
-  getBancks
+  getBancks,
+  paymentOrder,
+  updatePaymentOrder
 };

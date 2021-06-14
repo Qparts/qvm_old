@@ -61,7 +61,7 @@ function SubscriptionView() {
                         {
                             loginObject.company.subscriptions.map((item, index) => {
                                 return (
-                                    <div>
+                                    <div key={index}>
                                         <Typography variant="subtitle1" align="justify">
                                             {item.status == 'B' ?
                                                 t("Basic Plan") : item.status == 'A' ? t("Premium Plan") + "(" + t("Active") + ")" : t("Premium Plan")}

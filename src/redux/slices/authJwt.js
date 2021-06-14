@@ -6,7 +6,7 @@ import locationService from "../../services/locationService";
 
 import { createSlice } from '@reduxjs/toolkit';
 import settingService from 'src/services/settingService';
-import planService from 'src/services/planService';
+import paymentService from 'src/services/paymentService';
 
 // ----------------------------------------------------------------------
 
@@ -111,6 +111,7 @@ const slice = createSlice({
 
     updateLoginObject(state, action) {
       state.loginObject = action.payload.loginObject;
+      state.user = action.payload.loginObject;
       localStorage.setItem("loginObject", JSON.stringify(action.payload.loginObject));
     },
 
@@ -118,6 +119,7 @@ const slice = createSlice({
     logoutSuccess(state) {
       state.isAuthenticated = false;
       state.user = null;
+      state.loginObject = null;
     }
   }
 });
@@ -217,6 +219,7 @@ export function verify({ email, code }) {
 
 export function logout() {
   return async (dispatch) => {
+    localStorage.removeItem("loginObject");
     setSession(null);
     dispatch(slice.actions.logoutSuccess());
   };
@@ -283,7 +286,7 @@ export function refreshToken() {
       loginObject.refreshJwt = refreshJwt;
       dispatch(slice.actions.updateLoginObject({ loginObject: loginObject }));
     } catch (error) {
-      dispatch(slice.actions.resetPasswordFail(error.response.data));
+      dispatch(slice.actions.resetPasswordFail(error?.response?.data));
     }
 
   };
@@ -300,10 +303,10 @@ export function getInitialize() {
       const accessToken = window.localStorage.getItem('accessToken');
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
-        const { data: plans } = await planService.getPlans();
-        const { data: planFeatures } = await planService.getPlansFeatures();
+        const { data: plans } = await paymentService.getPlans();
+        const { data: planFeatures } = await paymentService.getPlansFeatures();
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
-        let currentPlan = getCurrentPlan(plans, loginObject.company.subscriptions[0].planId)
+        let currentPlan = getCurrentPlan(plans, loginObject.company.subscriptions[0]);
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
@@ -346,13 +349,23 @@ export function getInitialize() {
 // ----------------------------------------------------------------------
 
 
-const getCurrentPlan = (plans, planId) => {
+const getCurrentPlan = (plans, plan) => {
+  let currentPlan = null;
   if (plans && plans.length > 0) {
-    for (let p of plans) {
-      if (p.id == planId) {
-        return p;
+    currentPlan = plans[0];
+    if (plan.status == 'A') {
+      for (let p of plans) {
+        if (p.id == plan.planId) {
+          currentPlan = p;
+          currentPlan.status = plan.status;
+          return currentPlan;
+        }
       }
     }
+    else {
+      currentPlan.status = plan.status;
+      return currentPlan;
+    }
   }
-  return null;
+  return currentPlan;
 }

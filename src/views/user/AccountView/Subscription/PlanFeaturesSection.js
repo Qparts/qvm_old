@@ -70,7 +70,7 @@ function PlanFeaturesSection() {
             <div className="row">
                 {planFeatures.find(e => e.name == currentPlan.name).features.map((feature, index) => {
                     return (
-                        <div className="col-md-6">
+                        <div className="col-md-6" key={index}>
                             <div className="row">
                                 <div className="col-md-6">
                                     {themeDirection == 'ltr' ? feature.name : feature.nameAr}

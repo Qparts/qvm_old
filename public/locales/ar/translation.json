@@ -213,6 +213,9 @@
   "Promotion discount applied" : "تم اضافة الخصم الترويجي :",
   "Basic Plan" : "الباقة الأساسية",
   "Active" : "صالحة",
-  "Subscrip Date" : "تاريخ الإشتراك"
+  "Subscrip Date" : "تاريخ الإشتراك",
+  "Transaction Declined" : "تم رفض الصفقة",
+  "transaction successful" : "عملية ناجحة"
+
 
 }

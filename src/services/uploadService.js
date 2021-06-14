@@ -15,6 +15,17 @@ function updateCompanyLogo(data) {
 }
 
 
+function uploadBanckReceipt(data) {
+    const config = {
+        headers: {
+            'content-type': 'multipart/form-data'
+        }
+    }
+    return http.post(uploadUrl.postBankReceipt, data, config);
+}
+
+
 export default {
     updateCompanyLogo,
+    uploadBanckReceipt
 };

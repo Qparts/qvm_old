@@ -216,5 +216,7 @@
   "Promotion discount applied" : "Promotion discount applied :",
   "Basic Plan" : "Basic Plan",
   "Active" : "Active",
-  "Subscrip Date" : "Subscrip Date"
+  "Subscrip Date" : "Subscrip Date",
+  "Transaction Declined" : "Transaction Declined",
+  "transaction successful" : "transaction successful"
 }

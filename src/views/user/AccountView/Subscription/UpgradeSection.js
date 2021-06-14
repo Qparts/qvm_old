@@ -56,7 +56,7 @@ function UpgradeSection() {
                 </div>
 
 
-                {currentPlan.name != 'Premium Plan' &&
+                {( currentPlan.status != 'A') &&
                     <div className="col-md-6">
                         <div className="d-flex justify-content-end">
                             <Button

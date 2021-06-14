@@ -30,7 +30,8 @@ const subscriber = {
 
 const upload = {
   postCompanyLogo: `${UPLOAD_SERVICE}/logo`,
-  getCompanyLogo: (fileName) => `${UPLOAD_SERVICE}/logo/${fileName}`
+  postBankReceipt: `http://localhost:3000/upload/receipt`,
+  getCompanyLogo: (fileName) => `${UPLOAD_SERVICE}/logo/${fileName}`,
 }
 
 const setting = {
@@ -125,6 +126,7 @@ const plan = {
 
 const invoice = {
   getBanks : `${INVOICE_SERVICE}/banks`,
+  paymentOrder : `${INVOICE_SERVICE}/payment-order`
 }
 
 
