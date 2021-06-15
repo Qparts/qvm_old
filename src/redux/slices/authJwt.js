@@ -16,7 +16,7 @@ const initialState = {
   user: {},
   loginObject: null,
   countries: [],
-  error: '',
+  error: null,
   availablePlans: [],
   currentPlan: null,
   premiumPlan: null,
@@ -31,6 +31,12 @@ const slice = createSlice({
     // START LOADING
     startLoading(state) {
       state.isLoading = true;
+    },
+
+    // HAS ERROR
+    hasError(state, action) {
+      state.isLoading = false;
+      state.error = action.payload;
     },
 
     // INITIALISE
@@ -51,47 +57,31 @@ const slice = createSlice({
       state.isAuthenticated = true;
       state.user = action.payload.user;
       state.loginObject = action.payload.user;
-      state.error = ''
+      state.error = null;
     },
-    loginFail(state, action) {
-      state.isAuthenticated = false;
-      state.user = null;
-      state.error = action.payload
-    },
+
     // REGISTER
     registerSuccess(state, action) {
       state.isAuthenticated = false;
-      // state.user = action.payload.user;
-      state.error = ''
+      state.error = null;
     },
 
-    registerFail(state, action) {
-      state.isAuthenticated = false;
-      state.error = action.payload;
-    },
 
     // REGISTER
     verifySuccess(state, action) {
       state.isAuthenticated = false;
-      state.error = ''
+      state.error = null;
     },
 
-    verifyFail(state, action) {
-      state.isAuthenticated = false;
-      state.error = action.payload;
-    },
     // resetPassword
     forgotPasswordSuccess(state, action) {
-      state.error = ''
+      state.error = null;
     },
 
-    forgotPasswordFail(state, action) {
-      state.error = action.payload;
-    },
 
     // validate reset token
     validateResetTokenSuccess(state, action) {
-      state.error = '';
+      state.error = null;;
       state.validResetToken = true
     },
 
@@ -102,12 +92,12 @@ const slice = createSlice({
 
     // validate reset token
     resetPasswordSuccess(state, action) {
-      state.error = '';
+      state.error = null;;
     },
 
-    resetPasswordFail(state, action) {
-      state.error = action.payload;
-    },
+    // resetPasswordFail(state, action) {
+    //   state.error = action.payload;
+    // },
 
     updateLoginObject(state, action) {
       state.loginObject = action.payload.loginObject;
@@ -170,7 +160,7 @@ export function login({ email, password }) {
       localStorage.setItem('loginObject', JSON.stringify(user));
       dispatch(slice.actions.loginSuccess({ user }));
     } catch (error) {
-      dispatch(slice.actions.loginFail(error.response.data));
+      dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
     }
 
   };
@@ -189,7 +179,8 @@ export function register({ email, password, mobile, companyName, name, countryId
       // window.localStorage.setItem('accessToken', accessToken);
       dispatch(slice.actions.registerSuccess());
     } catch (error) {
-      dispatch(slice.actions.registerFail(error.response.data));
+      dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+
     }
 
   };
@@ -210,7 +201,8 @@ export function verify({ email, code }) {
       console.log("response", response);
       dispatch(slice.actions.verifySuccess());
     } catch (error) {
-      dispatch(slice.actions.verifyFail(error.response.data));
+      dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+
     }
   }
 }
@@ -235,7 +227,8 @@ export function forgotPassword(email) {
       });
       dispatch(slice.actions.forgotPasswordSuccess());
     } catch (error) {
-      dispatch(slice.actions.forgotPasswordFail(error.response.data));
+      dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+
     }
 
   };
@@ -249,7 +242,9 @@ export function validateResetToken(token) {
       await auth.validatePasswordResetToken(token);
       dispatch(slice.actions.validateResetTokenSuccess());
     } catch (error) {
-      dispatch(slice.actions.validateResetTokenFail(error.response.data));
+      // dispatch(slice.actions.validateResetTokenFail(error.response.data));
+      dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+
     }
 
   };
@@ -263,7 +258,8 @@ export function resetPassword({ code, newPassword }) {
       await auth.resetPassword({ code, newPassword });
       dispatch(slice.actions.resetPasswordSuccess());
     } catch (error) {
-      dispatch(slice.actions.resetPasswordFail(error.response.data));
+      dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+
     }
 
   };
@@ -286,7 +282,8 @@ export function refreshToken() {
       loginObject.refreshJwt = refreshJwt;
       dispatch(slice.actions.updateLoginObject({ loginObject: loginObject }));
     } catch (error) {
-      dispatch(slice.actions.resetPasswordFail(error?.response?.data));
+      dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+
     }
 
   };
@@ -306,7 +303,8 @@ export function getInitialize() {
         const { data: plans } = await paymentService.getPlans();
         const { data: planFeatures } = await paymentService.getPlansFeatures();
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
-        let currentPlan = getCurrentPlan(plans, loginObject.company.subscriptions[0]);
+        let validSubscriptions = loginObject.company.subscriptions.filter(e => e.status != 'F');
+        let currentPlan = getCurrentPlan(plans, validSubscriptions[0]);
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,

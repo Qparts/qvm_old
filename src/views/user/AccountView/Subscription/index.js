@@ -59,7 +59,7 @@ function SubscriptionView() {
                     </Typography>
                     <CardContent className={classes.cardContent}>
                         {
-                            loginObject.company.subscriptions.map((item, index) => {
+                            loginObject.company.subscriptions.filter(e => e.status != 'F').map((item, index) => {
                                 return (
                                     <div key={index}>
                                         <Typography variant="subtitle1" align="justify">
