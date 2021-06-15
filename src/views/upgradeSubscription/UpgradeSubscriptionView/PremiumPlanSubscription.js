@@ -70,7 +70,6 @@ function PremiumPlanSubscription({ planDuration }) {
         (state) => state.authJwt
     );
 
-    const [discount, setDiscount] = useState(0);
     const [promotion, setPromotion] = useState(null);
     const [code, setCode] = useState('');
 
@@ -130,8 +129,8 @@ function PremiumPlanSubscription({ planDuration }) {
                 calculationDays: planDuration.calculationDays,
                 actualDays: planDuration.actualDays,
                 baseAmount: price,
-                planDiscount: planDuration.discountPercentage * (premiumPlan.price / 360),
-                promoDiscount: promotion != null ? promotion.discountPercentage * price : 0,
+                planDiscount: Math.round(planDuration.discountPercentage),
+                promoDiscount: promotion != null ? Math.round(promotion.discountPercentage) * promotion.discountPercentage * price : 0,
                 vatPercentage: .15,
                 startDate: (new Date()).getTime(),
                 countryId: loginObject.company.countryId,

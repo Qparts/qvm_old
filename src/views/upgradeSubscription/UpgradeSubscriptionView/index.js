@@ -15,7 +15,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { PATH_APP } from 'src/routes/paths';
 import paymentService from 'src/services/paymentService';
-import { updateLoginObject } from 'src/redux/slices/authJwt';
+import { updateCurrentPlan, updateLoginObject } from 'src/redux/slices/authJwt';
 import { MIconButton } from 'src/theme';
 import closeFill from '@iconify-icons/eva/close-fill';
 import { Icon } from '@iconify/react';
@@ -70,11 +70,10 @@ function UpgradeSubscriptionView() {
         try {
             history.push(PATH_APP.management.user.account);
             const { data: company } = await paymentService.updatePaymentOrder({ chargeId: tapId });
-            console.log("company", company);
             let newLoginObject = Object.assign({}, loginObject);
             newLoginObject.company = company;
-            console.log("newLoginObject", newLoginObject);
             dispatch(updateLoginObject({ 'loginObject': newLoginObject }));
+            dispatch(updateCurrentPlan());
             enqueueSnackbar(t('transaction successful'),
                 {
                     variant: 'success',

@@ -105,6 +105,10 @@ const slice = createSlice({
       localStorage.setItem("loginObject", JSON.stringify(action.payload.loginObject));
     },
 
+    updateCurrentPlan(state) {
+      let currentPlan = getCurrentPlan(state.availablePlans);
+      state.currentPlan = currentPlan;
+    },
     // LOGOUT
     logoutSuccess(state) {
       state.isAuthenticated = false;
@@ -122,6 +126,7 @@ export default slice.reducer;
 // Actions
 export const {
   updateLoginObject,
+  updateCurrentPlan
 } = slice.actions;
 
 // ----------------------------------------------------------------------
@@ -174,9 +179,6 @@ export function register({ email, password, mobile, companyName, name, countryId
       const response = await auth.signup({
         email, password, mobile, companyName, name, countryId, regionId, cityId
       });
-      // const { accessToken, user } = response.data;
-
-      // window.localStorage.setItem('accessToken', accessToken);
       dispatch(slice.actions.registerSuccess());
     } catch (error) {
       dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
@@ -303,8 +305,7 @@ export function getInitialize() {
         const { data: plans } = await paymentService.getPlans();
         const { data: planFeatures } = await paymentService.getPlansFeatures();
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
-        let validSubscriptions = loginObject.company.subscriptions.filter(e => e.status != 'F');
-        let currentPlan = getCurrentPlan(plans, validSubscriptions[0]);
+        let currentPlan = getCurrentPlan(plans);
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
@@ -347,21 +348,23 @@ export function getInitialize() {
 // ----------------------------------------------------------------------
 
 
-const getCurrentPlan = (plans, plan) => {
+const getCurrentPlan = (plans) => {
+  const loginObject = JSON.parse(localStorage.getItem('loginObject'));
+  let validSubscriptions = loginObject.company.subscriptions.filter(e => e.status != 'F');
   let currentPlan = null;
   if (plans && plans.length > 0) {
     currentPlan = plans[0];
-    if (plan.status == 'A') {
+    if (validSubscriptions[0].status == 'A') {
       for (let p of plans) {
-        if (p.id == plan.planId) {
+        if (p.id == validSubscriptions[0].planId) {
           currentPlan = p;
-          currentPlan.status = plan.status;
+          currentPlan.status = validSubscriptions[0].status;
           return currentPlan;
         }
       }
     }
     else {
-      currentPlan.status = plan.status;
+      currentPlan.status = validSubscriptions[0].status;
       return currentPlan;
     }
   }
