@@ -18,7 +18,7 @@ function updateCompanyLogo(data) {
 function uploadBanckReceipt(data) {
     const config = {
         headers: {
-            'content-type': 'multipart/form-data'
+            'content-type': 'application/x-www-form-urlencoded',
         }
     }
     return http.post(uploadUrl.postBankReceipt, data, config);

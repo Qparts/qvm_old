@@ -165,10 +165,10 @@ function NavBar({ isOpenNav, onCloseNav }) {
         </div>
       </Link>
 
-      {MenuLinks.map((list) => (
+      {MenuLinks.map((list, index) => (
         <List
           disablePadding
-          key={list.subheader}
+          key={index}
           subheader={
             <ListSubheader
               disableSticky

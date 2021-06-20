@@ -27,11 +27,24 @@ const activePromtion = (code, plan, duration) => {
 }
 
 const paymentOrder = (data) => {
-  return http.post(invoiceUrl.paymentOrder , data);
+  return http.post(invoiceUrl.paymentOrder, data);
 };
 
+function wirePaymentOrder(data) {
+  const config = {
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    }
+  }
+  return http.post(invoiceUrl.wirepaymentOrder, data, config);
+}
+
 const updatePaymentOrder = (data) => {
-  return http.put(invoiceUrl.paymentOrder , data);
+  return http.put(invoiceUrl.paymentOrder, data);
+};
+
+const getPendingSubscription = () => {
+  return http.get(invoiceUrl.pendingSubscription);
 };
 
 export default {
@@ -40,5 +53,7 @@ export default {
   activePromtion,
   getBancks,
   paymentOrder,
-  updatePaymentOrder
+  updatePaymentOrder,
+  wirePaymentOrder,
+  getPendingSubscription
 };

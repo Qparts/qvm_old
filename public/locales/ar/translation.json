@@ -215,7 +215,8 @@
   "Active" : "صالحة",
   "Subscrip Date" : "تاريخ الإشتراك",
   "Transaction Declined" : "تم رفض الصفقة",
-  "transaction successful" : "عملية ناجحة"
-
+  "transaction successful" : "عملية ناجحة",
+  "Request has been uploaded" : "تم رفع الطلب",
+  "There is a pending subscription" : "يوجد اشتراك معلق"
 
 }

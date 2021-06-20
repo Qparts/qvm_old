@@ -6,10 +6,13 @@ import 'react-slideshow-image/dist/styles.css'
 import Button from "src/components/button/CustomButton";
 import { useHistory } from "react-router";
 import { PATH_APP } from 'src/routes/paths';
+import { useSnackbar } from 'notistack';
 import {
     Box, Link, Hidden, Container,
     Typography, Alert
 } from '@material-ui/core';
+import paymentService from 'src/services/paymentService';
+import { ElectricalServices } from '@material-ui/icons';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
@@ -35,12 +38,28 @@ function UpgradeSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const history = useHistory();
+    const { enqueueSnackbar } = useSnackbar();
     const { currentPlan } = useSelector(
         (state) => state.authJwt
     );
 
     const { themeDirection } = useSelector((state) => state.settings);
 
+
+    const gotoPremium = async () => {
+
+        try {
+            const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
+            console.log("pendingSubscriptions", pendingSubscriptions);
+            if (pendingSubscriptions != null && pendingSubscriptions != "")
+                enqueueSnackbar(t('There is a pending subscription'), { variant: 'warning' });
+            else
+                history.push(PATH_APP.general.upgradeSubscription);
+
+        } catch (error) {
+            enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
+        }
+    }
 
     return (
 
@@ -56,7 +75,7 @@ function UpgradeSection() {
                 </div>
 
 
-                {( currentPlan.status != 'A') &&
+                {(currentPlan.status != 'A') &&
                     <div className="col-md-6">
                         <div className="d-flex justify-content-end">
                             <Button
@@ -66,7 +85,7 @@ function UpgradeSection() {
                                 round
                                 simple
                                 onClick={() => {
-                                    history.push(PATH_APP.general.upgradeSubscription);
+                                    gotoPremium();
                                 }}
                             >
                                 {t("Upgrade to Premium")}

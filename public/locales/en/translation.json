@@ -218,5 +218,7 @@
   "Active" : "Active",
   "Subscrip Date" : "Subscrip Date",
   "Transaction Declined" : "Transaction Declined",
-  "transaction successful" : "transaction successful"
+  "transaction successful" : "transaction successful",
+  "Request has been uploaded" : "Request has been uploaded",
+  "There is a pending subscription" : "There is a pending subscription"
 }
