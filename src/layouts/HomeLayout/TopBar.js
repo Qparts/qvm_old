@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import Logo from 'src/components/Logo';
 import React, { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import useOffSetTop from 'src/hooks/useOffSetTop';
 import homeFill from '@iconify-icons/eva/home-fill';
 import PopoverMenu from 'src/components/PopoverMenu';
@@ -113,9 +114,9 @@ function TopBar() {
           variant="subtitle1"
           component={RouterLink}
           activeClassName={classes.isDesktopActive}
-           className={clsx({
-             [classes.isHome]: isHome
-           })}
+          className={clsx({
+            [classes.isHome]: isHome
+          })}
           sx={{ mr: 5, color: 'text.primary' }}
         >
           {t(link.title)}

@@ -63,10 +63,10 @@ function VerifyCodeView(props) {
   }, [loaded])
 
   const VerifyCodeSchema = Yup.object().shape({
-    code1: Yup.number().required(t("verification.error.require.code")),
-    code2: Yup.number().required(t("verification.error.require.code")),
-    code3: Yup.number().required(t("verification.error.require.code")),
-    code4: Yup.number().required(t("verification.error.require.code")),
+    code1: Yup.number().required(t("Verification Code Is Required")),
+    code2: Yup.number().required(t("Verification Code Is Required")),
+    code3: Yup.number().required(t("Verification Code Is Required")),
+    code4: Yup.number().required(t("Verification Code Is Required")),
   });
 
   const formik = useFormik({
@@ -100,10 +100,10 @@ function VerifyCodeView(props) {
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
 
           <Typography variant="h3" gutterBottom>
-            {t("verification.checkEmail")}
+            {t("Please check your email!")}
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            {t("verification.verificationMessage" , {email : props.location.state.email})}
+            {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email." , {email : props.location.state.email})}
           </Typography>
 
           <Box sx={{ mt: 5, mb: 3 }}>

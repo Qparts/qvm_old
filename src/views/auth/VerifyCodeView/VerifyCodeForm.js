@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function VerifyCodeForm({ formik }) {
+function VerifyCodeForm({ formik, closePopup }) {
   const classes = useStyles();
   const {
     values,
@@ -57,20 +57,53 @@ function VerifyCodeForm({ formik }) {
         </Box>
 
         <FormHelperText error={!isValid} style={{ textAlign: 'right' }}>
-          {!isValid && t("verification.error.require.code")}
+          {!isValid && t("Verification Code Is Required")}
         </FormHelperText>
+        {closePopup ?
 
-        <Box sx={{ mt: 3 }}>
-          <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-            pending={isSubmitting}
-          >
-            {t("verification.verify")}
-          </LoadingButton>
-        </Box>
+          <Box sx={{ mt: 3 }}>
+
+            <div className="row">
+
+              <div className="col-md-6">
+                <LoadingButton
+                  fullWidth
+                  size="large"
+                  type="submit"
+                  variant="contained"
+                  pending={isSubmitting}
+                >
+                  {t("Verify")}
+                </LoadingButton>
+              </div>
+
+              <div className="col-md-6">
+                <LoadingButton
+                  fullWidth
+                  size="large"
+                  variant="contained"
+                  onClick={() => closePopup(false)}
+                >
+                  {t("Cancel")}
+                </LoadingButton>
+
+              </div>
+
+            </div>
+          </Box>
+          :
+
+          <Box sx={{ mt: 3 }}>
+            <LoadingButton
+              fullWidth
+              size="large"
+              type="submit"
+              variant="contained"
+              pending={isSubmitting}
+            >
+              {t("Verify")}
+            </LoadingButton>
+          </Box>}
       </Form>
     </FormikProvider>
   );

@@ -50,7 +50,7 @@ function LocationFilterSection() {
         <Box sx={{ width: '100%' }}>
 
             <Autocomplete
-                noOptionsText={t("searchTab.noOptions")}
+                noOptionsText={t("No Options")}
                 id="location-filter"
                 style={{ width: 300 }}
                 open={open}
@@ -83,7 +83,7 @@ function LocationFilterSection() {
                 renderInput={(params) => (
                     <TextField
                         {...params}
-                        label={t("searchTab.selectLocation")}
+                        label={t("Filter results by location")}
                         variant="standard"
                         onChange={(e) => {
                             setOpen(false);

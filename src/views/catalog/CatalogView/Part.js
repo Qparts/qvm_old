@@ -66,30 +66,30 @@ function Part() {
             >
                 <DialogTitle>
                     <Typography variant="h6" component="div">
-                        {t("catalogTab.partDetails")}
+                        {t("Part Details")}
                     </Typography>
                 </DialogTitle>
                 <DialogContent dividers sx={{ p: 2 }}>
                     {partAreaDetails != null && (
                         <div>
                             <div className="row">
-                                <div className="col-md-6">{t("catalogTab.referenceNumber")}</div>
+                                <div className="col-md-6">{t("Reference Number")}</div>
                                 <div className="col-md-6">{partAreaDetails.id}</div>
                             </div>
                             <hr />
                             <div className="row">
-                                <div className="col-md-6">{t("catalogTab.partNumber")}</div>
+                                <div className="col-md-6">{t("Part Number")}</div>
 
                                 <div className="col-md-6">{partAreaDetails.number}</div>
                             </div>
                             <hr />
                             <div className="row">
-                                <div className="col-md-6">{t("catalogTab.partName")}</div>
+                                <div className="col-md-6">{t("Part Name")}</div>
                                 <div className="col-md-6">{partAreaDetails.name}</div>
                             </div>
                             <hr />
                             <div className="row">
-                                <div className="col-md-6">{t("catalogTab.details")}</div>
+                                <div className="col-md-6">{t("Description")}</div>
                                 <div className="col-md-6">{partAreaDetails.description}</div>
                             </div>
                         </div>

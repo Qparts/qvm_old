@@ -6,14 +6,15 @@ import PropTypes from 'prop-types';
 import Languages from './Languages';
 import { Icon } from '@iconify/react';
 import Notifications from './Notifications';
-import Settings from 'src/layouts/Common/Settings';
+import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
+import Orders from './Orders';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box, AppBar, Hidden, Toolbar, IconButton } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
-const DRAWER_WIDTH = 280;
+const DRAWER_WIDTH = 130;
 const APPBAR_MOBILE = 64;
 const APPBAR_DESKTOP = 92;
 
@@ -46,6 +47,7 @@ TopBar.propTypes = {
 
 function TopBar({ onOpenNav, className }) {
   const classes = useStyles();
+  const theme = useTheme();
 
   return (
     <AppBar className={clsx(classes.root, className)}>
@@ -62,14 +64,14 @@ function TopBar({ onOpenNav, className }) {
           </IconButton>
         </Hidden>
 
-        {/* <Search /> */}
+        <Search />
         <Box sx={{ flexGrow: 1 }} />
 
         <Box
           sx={{
             display: 'flex',
             alignItems: 'center',
-            '& > *:not(:first-of-type)': {
+            '& > *': {
               ml: {
                 xs: 0.5,
                 sm: 2,
@@ -78,9 +80,12 @@ function TopBar({ onOpenNav, className }) {
             }
           }}
         >
+          <Hidden smDown>
+            <UploadStockBtn bg={theme.palette.primary.main} color={theme.palette.grey[0]} />
+          </Hidden>
           <Languages />
+          <Orders />
           <Notifications />
-          <Settings />
           <Account />
         </Box>
       </Toolbar>

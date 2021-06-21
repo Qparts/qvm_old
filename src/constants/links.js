@@ -7,6 +7,9 @@ const LOCATION_SERVICE = `${BASE_URL}/location`;
 const UPLOAD_SERVICE = `${BASE_URL}/upload`;
 const CATALOG_SERVICE = `${BASE_URL}/catalog`;
 const PRODUCT_SERVICE = `${BASE_URL}/product`;
+const PLAN_SERVICE = `${BASE_URL}/plan`;
+const INVOICE_SERVICE = `${BASE_URL}/invoice`;
+
 
 const subscriber = {
   postLogin: `${SUBSCRIBER_SERVICE}/login`,
@@ -114,6 +117,16 @@ const product = {
   specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`
 }
 
+const plan = {
+  getPlans: `${PLAN_SERVICE}/plans`,
+  getPlansFeatures: `${PLAN_SERVICE}/plans-features`,
+  getPromtion: `${PLAN_SERVICE}//promo-code?`,
+}
+
+const invoice = {
+  getBanks : `${INVOICE_SERVICE}/banks`,
+}
+
 
 export default {
   subscriber,
@@ -123,5 +136,7 @@ export default {
   setting,
   upload,
   catalog,
-  product
+  product,
+  plan,
+  invoice
 };

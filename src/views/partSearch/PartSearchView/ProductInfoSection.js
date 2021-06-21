@@ -67,7 +67,7 @@ function ProductInfoSection() {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography>{t("searchTab.productInfo")}</Typography>
+                    <Typography>{t("Product information")}</Typography>
                 </AccordionSummary>
 
                 <AccordionDetails>
@@ -76,22 +76,22 @@ function ProductInfoSection() {
                     <Datatable
                         header={[
                             {
-                                name: t("searchTab.partNo"),
+                                name: t("Part Number"),
                                 attr: 'productNumber',
                             },
                             {
-                                name: t("searchTab.brand"),
+                                name: t("Brand"),
                                 attr: themeDirection == 'ltr' ? 'brand.name' : 'brand.nameAr'
                             },
                             {
-                                name: t("searchTab.averagePrice"),
+                                name: t("Average market price"),
                                 attr: 'salesPrice'
                             }
                         ]}
 
                         actions={[
                             {
-                                name: t("searchTab.details"),
+                                name: t("Details"),
                                 action: showDetails,
                                 icon: 'more-horizontal',
 
@@ -118,7 +118,7 @@ function ProductInfoSection() {
             >
                 <DialogTitle>
                     <Typography variant="h6" component="div">
-                        {t("searchTab.productDetails")}
+                        {t("Product Details")}
                     </Typography>
                 </DialogTitle>
                 <DialogContent dividers sx={{ p: 2 }}>

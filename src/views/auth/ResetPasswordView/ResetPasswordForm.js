@@ -26,7 +26,7 @@ function ResetPasswordForm({ formik }) {
         <TextField
           fullWidth
           {...getFieldProps('password')}
-          label={t("forgotPassword.newPassword")}
+          label={t("New Password")}
           error={
             Boolean(touched.password && errors.password) ||
             passwordError(errors.afterSubmit).error
@@ -44,7 +44,7 @@ function ResetPasswordForm({ formik }) {
             variant="contained"
             pending={isSubmitting}
           >
-            {t("forgotPassword.resetPassword")}
+            {t("Reset Password")}
           </LoadingButton>
         </Box>
       </Form>

@@ -66,6 +66,11 @@ const AppRoutes = {
       path: PATH_APP.general.quotationsReport,
       component: lazy(() => import('src/views/quotationsReport/QuotationsReportView'))
     },
+    {
+      exact: true,
+      path: PATH_APP.general.upgradeSubscription,
+      component: lazy(() => import('src/views/upgradeSubscription/UpgradeSubscriptionView'))
+    },
 
 
 

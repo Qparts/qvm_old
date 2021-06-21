@@ -50,7 +50,7 @@ function CatalogView() {
 
     return (
         <Page
-            title={t("catalogTab.title")}
+            title={t("Parts Catalog")}
             className={classes.root}
         >
 
@@ -69,7 +69,7 @@ function CatalogView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("catalogTab.title")}</Typography>
+                        <Typography variant="h4">{t("Parts Catalog")}</Typography>
                         <Divider />
                     </Box>
                     {showCarInfo == true ?

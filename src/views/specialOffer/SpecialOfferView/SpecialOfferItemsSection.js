@@ -68,14 +68,14 @@ function SpecialOfferItemsSection(props) {
                                         <div className="row">
 
                                             <div className="col-md-6" >
-                                                {t("specialOfferTab.offerDueDate")}
+                                                {t("Offer End Date")}
                                             </div>
                                             <div className="col-md-6" >
                                                 {helper.toDate(specialOffer.endDate)}
                                             </div>
 
                                             <div className="col-md-6" >
-                                                {t("specialOfferTab.partsNo")}
+                                                {t("Parts Number")}
                                             </div>
                                             <div className="col-md-6" >
                                                 {specialOffer.numberOfItems}

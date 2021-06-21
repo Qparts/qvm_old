@@ -6,10 +6,14 @@ import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
+const loginObject = JSON.parse(localStorage.getItem("loginObject"))
+
 const initialState = {
     isLoading: false,
-    branches: JSON.parse(localStorage.getItem("loginObject")).company.branches,
-    error: '',
+    branches: loginObject ? loginObject.company.branches : "",
+    verificationMode: null,
+    verifiedEmail: null,
+    error: null,
 };
 
 
@@ -27,17 +31,32 @@ const slice = createSlice({
             state.error = action.payload;
         },
 
+        resetError(state) {
+            state.isLoading = false;
+            state.error = null;
+        },
+
 
         loadBranchesSuccess(state, action) {
             state.isLoading = false;
             state.branches = action.payload.branches;
-            state.error = '';
+            state.error = null;
+        },
+
+        addUserSuccess(state, action) {
+            state.isLoading = false;
+            state.verificationMode = action.payload.verificationMode;
+            state.verifiedEmail = action.payload.verifiedEmail;
+            state.error = null;
         },
 
 
         cleanup(state) {
             state.isLoading = false;
-            state.error = '';
+            state.error = null;
+            state.verificationMode = null;
+            state.verifiedEmail = null;
+
         }
     }
 
@@ -82,7 +101,7 @@ export function createBranch(branchName, countryId, regionId, cityId, location, 
             dispatch(slice.actions.loadBranchesSuccess({ branches }));
 
         } catch (error) {
-            dispatch(slice.actions.hasError(error.response?.data));
+            dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
         }
     };
 }
@@ -94,11 +113,10 @@ export function loadBranches(countries) {
         try {
 
             let branches = getBranches(countries);
-
             dispatch(slice.actions.loadBranchesSuccess({ branches }));
 
         } catch (error) {
-            dispatch(slice.actions.hasError(error.response?.data));
+            dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
         }
     };
 }
@@ -112,7 +130,7 @@ const getBranches = (countries) => {
     loginObject.company.branches.forEach((b) => {
         let location = helper.getLocation(countries, b, 0, 0, 0);
         let branchUsers = loginObject.company.subscribers.filter(e => e.defaultBranch == b.id
-            || (e.defaultBranch == null && defaultBranchId == b.id));
+            || (b.id == defaultBranchId && e.defaultBranch == null));
 
         if (location != null) {
             let branchInfo = {
@@ -132,4 +150,41 @@ const getBranches = (countries) => {
     });
 
     return branches;
+}
+
+
+export function addUser(email, mobile, countryId, password, name, defaultBranch) {
+    return async (dispatch) => {
+        dispatch(slice.actions.startLoading());
+        try {
+
+            const { data: userData } = await settingService.addUser({
+                email: email, mobile: mobile, countryId: countryId,
+                password: password, name: name, defaultBranch: defaultBranch
+            });
+
+            dispatch(slice.actions.addUserSuccess({ verifiedEmail: email, verificationMode: userData.mode }));
+
+        } catch (error) {
+            dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+        }
+    };
+}
+
+
+export function verifyUser(code) {
+    return async (dispatch) => {
+        dispatch(slice.actions.startLoading());
+        try {
+
+            await settingService.verifyUser({
+                code: code
+            });
+
+            dispatch(slice.actions.resetError());
+
+        } catch (error) {
+            dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+        }
+    };
 }
