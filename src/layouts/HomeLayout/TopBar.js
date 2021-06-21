@@ -32,17 +32,14 @@ import { useTranslation } from 'react-i18next';
 import { red } from '@material-ui/core/colors';
 import { pxToRem } from 'src/utils/formatFontSize';
 // ----------------------------------------------------------------------
-
 const MENU_LINKS = [
   { title: 'home', icon: homeFill, href: '/' },
   { title: 'prices', icon: roundStreetview, href: PATH_HOME.dashboard },
   { title: 'contactUs', icon: roundSpeed, href: PATH_HOME.dashboard },
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
-
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 96;
-
 const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
@@ -56,7 +53,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   isHome: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '&:hover': {
+      color: theme.palette.text.disabled,
+    }
   },
   isDesktopActive: {
     color: theme.palette.secondary.lighter
@@ -73,9 +73,7 @@ const useStyles = makeStyles((theme) => ({
     '& $toolbar': {
       backgroundColor: theme.palette.secondary.darker
     },
-    // '& $isHome': {
-    //   color: theme.palette.text.primary
-    // },
+
     [theme.breakpoints.up('md')]: {
       '& $toolbar': {
         height: APP_BAR_DESKTOP - 20
@@ -84,6 +82,12 @@ const useStyles = makeStyles((theme) => ({
   },
   navButton: {
     fontSize: pxToRem(17),
+    background: theme.palette.grey[0],
+    color:theme.palette.primary.main,
+    boxShadow:'none',
+    '&:hover':{
+      color: theme.palette.grey[0],
+    },
   }
 }));
 
@@ -139,9 +143,6 @@ function TopBar() {
             activeClassName={classes.isMobileActive}
             sx={{ color: 'text.secondary' }}
           >
-            <ListItemIcon>
-              <Icon icon={link.icon} width={20} height={20} />
-            </ListItemIcon>
             <ListItemText>{link.title}</ListItemText>
           </MenuItem>
         ))}

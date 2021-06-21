@@ -27,7 +27,6 @@
     "autosuggest-highlight": "^3.1.1",
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
-    "bootstrap": "^4.6.0",
     "change-case": "^4.1.2",
     "clsx": "^1.1.1",
     "d3-array": "^2.8.0",
@@ -104,6 +103,7 @@
     "simplebar-react": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "stylis-plugin-rtl": "^2.0.1",
+    "swiper": "^6.7.0",
     "yup": "^0.28.5"
   },
   "devDependencies": {

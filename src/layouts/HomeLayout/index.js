@@ -2,7 +2,6 @@ import React from 'react';
 import TopBar from './TopBar';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import Hero from './../../views/home/LandingPageView/Hero';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
@@ -22,9 +21,7 @@ function HomeLayout({ children }) {
   return (
     <div className={classes.root}>
       <TopBar />
-      <div className={classes.content}>
-        <Hero/>
-      </div>
+      <div className={classes.content}>{children}</div>
     </div>
   );
 }
