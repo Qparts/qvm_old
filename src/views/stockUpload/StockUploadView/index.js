@@ -10,6 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
+import UploadSection from './UploadSection';
 
 // ----------------------------------------------------------------------
 
@@ -61,6 +62,8 @@ function StockUploadView() {
                         <Typography variant="h4">{t("Stock Upload")}</Typography>
                         <hr />
                     </Box>
+
+                    <UploadSection />
 
 
                 </Container>
