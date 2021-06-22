@@ -1,9 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import CardActionArea from '@material-ui/core/CardActionArea';
-
-
+import { useSnackbar } from 'notistack';
 import {
     Card,
     Grid,
@@ -24,48 +23,56 @@ const useStyles = makeStyles((theme) => ({
 function GroupItems() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { groups, selectedCar, selectedCatalog, fromList , groupsStack  } = useSelector((state) => state.catalogs);
+    const { groups, selectedCar, selectedCatalog, fromList, groupsStack, groupChanged } = useSelector((state) => state.catalogs);
+    const { enqueueSnackbar } = useSnackbar();
+    const { t } = useTranslation();
+
+    useEffect(() => {
+        if (!groupChanged) {
+            enqueueSnackbar(t('There is no parts'), { variant: 'warning' });
+        }
+    }, [groupChanged])
 
     return (
 
         <Grid container spacing={1}>
 
-                {groups.map((groupItem) => (
-                    <Grid item xs={12} sm={4} md={3} key={groupItem.id}>
-                        <Card className={classes.root}>
-                            <CardActionArea
+            {groups.map((groupItem) => (
+                <Grid item xs={12} sm={4} md={3} key={groupItem.id}>
+                    <Card className={classes.root}>
+                        <CardActionArea
                             onClick={() => {
                                 const catalogId = fromList
                                     ? selectedCatalog.id
                                     : selectedCar.catalogId;
                                 const carId = fromList ? selectedCar.id : selectedCar.carId;
                                 if (groupItem.hasSubgroups) {
-                                    dispatch(getGroups(catalogId, carId, groupItem.id, null , selectedCar));
-                                } 
+                                    dispatch(getGroups(catalogId, carId, groupItem.id, null, selectedCar));
+                                }
                                 else {
                                     dispatch(getPart(catalogId, carId, groupItem.id, null));
                                 }
                             }}
-                            >
+                        >
 
-                                <CardContent>
-                                    <img
-                                        src={
-                                            groupItem.img != null
-                                                ? groupItem.img
-                                                : "https://s3.eu-central-1.amazonaws.com/q-product/na.png"
-                                        }
-                                        alt={groupItem.name}
-                                    />
-                                    <Typography gutterBottom variant="h5" component="h5">
-                                        {groupItem.name}
-                                    </Typography>
-                                </CardContent>
-                            </CardActionArea>
+                            <CardContent>
+                                <img
+                                    src={
+                                        groupItem.img != null
+                                            ? groupItem.img
+                                            : "https://s3.eu-central-1.amazonaws.com/q-product/na.png"
+                                    }
+                                    alt={groupItem.name}
+                                />
+                                <Typography gutterBottom variant="h5" component="h5">
+                                    {groupItem.name}
+                                </Typography>
+                            </CardContent>
+                        </CardActionArea>
 
-                        </Card>
-                    </Grid>
-                ))}
+                    </Card>
+                </Grid>
+            ))}
 
 
         </Grid>

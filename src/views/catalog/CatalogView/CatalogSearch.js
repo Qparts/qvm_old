@@ -1,27 +1,20 @@
 import SearchBox from './../../../components/SearchBox';
 import Button from "./../../../components/button/CustomButton";
-
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-
-
 import {
     Box,
     Card,
     Grid,
     CardHeader,
-    CardContent
+    CardContent,
+    TextField
 } from '@material-ui/core';
-import { getCarByVin, getCarInfo, getCatalogs, getModels, handleModelChange } from 'src/redux/slices/catalog';
-import { FormControl, InputLabel, Select } from "@material-ui/core";
+import { getCarByVin, getCarInfo, getModels, handleModelChange } from 'src/redux/slices/catalog';
 import { useTranslation } from 'react-i18next';
 
-
-
 // ----------------------------------------------------------------------
-
-
 
 const useStyles = makeStyles((theme) => ({
     root: {}
@@ -29,17 +22,12 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-
-
 function CatalogSearch() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { catalogs, models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
+    const { models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
+    const { catalogs } = useSelector((state) => state.authJwt);
     const { t } = useTranslation();
-
-    useEffect(() => {
-        dispatch(getCatalogs());
-    }, [dispatch]);
 
     const getCars = () => {
         dispatch(getCarInfo(selectedCatalog.id, selectedModel.id, null))
@@ -69,56 +57,50 @@ function CatalogSearch() {
                     <CardHeader title={t("Find Catalog from List")} />
                     <CardContent className={classes.cardContent}>
 
-                        <div className="mt-form">
-                            <FormControl required className="w-100">
-                                <InputLabel id="catalog-id">{t("Catalog")}</InputLabel>
-                                <Select
-                                    native={true}
-                                    labelId="catalog-id"
-                                    id="catalog"
-                                    value={selectedCatalog ? selectedCatalog.id : ""}
-                                    name="catalog"
-                                    onChange={(event) => {
-                                        console.log(event.target.value);
-                                        dispatch(getModels(event.target.value, catalogs));
-                                    }}
-                                >
-                                    <option aria-label="None" value="" />
-                                    {catalogs?.map((item, index) => (
-                                        <option value={item.id} key={index}>
-                                            {item.name}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </div>
+                        <TextField
+                            select
+                            fullWidth
+                            label={t("Catalog")}
+                            id="catalog"
+                            value={selectedCatalog ? selectedCatalog.id : ""}
+                            name="catalog"
+                            onChange={(event) => {
+                                dispatch(getModels(event.target.value, catalogs));
+                            }}
+                            SelectProps={{ native: true }}
+                        >
+                            <option aria-label="None" value="" />
+                            {catalogs?.map((item, index) => (
+                                <option value={item.id} key={index}>
+                                    {item.name}
+                                </option>
+                            ))}
+                        </TextField>
 
                         <Box sx={{ mt: 3 }} />
 
-                        <div className="mt-form">
-                            <FormControl required className="w-100">
-                                <InputLabel id="model-id">{t("Car Model")}</InputLabel>
-                                <Select
-                                    native={true}
-                                    labelId="model-id"
-                                    id="model"
-                                    value={selectedModel ? selectedModel.id : ""}
-                                    name="model"
-                                    onChange={(event) => {
-                                        console.log(event.target.value);
-                                        dispatch(handleModelChange(event.target.value, models, selectedCatalog));
-                                    }}
-                                >
-                                    <option aria-label="None" value="" />
-                                    {models?.map((item, index) => (
-                                        <option value={item.id} key={index}>
-                                            {item.name}
-                                        </option>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </div>
+                        <TextField
+                            select
+                            fullWidth
+                            label={t("Car Model")}
+                            id="model"
+                            value={selectedModel ? selectedModel.id : ""}
+                            name="model"
+                            onChange={(event) => {
+                                dispatch(handleModelChange(event.target.value, models, selectedCatalog));
+                            }}
+                            SelectProps={{ native: true }}
+                        >
+                            <option aria-label="None" value="" />
+                            {models?.map((item, index) => (
+                                <option value={item.id} key={index}>
+                                    {item.name}
+                                </option>
+                            ))}
+                        </TextField>
+
                         <Box sx={{ mt: 3 }} />
+
                         <Button
                             variant="contained"
                             color="primary"
@@ -135,8 +117,6 @@ function CatalogSearch() {
 
             </Grid>
         </Grid>
-
-
     );
 }
 

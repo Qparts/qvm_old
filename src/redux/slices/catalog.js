@@ -22,7 +22,8 @@ const initialState = {
     partCoordinates: [],
     partImageHeight: 547,
     partImageWidth: 1024,
-    backToCarInfo: true
+    backToCarInfo: true,
+    groupChanged: false,
 
 };
 
@@ -85,12 +86,13 @@ const slice = createSlice({
         //get group
         getGroupsSuccess(state, action) {
             state.isLoading = false;
-            state.groups = action.payload.groups;
+            state.groups = action.payload.groups.length > 0 ? action.payload.groups : state.groups;
             state.selectedCar = action.payload.selectedCar ? action.payload.selectedCar : state.selectedCar;
             state.backToCarInfo = action.payload.groupId ? false : true;
-            if (action.payload.groupId)
+            if (action.payload.groupId && action.payload.groups.length > 0)
                 state.groupsStack.push(action.payload.groupId);
             state.error = '';
+            state.groupChanged = action.payload.groups.length > 0 ? true : false
         },
 
 
@@ -328,7 +330,7 @@ export function handleBackAction(part, selectedCatalog, selectedCar, fromList, g
         try {
             let newGroupsStack = [...groupsStack];
             if (part) part = null;
-            if (!backToCarInfo) {
+            if (!backToCarInfo && newGroupsStack.length > 0) {
                 newGroupsStack.splice(newGroupsStack.length - 1, 1);
                 const catalogId = fromList ? selectedCatalog.id : selectedCar.catalogId;
                 const carId = fromList ? selectedCar.id : selectedCar.carId;

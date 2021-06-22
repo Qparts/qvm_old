@@ -7,6 +7,8 @@ import locationService from "../../services/locationService";
 import { createSlice } from '@reduxjs/toolkit';
 import settingService from 'src/services/settingService';
 import paymentService from 'src/services/paymentService';
+import catalogService from 'src/services/catalogService';
+
 
 // ----------------------------------------------------------------------
 
@@ -21,6 +23,7 @@ const initialState = {
   currentPlan: null,
   premiumPlan: null,
   planFeatures: [],
+  catalogs: [],
   validResetToken: false
 };
 
@@ -50,6 +53,7 @@ const slice = createSlice({
       state.planFeatures = action.payload.planFeatures;
       state.availablePlans = action.payload.availablePlans;
       state.premiumPlan = action.payload.premiumPlan;
+      state.catalogs = action.payload.catalogs;
     },
 
     // LOGIN
@@ -114,7 +118,8 @@ const slice = createSlice({
       state.isAuthenticated = false;
       state.user = null;
       state.loginObject = null;
-    }
+    },
+
   }
 });
 
@@ -306,6 +311,7 @@ export function getInitialize() {
         const { data: planFeatures } = await paymentService.getPlansFeatures();
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
         let currentPlan = getCurrentPlan(plans);
+        const { data: catalogs } = await catalogService.getCatalogs();
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
@@ -315,6 +321,7 @@ export function getInitialize() {
             currentPlan: currentPlan,
             planFeatures: planFeatures,
             availablePlans: plans,
+            catalogs: catalogs,
             premiumPlan: plans.find(e => e.name == 'Premium Plan')
           })
         );

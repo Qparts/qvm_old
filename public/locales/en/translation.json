@@ -232,6 +232,7 @@
   "Received From":"Received From",
   "Date" :"Date",
   "Number of items" : "Number of items",
-  "Add Offer" : "Add Offer"
+  "Add Offer" : "Add Offer",
+  "There is no parts" : "There is no parts"
 
 }

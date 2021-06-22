@@ -234,7 +234,9 @@
   "Received From":"مرسل من",
   "Date" :"التاريخ",
   "Number of items" : "عدد القطع",
-  "Add Offer" : "أضف العرض"
+  "Add Offer" : "أضف العرض",
+  "There is no parts" : "لا توجد قطع "
+
 
   
 
