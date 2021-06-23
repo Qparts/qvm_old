@@ -1,13 +1,12 @@
-import React, { useEffect, useLayoutEffect, useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Page from 'src/components/Page';
-import Logo from 'src/components/Logo';
 import { useSnackbar } from 'notistack';
 import VerifyCodeForm from './VerifyCodeForm';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Typography ,Hidden } from '@material-ui/core';
+import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import useAuth from 'src/hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { PATH_PAGE } from 'src/routes/paths';
@@ -52,12 +51,15 @@ function VerifyCodeView(props) {
 
   useLayoutEffect(() => {
     if (loaded) {
-      if (verifyError == '') {
+      if (verifyError == null) {
         history.push(PATH_PAGE.auth.confirm);
         enqueueSnackbar('Verify success', { variant: 'success' });
       }
       else
-        enqueueSnackbar('Verify Fail', { variant: 'error' });
+        enqueueSnackbar(verifyError.data ?
+          t(verifyError.data) : verifyError.status, { variant: 'error' });
+
+      setLoaded(false);
 
     }
   }, [loaded])
@@ -80,7 +82,7 @@ function VerifyCodeView(props) {
     onSubmit: async (values) => {
       let code = values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4;
       await verify({ code: code, email: props.location.state.email })
-      enqueueSnackbar('Verify success', { variant: 'success' });
+      // enqueueSnackbar('Verify success', { variant: 'success' });
       setLoaded(true);
     }
   });
@@ -103,7 +105,7 @@ function VerifyCodeView(props) {
             {t("Please check your email!")}
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email." , {email : props.location.state.email})}
+            {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.", { email: props.location.state.email })}
           </Typography>
 
           <Box sx={{ mt: 5, mb: 3 }}>

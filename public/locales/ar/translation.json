@@ -467,6 +467,34 @@
   "Promotion discount applied" : "تم اضافة الخصم الترويجي :",
   "Basic Plan" : "الباقة الأساسية",
   "Active" : "صالحة",
-  "Subscrip Date" : "تاريخ الإشتراك"
+  "Subscrip Date" : "تاريخ الإشتراك",
+  "Transaction Declined" : "تم رفض الصفقة",
+  "transaction successful" : "عملية ناجحة",
+  "Request has been uploaded" : "تم رفع الطلب",
+  "There is a pending subscription" : "يوجد اشتراك معلق",
+  "Add your stock" : " أضف مخزونك",
+  "Use the following format when uploading the excel file" : "استخدم النسق كما هو موضح ادناه عند رفع ملف الإكسل",
+  "Stock File" : "اختر ملف المخزون",
+  "Upload" : "رفع الملف",
+  "Branch is required" : "الفرع مطلوب",
+  "The file is required" : "الملف مطلوب",
+  "Offer Name" : "اسم العرض",
+  "Offer Start Date" : "تاريخ بداية العرض",
+  "Notes" : "ملاحظات",
+  "Stock file is required" : "ملف المخزون مطلوب",
+  "Offer start date is required" : "تاريخ بدء العرض مطلوب",
+  "Offer end date is required" : "تاريخ انتهاء العرض مطلوب",
+  "Create Report" : "إنشاء تقرير",
+  "Received From":"مرسل من",
+  "Date" :"التاريخ",
+  "Number of items" : "عدد القطع",
+  "Add Offer" : "أضف العرض"
+
+  
+
+
+
+
+
 
 }

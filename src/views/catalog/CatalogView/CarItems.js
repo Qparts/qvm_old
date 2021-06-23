@@ -50,13 +50,15 @@ function CarItems() {
                                 </thead>
                                 <tbody>
 
-                                    {cars.map((car) => (
+                                    {cars.map((car, index) => (
 
-                                        <tr onClick={() => {
-                                            const catalogId = fromList ? selectedCatalog.id : car.catalogId;
-                                            const carId = fromList ? car.id : car.carId;
-                                            dispatch(getGroups(catalogId, carId, null, null, car));
-                                        }}>
+                                        <tr
+                                            key={index}
+                                            onClick={() => {
+                                                const catalogId = fromList ? selectedCatalog.id : car.catalogId;
+                                                const carId = fromList ? car.id : car.carId;
+                                                dispatch(getGroups(catalogId, carId, null, null, car));
+                                            }}>
                                             <td>{fromList ? car.modelName : car.brand}</td>
                                             <td>{fromList ? car.description : car.title}</td>
                                             {car.parameters.map((param) => (

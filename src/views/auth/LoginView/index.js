@@ -24,7 +24,7 @@ import {
   Typography
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
-import { useSelector , useDispatch} from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
 import { getInitialize } from 'src/redux/slices/authJwt';
@@ -79,7 +79,7 @@ function LoginView() {
 
 
   useEffect(() => {
-    if (loaded && loginError == '') {
+    if (loaded && loginError == null) {
       enqueueSnackbar('Login success', {
         variant: 'success',
         action: (key) => (
@@ -184,8 +184,8 @@ function LoginView() {
           </Box>
 
 
-          {loginError != '' && <Alert severity="error" sx={{ mb: 5 }}>
-            {loginError}
+          {loginError != null && <Alert severity="error" sx={{ mb: 5 }}>
+            {loginError.data ? loginError.data : loginError.status}
           </Alert>}
 
           <LoginForm formik={formik} />

@@ -115,7 +115,6 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
           fullWidth
           label={t("Branch")}
           placeholder={t("Branch")}
-          // defaultValue={selectedBranch ? selectedBranch.id : 0}
           disabled={selectedBranch != null}
           {...getFieldProps('branch')}
           SelectProps={{ native: true }}

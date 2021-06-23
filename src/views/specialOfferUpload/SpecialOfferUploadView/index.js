@@ -10,10 +10,12 @@ import {
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
+import AddOffer from './addOffer/AddOffer';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
+    
     root: {
         boxShadow: 'none',
         textAlign: 'center',
@@ -61,7 +63,8 @@ function SpecialOfferUpload() {
                         <Typography variant="h4">{t("Special Offer Upload")}</Typography>
                         <hr />
                     </Box>
-
+                    
+                    <AddOffer />
 
                 </Container>
             </LoadingOverlay>

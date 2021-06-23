@@ -36,7 +36,7 @@ function AddUserVerification(props) {
         console.log(loaded);
         console.log(error);
         (async () => {
-            if ((error == null || error.status == 200) && !isLoading && loaded) {
+            if ((error == null ) && !isLoading && loaded) {
                 await dispatch(refreshToken());
                 await dispatch(loadBranches());
                 props.setAddUserIsOpen(false);
@@ -75,13 +75,6 @@ function AddUserVerification(props) {
                     setSubmitting(false);
                 }
 
-                // if ((error == null || error.status == 200) &&
-                //     !isLoading && verifiedEmail == null && verificationMode == null) {
-                //     await dispatch(refreshToken());
-                //     await dispatch(loadBranches());
-                //     props.setAddUserIsOpen(false);
-                //     window.location = PATH_APP.management.user.account;
-                // }
 
             } catch (ex) {
                 resetForm();

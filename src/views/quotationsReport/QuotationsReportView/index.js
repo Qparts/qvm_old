@@ -10,6 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
+import QuotationSearchSection from './searchSection/QuotationSearchSection';
 
 // ----------------------------------------------------------------------
 
@@ -61,7 +62,8 @@ function QuotationsReportView() {
                         <Typography variant="h4">{t("Quotations Report")}</Typography>
                         <hr />
                     </Box>
-
+                    
+                    <QuotationSearchSection />
 
                 </Container>
             </LoadingOverlay>

@@ -26,9 +26,34 @@ const activePromtion = (code, plan, duration) => {
   return http.get(serviceUrl);
 }
 
+const paymentOrder = (data) => {
+  return http.post(invoiceUrl.paymentOrder, data);
+};
+
+function wirePaymentOrder(data) {
+  const config = {
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded',
+    }
+  }
+  return http.post(invoiceUrl.wirepaymentOrder, data, config);
+}
+
+const updatePaymentOrder = (data) => {
+  return http.put(invoiceUrl.paymentOrder, data);
+};
+
+const getPendingSubscription = () => {
+  return http.get(invoiceUrl.pendingSubscription);
+};
+
 export default {
   getPlans,
   getPlansFeatures,
   activePromtion,
-  getBancks
+  getBancks,
+  paymentOrder,
+  updatePaymentOrder,
+  wirePaymentOrder,
+  getPendingSubscription
 };

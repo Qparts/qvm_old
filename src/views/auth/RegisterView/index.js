@@ -17,9 +17,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import helper from 'src/utils/helper';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
+import { register } from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -41,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
-      padding: theme.spacing(7, 5, 0, 7)
+      padding: theme.spacing(4, 5, 0, 7)
     }
   },
   content: {
@@ -59,13 +60,14 @@ const useStyles = makeStyles((theme) => ({
 
 function RegisterView() {
   const classes = useStyles();
-  const { method, register } = useAuth();
+  const { method } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { countries, error: registerError } = useSelector(
     (state) => state.authJwt
   );
@@ -73,30 +75,28 @@ function RegisterView() {
 
 
   const goToVerification = () => {
-    if (registerError == '') {
-      enqueueSnackbar('Login success', {
-        variant: 'success',
-        action: (key) => (
-          <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-            <Icon icon={closeFill} />
-          </MIconButton>
-        )
-      });
+    enqueueSnackbar('Register success', {
+      variant: 'success',
+      action: (key) => (
+        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+          <Icon icon={closeFill} />
+        </MIconButton>
+      )
+    });
 
-      history.push(
-        PATH_PAGE.auth.verify,
-        { email: email }
-      );
-    }
+    history.push(
+      PATH_PAGE.auth.verify,
+      { email: email }
+    );
   }
 
 
   useEffect(() => {
-    if (loaded){
+    if (loaded && registerError == null) {
       goToVerification();
-      setLoaded(false);
     }
-     
+    setLoaded(false);
+
   }, [loaded])
 
 
@@ -111,6 +111,25 @@ function RegisterView() {
   });
 
 
+  const submit = async (values) => {
+
+    await dispatch(
+      register({
+        email: values.email,
+        password: values.password,
+        mobile: helper.reconstructPhone(values.countryId, values.phone, countries),
+        companyName: values.companyName,
+        name: values.name,
+        countryId: values.countryId,
+        regionId: "1",
+        cityId: "1",
+      })
+    );
+
+    setEmail(values.email);
+    setLoaded(true);
+  }
+
 
   const formik = useFormik({
     initialValues: {
@@ -124,25 +143,12 @@ function RegisterView() {
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await register({
-          email: values.email,
-          password: values.password,
-          mobile: helper.reconstructPhone(values.countryId, values.phone, countries),
-          companyName: values.companyName,
-          name: values.name,
-          countryId: values.countryId,
-          regionId: "1",
-          cityId: "1",
-        });
-
+        await submit(values);
         if (isMountedRef.current) {
           setSubmitting(false);
         }
 
-        setEmail(values.email);
-        setLoaded(true);
       } catch (error) {
-        console.error(error);
         if (isMountedRef.current) {
           setErrors({ afterSubmit: error.code || error.message });
           setSubmitting(false);
@@ -195,7 +201,9 @@ function RegisterView() {
           {method === 'firebase' && <SocialLogin />}
 
 
-          {registerError && <Alert severity="error"> {t(registerError)} </Alert>}
+          {registerError != null && <Alert severity="error">  {registerError.data ?
+            t(registerError.data) : registerError.status} </Alert>}
+
           <Box sx={{ mb: 3 }} />
           <RegisterForm formik={formik} />
 
