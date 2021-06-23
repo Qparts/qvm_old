@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Form, FormikProvider } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -9,6 +9,7 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import Button from "src/components/button/CustomButton";
+import { getBranches } from 'src/redux/slices/branches';
 
 // ----------------------------------------------------------------------
 
@@ -16,16 +17,22 @@ AddStockForm.propTypes = {
     formik: PropTypes.object.isRequired
 };
 
-function AddStockForm({ formik }) {
-    const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue } = formik;
+function AddStockForm(props) {
+    const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue } = props.formik;
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const [branches, setBranches] = useState(JSON.parse(localStorage.getItem("loginObject")).company.branches)
+    const { countries } = useSelector(
+        (state) => state.authJwt
+    );
+    const [branches, setBranches] = useState(getBranches(countries));
     const { themeDirection } = useSelector((state) => state.settings);
 
+    useEffect(() => {
+        console.log("branches", branches);
+    }, [])
 
     return (
-        <FormikProvider value={formik}>
+        <FormikProvider value={props.formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
 
@@ -43,7 +50,7 @@ function AddStockForm({ formik }) {
                             <option value="" />
                             {branches.map((option) => (
                                 <option key={option.id} value={option.id}>
-                                    {themeDirection == 'ltr' ? option.name : option.nameAr}
+                                    {themeDirection == 'ltr' ? option.branchName : option.branchNameAr}
                                 </option>
                             ))}
                         </TextField>
@@ -59,6 +66,8 @@ function AddStockForm({ formik }) {
                                     fullWidth
                                     placeholder={t("Stock File")}
                                     type="file"
+                                    ref={props.innerRef}
+                                    // onClick={(event) => event.target.value = null}
                                     onChange={(event) => {
                                         setFieldValue("stockFile", event.currentTarget.files[0]);
                                     }}

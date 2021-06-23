@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
-
 import {
     Alert, AlertTitle, IconButton,
     Typography
@@ -19,6 +18,9 @@ import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import AddStockForm from './AddStockForm';
+import partSearchService from 'src/services/partSearchService';
+import { useSnackbar } from 'notistack';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -47,7 +49,9 @@ function UploadSection() {
     const isMountedRef = useIsMountedRef();
     const [open, setOpen] = useState(true);
     const [expanded, setExpanded] = useState(true);
-
+    const { enqueueSnackbar } = useSnackbar();
+    const childRef = React.useRef()
+    const [file, setFile] = useState();
 
     const stockSchema = Yup.object().shape({
         branch: Yup.string().required(t("Branch is required")),
@@ -63,14 +67,25 @@ function UploadSection() {
             stockFile: ''
         },
         validationSchema: stockSchema,
-        onSubmit: async (values, { setErrors, setSubmitting }) => {
+        onSubmit: async (values, { setErrors, setSubmitting, resetForm, setFieldValue }) => {
             try {
                 console.log("values", values);
+                const formData = new FormData();
+                formData.append("stockObject", JSON.stringify({
+                    branchId: values.branch, extension: "xlsx",
+                    mimeType: values.stockFile.type
+                }));
+                formData.append("file", values.stockFile);
+                await partSearchService.qvmStockUpload(formData);
+                enqueueSnackbar(t('Stock file has been uploaded'), { variant: 'success' });
+                resetForm();
             } catch (error) {
+                console.log("error", error);
                 if (isMountedRef.current) {
                     setErrors({ afterSubmit: error.code || error.message });
                     setSubmitting(false);
                 }
+                enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
             }
         }
     });
@@ -119,7 +134,11 @@ function UploadSection() {
 
                 <Box sx={{ mb: 6 }} />
 
-                <AddStockForm formik={formik} />
+                <AddStockForm
+                    formik={formik}
+                    innerRef={childRef}
+                    setFile={setFile}
+                    file={file} />
 
             </AccordionDetails>
         </Accordion>

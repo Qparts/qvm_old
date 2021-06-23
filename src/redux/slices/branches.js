@@ -120,7 +120,7 @@ export function loadBranches(countries) {
 }
 
 
-const getBranches = (countries) => {
+export const getBranches = (countries) => {
     const loginObject = JSON.parse(localStorage.getItem("loginObject"));
     let branches = [];
     const defaultBranchId = loginObject.company.defaultBranchId;

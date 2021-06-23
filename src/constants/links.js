@@ -115,7 +115,8 @@ const product = {
   productInfoSearch: `${PRODUCT_SERVICE}/search-product`,
   getProductReplacement: `${PRODUCT_SERVICE}/search-replacement-product`,
   getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
-  specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`
+  specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
+  postQvmStockUpload : `${PRODUCT_SERVICE}/stock-upload`,
 }
 
 const plan = {
@@ -125,10 +126,10 @@ const plan = {
 }
 
 const invoice = {
-  getBanks : `${INVOICE_SERVICE}/banks`,
-  paymentOrder : `${INVOICE_SERVICE}/payment-order`,
-  wirepaymentOrder : `${INVOICE_SERVICE}/wire-transfer/payment-order`,
-  pendingSubscription : `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`
+  getBanks: `${INVOICE_SERVICE}/banks`,
+  paymentOrder: `${INVOICE_SERVICE}/payment-order`,
+  wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
+  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`
 }
 
 

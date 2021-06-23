@@ -27,7 +27,14 @@ const getCompanies = ({ companyId }) => {
 };
 
 
-
+function qvmStockUpload(data) {
+    const config = {
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+        }
+    }
+    return http.post(productUrl.postQvmStockUpload, data, config);
+}
 
 
 
@@ -36,5 +43,6 @@ export default {
     productInfoSearch,
     getCompanies,
     getPartReplacements,
-    getSpecialOffersLive
+    getSpecialOffersLive,
+    qvmStockUpload
 };
