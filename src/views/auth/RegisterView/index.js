@@ -117,7 +117,7 @@ function RegisterView() {
       register({
         email: values.email,
         password: values.password,
-        mobile: helper.reconstructPhone(values.countryId, values.phone, countries),
+        mobile: helper.reconstructPhone(parseInt(values.countryId), values.phone, countries),
         companyName: values.companyName,
         name: values.name,
         countryId: values.countryId,

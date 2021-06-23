@@ -31,6 +31,7 @@ function RegisterForm({ formik }) {
   const { countries } = useSelector(
     (state) => state.authJwt
   );
+  const { themeDirection } = useSelector((state) => state.settings);
 
 
 
@@ -68,21 +69,22 @@ function RegisterForm({ formik }) {
 
         <Grid container >
           <Grid item xs={5} >
-            <Select
-              labelId="countryId"
+
+            <TextField
+              style={{ paddingInlineEnd: 10 }}
+              select
               id="countryId"
               name="countryId"
               {...getFieldProps('countryId')}
+              SelectProps={{ native: true }}
             >
-              {countries.map((country) => (
-                <MenuItem
-                  key={country.id}
-                  value={country.id}
-                >
-                  (+{country.countryCode}) {document.body.dir === "rtl" ? country.nameAr : country.name}
-                </MenuItem>
+              {countries.map((option, index) => (
+                <option key={index} value={option.id}>
+                  (+{option.countryCode}) {themeDirection === "rtl" ? option.nameAr : option.name}
+                </option>
               ))}
-            </Select>
+            </TextField>
+
           </Grid>
 
           <Grid item xs={7}>

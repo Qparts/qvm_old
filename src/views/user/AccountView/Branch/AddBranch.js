@@ -7,10 +7,10 @@ import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import {
     Grid,
-    TextField} from '@material-ui/core';
+    TextField
+} from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { useSnackbar } from 'notistack';
-import { FormControl, InputLabel, Select } from "@material-ui/core";
 import { createBranch } from 'src/redux/slices/branches';
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 
@@ -93,92 +93,101 @@ function AddBranch(props) {
 
 
                 <Grid item xs={12} sm={12}>
+                    <TextField
+                        select
+                        fullWidth
+                        label={t("Country")}
+                        id="countryId"
+                        value={countryId}
+                        name="countryId"
 
-                    <FormControl fullWidth required>
-                        <InputLabel id="countryId">{t("Country")}</InputLabel>
-                        <Select
-                            native={true}
-                            labelId="countryLabelId"
-                            label="Country"
-                            value={countryId}
+                        onChange={(event) => {
+                            setCountryId(event.target.value);
+                            setRegionId(0);
+                            setCityId(0);
+                            const country = countries.find(
+                                (x) => x.id === parseInt(event.target.value)
+                            );
+                            const newregions = country != null ? country.regions : [];
+                            setRegions(newregions);
+                            setCities([]);
+                        }}
 
-                            onChange={(event) => {
-                                setCountryId(event.target.value);
-                                setRegionId(0);
-                                setCityId(0);
-                                const country = countries.find(
-                                    (x) => x.id === parseInt(event.target.value)
-                                );
-                                const newregions = country != null ? country.regions : [];
-                                setRegions(newregions);
-                                setCities([]);
-                            }}
-                        >
-                            <option aria-label="None" value="" />
-                            {countries?.map((item, index) => (
-                                <option value={item.id} key={index}>
-                                    {themeDirection == 'ltr' ? item.name : item.nameAr}
-                                </option>))
-                            }
-                        </Select>
-                    </FormControl>
+                        SelectProps={{ native: true }}
+                    >
+                        <option aria-label="None" value="" />
+                        {countries?.map((item, index) => (
+                            <option value={item.id} key={index}>
+                                {themeDirection == 'ltr' ? item.name : item.nameAr}
+                            </option>))
+                        }
+                    </TextField>
 
                 </Grid>
 
                 <Grid item xs={12} sm={12}>
-                    <FormControl fullWidth required>
-                        <InputLabel id="regionId">{t("Region")}</InputLabel>
-                        <Select
-                            native={true}
-                            labelId="regionLabelId"
-                            label={t("Region")}
-                            value={regionId}
-                            onChange={(event) => {
-                                setRegionId(event.target.value);
-                                setCityId(0);
-                                const newCities = regions.find(
-                                    (x) => x.id === parseInt(event.target.value)
-                                ).cities;
-                                setCities(newCities);
-                            }}
-                        >
-                            <option aria-label="None" value="" />
-                            {regions?.map((item, index) => (
-                                <option value={item.id} key={index}>
-                                    {themeDirection == 'ltr' ? item.name : item.nameAr}
-                                </option>))
-                            }
-                        </Select>
-                    </FormControl>
+
+                    <TextField
+                        select
+                        fullWidth
+                        label={t("Region")}
+                        id="regionId"
+                        value={regionId}
+                        name="regionId"
+
+                        onChange={(event) => {
+                            setRegionId(event.target.value);
+                            setCityId(0);
+                            const newCities = regions.find(
+                                (x) => x.id === parseInt(event.target.value)
+                            ).cities;
+                            setCities(newCities);
+                        }}
+
+                        SelectProps={{ native: true }}
+                    >
+                        <option aria-label="None" value="" />
+                        {regions?.map((item, index) => (
+                            <option value={item.id} key={index}>
+                                {themeDirection == 'ltr' ? item.name : item.nameAr}
+                            </option>))
+                        }
+                    </TextField>
+
                 </Grid>
 
 
                 <Grid item xs={12} sm={12}>
-                    <FormControl fullWidth required>
-                        <InputLabel id="cityId">{t("City")}</InputLabel>
-                        <Select
-                            native={true}
-                            labelId="cityLabelId"
-                            label="City"
-                            value={cityId}
-                            onChange={(event) => {
-                                setCityId(event.target.value);
-                                const city = cities.find((e) => e.id == event.target.value);
-                                let newLocation = {};
-                                newLocation.latitude = city.latitude;
-                                newLocation.longitude = city.longitude;
-                                newLocation.mapZoom = city.mapZoom;
-                                setLocation(newLocation);
-                            }}
-                        >
-                            <option aria-label="None" value="" />
-                            {cities?.map((item, index) => (
-                                <option value={item.id} key={index}>
-                                    {themeDirection == 'ltr' ? item.name : item.nameAr}
-                                </option>))
-                            }
-                        </Select>
-                    </FormControl>
+
+                    <TextField
+                        select
+                        fullWidth
+                        required
+                        label={t("City")}
+                        id="cityId"
+                        value={cityId}
+                        name="cityId"
+
+                        onChange={(event) => {
+                            setCityId(event.target.value);
+                            const city = cities.find((e) => e.id == event.target.value);
+                            let newLocation = {};
+                            newLocation.latitude = city.latitude;
+                            newLocation.longitude = city.longitude;
+                            newLocation.mapZoom = city.mapZoom;
+                            setLocation(newLocation);
+                        }}
+
+                        SelectProps={{ native: true }}
+                    >
+                        <option aria-label="None" value="" />
+                        {cities?.map((item, index) => (
+                            <option value={item.id} key={index}>
+                                {themeDirection == 'ltr' ? item.name : item.nameAr}
+                            </option>))
+                        }
+                    </TextField>
+
                 </Grid>
 
 
@@ -302,11 +311,6 @@ function AddBranch(props) {
                 {t("Create")}
             </LoadingButton>
 
-
-
-
-            {/* </CardContent>
-            </Card> */}
         </Grid >
 
     );

@@ -29,6 +29,8 @@ function AddUserVerification(props) {
     const { error, isLoading, verifiedEmail, verificationMode } = useSelector((state) => state.branches);
     const isMountedRef = useIsMountedRef();
     const [loaded, setLoaded] = useState(false);
+    const { themeDirection } = useSelector((state) => state.settings);
+
 
 
 
@@ -36,7 +38,7 @@ function AddUserVerification(props) {
         console.log(loaded);
         console.log(error);
         (async () => {
-            if ((error == null ) && !isLoading && loaded) {
+            if ((error == null) && !isLoading && loaded) {
                 await dispatch(refreshToken());
                 await dispatch(loadBranches());
                 props.setAddUserIsOpen(false);
@@ -66,7 +68,8 @@ function AddUserVerification(props) {
         onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
             try {
 
-                let code = values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4;
+                let code = themeDirection == 'ltr' ? values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4
+                    : values.code4 + '' + values.code3 + '' + values.code2 + '' + values.code1;
                 await dispatch(verifyUser(code));
 
                 setLoaded(true);
