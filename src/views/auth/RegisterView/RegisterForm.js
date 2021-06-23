@@ -13,7 +13,8 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  NativeSelect
+  Typography,
+  Link
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
@@ -141,6 +142,21 @@ function RegisterForm({ formik }) {
             passwordError(errors.afterSubmit).helperText
           }
         />
+        <Typography
+            variant="body2"
+            align="center"
+            sx={{ color: 'text.secondary', mt: 3 }}
+          >
+            {t("By registering you agree on QVM  and QVM")}&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              {t("Terms of Use")}
+            </Link>
+            &nbsp;{t("and QVM")}&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              {t("Privacy Policy")}
+            </Link>
+            .
+          </Typography>
         <Box sx={{ mt: 3 }}>
           <LoadingButton
             fullWidth

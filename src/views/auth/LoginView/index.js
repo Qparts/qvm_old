@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import Section from './Section';
+import Section from './../RegisterView/Section';
 import { useFormik } from 'formik';
 import LoginForm from './LoginForm';
 import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
-import SocialLogin from './SocialLogin';
 import useAuth from 'src/hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { PATH_PAGE } from 'src/routes/paths';
@@ -53,13 +52,18 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   content: {
-    maxWidth: 480,
+    maxWidth: 600,
     margin: 'auto',
     display: 'flex',
     minHeight: '100vh',
     flexDirection: 'column',
     justifyContent: 'center',
     padding: theme.spacing(12, 0)
+  },
+  heading:{
+    color: theme.palette.secondary.main,
+    lineHeight:1,
+    marginRight: '0.5rem',
   }
 }));
 
@@ -167,20 +171,14 @@ function LoginView() {
         <div className={classes.content}>
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h4" gutterBottom>
+              <Typography variant="h3" gutterBottom className={classes.heading}>
                 {t("Sign into QVM Vendor Market Place")}
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
                 {t("Enter your details below")}
               </Typography>
             </Box>
-            <Tooltip title={'QVM'}>
-              <Box
-                component="img"
-                src={`/static/icons/QVM-logo.png`}
-                sx={{ width: 50, height: 50 }}
-              />
-            </Tooltip>
+            
           </Box>
 
 
