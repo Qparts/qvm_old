@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,13 +18,26 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
+import { useTranslation } from 'react-i18next';
 
 
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {}
+    root: {
+        boxShadow: 'none',
+        textAlign: 'center',
+        [theme.breakpoints.up('md')]: {
+            display: 'flex',
+            textAlign: 'left',
+            alignItems: 'center',
+            justifyContent: 'space-between'
+        },
+        [theme.breakpoints.up('xl')]: {
+            height: 320
+        }
+    }
 }));
 
 
@@ -132,8 +145,10 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
 
     const classes = useStyles();
     const dispatch = useDispatch();
+    const { themeDirection } = useSelector((state) => state.settings);
 
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
 
     const [state, setState] = useState({
@@ -178,7 +193,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     };
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ width: '100%' }} className={classes.root}>
             <Paper sx={{ width: '100%', mb: 2 }}>
                 <Scrollbars>
                     <TableContainer component={Paper}>
@@ -265,6 +280,12 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                     rowsPerPage={constants.MAX}
                     page={state.page}
                     onPageChange={changePagehandler}
+                    labelDisplayedRows={
+                        ({ from, to, count }) => {
+                            return themeDirection == 'ltr' ? '' + from + '-' + to + t("Of") + count :
+                                '' + to + '-' + from + t("Of") + count
+                        }
+                    }
                 />}
 
 

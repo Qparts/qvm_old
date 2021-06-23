@@ -43,7 +43,7 @@ function CarItems() {
                                         <th>{t("Description")}</th>
 
                                         {cars[0].parameters.map((param) => (
-                                            <th key={param.key}> {t("catalogTab." + param.key)}</th>
+                                            <th key={param.key}> {t(param.key)}</th>
                                         ))}
                                         <th></th>
                                     </tr>

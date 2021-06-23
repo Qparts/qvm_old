@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import Accordion from '@material-ui/core/Accordion';
@@ -6,17 +6,16 @@ import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { FormControl, InputLabel, Select } from "@material-ui/core";
 import ClearIcon from '@material-ui/icons/Clear';
 import {
     Card,
     Grid,
-    CardContent
+    CardContent,
+    TextField,
+    Box
 } from '@material-ui/core';
 import { handleFilterChange } from 'src/redux/slices/catalog';
 import { useTranslation } from 'react-i18next';
-import { useState } from 'react';
-import GridContainer from 'src/components/grid/GridContainer';
 
 // ----------------------------------------------------------------------
 
@@ -49,50 +48,56 @@ function CarFilter() {
                                 <Typography>filter</Typography>
                             </AccordionSummary>
                             <AccordionDetails className="border-top d-block">
-                                <div className="" >
+                                <Grid container spacing={1}>
                                     {Array.from(filterKeysMap.keys()).map((keyItem) => {
                                         return (
-                                            <div className="badge badge-pill badge-light " key={keyItem}>
-                                                {t(keyItem)} : {filterKeysMap.get(keyItem).value}
-                                                <ClearIcon
-                                                    onClick={() => {
-                                                        dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, keyItem, null));
-                                                    }}
-                                                />
-                                            </div>
+                                            <Grid
+                                                item
+                                                xs={12} sm={2} md={2}
+                                                key={keyItem}>
+                                                <div className="badge badge-pill badge-light ">
+                                                    {t(keyItem)} : {filterKeysMap.get(keyItem).value}
+                                                    <ClearIcon
+                                                        onClick={() => {
+                                                            dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, keyItem, null));
+                                                        }}
+                                                    />
+                                                </div>
+                                            </Grid>
                                         );
                                     })}
-                                </div>
+                                </Grid>
 
-                                <GridContainer>
+                                <Box sx={{ mt: 3 }} />
+
+
+                                <Grid container spacing={1}>
                                     {filters.map(
                                         (filter) =>
                                             !filterKeysMap.has(filter.key) && (
                                                 <Grid item xs={12} sm={4} md={3} key={filter.key}>
-                                                    <FormControl required style={{ width: "100%" }}>
-                                                        <InputLabel id={filter.key}>{t("catalogTab." + filter.key)}</InputLabel>
-                                                        <Select
-                                                            native={true}
-                                                            labelId={filter.key}
-                                                            id={filter.key}
-                                                            name={filter.key}
-                                                            onChange={(event) => {
-                                                                dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, filter.key, JSON.parse(event.target.value)));
-                                                            }}
-                                                        >
-                                                            <option aria-label="None" value="" />
-                                                            {filter.values.map((item, index) => (
-                                                                <option value={JSON.stringify(item)} key={index}>
-                                                                    {item.value}
-                                                                </option>
-                                                            ))}
-                                                        </Select>
-                                                    </FormControl>
+                                                    <TextField
+                                                        select
+                                                        fullWidth
+                                                        label={t(filter.key)}
+                                                        id={filter.key}
+                                                        name={filter.key}
+                                                        onChange={(event) => {
+                                                            dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, filter.key, JSON.parse(event.target.value)));
+                                                        }}
+                                                        SelectProps={{ native: true }}
+                                                    >
+                                                        <option aria-label="None" value="" />
+                                                        {filter.values.map((item, index) => (
+                                                            <option value={JSON.stringify(item)} key={index}>
+                                                                {item.value}
+                                                            </option>
+                                                        ))}
+                                                    </TextField>
                                                 </Grid>
                                             )
                                     )}
-
-                                </GridContainer>
+                                </Grid>
                             </AccordionDetails>
                         </Accordion>
 
