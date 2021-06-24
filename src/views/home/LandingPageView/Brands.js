@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Box, Typography } from '@material-ui/core';
@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/swiper.min.css';
 import 'swiper/components/pagination/pagination.min.css';
 import './BrandsSwiperStyle.css';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 const useStyles = makeStyles((theme) => {
@@ -29,8 +30,48 @@ const useStyles = makeStyles((theme) => {
 Benefits.propTypes = {
   className: PropTypes.string
 };
+
+const brands = [
+  "./static/images/brands/gm.png",
+  "./static/images/brands/hyundai.png",
+  "./static/images/brands/KIa.png",
+  "./static/images/brands/ford.png",
+  "./static/images/brands/toyota.png",
+  "./static/images/brands/jeep.png",
+  "./static/images/brands/chevrolet.png",
+  "./static/images/brands/honda.png",
+  "./static/images/brands/chrysler.png",
+  "./static/images/brands/renault.png",
+  "./static/images/brands/dodge.png",
+  "./static/images/brands/cadillac.png",
+  "./static/images/brands/mazda.png",
+  "./static/images/brands/geely.png",
+  "./static/images/brands/nissan.png",
+  "./static/images/brands/lexus.png",
+  "./static/images/brands/ray.png",
+  "./static/images/brands/luber.png",
+  "./static/images/brands/delphi.png",
+  "./static/images/brands/mize.png",
+  "./static/images/brands/mackay.png",
+  "./static/images/brands/remy.png",
+  "./static/images/brands/mahle.png",
+  "./static/images/brands/aam.png",
+  "./static/images/brands/pista.png",
+  "./static/images/brands/gt.png",
+  "./static/images/brands/peak.png",
+  "./static/images/brands/supercool.png",
+  "./static/images/brands/victor-reinz-detail.png",
+  "./static/images/brands/dayco.png",
+  "./static/images/brands/ACDelco.png",
+  "./static/images/brands/Airtex-logo.png",
+  "./static/images/brands/gabriel.png"
+]
+
 function Benefits({ className }) {
   const classes = useStyles();
+  const [showAll, setShowAll] = useState(false);
+  const { t } = useTranslation();
+
   return (
     <div className={clsx(classes.root, className)}>
       <Container maxWidth="lg" className="brands">
@@ -39,216 +80,49 @@ function Benefits({ className }) {
           align="center"
           className={classes.headingWeight}
         >
-          تستطيع الوصول لجميع ماركات السيارات و البدائل من تجاري واصلي
+          {t("access all brands of cars and alternatives, both commercial and original")}
         </Typography>
 
-        <Swiper slidesPerView={'auto'} spaceBetween={0}>
-          <SwiperSlide>
-            <img src="./static/images/brands/gm.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/hyundai.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/KIa.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/ford.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/toyota.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/jeep.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/chevrolet.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/honda.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/chrysler.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/renault.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/dodge.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/cadillac.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/mazda.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/geely.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/nissan.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/lexus.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/ray.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/luber.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/delphi.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/mize.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/mackay.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/remy.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/mahle.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/aam.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/pista.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/gt.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/peak.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/supercool.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/victor-reinz-detail.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/dayco.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/ACDelco.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/Airtex-logo.png" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <img src="./static/images/brands/gabriel.png" />
-          </SwiperSlide>
-        </Swiper>
-        <Box display="flex" justifyContent="center" mt={2}>
-          <Button color="primary">إظهار كل الماركات</Button>
-        </Box>
-        <div class="brand-list">
-          <ul class="list-unstyled">
-            <li>
-              <img src="./static/images/brands/gm.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/hyundai.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/KIa.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/ford.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/toyota.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/jeep.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/chevrolet.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/honda.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/chrysler.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/renault.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/dodge.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/cadillac.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/mazda.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/geely.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/nissan.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/lexus.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/ray.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/luber.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/delphi.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/mize.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/mackay.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/remy.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/mahle.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/aam.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/pista.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/gt.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/peak.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/supercool.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/victor-reinz-detail.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/dayco.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/ACDelco.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/Airtex-logo.png" />
-            </li>
-            <li>
-              <img src="./static/images/brands/gabriel.png" />
-            </li>
-          </ul>
-        </div>
+        {showAll == false &&
+          <>
+            <Swiper slidesPerView={'auto'} spaceBetween={0}>
+              {
+                brands.map((brand, index) => {
+                  return (
+                    <SwiperSlide key={index}>
+                      <img src={brand} />
+                    </SwiperSlide>
+                  )
+                })
+              }
+            </Swiper>
+
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Button color="primary" onClick={() => setShowAll(true)}>{t("Show all brands")}</Button>
+            </Box>
+          </>
+        }
+
+        {showAll &&
+          <>
+            <div class="brand-list">
+              <ul class="list-unstyled">
+                {
+                  brands.map((brand, index) => {
+                    return (
+                      <li key={index}>
+                        <img src={brand} />
+                      </li>
+                    )
+                  })
+                }
+              </ul>
+            </div>
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Button color="primary" onClick={() => setShowAll(false)}>{t("Hid all brands")}</Button>
+            </Box>
+          </>
+        }
       </Container>
     </div>
   );

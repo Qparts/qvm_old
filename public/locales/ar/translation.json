@@ -490,7 +490,11 @@
   "Number of items" : "عدد القطع",
   "Add Offer" : "أضف العرض",
   "There is no parts" : "لا توجد قطع ",
-  "Of" : " من "
+  "Of" : " من ",
+  "access all brands of cars and alternatives, both commercial and original" : " تستطيع الوصول لجميع ماركات السيارات و البدائل من تجاري واصلي",
+  "Show all brands": "إظهار كل الماركات",
+  "Hid all brands": "إخغاء كل الماركات"
+
 
 
 
