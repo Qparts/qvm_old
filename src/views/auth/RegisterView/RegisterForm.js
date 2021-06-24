@@ -70,7 +70,6 @@ function RegisterForm({ formik }) {
 
         <Grid container >
           <Grid item xs={5} >
-
             <TextField
               style={{ paddingInlineEnd: 10 }}
               select

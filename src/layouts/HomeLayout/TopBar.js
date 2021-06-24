@@ -71,10 +71,6 @@ const useStyles = makeStyles((theme) => ({
     )
   },
   onScroll: {
-    '& $toolbar': {
-      backgroundColor: theme.palette.secondary.darker
-    },
-
     [theme.breakpoints.up('md')]: {
       '& $toolbar': {
         height: APP_BAR_DESKTOP - 20
@@ -95,6 +91,11 @@ const useStyles = makeStyles((theme) => ({
   },
   transparentNav:{
     background: 'transparent',
+    '&$onScroll':{
+      '& $toolbar': {
+        backgroundColor: theme.palette.secondary.darker
+      },
+    }
   }
 }));
 

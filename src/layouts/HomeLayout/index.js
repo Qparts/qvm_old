@@ -8,7 +8,10 @@ import {Box} from '@material-ui/core'
 
 const useStyles = makeStyles((theme) => ({
   root: { height: '100%' },
-  content: { height: '100%' },
+  content: { 
+    minHeight: '100%',
+   },
+
 }));
 
 // ----------------------------------------------------------------------
@@ -23,7 +26,7 @@ function HomeLayout({ children }) {
   return (
     <div className={classes.root}>
       <TopBar />
-      <Box display='flex' className={classes.content}>{children}</Box>
+      <Box display='flex' flexDirection="column" className={classes.content}>{children}</Box>
       <Footer />
 
     </div>

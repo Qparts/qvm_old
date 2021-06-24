@@ -1,13 +1,16 @@
-import React, { } from 'react';
+import React from 'react';
 import Page from 'src/components/Page';
-import Logo from 'src/components/Logo';
-import { Link as RouterLink } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Typography, Hidden } from '@material-ui/core';
-import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
-import Footer from '../../layouts/HomeLayout/Footer';
-
+import Card from '@material-ui/core/Card';
+import {
+  Container,
+  makeStyles,
+  Box,
+  TextField,
+  Typography,
+  Grid
+} from '@material-ui/core';
+import { LoadingButton } from '@material-ui/lab';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
@@ -15,38 +18,88 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     minHeight: '100%',
     alignItems: 'center',
-    padding: theme.spacing(12, 0)
+    padding: theme.spacing(12, 0, 0)
   },
-  header: {
-    top: 0,
-    left: 0,
-    width: '100%',
-    position: 'absolute',
-    padding: theme.spacing(3),
-    [theme.breakpoints.up('sm')]: {
-      padding: theme.spacing(5)
-    }
+  heading: {
+    color: theme.palette.secondary.main,
+    lineHeight: 1,
+    marginRight: '0.5rem'
   }
 }));
 
 // ----------------------------------------------------------------------
 
-function ConfirmView(props) {
+function RegisterForm({ formik }) {
   const classes = useStyles();
   const { t } = useTranslation();
+
   return (
-    <Page title="Verify | Minimal UI" className={classes.root}>
-
-
-      <Container>
-        <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-
-        
+    <Page className={classes.root}>
+      <Container maxWidth="sm">
+        <Box sx={{ mx: 'auto', textAlign: 'center' }}>
+          <Typography variant="h4" gutterBottom className={classes.heading}>
+            {t('Contact Our Team')}
+          </Typography>
+          <Typography sx={{ color: 'text.secondary' }}>
+            {t('Fill the form and we will contact you as soon as possible')}
+          </Typography>
         </Box>
-        
+        <Card sx={{ px: 2, py: 3, my: 3 }}>
+          <form>
+            <TextField
+              sx={{ mb: 3 }}
+              fullWidth
+              label={t("Name")}
+              variant="outlined"
+            />
+            <TextField
+              sx={{ mb: 3 }}
+              fullWidth
+              label={t('Email')}
+              variant="outlined"
+            />
+            <Grid container sx={{ mb: 3 }}>
+              <Grid item xs={5}>
+                <TextField
+                  style={{ paddingInlineEnd: 10 }}
+                >
+                </TextField>
+              </Grid>
+              <Grid item xs={7}>
+                <TextField
+                  fullWidth
+                  name="phone"
+                  label={t('Mobile')}
+                />
+              </Grid>
+            </Grid>
+            <TextField
+              sx={{ mb: 3 }}
+              fullWidth
+              label={t("Company Name")}
+              variant="outlined"
+            />
+            <TextField
+              sx={{ mb: 3 }}
+              fullWidth
+              label={t("Notes")}
+              variant="outlined"
+              multiline
+              rowsMax={4}
+            />
+               <LoadingButton
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+          >
+            {t("Send")}
+          </LoadingButton>
+          </form>
+        </Card>
       </Container>
     </Page>
   );
 }
 
-export default ConfirmView;
+export default RegisterForm;
