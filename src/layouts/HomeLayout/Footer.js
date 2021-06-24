@@ -43,7 +43,7 @@ function Footer({ className }) {
   const classes = useStyles();
 
   return (
-    <Box className={clsx(classes.root, className)}>
+    <Box className={clsx(classes.root, className)} position='relative'>
       <Container maxWidth="lg">
       <Grid container spacing={2} >
       <Hidden only={['sm', 'xs']}>

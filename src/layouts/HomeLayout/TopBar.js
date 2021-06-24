@@ -40,7 +40,7 @@ const MENU_LINKS = [
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
 const APP_BAR_MOBILE = 64;
-const APP_BAR_DESKTOP = 96;
+const APP_BAR_DESKTOP = 70;
 const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
@@ -83,12 +83,18 @@ const useStyles = makeStyles((theme) => ({
   },
   navButton: {
     fontSize: pxToRem(17),
+    boxShadow:'none',
+
+  },
+  whiteBtn:{
     background: theme.palette.grey[0],
     color:theme.palette.primary.main,
-    boxShadow:'none',
     '&:hover':{
       color: theme.palette.grey[0],
     },
+  },
+  transparentNav:{
+    background: 'transparent',
   }
 }));
 
@@ -153,9 +159,10 @@ function TopBar() {
 
   return (
     <AppBar
-      color="transparent"
-      className={clsx(classes.root, { [classes.onScroll]: offset })}
+      color='inherit'
+      className={clsx(classes.root, { [classes.onScroll]: offset }, {[classes.transparentNav]: isHome})}
       sx={{ boxShadow: 'none' }}
+      
     >
       <Toolbar disableGutters className={classes.toolbar}>
         <Container
@@ -182,6 +189,7 @@ function TopBar() {
             size="large"
             href={PATH_PAGE.auth.register}
             className={classes.navButton}
+            className={clsx(classes.navButton , {[classes.whiteBtn]: isHome})}
           >
             {t("registeration")}
           </Button>

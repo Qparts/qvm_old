@@ -2,7 +2,6 @@ import React from 'react';
 import Hero from './Hero';
 import Catalog from './Catalog';
 import PartAvailability from './PartAvailability';
-import Footer from './Footer';
 import Page from 'src/components/Page';
 import { makeStyles } from '@material-ui/core/styles';
 import Benefits from './Benefits';
@@ -37,7 +36,6 @@ function LandingPageView() {
       <Benefits/>
       <NewsLetter/>
       <Brands/>
-      <Footer/>
     </div>
   </Page>
   );
