@@ -102,7 +102,7 @@ function NewInvoice({ className, ...other }) {
   return (
     <Card className={clsx(classes.root, classes.partsSearch, className)} {...other}>
       <Scrollbars>
-        <TableContainer sx={{ minWidth: 720 }}>
+        <TableContainer >
           <Table>
             <TableHead className={classes.partsSearchHead}>
               <TableRow>
