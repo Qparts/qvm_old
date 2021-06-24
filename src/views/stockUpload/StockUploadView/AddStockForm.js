@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Form, FormikProvider } from 'formik';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -18,7 +18,7 @@ AddStockForm.propTypes = {
 };
 
 function AddStockForm(props) {
-    const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue } = props.formik;
+    const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = props.formik;
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const { countries } = useSelector(
@@ -26,10 +26,6 @@ function AddStockForm(props) {
     );
     const [branches, setBranches] = useState(getBranches(countries));
     const { themeDirection } = useSelector((state) => state.settings);
-
-    useEffect(() => {
-        console.log("branches", branches);
-    }, [])
 
     return (
         <FormikProvider value={props.formik}>
@@ -43,6 +39,9 @@ function AddStockForm(props) {
                             name="branch"
                             label={t("Branch")}
                             {...getFieldProps('branch')}
+                            onClick={() => {
+                                console.log("stockFile", values.stockFile)
+                            }}
                             SelectProps={{ native: true }}
                             error={Boolean(touched.branch && errors.branch)}
                             helperText={touched.branch && errors.branch}
@@ -66,8 +65,7 @@ function AddStockForm(props) {
                                     fullWidth
                                     placeholder={t("Stock File")}
                                     type="file"
-                                    ref={props.innerRef}
-                                    // onClick={(event) => event.target.value = null}
+                                    id="stockFile"
                                     onChange={(event) => {
                                         setFieldValue("stockFile", event.currentTarget.files[0]);
                                     }}

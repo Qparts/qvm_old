@@ -69,7 +69,6 @@ function UploadSection() {
         validationSchema: stockSchema,
         onSubmit: async (values, { setErrors, setSubmitting, resetForm, setFieldValue }) => {
             try {
-                console.log("values", values);
                 const formData = new FormData();
                 formData.append("stockObject", JSON.stringify({
                     branchId: values.branch, extension: "xlsx",
@@ -78,6 +77,7 @@ function UploadSection() {
                 formData.append("file", values.stockFile);
                 await partSearchService.qvmStockUpload(formData);
                 enqueueSnackbar(t('Stock file has been uploaded'), { variant: 'success' });
+                document.getElementById("stockFile").value = "";
                 resetForm();
             } catch (error) {
                 console.log("error", error);
