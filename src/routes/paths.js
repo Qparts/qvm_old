@@ -22,6 +22,11 @@ export const PATH_PAGE = {
     verify: path(ROOTS.auth, '/verify'),
     confirm: path(ROOTS.auth, '/confirm')
   },
+  common: {
+    prices: path('' ,  '/prices'),
+    privacy: path('' ,  '/privacy-policy'),
+    terms: path('' ,  '/term-of-use')
+  }
 };
 
 export const PATH_HOME = {

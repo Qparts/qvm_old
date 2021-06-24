@@ -37,6 +37,16 @@ function qvmStockUpload(data) {
 }
 
 
+function qvmSpecialOfferUpload(data) {
+    const config = {
+        headers: {
+            'content-type': 'application/x-www-form-urlencoded',
+        }
+    }
+    return http.post(productUrl.postQvmSpecialOfferUploadRequest, data, config);
+}
+
+
 
 export default {
     productSearch,
@@ -44,5 +54,6 @@ export default {
     getCompanies,
     getPartReplacements,
     getSpecialOffersLive,
-    qvmStockUpload
+    qvmStockUpload,
+    qvmSpecialOfferUpload
 };

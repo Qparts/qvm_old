@@ -16,6 +16,8 @@ import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import partSearchService from 'src/services/partSearchService';
+
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
@@ -43,6 +45,9 @@ function AddOffer(props) {
     const isMountedRef = useIsMountedRef();
     const { enqueueSnackbar } = useSnackbar();
     const [expanded, setExpanded] = useState(true);
+    const { loginObject } = useSelector(
+        (state) => state.authJwt
+    );
 
     const userSchema = Yup.object().shape({
         offerName: Yup.string().required(t("Stock File Is Required")),
@@ -62,14 +67,31 @@ function AddOffer(props) {
             notes: '',
         },
         validationSchema: userSchema,
-        onSubmit: async (values, { setErrors, setSubmitting }) => {
+        onSubmit: async (values, { setErrors, setSubmitting, resetForm, setFieldValue }) => {
             try {
+                const formData = new FormData();
                 console.log("values", values);
+                formData.append("offerObject", JSON.stringify({
+                    branchId: loginObject.company.defaultBranchId,
+                    extension: "xlsx",
+                    mimeType: values.offerFile.type,
+                    offerName: values.offerName,
+                    notes: values.notes,
+                    startDate: values.offerStartDate.getTime(),
+                    endDate: values.offerEndDate.getTime()
+                }));
+                formData.append("file", values.offerFile);
+                await partSearchService.qvmSpecialOfferUpload(formData);
+                enqueueSnackbar(t('Offer file has been uploaded'), { variant: 'success' });
+                document.getElementById("offerFile").value = "";
+                resetForm();
+
             } catch (error) {
                 if (isMountedRef.current) {
                     setErrors({ afterSubmit: error.code || error.message });
                     setSubmitting(false);
                 }
+                enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
             }
         }
     });
@@ -87,7 +109,9 @@ function AddOffer(props) {
                 </AccordionSummary>
                 <AccordionDetails>
 
-                    <AddOfferForm formik={formik} />
+                    <AddOfferForm
+                        formik={formik}
+                    />
 
                 </AccordionDetails>
             </Accordion>

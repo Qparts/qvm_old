@@ -54,6 +54,7 @@ function AddOfferForm({ formik }) {
                                 }}
                                 renderInput={(params) =>
                                     <TextField {...params}
+                                        id="offerStartDate"
                                         fullWidth
                                         name="offerStartDate"
                                         error={Boolean(touched.offerStartDate && errors.offerStartDate)}
@@ -73,7 +74,6 @@ function AddOfferForm({ formik }) {
                                 label={t("Offer End Date")}
                                 value={values.offerEndDate}
                                 onChange={(newValue) => {
-                                    console.log("event", newValue);
                                     setFieldValue("offerEndDate", newValue);
                                 }}
                                 renderInput={(params) =>
@@ -98,6 +98,7 @@ function AddOfferForm({ formik }) {
                                 <TextField
                                     placeholder={t("Stock File")}
                                     type="file"
+                                    id="offerFile"
                                     onChange={(event) => {
                                         setFieldValue("offerFile", event.currentTarget.files[0]);
                                     }}

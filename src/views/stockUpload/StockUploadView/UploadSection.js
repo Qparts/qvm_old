@@ -20,7 +20,6 @@ import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import AddStockForm from './AddStockForm';
 import partSearchService from 'src/services/partSearchService';
 import { useSnackbar } from 'notistack';
-import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -67,7 +66,7 @@ function UploadSection() {
             stockFile: ''
         },
         validationSchema: stockSchema,
-        onSubmit: async (values, { setErrors, setSubmitting, resetForm, setFieldValue }) => {
+        onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
             try {
                 const formData = new FormData();
                 formData.append("stockObject", JSON.stringify({
