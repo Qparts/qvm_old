@@ -14,13 +14,6 @@ import enLocale from 'date-fns/locale/en-US';
 import arLocale from 'date-fns/locale/ar-SA';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import DateFnsUtils from "@date-io/date-fns";
-// --- Material Ui Picker Imports --- //
-import {
-    MuiPickersUtilsProvider,
-    KeyboardTimePicker,
-    KeyboardDatePicker
-} from "@material-ui/pickers";
 // ----------------------------------------------------------------------
 
 AddOfferForm.propTypes = {
