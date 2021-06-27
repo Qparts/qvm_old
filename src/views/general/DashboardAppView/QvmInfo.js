@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(3),
+    padding: theme.typography.generalPadding,
     boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
     border: '1px solid #E7F0F7',
   },
@@ -41,17 +41,17 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-TotalActiveUsers.propTypes = {
+QvmInfo.propTypes = {
   className: PropTypes.string
 };
 
-function TotalActiveUsers(props, { className, ...other }) {
+function QvmInfo(props, { className, ...other }) {
   const classes = useStyles();
 
   return (
     <Card className={clsx(classes.root, classes[props.active], className)} {...other}>
       <Box className={classes.qvmNumbers} sx={{ flexGrow: 1 }}>
-        <Typography variant="subtitle2" className={classes.fontWeightLight}>{props.title}</Typography>
+        <Typography variant="subtitle2">{props.title}</Typography>
         <Typography variant="h3" className={classes.fontWeightLight}>{props.number}</Typography>
       </Box>
       <Box className={classes.widgetIcon}> {props.icon} </Box>
@@ -59,4 +59,4 @@ function TotalActiveUsers(props, { className, ...other }) {
   );
 }
 
-export default TotalActiveUsers;
+export default QvmInfo;

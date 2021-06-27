@@ -19,12 +19,46 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 
-
-
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {}
+    root: {},
+    dataTable: {
+        boxShadow: 'none',
+        background: '#F6F8FC',
+    },
+    dataTableHead: {
+        '& $th': {
+            border: 'none',
+            background: 'none',
+            color: '#7E8D99',
+            paddingTop: 0,
+            paddingBottom: '8px',
+            fontWeight: theme.typography.fontWeightRegular
+        },
+        '& $th:first-of-type, & $th:last-of-type': {
+            boxShadow: 'none',
+        }
+    },
+    dataTableTr: {
+        background: theme.palette.grey[0],
+        borderBottom: '10px solid #F6F8FC',
+        '&:last-of-type': {
+            border: 0
+        },
+        '& $td:first-of-type': {
+            borderRadius: '10px 0 0 10px',
+        },
+        '& $td:last-of-type': {
+            borderRadius: '0 10px 10px 0'
+        }
+    },
+    tablePagination: {
+        borderTop: '10px solid #F6F8FC',
+        '& .MuiTablePagination-toolbar': {
+            height: '59px'
+        }
+    }
 }));
 
 
@@ -57,26 +91,19 @@ const getCellValue = (item, headerItem, maps) => {
     return value;
 }
 
-
 // ----------------------------------------------------------------------
-
-
 
 function Row({ header, title, item, maps, childData = [], childHeader, showChildNumbers, noChildComponent }) {
     const [open, setOpen] = React.useState(false);
+    const classes = useStyles();
 
     return (
         <React.Fragment>
-            <TableRow >
+            <TableRow>
                 {header.map((headerItem, j) => {
-
                     return (
                         <TableCell key={j}>
-
-                            {
-                                getCellValue(item, headerItem, maps)
-                            }
-
+                            {getCellValue(item, headerItem, maps)}
                         </TableCell>
                     );
                 })}
@@ -110,11 +137,8 @@ function Row({ header, title, item, maps, childData = [], childHeader, showChild
                                     hasChild={false}
                                     datatable={childData}
                                     page={0}
-                                    isLazy={false}
-                                />
-
+                                    isLazy={false} />
                             }
-
                         </Box>
                     </Collapse>
                 </TableCell>
@@ -164,8 +188,6 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
 
     }, [rowsPerPage])
 
-
-
     const changePagehandler = (event, newPage) => {
         if (onSelectedPage)
             onSelectedPage(event, newPage);
@@ -179,19 +201,17 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
 
     return (
         <Box sx={{ width: '100%' }}>
-            <Paper sx={{ width: '100%', mb: 2 }}>
+            <Paper sx={{ width: '100%' }}>
                 <Scrollbars>
                     <TableContainer component={Paper}>
-                        <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                            <TableHead>
+                        <Table className={classes.dataTable} sx={{ minWidth: 650 }} aria-label="simple table">
+                            <TableHead className={classes.dataTableHead}>
                                 <TableRow>
-
                                     {header.map((item, i) => {
                                         return (
                                             <TableCell key={i}>{item.name}</TableCell>
                                         );
                                     })}
-
                                     {actions.map((actionItem, i) => {
                                         return (
                                             <TableCell key={i}>
@@ -219,35 +239,21 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                             ></Row>)
                                         else
                                             return (
-                                                <TableRow key={i}>
+                                                <TableRow key={i} className={classes.dataTableTr}>
                                                     {header.map((headerItem, j) => {
                                                         return (
                                                             <TableCell key={j}>
-
-                                                                {
-                                                                    getCellValue(item, headerItem, maps)
-                                                                }
-
+                                                                {getCellValue(item, headerItem, maps)}
                                                             </TableCell>
                                                         );
                                                     })}
-
                                                     {actions.map((actionItem, index) => {
                                                         return (
                                                             <TableCell key={index}>
-                                                                <Button
-                                                                    variant="contained"
-                                                                    color="primary"
-                                                                    round
-                                                                    onClick={() => actionItem.action(JSON.stringify(item))}
-                                                                >
-                                                                    {actionItem.name}
-                                                                </Button>
+                                                                {actionItem.element(JSON.stringify(item))}
                                                             </TableCell>
-
                                                         );
                                                     })}
-
                                                 </TableRow>
                                             );
                                     })
@@ -265,9 +271,8 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                     rowsPerPage={constants.MAX}
                     page={state.page}
                     onPageChange={changePagehandler}
+                    className={classes.tablePagination}
                 />}
-
-
             </Paper>
         </Box>
     );

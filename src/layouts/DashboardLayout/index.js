@@ -19,12 +19,12 @@ const useStyles = makeStyles((theme) => ({
     flexGrow: 1,
     overflow: 'auto',
     minHeight: '100%',
-    paddingTop: APP_BAR_MOBILE + 40,
+    paddingTop: APP_BAR_MOBILE + 18,
     paddingBottom: theme.spacing(4),
     [theme.breakpoints.up('lg')]: {
-      paddingTop: APP_BAR_DESKTOP + 40,
+      paddingTop: APP_BAR_DESKTOP + 18,
       paddingLeft: 0,
-      paddingRight: theme.spacing(2)
+      // paddingRight: theme.spacing(2)
     }
   }
 }));

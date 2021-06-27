@@ -7,19 +7,22 @@ import { makeStyles } from '@material-ui/core/styles';
 const useStyles = makeStyles(() => ({
     root: {},
     advertise: {
-        margin: '26px auto 0',
+        margin: '34px auto 0',
         '& $img': {
-            margin: 'auto'
+            width: '100%',
+            height: '100%'
         }
     }
 }));
 
+// ----------------------------------------------------------------------
+
 const Advertisement = (props) => {
     const classes = useStyles();
     return (
-        <div className={classes.advertise}>
+        <div className={classes.advertise} style={{ width: props.width, height: props.height }}>
             <Link to='/app/dashboard'>
-                <img src={props.url} width={props.width} height={props.height} alt='Advertise' />
+                <img src={props.url} alt='Advertise' />
             </Link>
         </div>
     )

@@ -14,7 +14,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import searchFill from '@iconify-icons/eva/search-fill';
 import { Icon } from '@iconify/react';
 import {
-    TextField,
     Typography,
     OutlinedInput,
     InputAdornment
@@ -22,7 +21,7 @@ import {
 import Datatable from 'src/components/table/DataTable';
 import { useTranslation } from 'react-i18next';
 import constants from 'src/utils/constants';
-
+import CustomButton from 'src/components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -65,9 +64,18 @@ function AvailabilityPartsSection() {
     };
 
 
-    const showDetails = (item) => {
+    const showDetailsAction = (item) => {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
     }
+
+    const showDetailsElement = (item) => {
+        return <CustomButton
+            onClick={() => showDetailsAction(item)}
+        >
+            {t("Details")}
+        </CustomButton>
+    }
+
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -141,7 +149,8 @@ function AvailabilityPartsSection() {
                         actions={[
                             {
                                 name: t("Details"),
-                                action: showDetails,
+                                // action: showDetails,
+                                element: showDetailsElement
                             }
                         ]}
                         datatable={productResult}
