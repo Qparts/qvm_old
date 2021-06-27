@@ -33,30 +33,33 @@ axios.interceptors.response.use(
     }
 
     if (error.response && error.response.status == 401) {
-      return authService
-        .getNewToken()
-        .then((token) => {
-          const loginObject = JSON.parse(localStorage.getItem("loginObject"));
-          delete loginObject["jwt"];
-          loginObject.jwt = token;
-          localStorage.setItem("loginObject", JSON.stringify(loginObject));
-          const config = error.config;
-          localStorage.setItem('accessToken', token);
-          config.headers["Authorization"] = `Bearer ${token}`;
-          return new Promise((resolve, reject) => {
-            axios
-              .request(config)
-              .then((response) => {
-                resolve(response);
-              })
-              .catch((error) => {
-                reject(error);
-              });
+      const loginObject = JSON.parse(localStorage.getItem("loginObject"));
+      if (loginObject) {
+        return authService
+          .getNewToken()
+          .then((token) => {
+            delete loginObject["jwt"];
+            loginObject.jwt = token;
+            localStorage.setItem("loginObject", JSON.stringify(loginObject));
+            const config = error.config;
+            localStorage.setItem('accessToken', token);
+            config.headers["Authorization"] = `Bearer ${token}`;
+            return new Promise((resolve, reject) => {
+              axios
+                .request(config)
+                .then((response) => {
+                  resolve(response);
+                })
+                .catch((error) => {
+                  reject(error);
+                });
+            });
+          })
+          .catch((error) => {
+            Promise.reject(error);
           });
-        })
-        .catch((error) => {
-          Promise.reject(error);
-        });
+      }
+
     }
   }
 );

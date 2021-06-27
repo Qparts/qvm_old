@@ -102,11 +102,13 @@ function SpecialOfferDetails({ specialOfferId }) {
     };
 
     useEffect(() => {
-        const delayDebounceFn = setTimeout(() => {
+        const delayforSearch = setTimeout(() => {
+            setPage(0);
             dispatch(getSpecialOfferDetails(specialOfferId, 0, constants.MAX, searchTerm));
         }, 500)
-        return () => clearTimeout(delayDebounceFn)
-    }, [searchTerm]);
+
+        return () => clearTimeout(delayforSearch)
+    }, [searchTerm])
 
     const handleBackToOffersMenu = () => {
         history.goBack();

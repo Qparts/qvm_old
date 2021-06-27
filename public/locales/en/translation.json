@@ -12,7 +12,6 @@
   "advertise now": "Advertise Now",
   "stockUpload": "Stock Upload",
 
-  
   "Subscriber already registered": "Subscriber already registered",
   "qvm orders": "Qvm's orders",
   "daily searches": "Daily searches",
@@ -378,8 +377,6 @@
 
   "THANK YOU FOR REGISTRATION IN QVM": "THANK YOU FOR REGISTRATION IN QVM",
   "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.": "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.",
- 
-
 
   "Forgot your password?": "Forgot your password?",
   "Please enter the email address associated with your account and We will email you a link to reset your password.": "Please enter the email address associated with your account and We will email you a link to reset your password.",
@@ -389,8 +386,6 @@
   "New Password": "New Password",
   "The request is not available": "The request is not available",
   "New Password Is Required": "New Password Is Required",
-
-
 
   "Parts Catalog": "Parts Catalog",
   "Car Details": "Car Details",
@@ -509,8 +504,8 @@
   "Active Discount": "ACTIVATE DISCOUNT",
   "Payment Method": "Payment Method",
   "Submit Order": "Submit Order",
-  "Month": "a Month",
-  "Year": "a year",
+  "Month": "Month",
+  "Year": "Year",
   "SAR": "SAR",
   "Subscription Information": "Subscription Information",
   "Features": "Features",
@@ -523,8 +518,41 @@
   "Account Number": "Account Number",
   "Bank": "Bank",
   "Account Name": "Account Name",
-  "Promotion discount applied" : "Promotion discount applied :",
-  "Basic Plan" : "Basic Plan",
-  "Active" : "Active",
-  "Subscrip Date" : "Subscrip Date"
+  "Promotion discount applied": "Promotion discount applied :",
+  "Basic Plan": "Basic Plan",
+  "Active": "Active",
+  "Subscrip Date": "Subscrip Date",
+  "Transaction Declined": "Transaction Declined",
+  "transaction successful": "transaction successful",
+  "Request has been uploaded": "Request has been uploaded",
+  "There is a pending subscription": "There is a pending subscription",
+  "Add your stock": "Add your stock",
+  "Use the following format when uploading the excel file": "Use the following format when uploading the excel file",
+  "Stock File": "Stock File",
+  "Upload": "Upload",
+  "Branch is required" : "Branch is required",
+  "The file is required" : "The file is required",
+  "Offer Name" : "Offer Name",
+  "Offer Start Date" : "Offer Start Date",
+  "Notes" : "Notes",
+  "Stock file is required" : "Stock File is required",
+  "Offer start date is required" : "Offer start date is required",
+  "Offer end date is required" : "Offer end date is required",
+  "Create Report" : "Create Report",
+  "Received From":"Received From",
+  "Date" :"Date",
+  "Number of items" : "Number of items",
+  "Add Offer" : "Add Offer",
+  "There is no parts" : "There is no parts",
+  "Of" : " Of ",
+  "Contact Our Team":  "Contact Our Team",
+  "Send": "Send",
+  "access all brands of cars and alternatives, both commercial and original" : "access all brands of cars and alternatives, both commercial and original",
+  "Show all brands": "Show all brands",
+  "Hid all brands": "Hid all brands",
+  "Stock file has been uploaded" : "Stock file has been uploaded",
+  "Offer file has been uploaded" : "Offer file has been uploaded",
+  "price page title":"Try our free package now, and upgrade to the premium plan to grow your business.",
+  "price page caption":"You can access huge numbers of auto spare parts and deal with great number of vendors"
+
 }

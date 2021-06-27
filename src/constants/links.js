@@ -30,7 +30,8 @@ const subscriber = {
 
 const upload = {
   postCompanyLogo: `${UPLOAD_SERVICE}/logo`,
-  getCompanyLogo: (fileName) => `${UPLOAD_SERVICE}/logo/${fileName}`
+  postBankReceipt: `http://localhost:3000/upload/receipt`,
+  getCompanyLogo: (fileName) => `${UPLOAD_SERVICE}/logo/${fileName}`,
 }
 
 const setting = {
@@ -114,7 +115,10 @@ const product = {
   productInfoSearch: `${PRODUCT_SERVICE}/search-product`,
   getProductReplacement: `${PRODUCT_SERVICE}/search-replacement-product`,
   getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
-  specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`
+  specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
+  postQvmStockUpload : `${PRODUCT_SERVICE}/stock-upload`,
+  postQvmStockUpload : `${PRODUCT_SERVICE}/stock-upload`,
+  postQvmSpecialOfferUploadRequest : `http://localhost:3000/product/special-offer-upload`
 }
 
 const plan = {
@@ -124,7 +128,10 @@ const plan = {
 }
 
 const invoice = {
-  getBanks : `${INVOICE_SERVICE}/banks`,
+  getBanks: `${INVOICE_SERVICE}/banks`,
+  paymentOrder: `${INVOICE_SERVICE}/payment-order`,
+  wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
+  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`
 }
 
 

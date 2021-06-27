@@ -63,23 +63,25 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
         />
         <Box sx={{ mb: 3 }} />
 
-        <Grid container spacing={4}>
+        <Grid container >
           <Grid item xs={5} >
-            <Select
-              labelId="countryId"
+
+            <TextField
+              style={{ paddingInlineEnd: 10 }}
+              select
+              fullWidth
               id="countryId"
               name="countryId"
               {...getFieldProps('countryId')}
+              SelectProps={{ native: true }}
             >
-              {countries.map((country) => (
-                <MenuItem
-                  key={country.id}
-                  value={country.id}
-                >
-                  (+{country.countryCode}) {themeDirection === "rtl" ? country.nameAr : country.name}
-                </MenuItem>
+              {countries.map((option, index) => (
+                <option key={index} value={option.id}>
+                  (+{option.countryCode}) {themeDirection === "rtl" ? option.nameAr : option.name}
+                </option>
               ))}
-            </Select>
+            </TextField>
+
           </Grid>
 
           <Grid item xs={7}>
@@ -115,7 +117,6 @@ function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) 
           fullWidth
           label={t("Branch")}
           placeholder={t("Branch")}
-          // defaultValue={selectedBranch ? selectedBranch.id : 0}
           disabled={selectedBranch != null}
           {...getFieldProps('branch')}
           SelectProps={{ native: true }}

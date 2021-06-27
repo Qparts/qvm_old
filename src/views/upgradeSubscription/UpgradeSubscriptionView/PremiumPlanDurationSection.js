@@ -120,7 +120,10 @@ function PremiumPlanDurationSection() {
                 </DialogTitle>
                 <DialogContent >
 
-                    <PremiumPlanSubscription planDuration={planDuration} />
+                    <PremiumPlanSubscription
+                        planDuration={planDuration}
+                        setPlanDuration={setPlanDuration}
+                    />
                 </DialogContent>
             </Dialog>
 

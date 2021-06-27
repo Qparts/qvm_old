@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -18,6 +18,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -156,8 +157,10 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
 
     const classes = useStyles();
     const dispatch = useDispatch();
+    const { themeDirection } = useSelector((state) => state.settings);
 
     const [open, setOpen] = React.useState(false);
+    const { t } = useTranslation();
 
 
     const [state, setState] = useState({
@@ -272,6 +275,12 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                     page={state.page}
                     onPageChange={changePagehandler}
                     className={classes.tablePagination}
+                    labelDisplayedRows={
+                        ({ from, to, count }) => {
+                            return themeDirection == 'ltr' ? '' + from + '-' + to + t("Of") + count :
+                                '' + to + '-' + from + t("Of") + count
+                        }
+                    }
                 />}
             </Paper>
         </Box>

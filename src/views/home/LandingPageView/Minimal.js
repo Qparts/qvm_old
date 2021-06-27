@@ -135,7 +135,7 @@ function MinimalHelps({ className }) {
               align="center"
               sx={{ color: 'text.secondary', display: 'block' }}
             >
-              QVM
+              Minimal
             </Typography>
           </MotionInView>
           <MotionInView variants={varFadeInDown}>

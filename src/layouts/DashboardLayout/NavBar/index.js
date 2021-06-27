@@ -12,7 +12,7 @@ import {
   List,
   Drawer,
   Hidden,
-  ListSubheader
+  ListSubheader,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
@@ -124,7 +124,6 @@ function NavBar({ isOpenNav, onCloseNav }) {
   const classes = useStyles();
   const { pathname } = useLocation();
   const { user } = useAuth();
-
   useEffect(() => {
     if (isOpenNav && onCloseNav) {
       onCloseNav();
@@ -140,10 +139,28 @@ function NavBar({ isOpenNav, onCloseNav }) {
         </RouterLink>
       </Box>
 
-      {MenuLinks.map((list) => (
+      {/* <Link
+        underline="none"
+        component={RouterLink}
+        to={PATH_APP.management.user.account}
+      >
+        <div className={classes.account}>
+          <MyAvatar />
+          <Box sx={{ ml: 2 }}>
+            <Typography variant="subtitle2" sx={{ color: 'text.primary' }}>
+              {user.displayName}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }}>
+              {user.role}
+            </Typography>
+          </Box>
+        </div>
+      </Link> */}
+
+      {MenuLinks.map((list, index) => (
         <List
           disablePadding
-          key={list.subheader}
+          key={index}
           className={classes.textCent}
           subheader={
             <ListSubheader

@@ -103,6 +103,7 @@ function ProductInfoSection() {
                         page={page}
                         isLazy={false}
                         rowsPerPage={rowsPerPage}
+                        hasPagination={true}
                     />
 
 

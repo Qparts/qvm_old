@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Box,
@@ -6,7 +6,7 @@ import {
     MenuItem
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import { getCarByVin, getCarInfo, getCatalogs, getModels, handleModelChange } from 'src/redux/slices/catalog';
+import { getCarByVin, getCarInfo, getModels, handleModelChange } from 'src/redux/slices/catalog';
 import SearchBox from './../../../components/SearchBox';
 import Advertisement from "./../../../components/Ui/Advertise";
 import MainCard from "./../../../components/Ui/MainCard";
@@ -17,12 +17,9 @@ import Button from "./../../../components/Ui/Button";
 
 function CatalogSearch() {
     const dispatch = useDispatch();
-    const { catalogs, models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
+    const { models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
+    const { catalogs } = useSelector((state) => state.authJwt);
     const { t } = useTranslation();
-
-    useEffect(() => {
-        dispatch(getCatalogs());
-    }, [dispatch]);
 
     const getCars = () => {
         dispatch(getCarInfo(selectedCatalog.id, selectedModel.id, null))
@@ -77,6 +74,7 @@ function CatalogSearch() {
                             ))}
                         </Select>
                         <Box sx={{ mt: 3 }} />
+
                         <Button
                             disabled={selectedCatalog == null || selectedModel == null}
                             onClick={getCars}
