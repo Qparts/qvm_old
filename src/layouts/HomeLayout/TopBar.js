@@ -35,7 +35,7 @@ import { pxToRem } from 'src/utils/formatFontSize';
 // ----------------------------------------------------------------------
 const MENU_LINKS = [
   { title: 'home', icon: homeFill, href: '/' },
-  { title: 'prices', icon: roundStreetview, href: PATH_HOME.dashboard },
+  { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.prices },
   { title: 'contactUs', icon: roundSpeed, href: PATH_HOME.dashboard },
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
