@@ -22,6 +22,10 @@ const HomeRoutes = {
       component: lazy(() => import('src/views/price'))
     },
     {
+      path: '/TermsView',
+      component: lazy(() => import('src/views/TermsView'))
+    },
+    {
       component: () => <Redirect to="/404" />
     }
   ]

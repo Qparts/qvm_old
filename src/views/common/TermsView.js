@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
-import TopBar from 'src/layouts/HomeLayout/TopBar';
 
 
 // ----------------------------------------------------------------------
@@ -38,7 +37,6 @@ function TermsView(props) {
 
             <Container>
                 <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-                    <TopBar />
 
 
                 </Box>
