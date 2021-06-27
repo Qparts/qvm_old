@@ -14,7 +14,13 @@ import enLocale from 'date-fns/locale/en-US';
 import arLocale from 'date-fns/locale/ar-SA';
 import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-
+import DateFnsUtils from "@date-io/date-fns";
+// --- Material Ui Picker Imports --- //
+import {
+    MuiPickersUtilsProvider,
+    KeyboardTimePicker,
+    KeyboardDatePicker
+} from "@material-ui/pickers";
 // ----------------------------------------------------------------------
 
 AddOfferForm.propTypes = {
@@ -34,6 +40,7 @@ function AddOfferForm({ formik }) {
                     <Grid item xs={6} >
                         <TextField
                             fullWidth
+                            required
                             name="offerName"
                             label={t("Offer Name")}
                             {...getFieldProps('offerName')}
@@ -43,17 +50,19 @@ function AddOfferForm({ formik }) {
                     </Grid>
 
                     <Grid item xs={5} >
+
+
                         <LocalizationProvider dateAdapter={AdapterDateFns} locale={themeDirection == 'ltr' ? enLocale : arLocale}>
                             <DatePicker
                                 mask='__/__/____'
                                 label={t("Offer Start Date")}
                                 value={values.offerStartDate}
                                 onChange={(newValue) => {
-                                    console.log("event", newValue);
                                     setFieldValue("offerStartDate", newValue);
                                 }}
                                 renderInput={(params) =>
                                     <TextField {...params}
+                                        required
                                         id="offerStartDate"
                                         fullWidth
                                         name="offerStartDate"
@@ -78,6 +87,7 @@ function AddOfferForm({ formik }) {
                                 }}
                                 renderInput={(params) =>
                                     <TextField {...params}
+                                        required
                                         fullWidth
                                         name="offerEndDate"
                                         error={Boolean(touched.offerEndDate && errors.offerEndDate)}
@@ -96,6 +106,7 @@ function AddOfferForm({ formik }) {
                             </Grid>
                             <Grid item xs={7}>
                                 <TextField
+                                    required
                                     placeholder={t("Stock File")}
                                     type="file"
                                     id="offerFile"

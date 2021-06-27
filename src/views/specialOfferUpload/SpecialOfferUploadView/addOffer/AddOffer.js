@@ -50,9 +50,9 @@ function AddOffer(props) {
     );
 
     const userSchema = Yup.object().shape({
-        offerName: Yup.string().required(t("Stock File Is Required")),
-        offerStartDate: Yup.string().required(t("Offer start date is required")),
-        offerEndDate: Yup.string().required(t("Offer end date is required")),
+        offerName: Yup.string().required(t("Offer name is required")),
+        offerStartDate: Yup.date().required(t("Offer start date is required")).nullable(),
+        offerEndDate: Yup.string().required(t("Offer end date is required")).nullable(),
         offerFile: Yup
             .mixed()
             .required(t("The file is required")),
@@ -61,8 +61,8 @@ function AddOffer(props) {
     const formik = useFormik({
         initialValues: {
             offerName: '',
-            offerStartDate: '',
-            offerEndDate: '',
+            offerStartDate: null,
+            offerEndDate: null,
             offerFile: '',
             notes: '',
         },
@@ -71,7 +71,7 @@ function AddOffer(props) {
             try {
                 const formData = new FormData();
                 console.log("values", values);
-                formData.append("offerObject", JSON.stringify({
+                const offerObject = {
                     branchId: loginObject.company.defaultBranchId,
                     extension: "xlsx",
                     mimeType: values.offerFile.type,
@@ -79,7 +79,8 @@ function AddOffer(props) {
                     notes: values.notes,
                     startDate: values.offerStartDate.getTime(),
                     endDate: values.offerEndDate.getTime()
-                }));
+                };
+                formData.append("offerObject", JSON.stringify(offerObject));
                 formData.append("file", values.offerFile);
                 await partSearchService.qvmSpecialOfferUpload(formData);
                 enqueueSnackbar(t('Offer file has been uploaded'), { variant: 'success' });
