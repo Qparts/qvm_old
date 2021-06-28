@@ -141,13 +141,13 @@ function BrancheItemsSection() {
                         <>
                             {
                                 verificationMode == "email" ?
-                                    <h7 className="mb-0 mt-3 d-block">
+                                    <h6 className="mb-0 mt-3 d-block">
                                         {t("Check your email to get verification code")}
-                                    </h7>
+                                    </h6>
                                     :
-                                    <h7 className="mb-0 mt-3 d-block">
+                                    <h6 className="mb-0 mt-3 d-block">
                                         {t("Check your mobile to get verification code")}
-                                    </h7>
+                                    </h6>
                             }
 
                             <Box sx={{ mb: 3 }} />

@@ -14,7 +14,7 @@ const HomeRoutes = {
       component: lazy(() => import('src/views/home/LandingPageView'))
     },
     {
-      path: '/contactus',
+      path: '/contact-us',
       component: lazy(() => import('src/views/contact'))
     },
     {

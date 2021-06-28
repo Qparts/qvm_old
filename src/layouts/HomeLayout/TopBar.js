@@ -34,9 +34,9 @@ import { red } from '@material-ui/core/colors';
 import { pxToRem } from 'src/utils/formatFontSize';
 // ----------------------------------------------------------------------
 const MENU_LINKS = [
-  { title: 'home', icon: homeFill, href: '/' },
-  { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.prices },
-  { title: 'contactUs', icon: roundSpeed, href: PATH_HOME.dashboard },
+  { title: 'home', icon: homeFill, href: PATH_PAGE.common.home },
+  { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.price },
+  { title: 'contactUs', icon: roundSpeed, href: PATH_PAGE.common.contactUs },
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
 const APP_BAR_MOBILE = 64;

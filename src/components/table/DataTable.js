@@ -253,7 +253,17 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                     {actions.map((actionItem, index) => {
                                                         return (
                                                             <TableCell key={index}>
-                                                                {actionItem.element(JSON.stringify(item))}
+                                                                {actionItem ?
+                                                                    actionItem.element(JSON.stringify(item)) :
+                                                                    <Button
+                                                                        variant="contained"
+                                                                        color="primary"
+                                                                        round
+                                                                        onClick={() => actionItem.action(JSON.stringify(item))}
+                                                                    >
+                                                                        {actionItem.name}
+                                                                    </Button>
+                                                                }
                                                             </TableCell>
                                                         );
                                                     })}
