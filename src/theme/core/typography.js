@@ -1,5 +1,6 @@
 import { pxToRem } from 'src/utils/formatFontSize';
 import createBreakpoints from '@material-ui/core/styles/createBreakpoints';
+import { store } from 'src/redux/store'
 
 // ----------------------------------------------------------------------
 
@@ -19,13 +20,21 @@ function responsiveFontSizes({ sm, md, lg }) {
   };
 }
 
-const FONT_PRIMARY = 'Tajawal, sans-serif'; // Google Font
+let FONT_PRIMARY
 
-const typography = {
-  fontFamily: FONT_PRIMARY,
+store.subscribe(() => {
+  FONT_PRIMARY = store.getState().settings.themeDirection
+  if (typography) {
+    typography.fontFamily = FONT_PRIMARY === 'rtl' ? 'Tajawal, sans-serif' : 'Roboto, Helvetica, Arial, sans-serif';
+  }
+})
+
+let typography = {
+  fontFamily: FONT_PRIMARY === 'rtl' ? 'Tajawal, sans-serif' : 'Roboto, Helvetica, Arial, sans-serif',
   fontWeightRegular: 500,
   fontWeightMedium: 600,
   fontWeightBold: 700,
+  generalPadding: '20px',
   h1: {
     fontWeight: 600,
     lineHeight: 80 / 64,
@@ -53,8 +62,8 @@ const typography = {
   h5: {
     lineHeight: 1.5,
     fontWeight: 600,
-    fontSize: pxToRem(18),
-    ...responsiveFontSizes({ sm: 19, md: 20, lg: 20 })
+    fontSize: pxToRem(17.2),
+    ...responsiveFontSizes({ sm: 18.2, md: 19.2, lg: 19.2 })
   },
   h6: {
     fontWeight: 600,
@@ -70,7 +79,7 @@ const typography = {
   subtitle2: {
     fontSize: pxToRem(14),
     lineHeight: 22 / 14,
-    fontWeight: 600
+    fontWeight: 500
   },
   body1: {
     fontSize: pxToRem(16),
@@ -79,6 +88,14 @@ const typography = {
   body2: {
     fontSize: pxToRem(14),
     lineHeight: 22 / 14
+  },
+  body3: {
+    fontSize: pxToRem(15),
+    lineHeight: 1.5
+  },
+  body4: {
+    fontSize: pxToRem(13),
+    lineHeight: 1.5
   },
   caption: {
     fontSize: pxToRem(12),

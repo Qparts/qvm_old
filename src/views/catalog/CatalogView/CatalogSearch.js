@@ -1,29 +1,21 @@
-import SearchBox from './../../../components/SearchBox';
-import Button from "./../../../components/button/CustomButton";
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Box,
-    Card,
     Grid,
-    CardHeader,
-    CardContent,
-    TextField
+    MenuItem
 } from '@material-ui/core';
-import { getCarByVin, getCarInfo, getModels, handleModelChange } from 'src/redux/slices/catalog';
 import { useTranslation } from 'react-i18next';
-
-// ----------------------------------------------------------------------
-
-const useStyles = makeStyles((theme) => ({
-    root: {}
-}));
+import { getCarByVin, getCarInfo, getModels, handleModelChange } from 'src/redux/slices/catalog';
+import SearchBox from './../../../components/SearchBox';
+import Advertisement from "./../../../components/Ui/Advertise";
+import MainCard from "./../../../components/Ui/MainCard";
+import Select from "./../../../components/Ui/Select";
+import Button from "./../../../components/Ui/Button";
 
 // ----------------------------------------------------------------------
 
 function CatalogSearch() {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const { models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
     const { catalogs } = useSelector((state) => state.authJwt);
@@ -38,85 +30,64 @@ function CatalogSearch() {
     };
 
     return (
-
-        <Grid container spacing={3}>
-
-            <Grid item xs={6} md={6} lg={6}>
-                <Card >
-                    <CardHeader title={t("Find Catalog by VIN number")} />
-                    <CardContent className={classes.cardContent}>
+        <>
+            <Grid container spacing={2}>
+                <Grid item xs={12} md={6}>
+                    <MainCard title={t("Find Catalog by VIN number")} sameHeight='sameHeight'>
                         <SearchBox handleSubmit={handleQuerySubmit} />
-                    </CardContent >
-                </Card>
+                    </MainCard>
+                </Grid>
 
-            </Grid>
-
-
-            <Grid item xs={6} md={6} lg={6}>
-                <Card >
-                    <CardHeader title={t("Find Catalog from List")} />
-                    <CardContent className={classes.cardContent}>
-
-                        <TextField
-                            select
-                            fullWidth
-                            label={t("Catalog")}
+                <Grid item xs={12} md={6}>
+                    <MainCard title={t("Find Catalog from List")}>
+                        <Select
+                            label={t("catalog")}
                             id="catalog"
                             value={selectedCatalog ? selectedCatalog.id : ""}
                             name="catalog"
                             onChange={(event) => {
+                                console.log(event.target.value);
                                 dispatch(getModels(event.target.value, catalogs));
-                            }}
-                            SelectProps={{ native: true }}
-                        >
-                            <option aria-label="None" value="" />
+                            }}>
+                            <MenuItem aria-label="None" value="" />
                             {catalogs?.map((item, index) => (
-                                <option value={item.id} key={index}>
+                                <MenuItem value={item.id} key={index}>
                                     {item.name}
-                                </option>
+                                </MenuItem>
                             ))}
-                        </TextField>
-
-                        <Box sx={{ mt: 3 }} />
-
-                        <TextField
-                            select
-                            fullWidth
+                        </Select>
+                        <Select
                             label={t("Car Model")}
                             id="model"
                             value={selectedModel ? selectedModel.id : ""}
                             name="model"
+                            spaceToTop="spaceToTop"
                             onChange={(event) => {
+                                console.log(event.target.value);
                                 dispatch(handleModelChange(event.target.value, models, selectedCatalog));
-                            }}
-                            SelectProps={{ native: true }}
-                        >
-                            <option aria-label="None" value="" />
+                            }}>
+                            <MenuItem aria-label="None" value="" />
                             {models?.map((item, index) => (
-                                <option value={item.id} key={index}>
+                                <MenuItem value={item.id} key={index}>
                                     {item.name}
-                                </option>
+                                </MenuItem>
                             ))}
-                        </TextField>
-
+                        </Select>
                         <Box sx={{ mt: 3 }} />
 
                         <Button
-                            variant="contained"
-                            color="primary"
-                            round
-                            component="span"
                             disabled={selectedCatalog == null || selectedModel == null}
                             onClick={getCars}
                         >
                             {t("Car Details")}
                         </Button>
+                    </MainCard>
 
-                    </CardContent>
-                </Card>
-
+                </Grid>
             </Grid>
-        </Grid>
+            <Box sx={{ mt: 6 }} />
+            <Advertisement width='728px' height='90px' url='/static/icons/ic_chrome.svg' />
+        </>
     );
 }
 

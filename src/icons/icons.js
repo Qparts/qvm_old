@@ -432,6 +432,25 @@ export const More = (props) => {
     )
 }
 
+export const Plus = (props) => {
+    const { width, height, className, fill, style } = props
+    return (
+        <svg
+            className={className}
+            viewBox="0 0 10 10"
+            fill={fill}
+            width={width}
+            height={height}
+            style={style}
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            xmlnsXlink="http://www.w3.org/1999/xlink"
+        >
+            <path d="M5.83333 4.16667V0.833333C5.83333 0.373083 5.46025 0 5 0C4.53975 0 4.16667 0.373083 4.16667 0.833333V4.16667H0.833333C0.373083 4.16667 0 4.53975 0 5C0 5.46025 0.373083 5.83333 0.833333 5.83333H4.16667V9.16667C4.16667 9.62692 4.53975 10 5 10C5.46025 10 5.83333 9.62692 5.83333 9.16667V5.83333H9.16667C9.62692 5.83333 10 5.46025 10 5C10 4.53975 9.62692 4.16667 9.16667 4.16667H5.83333Z" fill={fill} />
+        </svg>
+    )
+}
+
 export const Note = (props) => {
     const { width, height, className, fill, style } = props
     return (

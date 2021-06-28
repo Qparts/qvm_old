@@ -12,7 +12,7 @@ const PRIMARY = {
   light: '#E55B5B',
   main: '#F20505',
   dark: '#DB0000',
-  darker: '#CC0909'
+  darker: '#CC0909',
 };
 const SECONDARY = {
   lighter: '#CED5D8',
@@ -61,6 +61,7 @@ const GREY = {
   700: '#454F5B',
   800: '#212B36',
   900: '#161C24',
+  1000: '#999999',
   500_8: alpha('#919EAB', 0.08),
   500_12: alpha('#919EAB', 0.12),
   500_16: alpha('#919EAB', 0.16),
@@ -76,7 +77,7 @@ const GRADIENTS = {
   info: createGradient(INFO.light, INFO.main),
   success: createGradient(SUCCESS.light, SUCCESS.main),
   warning: createGradient(WARNING.light, WARNING.main),
-  error: createGradient(ERROR.light, ERROR.main)
+  error: createGradient(ERROR.light, ERROR.main),
 };
 
 const COMMON = {

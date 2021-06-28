@@ -25,7 +25,10 @@ export const PATH_PAGE = {
   common: {
     prices: path('' ,  '/prices'),
     privacy: path('' ,  '/privacy-policy'),
-    terms: path('' ,  '/term-of-use')
+    terms: path('' ,  '/term-of-use'),
+    home: path('' ,  '/'),
+    contactUs: path('' ,  '/contact-us'),
+    price: path('' ,  '/price')
   }
 };
 

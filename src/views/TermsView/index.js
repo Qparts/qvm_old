@@ -79,9 +79,10 @@ function RegisterForm({ formik }) {
             <Typography className={classes.heading}>المادة الأولى – المقدّمة و التعريفات:</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <Typography>
+            <Typography sx={{mb:2}}>
               يعتبر التمهيد أعلاه جزءاً لا يتجزأ من هذه الاتفاقية ، كما تجدون أدناه الدلالات والتعريفات للعبارات الرئيسية المستخدمة في هذه الاتفاقية :
-              <ol className={classes.orderedList}>
+            </Typography>
+            <ol className={classes.orderedList}>
                                     <li>
                                         ( منصة QVM المملوكة لشركة كيو بارتز القابضة المحدودة) يقصَد بهذه العبارة شركة تطبيق قطع للتجارة، ويشمل هذا التعريف كافة أشكال شركة تطبيق قطع للتجارة على الشبكة العنكبوتية، سواءً كانت تطبيق إلكتروني، أو موقع الكتروني على الشبكة العنكبوتية.
                                     </li>
@@ -99,7 +100,6 @@ function RegisterForm({ formik }) {
 
                                     </li>
                                 </ol>
-            </Typography>
           </AccordionDetails>
         </Accordion>
         <Accordion>
@@ -131,8 +131,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel3a-content"
+            id="panel3a-header"
           >
             <Typography className={classes.heading}>
             المادة الثالثة – طبيعة التزام منصة QVM:
@@ -164,8 +164,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel4a-content"
+            id="panel4a-header"
           >
             <Typography className={classes.heading}>
             المادة الرابعة – ضوابط التعامل مع المنصة الالكترونية:
@@ -209,8 +209,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel5a-content"
+            id="panel5a-header"
           >
             <Typography className={classes.heading}>
             المادة الخامسة – الحسابات والتزامات التسجيل:
@@ -259,8 +259,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel6a-content"
+            id="panel6a-header"
           >
             <Typography className={classes.heading}>
             المادة السادسة – الاتصالات الإلكترونية ووسائل التواصل الرسمية:
@@ -280,8 +280,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel7a-content"
+            id="panel7a-header"
           >
             <Typography className={classes.heading}>
             المادة السابعة – التعديلات على اتفاقية الاستخدام والرسوم:
@@ -316,8 +316,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel8a-content"
+            id="panel8a-header"
           >
             <Typography className={classes.heading}>
             المادة الثامنة – خدمات الدفع والسداد للمتاجر في منصة QVM:
@@ -355,8 +355,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel9a-content"
+            id="panel9a-header"
           >
             <Typography className={classes.heading}>
             المادة التاسعة – معلوماتك الشخصية ومعلومات تفاصيل العمليات:
@@ -379,8 +379,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel0a-content"
+            id="panel0a-header"
           >
             <Typography className={classes.heading}>
             المادة العاشرة – تعهد التاجر بـالالتزام بالقوانين والأنظمة في المملكة العربية السعودية :
@@ -397,8 +397,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel11a-content"
+            id="panel11a-header"
           >
             <Typography className={classes.heading}>
             المادة الحادية عشرة – الحقوق:
@@ -421,8 +421,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel12a-content"
+            id="panel12a-header"
           >
             <Typography className={classes.heading}>
             المادة الثانية عشرة – الملكية الفكرية:
@@ -445,8 +445,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel13a-content"
+            id="panel13a-header"
           >
             <Typography className={classes.heading}>
             المادة الثالثة عشرة – حماية المستخدم:
@@ -469,8 +469,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel14a-content"
+            id="panel14a-header"
           >
             <Typography className={classes.heading}>
             المادة الرابعة عشرة – مسئولية منصة QVM:
@@ -506,8 +506,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel15a-content"
+            id="panel15a-header"
           >
             <Typography className={classes.heading}>
             المادة الخامسة عشرة – سرية المعلومات:
@@ -533,15 +533,15 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel16a-content"
+            id="panel16a-header"
           >
             <Typography className={classes.heading}>
             المادة السادسة عشرة – إلغاء العضوية أو المنصة:
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-              <Typography>
+              <Typography sx={{mb:2}}>
               إن منصة QVM بحسب اتفاقية الاستخدام وبحسب القوانين والأنظمة المرعية بالمملكة العربية السعودية قد تلجأ إلى وقف مؤقت أو دائم للمتجر أو سحب وإلغاء عضوية التاجر أو تحديد قدرات التجار على الولوج إلى خدمات منصة QVM ، في حالة:
               
               </Typography>
@@ -567,8 +567,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel17a-content"
+            id="panel17a-header"
           >
             <Typography className={classes.heading}>
             المادة السابعة عشرة – عمليات الدفع والبيع والشراء:
@@ -607,8 +607,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel18a-content"
+            id="panel18a-header"
           >
             <Typography className={classes.heading}>
             المادة الثامنة عشرة – محتويات غير مسموح بها :
@@ -625,8 +625,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel19a-content"
+            id="panel19a-header"
           >
             <Typography className={classes.heading}>
             المادة التاسعة عشرة – نظام الجرائم المعلوماتية السعودي :
@@ -643,8 +643,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel20a-content"
+            id="panel20a-header"
           >
             <Typography className={classes.heading}>
             المادة العشرون – تقييد الولوج أو العضوية:
@@ -661,8 +661,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel21a-content"
+            id="panel21a-header"
           >
             <Typography className={classes.heading}>
             المادة الحادية والعشرون – الضمان:
@@ -682,8 +682,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel22a-content"
+            id="panel22a-header"
           >
             <Typography className={classes.heading}>
             المادة الثانية والعشرون – مسؤولية التاجر:
@@ -703,8 +703,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel23a-content"
+            id="panel23a-header"
           >
             <Typography className={classes.heading}>
             المادة الثالثة والعشرون – العلاقة والإشعارات بين منصة QVM والتجار:
@@ -721,8 +721,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel24a-content"
+            id="panel24a-header"
           >
             <Typography className={classes.heading}>
             المادة الرابعة والعشرون – نقل الحقوق والالتزامات:
@@ -739,8 +739,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel25a-content"
+            id="panel25a-header"
           >
             <Typography className={classes.heading}>
             المادة الخامسة والعشرون – القانون والتشريع المُطبّق:
@@ -757,8 +757,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel26a-content"
+            id="panel26a-header"
           >
             <Typography className={classes.heading}>
             ​المادة السادسة والعشرون – قواعد يجب على المنصة اتباعها عند التعامل مع المستخدم :
@@ -778,8 +778,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel27a-content"
+            id="panel27a-header"
           >
             <Typography className={classes.heading}>
             المادة السابعة والعشرون – المنشورات الدعائية الورقية والإلكترونية والعروض الخاصة بمنصة QVM:
@@ -838,15 +838,15 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel28a-content"
+            id="panel28a-header"
           >
             <Typography className={classes.heading}>
             المادة التاسعة والعشرون – الدعم الفني:
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-                <Typography>
+                <Typography sx={{mb:2}}>
                 بموجب قواعد وأحكام اتفاقية الاستخدام هذه فإن منصة QVM توفّر بعض خدمات الدعم الفني للمتاجر والتُجّار ، ويكون ذلك وفقاً لامتيازات الباقة التي يشترك فيها المنصة ، وتكون على سبيل المثال
                 </Typography>
                  <ol className={classes.orderedList}>
@@ -865,8 +865,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel29a-content"
+            id="panel29a-header"
           >
             <Typography className={classes.heading}>
             المادة الثلاثون – حل الخلافات:
@@ -883,8 +883,8 @@ function RegisterForm({ formik }) {
         <Accordion>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
-            aria-controls="panel2a-content"
-            id="panel2a-header"
+            aria-controls="panel30a-content"
+            id="panel30a-header"
           >
             <Typography className={classes.heading}>
             المادة الحادية والثلاثون – أحكام عامة:

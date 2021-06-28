@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
 import ImageMapper from "react-image-mapper";
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';
 import {
-    Typography
+    Typography,
+    IconButton,
+    Box,
+    Divider
 } from '@material-ui/core';
+import CloseIcon from '@material-ui/icons/Close';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
+import { Search } from '../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -25,6 +31,41 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
+    },
+    partHead: {
+        color: theme.palette.secondary.main,
+        paddingRight: theme.spacing(2),
+        paddingLeft: theme.spacing(2),
+        paddingTop: theme.spacing(1),
+        paddingBottom: 0
+    },
+    partHeadChild: {
+        borderBottom: '1px solid #EEF1F5',
+    },
+    partNumberCont: {
+        marginBottom: theme.spacing(2)
+    },
+    partNumber: {
+        display: 'flex',
+        background: '#FFEDED',
+        borderRadius: '15px',
+        padding: '11px',
+        width: '80%',
+    },
+    partNumberChild: {
+        color: theme.palette.primary.main
+    },
+    partNumberCard: {
+        paddingTop: theme.spacing(2),
+        paddingBottom: theme.spacing(2)
+    },
+    partNumberHaed: {
+        color: theme.palette.secondary.main,
+    },
+    displayFlex: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     }
 }));
 
@@ -32,7 +73,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Part() {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const { part, partCoordinates, partImageHeight, partImageWidth } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
     const [partAreaDetails, setPartAreaDetails] = useState(null);
@@ -43,10 +83,11 @@ function Part() {
         setPartAreaDetails(selectedArea);
     };
 
-    return (
+    console.log(partAreaDetails)
 
+    return (
         <>
-            <div className="d-flex justify-content-center">
+            <Box>
                 <ImageMapper
                     heigh={(partImageHeight * 800) / partImageWidth}
                     width={800}
@@ -54,50 +95,46 @@ function Part() {
                     onClick={(area) => mapperAreaClickHandler(area)}
                     map={{ name: "my-map", areas: partCoordinates }}
                 />
-            </div>
-
-
-
+            </Box>
             <Dialog
                 onClose={() => setPartAreaDetails(null)}
                 aria-labelledby="customized-dialog-title"
                 open={partAreaDetails != null}
                 className={classes.root}
             >
-                <DialogTitle>
-                    <Typography variant="h6" component="div">
-                        {t("Part Details")}
-                    </Typography>
+                <DialogTitle className={classes.partHead}>
+                    <Box className={clsx(classes.partHeadChild, classes.displayFlex)}>
+                        <Typography variant='body1'>{t("Part Details")}</Typography>
+                        <IconButton aria-label="close" onClick={() => setPartAreaDetails(null)}>
+                            <CloseIcon />
+                        </IconButton>
+                    </Box>
                 </DialogTitle>
-                <DialogContent dividers sx={{ p: 2 }}>
+                <DialogContent style={{padding: '16px'}}>
                     {partAreaDetails != null && (
-                        <div>
-                            <div className="row">
-                                <div className="col-md-6">{t("Reference Number")}</div>
-                                <div className="col-md-6">{partAreaDetails.id}</div>
-                            </div>
-                            <hr />
-                            <div className="row">
-                                <div className="col-md-6">{t("Part Number")}</div>
-
-                                <div className="col-md-6">{partAreaDetails.number}</div>
-                            </div>
-                            <hr />
-                            <div className="row">
-                                <div className="col-md-6">{t("Part Name")}</div>
-                                <div className="col-md-6">{partAreaDetails.name}</div>
-                            </div>
-                            <hr />
-                            <div className="row">
-                                <div className="col-md-6">{t("Description")}</div>
-                                <div className="col-md-6">{partAreaDetails.description}</div>
-                            </div>
-                        </div>
+                        <Box>
+                            <Box className={clsx(classes.partNumberCont, classes.displayFlex)}>
+                                <Box className={classes.partNumber}>
+                                    <Typography variant='body2' sx={{color: '#526C78', marginRight: '8px'}}>{t("Part Number")}</Typography>
+                                    <Typography variant='body1' className={classes.partNumberChild}>{partAreaDetails.number}</Typography>
+                                </Box>
+                                <Search width='24px' height='24' fill='#CED5D8' style={{cursor: 'pointer'}} />
+                            </Box>
+                            <Divider />
+                            <Box className={classes.partNumberCard}>
+                                <Typography className={classes.partNumberHaed} variant='body1'>{t("Part Name")}</Typography>
+                                <Typography variant='body2'>{partAreaDetails.name}</Typography>
+                            </Box>
+                            <Divider />
+                            <Box className={classes.partNumberCard}>
+                                <Typography className={classes.partNumberHaed} variant='body1'>{t("Description")}</Typography>
+                                <Typography variant='body2'>{partAreaDetails.description}</Typography>
+                            </Box>
+                        </Box>
                     )}
 
                 </DialogContent>
             </Dialog>
-
         </>
     );
 }

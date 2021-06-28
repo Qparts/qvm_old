@@ -41,7 +41,7 @@ const navConfig = [
       {
         title: 'offers',
         icon: <Offer width='32' height='32' fill='#a2b4bd' />,
-        href: PATH_APP.general.stockUpload,
+        href: PATH_APP.general.specialOffer,
         notification: true
       },
 
