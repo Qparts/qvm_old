@@ -62,15 +62,23 @@ PlanCard.propTypes = {
   className: PropTypes.string
 };
 
-function PlanCard({ plan }) {
+function PlanCard({ plan, duration }) {
   const classes = useStyles();
   const history = useHistory();
   const [open, setOpen] = useState(false);
   const { t } = useTranslation();
   const { themeDirection } = useSelector((state) => state.settings);
+  const { planFeatures, isLoading, availablePlans } = useSelector(
+    (state) => state.authJwt
+  );
   const imagePath = plan.name === 'Basic Plan' ? '/static/icons/ic_plan_free.svg' :
     plan.name === 'Premium Plan' ? '/static/icons/ic_plan_starter.svg' :
       '/static/icons/ic_plan_premium.svg';
+
+
+  const getSaveValue = () => {
+    return Math.round((duration.discountPercentage * (availablePlans[1].price / 360) * duration.calculationDays));
+  }
 
   return (
     <Card className={clsx(classes.root)}>
@@ -102,7 +110,11 @@ function PlanCard({ plan }) {
           textTransform: 'capitalize'
         }}
       >
-        {plan.name == 'Premium Plan' ? t("Save") + ' ' + 700 + ' ' + t('SAR') : ''}
+        {plan.name == 'Premium Plan' && duration && getSaveValue() > 0 ?
+          t("Save") +
+          getSaveValue()
+          + ' ' + t('SAR')
+          : ''}
       </Typography>
 
 
@@ -110,7 +122,9 @@ function PlanCard({ plan }) {
       <Box sx={{ display: 'flex', justifyContent: 'flex-end', my: 2 }}>
 
         <Typography variant="h2" sx={{ mx: 1 }}>
-          {plan.name === 'Basic Plan' ? t('Free') : plan.name === 'Premium Plan' ? 2900 : '-'}
+          {plan.name === 'Basic Plan' ? t('Free') : plan.name === 'Premium Plan' && duration ?
+            Math.round(((availablePlans[1].price / 360) - (duration.discountPercentage * (availablePlans[1].price / 360))) * duration.calculationDays)
+            : '-'}
         </Typography>
       </Box>
 
@@ -135,8 +149,8 @@ function PlanCard({ plan }) {
 
       <Box component="ul" sx={{ my: 5, width: '100%' }}>
 
-        {plan.features.map((item) => (
-          <Grid container  >
+        {plan.features.map((item, index) => (
+          <Grid container key={index}  >
             <Grid item xs={6}>
 
               <Box
@@ -208,7 +222,7 @@ function PlanCard({ plan }) {
               plan.companies.map((company, index) => {
                 if (company.logo == null)
                   return (
-                    <Grid item xs={12}>
+                    <Grid item xs={12} key={index}>
                       <Typography variant="h6" component="div">
                         {company.name}
                       </Typography>
@@ -217,7 +231,7 @@ function PlanCard({ plan }) {
                   )
                 else
                   return (
-                    <Grid item xs={4}>
+                    <Grid item xs={4} key={index}>
                       <Box>
                         <img
                           style={{ margin: 20 }}
