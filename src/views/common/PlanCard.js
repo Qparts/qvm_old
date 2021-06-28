@@ -136,7 +136,10 @@ function PlanCard({ plan, duration }) {
           textTransform: 'capitalize'
         }}
       >
-        {plan.name === 'Basic Plan' ? t('Forever') : plan.name === 'Premium Plan' ? t('SAR') + '/' + t('Yearly') : '-'}
+        {plan.name === 'Basic Plan' ? t('Forever') : plan.name === 'Premium Plan' ?
+          duration.calculationDays == 30 ? t('SAR') + '/' + t('Monthly') :
+            duration.calculationDays == 180 ?
+              t('SAR') + '/' + 6 + ' ' + t('Months') : t('SAR') + '/' + t('Yearly') : '-'}
       </Typography>
 
 
