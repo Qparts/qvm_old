@@ -54,6 +54,11 @@ const useStyles = makeStyles((theme) => ({
   partsSearch: {
     boxShadow: 'none',
     background: 'inherit',
+    
+  },
+  tableSpace:{
+    borderCollapse: 'separate',
+    borderSpacing: '0 10px',
   },
   partsSearchHead: {
     '& $th': {
@@ -61,24 +66,22 @@ const useStyles = makeStyles((theme) => ({
       background: 'none',
       color: '#7E8D99',
       paddingTop: 0,
-      paddingBottom: 9
+      paddingBottom: 0
     },
     '& $th:first-of-type, & $th:last-of-type': {
       boxShadow: 'none',
     }
   },
   partsSearchTr: {
-    background: theme.palette.grey[0],
-    borderBottom: '10px solid #F6F8FC',
-    '&:last-of-type': {
-      border: 0
-    },
     '& $td:first-of-type': {
       borderRadius: '20px 0 0 20px',
       display: 'flex'
     },
     '& $td:last-of-type': {
       borderRadius: '0 20px 20px 0'
+    },
+    "& td":{
+      background: theme.palette.grey[0],
     }
   },
   partNumber: {
@@ -101,9 +104,8 @@ function SearchedParts({ className, ...other }) {
 
   return (
     <Card className={clsx(classes.root, classes.partsSearch, className)} {...other}>
-      <Scrollbars>
         <TableContainer>
-          <Table>
+          <Table className={classes.tableSpace}>
             <TableHead className={classes.partsSearchHead}>
               <TableRow>
                 <TableCell><Typography variant="subtitle2">{t('Part No')}</Typography></TableCell>
@@ -143,7 +145,6 @@ function SearchedParts({ className, ...other }) {
             </TableBody>
           </Table>
         </TableContainer>
-      </Scrollbars>
     </Card>
   );
 }

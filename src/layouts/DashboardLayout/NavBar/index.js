@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => {
     },
     drawerPaper: {
       width: DRAWER_WIDTH,
-      background: theme.palette.secondary.main,
+      background: theme.palette.secondary.darker,
       border: 'none'
     },
     subHeader: {

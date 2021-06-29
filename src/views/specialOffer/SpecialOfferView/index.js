@@ -3,7 +3,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import {
-    Container,
+    Box,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
@@ -53,11 +53,11 @@ function SpecialOfferView(props) {
                 spinner={
                     <LoadingScreen />
                 }>
-                <Container >
+                <Box >
                     {offerId == null ? <SpecialOfferItemsSection /> :
                         <SpecialOfferDetails specialOfferId={offerId} />
                     }
-                </Container>
+                </Box>
             </LoadingOverlay>
         </Page>
     );

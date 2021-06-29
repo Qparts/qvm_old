@@ -5,11 +5,11 @@ export default function Grid({ theme }) {
 
   return {
     MuiGrid: {
-      styleOverrides: {
-        container: {
-          marginLeft: isRTL && 0
-        }
-      }
+      // styleOverrides: {
+      //   container: {
+      //     marginLeft: isRTL && 0
+      //   }
+      // }
     }
   };
 }

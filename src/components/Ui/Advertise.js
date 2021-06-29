@@ -1,13 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {},
     advertise: {
         margin: '34px auto 0',
+        background:theme.palette.grey[0],
         '& $img': {
             width: '100%',
             height: '100%'

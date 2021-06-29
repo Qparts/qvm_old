@@ -16,7 +16,7 @@ import helper from 'src/utils/helper';
 import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { Container, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
@@ -75,7 +75,6 @@ function DashboardAppView() {
 
   return (
     <Page title="Dashboard App | Minimal-UI" className={classes.root}>
-      <Container maxWidth="xl">
 
         <Grid container spacing={2}>
           <Grid item xs={12} md={9}>
@@ -105,7 +104,7 @@ function DashboardAppView() {
 
               <Grid item xs={12} md={12} lg={12}>
                 <Advertisement
-                  url='/static/icons/ic_chrome.svg'
+                  url='/static/images/banner90.jpg'
                   width='728px'
                   height='90px' />
               </Grid>
@@ -154,12 +153,11 @@ function DashboardAppView() {
           </Grid>
           <Grid item xs={12} md={3}>
             <Grid container>
-              <Grid item xs={12}>
+              <Grid item xs={12} sx={{px:1}}>
                 <UserInfo />
                 <Advertisement
-                  url='/static/icons/ic_chrome.svg'
-                  width='300px'
-                  height='250px' />
+                  url='/static/images/banner-300.jpg' width='300px'
+              height='250px'/>
               </Grid>
             </Grid>
           </Grid>
@@ -282,7 +280,6 @@ function DashboardAppView() {
 
         </Grid> */}
 
-      </Container>
     </Page>
   );
 }

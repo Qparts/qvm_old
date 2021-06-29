@@ -58,7 +58,7 @@ function SpecialOfferItemsSection() {
 
     return (
         <Grid container spacing={2}>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} sm={10} >
                 <SecContainerOffer
                     header={t('Special Offers')}
                     filter={toggleFilter}>
@@ -145,9 +145,9 @@ function SpecialOfferItemsSection() {
                     </Grid>
                 </SecContainerOffer>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs >
                 <Advertisement
-                    url='/static/icons/ic_chrome.svg'
+                    url='/static/images/banner120.png'
                     width='120px'
                     height='600px' />
             </Grid>
