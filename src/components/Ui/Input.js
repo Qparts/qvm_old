@@ -56,6 +56,9 @@ export default function CustomInput(props) {
             type={props.type}
             label={props.label}
             variant="outlined"
+            {...props.getField}
+            error={Boolean(props.touched && props.errors)}
+            helperText={props.touched && props.errors}
             inputProps={{
                 className: clsx(classes.inputStyl, classes[props.selectBg]),
                 onChange: props.onChange,

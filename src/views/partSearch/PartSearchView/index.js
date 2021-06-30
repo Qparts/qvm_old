@@ -14,7 +14,6 @@ import LoadingOverlay from "react-loading-overlay";
 import AvailabilityPartsSection from './AvailabilityPartsSection';
 import PartSearchSection from './PartSearchSection';
 import ProductInfoSection from './ProductInfoSection';
-import LocationFilterSection from './LocationFilterSection';
 import { cleanup } from 'src/redux/slices/partSearch';
 
 
@@ -77,9 +76,6 @@ function PartSearchView() {
                     </Box>
 
                     <PartSearchSection />
-                    <Box sx={{ mb: 6 }} />
-
-                    <LocationFilterSection />
                     <Box sx={{ mb: 6 }} />
 
                     <AvailabilityPartsSection />

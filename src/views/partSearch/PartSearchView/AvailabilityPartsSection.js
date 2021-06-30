@@ -1,27 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import Box from '@material-ui/core/Box';
-import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import PartDetails from './PartDetails';
-import Accordion from '@material-ui/core/Accordion';
-import AccordionSummary from '@material-ui/core/AccordionSummary';
-import AccordionDetails from '@material-ui/core/AccordionDetails';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import searchFill from '@iconify-icons/eva/search-fill';
-import { Icon } from '@iconify/react';
-import {
-    Typography,
-    OutlinedInput,
-    InputAdornment
-} from '@material-ui/core';
-import Datatable from 'src/components/table/DataTable';
 import { useTranslation } from 'react-i18next';
+import { Box } from '@material-ui/core';
+import PartDetails from './PartDetails';
+import Datatable from 'src/components/table/DataTable';
+import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
 import constants from 'src/utils/constants';
-import CustomButton from 'src/components/Ui/Button';
+import LocationFilterSection from './LocationFilterSection';
+import PartSearchAction from './PartSearchAction';
+import Input from 'src/components/Ui/Input';
+import SecContainer from '../../../components/Ui/SecContainer';
+import CustomDialog from '../../../components/Ui/Dialog';
 
 // ----------------------------------------------------------------------
 
@@ -38,13 +28,21 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
+    },
+    availabilityActionsCont: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        borderBottom: '1px solid #E5EBF0',
+        marginBottom: '10px',
+        paddingBottom: '10px',
+    },
+    availabilityActionsLeft: {
+        width: '300px',
     }
 }));
 
 // ----------------------------------------------------------------------
-
-
-
 
 function AvailabilityPartsSection() {
     const classes = useStyles();
@@ -54,28 +52,24 @@ function AvailabilityPartsSection() {
         rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
 
-    const [expanded, setExpanded] = useState(true);
-    const [searchTerm, setSearchTerm] = useState('')
-
+    const [searchTerm, setSearchTerm] = useState('');
 
     const changePagehandler = (event, newPage) => {
         dispatch(handleChangePage({ newPage: newPage }));
         dispatch(partSearch(query, newPage * constants.MAX, constants.MAX, filter, locationFilters));
     };
 
-
     const showDetailsAction = (item) => {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
     }
 
     const showDetailsElement = (item) => {
-        return <CustomButton
-            onClick={() => showDetailsAction(item)}
-        >
-            {t("Details")}
-        </CustomButton>
+        return (
+            <PartSearchAction
+                onClick={() => showDetailsAction(item)}
+                title={t("Details")} />
+        )
     }
-
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -88,103 +82,70 @@ function AvailabilityPartsSection() {
         return () => clearTimeout(delayDebounceFn)
     }, [searchTerm]);
 
-
     return (
         <Box sx={{ width: '100%' }}>
-
-            <Accordion expanded={expanded} onChange={() => setExpanded(!expanded)}>
-
-                <AccordionSummary
-                    expandIcon={<ExpandMoreIcon />}
-                    aria-controls="panel1a-content"
-                    id="panel1a-header"
-                >
-                    <Typography>{t("Availability")}</Typography>
-                </AccordionSummary>
-                <AccordionDetails>
-                    <OutlinedInput
-                        style={{ margin: 10 }}
-                        value={filter}
-                        onChange={(e) => {
-                            dispatch(setFilter({ filter: e.target.value }));
-                            setSearchTerm(e.target.value);
-                        }}
-                        placeholder={t("Search by part number")}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <Box
-                                    component={Icon}
-                                    icon={searchFill}
-                                    sx={{ color: 'text.disabled' }}
-                                />
-                            </InputAdornment>
+            <SecContainer
+                header={t('Availability')}>
+                <Box className={classes.availabilityActionsCont}>
+                    <Box className={classes.availabilityActionsLeft}>
+                        <Input
+                            value={filter}
+                            onChange={(e) => {
+                                dispatch(setFilter({ filter: e.target.value }));
+                                setSearchTerm(e.target.value);
+                            }}
+                            type='text'
+                            label={t("Search by part number")}
+                            selectBg='selectBg' />
+                    </Box>
+                    <Box className={classes.availabilityActionsRight}>
+                        <LocationFilterSection />
+                    </Box>
+                </Box>
+                <Datatable
+                    header={[
+                        {
+                            name: t("Part Number"),
+                            attr: 'partNumber',
+                        },
+                        {
+                            name: t("Brand"),
+                            attr: 'brandName',
+                        },
+                        {
+                            name: t("Company Name"),
+                            isMapped: true,
+                            mapIndex: 0,
+                            mappedAttribute: themeDirection == 'ltr' ? 'name' : 'nameAr',
+                            attr: 'companyId'
+                        },
+                        {
+                            name: t("Average market price"),
+                            attr: 'retailPrice'
                         }
-                        className={classes.search}
-                    />
-                    <Box sx={{ mb: 3 }} />
+                    ]}
 
-                    <Datatable
-                        header={[
-                            {
-                                name: t("Part Number"),
-                                attr: 'partNumber',
-                            },
-                            {
-                                name: t("Brand"),
-                                attr: 'brandName',
-                            },
-                            {
-                                name: t("Company Name"),
-                                isMapped: true,
-                                mapIndex: 0,
-                                mappedAttribute: themeDirection == 'ltr' ? 'name' : 'nameAr',
-                                attr: 'companyId'
-                            },
-                            {
-                                name: t("Average market price"),
-                                attr: 'retailPrice'
-                            }
-                        ]}
+                    actions={[{ element: showDetailsElement }]}
+                    datatable={productResult}
+                    error={error}
+                    onSelectedPage={changePagehandler}
+                    page={page}
+                    isLazy={true}
+                    maps={[companies]}
+                    size={searchSize}
+                    rowsPerPage={rowsPerPage}
+                    hasPagination={true}
 
-                        actions={[
-                            {
-                                name: t("Details"),
-                                // action: showDetails,
-                                element: showDetailsElement
-                            }
-                        ]}
-                        datatable={productResult}
-                        error={error}
-                        onSelectedPage={changePagehandler}
-                        page={page}
-                        isLazy={true}
-                        maps={[companies]}
-                        size={searchSize}
-                        rowsPerPage={rowsPerPage}
-                        hasPagination={true}
+                />
+            </SecContainer>
 
-                    />
-
-                </AccordionDetails>
-            </Accordion>
-
-            <Dialog
-                onClose={() => dispatch(setSelectedPart({ selectedPart: null }))}
-                aria-labelledby="customized-dialog-title"
+            <CustomDialog
                 open={selectedPart != null}
-                className={classes.root}
-            >
-                <DialogTitle>
-                    <Typography variant="h6" component="div">
-                        {t("Availability details")}
-                    </Typography>
-                </DialogTitle>
-                <DialogContent dividers sx={{ p: 2 }}>
-                    <PartDetails />
-                </DialogContent>
-            </Dialog>
-
-        </Box>
+                handleClose={() => dispatch(setSelectedPart({ selectedPart: null }))}
+                title={t("Availability details")}>
+                <PartDetails />
+            </CustomDialog>
+        </Box >
     );
 }
 

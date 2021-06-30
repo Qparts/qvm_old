@@ -2,20 +2,16 @@ import Page from 'src/components/Page';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import {
-    Box,
-    Container,
-    Typography
-} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import AddOffer from './addOffer/AddOffer';
+import CustomDialog from '../../../components/Ui/Dialog'
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    
+
     root: {
         boxShadow: 'none',
         textAlign: 'center',
@@ -33,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function SpecialOfferUpload() {
+function SpecialOfferUpload(props) {
     const classes = useStyles();
     const { isLoading } = useSelector((state) => state.specialOfferUpload);
     const { t } = useTranslation();
@@ -42,9 +38,7 @@ function SpecialOfferUpload() {
     return (
         <Page
             title={t("Special Offer Upload")}
-            className={classes.root}
-        >
-
+            className={classes.root}>
             <LoadingOverlay
                 active={isLoading}
                 styles={{
@@ -53,20 +47,14 @@ function SpecialOfferUpload() {
                         height: "100%",
                     },
                 }}
-                spinner={
-                    <LoadingScreen />
-
-                }
-            >
-                <Container >
-                    <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("Special Offer Upload")}</Typography>
-                        <hr />
-                    </Box>
-                    
+                spinner={<LoadingScreen />}>
+                <CustomDialog
+                    open={props.open}
+                    handleClose={props.handleClose}
+                    title={t("Special Offer Upload")}
+                >
                     <AddOffer />
-
-                </Container>
+                </CustomDialog>
             </LoadingOverlay>
 
         </Page>

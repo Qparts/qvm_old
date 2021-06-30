@@ -71,6 +71,9 @@ export default function DropDownList(props) {
             value={props.value}
             onChange={props.onChange}
             variant="outlined"
+            {...props.getField}
+            error={Boolean(props.touched && props.errors)}
+            helperText={props.touched && props.errors}
             inputProps={{
                 className: clsx(classes.inputStyl, classes[props.selectBg], classes[props.datePadding]),
                 onChange: props.onChange,

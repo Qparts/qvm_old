@@ -17,6 +17,7 @@ import {
 import { handleFilterChange } from 'src/redux/slices/catalog';
 import { useTranslation } from 'react-i18next';
 import Select from '../../../components/Ui/Select';
+import FilterResult from '../../../components/Ui/FilterResult';
 
 // ----------------------------------------------------------------------
 
@@ -41,19 +42,6 @@ const useStyles = makeStyles(() => ({
     },
     catalogFilterResult: {
         display: 'flex'
-    },
-    catalogFilterResultChild: {
-        padding: '0.6em',
-        borderRadius: '10rem',
-        background: '#F6F8FC',
-        fontSize: '14px',
-        margin: '5px 5px 0'
-    },
-    clearCatalogFilterResult: {
-        width: '16px',
-        height: '16px',
-        cursor: 'pointer',
-        marginLeft: '5px',
     }
 }));
 
@@ -83,7 +71,7 @@ function CarFilter() {
                             <div className={classes.catalogFilterResult}>
                                 {Array.from(filterKeysMap.keys()).map((keyItem) => {
                                     return (
-                                        <div className={classes.catalogFilterResultChild} key={keyItem}>
+                                        <FilterResult key={keyItem}>
                                             {t(keyItem)} : {filterKeysMap.get(keyItem).value}
                                             <ClearIcon
                                                 className={classes.clearCatalogFilterResult}
@@ -91,7 +79,7 @@ function CarFilter() {
                                                     dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, keyItem, null));
                                                 }}
                                             />
-                                        </div>
+                                        </FilterResult>
                                     );
                                 })}
                             </div>

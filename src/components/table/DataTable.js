@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
             background: 'none',
             color: '#7E8D99',
             paddingTop: 0,
-            paddingBottom: '8px',
+            paddingBottom: theme.spacing(1),
+            fontSize: theme.typography.body4.fontSize,
             fontWeight: theme.typography.fontWeightRegular
         },
         '& $th:first-of-type, & $th:last-of-type': {
@@ -100,7 +101,7 @@ function Row({ header, title, item, maps, childData = [], childHeader, showChild
 
     return (
         <React.Fragment>
-            <TableRow>
+            <TableRow className={classes.dataTableTr}>
                 {header.map((headerItem, j) => {
                     return (
                         <TableCell key={j}>
@@ -253,7 +254,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                     {actions.map((actionItem, index) => {
                                                         return (
                                                             <TableCell key={index}>
-                                                                {actionItem ?
+                                                                {actionItem.element ?
                                                                     actionItem.element(JSON.stringify(item)) :
                                                                     <Button
                                                                         variant="contained"

@@ -1,15 +1,55 @@
 import PropTypes from 'prop-types';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { Form, FormikProvider } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import {
-    TextField,
+    Box,
+    Divider,
+    MenuItem,
+    Checkbox,
+    FormControlLabel,
     Grid,
-    InputLabel
+    Typography,
+    Button,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import Button from "src/components/button/CustomButton";
 import { getBranches } from 'src/redux/slices/branches';
+import { Download } from '../../../icons/icons';
+import StockFileBtn from '../../../components/Ui/StockFileBtn';
+import CustomInput from '../../../components/Ui/Input';
+import Select from '../../../components/Ui/Select';
+import CustomButton from '../../../components/Ui/Button';
+import Label from '../../../components/Ui/Label';
+
+// ----------------------------------------------------------------------
+
+const useStyles = makeStyles((theme) => ({
+    root: {},
+    downlaodInfo: {
+        fontSize: '0.875rem',
+        color: '#7E8D99',
+        marginBottom: '8px',
+        display: 'block'
+    },
+    uploadStockMainBtn: {
+        color: theme.palette.primary.main,
+        fontSize: theme.typography.body3.fontSize,
+        fontWeight: theme.typography.fontWeightRegular,
+        boxShadow: 'none',
+        background: '#FFEDED',
+        display: 'flex',
+        marginBottom: '20px',
+        '& $svg': {
+            marginLeft: '5px'
+        },
+        '&:hover': {
+            color: theme.palette.primary.main,
+            background: '#FFEDED',
+            boxShadow: '0px 3px 1px -2px rgb(145 158 171 / 20%), 0px 2px 2px 0px rgb(145 158 171 / 14%), 0px 1px 5px 0px rgb(145 158 171 / 12%)'
+        }
+    }
+}));
 
 // ----------------------------------------------------------------------
 
@@ -18,9 +58,10 @@ AddStockForm.propTypes = {
 };
 
 function AddStockForm(props) {
-    const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = props.formik;
+    const { errors, touched, handleSubmit, getFieldProps, setFieldValue } = props.formik;
     const { t } = useTranslation();
-    const dispatch = useDispatch();
+    const classes = useStyles();
+    const theme = useTheme();
     const { countries } = useSelector(
         (state) => state.authJwt
     );
@@ -30,68 +71,76 @@ function AddStockForm(props) {
     return (
         <FormikProvider value={props.formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Grid container spacing={2}>
-
-                    <Grid item xs={3} >
-                        <TextField
-                            select
-                            fullWidth
-                            name="branch"
-                            label={t("Branch")}
-                            {...getFieldProps('branch')}
-                            onClick={() => {
-                                console.log("stockFile", values.stockFile)
-                            }}
-                            SelectProps={{ native: true }}
-                            error={Boolean(touched.branch && errors.branch)}
-                            helperText={touched.branch && errors.branch}
-                        >
-                            <option value="" />
-                            {branches.map((option) => (
-                                <option key={option.id} value={option.id}>
-                                    {themeDirection == 'ltr' ? option.branchName : option.branchNameAr}
-                                </option>
-                            ))}
-                        </TextField>
-                    </Grid>
-
-                    <Grid item xs={7} >
-                        <Grid container >
-                            <Grid item xs={2}>
-                                <InputLabel>{t("Stock File")}</InputLabel>
+                <Typography variant="body3" className={classes.downlaodInfo}>
+                    {t("Download the excel file and use the format as it is, then upload the file")}
+                </Typography>
+                <Button
+                    variant="contained"
+                    color="primary"
+                    round
+                    component="span"
+                    className={classes.uploadStockMainBtn}
+                >
+                    {t("download stock file")}
+                    <Download width='20' height='20' fill={theme.palette.primary.main} />
+                </Button>
+                <Divider />
+                <Select
+                    label={t("Branch")}
+                    id="branch"
+                    name="branch"
+                    spaceToTop='spaceToTop'
+                    getField={getFieldProps('branch')}
+                    touched={touched.branch}
+                    errors={errors.branch}
+                >
+                    <MenuItem value="" />
+                    {branches.map((option) => (
+                        <MenuItem key={option.id} value={option.id}>
+                            {themeDirection == 'ltr' ? option.branchName : option.branchNameAr}
+                        </MenuItem>
+                    ))}
+                </Select>
+                <StockFileBtn
+                    onChange={(event) => {
+                        setFieldValue("stockFile", event.currentTarget.files[0]);
+                    }}
+                    touched={touched.stockFile}
+                    errors={errors.stockFile} />
+                <FormControlLabel
+                    control={<Checkbox checked={props.checked} onChange={props.handleChange} />}
+                    label={t("special offer")}
+                    style={{ marginTop: '15px' }}
+                />
+                {props.checked ?
+                    <>
+                        <Divider />
+                        <CustomInput
+                            value=""
+                            name='offerName'
+                            type='text'
+                            label={t('add offer name')}
+                            spaceToTop='spaceToTop' />
+                        <Grid container spacing={1}>
+                            <Grid item xs={12} md={6}>
+                                <Label name={t("start in")} />
+                                <CustomInput value="" name='startIn' type='date' />
                             </Grid>
-                            <Grid item xs={10}>
-                                <TextField
-                                    fullWidth
-                                    placeholder={t("Stock File")}
-                                    type="file"
-                                    id="stockFile"
-                                    onChange={(event) => {
-                                        setFieldValue("stockFile", event.currentTarget.files[0]);
-                                    }}
-                                    error={Boolean(touched.stockFile && errors.stockFile)}
-                                    helperText={touched.stockFile && errors.stockFile}
-                                />
+                            <Grid item xs={12} md={6}>
+                                <Label name={t("ends in")} />
+                                <CustomInput value="" name='endsIn' type='date' />
                             </Grid>
                         </Grid>
-                    </Grid>
-
-
-                    <Grid item xs={2}>
-                        <Button
-                            className="round"
-                            color="primary"
-                            className="mx-2"
-                            type="submit"
-                            round
-                            simple
-                        >
-                            {t("Upload")}
-                        </Button>
-                    </Grid>
-
-
-                </Grid>
+                        <CustomInput
+                            value=""
+                            name='discount'
+                            type='text'
+                            label={t('put discount value')}
+                            spaceToTop='spaceToTop' />
+                    </> : ""}
+                <Box sx={{ marginTop: '20px' }}>
+                    <CustomButton type="submit">{t("upload stock")}</CustomButton>
+                </Box>
             </Form>
         </FormikProvider>
     );

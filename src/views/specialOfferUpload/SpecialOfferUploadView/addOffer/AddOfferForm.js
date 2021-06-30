@@ -1,19 +1,16 @@
 import PropTypes from 'prop-types';
-import React, { } from 'react';
+import React from 'react';
 import { Form, FormikProvider } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
 import {
-    TextField,
     Grid,
-    InputLabel
+    Box
 } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
-import DatePicker from '@material-ui/lab/DatePicker';
-import enLocale from 'date-fns/locale/en-US';
-import arLocale from 'date-fns/locale/ar-SA';
-import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
+import StockFileBtn from '../../../../components/Ui/StockFileBtn';
+import CustomInput from '../../../../components/Ui/Input';
+import CustomButton from '../../../../components/Ui/Button';
+import Label from '../../../../components/Ui/Label';
+
 // ----------------------------------------------------------------------
 
 AddOfferForm.propTypes = {
@@ -23,13 +20,63 @@ AddOfferForm.propTypes = {
 function AddOfferForm({ formik }) {
     const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
     const { t } = useTranslation();
-    const dispatch = useDispatch();
-    const { themeDirection } = useSelector((state) => state.settings);
 
     return (
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                <Grid container spacing={2}>
+
+                <CustomInput
+                    name='offerName'
+                    type='text'
+                    label={t('add offer name')}
+                    getField={getFieldProps('offerName')}
+                    touched={touched.offerName}
+                    errors={errors.offerName} />
+
+                <StockFileBtn
+                    onChange={(event) => {
+                        setFieldValue("offerFile", event.currentTarget.files[0]);
+                    }}
+                    touched={touched.offerFile}
+                    errors={errors.offerFile} />
+
+                <Grid container spacing={1}>
+                    <Grid item xs={12} md={6}>
+                        <Label name={t("start in")} />
+                        <CustomInput
+                            id="offerStartDate"
+                            name='offerStartDate'
+                            type='date'
+                            error={Boolean(touched.offerStartDate && errors.offerStartDate)}
+                            helperText={touched.offerStartDate && errors.offerStartDate}
+                        />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                        <Label name={t("ends in")} />
+                        <CustomInput
+                            id="offerEndDate"
+                            name='offerEndDate'
+                            type='date'
+                            error={Boolean(touched.offerEndDate && errors.offerEndDate)}
+                            helperText={touched.offerEndDate && errors.offerEndDate}
+                        />
+                    </Grid>
+                </Grid>
+{/* 
+                <CustomInput
+                    name='discount'
+                    type='text'
+                    label={t('put discount value')}
+                    spaceToTop='spaceToTop'
+                    getField={getFieldProps('discount')}
+                    touched={touched.discount}
+                    errors={errors.discount} /> */}
+
+                <Box sx={{ marginTop: '20px' }}>
+                    <CustomButton type="submit">{t("upload stock")}</CustomButton>
+                </Box>
+
+                {/* <Grid container spacing={2}>
                     <Grid item xs={6} >
                         <TextField
                             fullWidth
@@ -139,9 +186,9 @@ function AddOfferForm({ formik }) {
                         </LoadingButton>
 
                     </Grid>
-                </Grid>
+                </Grid> */}
             </Form>
-        </FormikProvider>
+        </FormikProvider >
     );
 }
 
