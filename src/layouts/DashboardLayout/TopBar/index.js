@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     backdropFilter: 'blur(8px)',
     backgroundColor: alpha(theme.palette.background.default, 0.72),
+    marginRight:theme.spacing(1),
     [theme.breakpoints.up('lg')]: {
       paddingLeft: DRAWER_WIDTH
     }

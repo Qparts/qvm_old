@@ -530,6 +530,12 @@
   "Use the following format when uploading the excel file": "Use the following format when uploading the excel file",
   "Stock File": "Stock File *",
   "Upload": "Upload",
+  "Send": "Send",
+  "access all brands of cars and alternatives, both commercial and original" : "access all brands of cars and alternatives, both commercial and original",
+  "Show all brands": "Show all brands",
+  "Hid all brands": "Hid all brands",
+  "price page title":"Try our free package now, and upgrade to the premium plan to grow your business.",
+  "price page caption":"You can access huge numbers of auto spare parts and deal with great number of vendors",
   "Branch is required": "Branch is required",
   "The file is required": "The file is required",
   "Offer Name": "Offer Name",
@@ -547,5 +553,16 @@
   "There is no parts": "There is no parts",
   "Of": " Of ",
   "Stock file has been uploaded": "Stock file has been uploaded",
-  "Offer file has been uploaded": "Offer file has been uploaded"
+  "Offer file has been uploaded": "Offer file has been uploaded",
+  "Who subscribed in this package" : "Who subscribed in this package",
+  "Save SR" : "Save SR ",
+  "Forever" : "Forever",
+  "Free" :"Free",
+  "Yearly" : "Yearly",
+  "Contact Our Team" :"Contact Our Team",
+  "Subscribers to the package" :"Subscribers to the package ",
+  "Try our free package now, and upgrade to the premium plan to grow your business" :"Try our free package now, and upgrade to the premium plan to grow your business.",
+  "Monthly" : "Monthly"
+  
+
 }
