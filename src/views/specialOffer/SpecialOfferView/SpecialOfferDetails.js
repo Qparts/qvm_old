@@ -124,7 +124,7 @@ function SpecialOfferDetails({ specialOfferId }) {
 
     const showDetailsElement = (item) => {
         return (
-            <Box className={clsx(classes.offerDetailsGridFlex)}>
+            <Box className={classes.offerDetailsGridFlex}>
                 <Link to='/dashboard' className={classes.hoverLink}><Search width='15' height='15' fill='#CED5D8' /> </Link>
                 <Link to='/dashboard' className={clsx(classes.offerDetailsGridFlex, classes.hoverLink)}>
                     <Orders width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} className={classes.offerDetailsGridActionsIcon} />

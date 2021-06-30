@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { OfferOne, Filter } from '../../icons/icons';
+import SpecialOfferUpload from '../../views/specialOfferUpload/SpecialOfferUploadView/index'
 
 // ----------------------------------------------------------------------
 
@@ -63,6 +64,16 @@ const SecContainerOffer = (props, { className, ...other }) => {
     const classes = useStyles();
     const theme = useTheme();
     const { t } = useTranslation();
+    const [open, setOpen] = React.useState(false);
+    const [checked, setChecked] = React.useState(false);
+
+    const handleClickOpen = () => {
+        setOpen(true);
+    };
+
+    const handleClose = () => {
+        setOpen(false);
+    };
 
     return (
         <div className={clsx(classes.root, classes.secContainer, className)} {...other}>
@@ -73,18 +84,19 @@ const SecContainerOffer = (props, { className, ...other }) => {
                         <Filter width='17px' height='17px' fill={theme.palette.secondary.main} />
                         <Typography variant="body2" sx={{ marginLeft: '5px' }}>{t("filter")}</Typography>
                     </Button>
-                    <Link to='/special-offer'>
-                        <Button variant="contained" className={classes.offerBtn} style={{ background: theme.palette.primary.main, color: theme.palette.grey[0] }}>
-                            <OfferOne width='21px' height='21px' fill={theme.palette.grey[0]} />
-                            <Typography variant="body2" sx={{ marginLeft: '5px' }}>{t("add offer")}</Typography>
-                        </Button>
-                    </Link>
+                    <Button variant="contained" onClick={handleClickOpen} className={classes.offerBtn} style={{ background: theme.palette.primary.main, color: theme.palette.grey[0] }}>
+                        <OfferOne width='21px' height='21px' fill={theme.palette.grey[0]} />
+                        <Typography variant="body2" sx={{ marginLeft: '5px' }}>{t("add offer")}</Typography>
+                    </Button>
                 </Box>
             </Box>
             <Card className={classes.secBody}>
                 {props.children}
             </Card>
             <Typography variant="subtitle2" className={classes.secFooter}></Typography>
+            <SpecialOfferUpload
+                open={open}
+                handleClose={handleClose} />
         </div>
     )
 }

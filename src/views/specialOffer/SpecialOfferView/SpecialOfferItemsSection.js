@@ -5,7 +5,6 @@ import {
     Box,
     MenuItem,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
 import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
@@ -30,10 +29,6 @@ const PARTS = [
         shortcut: '/static/icons/ic_dropbox.svg'
     },
 ];
-
-const useStyles = makeStyles((theme) => ({
-    root: {},
-}));
 
 // ----------------------------------------------------------------------
 

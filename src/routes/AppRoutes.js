@@ -34,12 +34,6 @@ const AppRoutes = {
       path: PATH_APP.general.replacements,
       component: lazy(() => import('src/views/replacements/ReplacementsView'))
     },
-
-    {
-      exact: true,
-      path: PATH_APP.general.stockUpload,
-      component: lazy(() => import('src/views/stockUpload/StockUploadView'))
-    },
     {
       exact: true,
       path: PATH_APP.general.specialOfferUpload,
