@@ -34,7 +34,6 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'space-between',
         alignItems: 'center',
         borderBottom: '1px solid #E5EBF0',
-        marginBottom: '10px',
         paddingBottom: '10px',
     },
     availabilityActionsLeft: {

@@ -39,7 +39,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function RegisterForm({ formik }) {
+function PrivacyPolicy({ formik }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -245,4 +245,4 @@ function RegisterForm({ formik }) {
   );
 }
 
-export default RegisterForm;
+export default PrivacyPolicy;

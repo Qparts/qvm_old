@@ -2,23 +2,24 @@ import clsx from 'clsx';
 import faker from 'faker';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { fCurrency } from 'src/utils/formatNumber';
-import Scrollbars from 'src/components/Scrollbars';
+// import { fCurrency } from 'src/utils/formatNumber';
+// import Scrollbars from 'src/components/Scrollbars';
 import { makeStyles } from '@material-ui/core/styles';
 import { More } from '../../../icons/icons';
 import { useTranslation } from 'react-i18next';
 import {
   Card,
-  Table,
-  TableRow,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableContainer,
-  Avatar,
-  Box,
-  Typography
+  // Table,
+  // TableRow,
+  // TableBody,
+  // TableCell,
+  // TableHead,
+  // TableContainer,
+  // Avatar,
+  // Box,
+  // Typography
 } from '@material-ui/core';
+import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
 
@@ -54,41 +55,38 @@ const useStyles = makeStyles((theme) => ({
   partsSearch: {
     boxShadow: 'none',
     background: 'inherit',
-    
   },
-  tableSpace:{
-    borderCollapse: 'separate',
-    borderSpacing: '0 10px',
-  },
-  partsSearchHead: {
-    '& $th': {
-      border: 'none',
-      background: 'none',
-      color: '#7E8D99',
-      paddingTop: 0,
-      paddingBottom: 0
-    },
-    '& $th:first-of-type, & $th:last-of-type': {
-      boxShadow: 'none',
-    }
-  },
-  partsSearchTr: {
-    '& $td:first-of-type': {
-      borderRadius: '20px 0 0 20px',
-      display: 'flex'
-    },
-    '& $td:last-of-type': {
-      borderRadius: '0 20px 20px 0'
-    },
-    "& td":{
-      background: theme.palette.grey[0],
-    }
-  },
-  partNumber: {
-    margin: '10px 0 0 10px'
-  },
+  // reactiveCompaniesHead: {
+  //     '& $th': {
+  //         border: 'none',
+  //         background: 'none',
+  //         color: '#7E8D99',
+  //         paddingTop: 0,
+  //         paddingBottom: 9
+  //     },
+  //     '& $th:first-of-type, & $th:last-of-type': {
+  //         boxShadow: 'none',
+  //     }
+  // },
+  // reactiveCompaniesTr: {
+  //     background: theme.palette.grey[0],
+  //     borderBottom: '10px solid #F6F8FC',
+  //     '&:last-of-type': {
+  //         border: 0
+  //     },
+  //     '& $td:first-of-type': {
+  //         borderRadius: '20px 0 0 20px',
+  //         display: 'flex'
+  //     },
+  //     '& $td:last-of-type': {
+  //         borderRadius: '0 20px 20px 0'
+  //     }
+  // },
+  // partNumber: {
+  //     margin: '10px 0 0 10px'
+  // },
   more: {
-    cursor: 'pointer'
+      cursor: 'pointer'
   }
 }));
 
@@ -102,9 +100,35 @@ function SearchedParts({ className, ...other }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
+  const showMoreActions = (item) => {
+    return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
+  }
+
   return (
     <Card className={clsx(classes.root, classes.partsSearch, className)} {...other}>
-        <TableContainer>
+
+      <Datatable
+        header={[
+          {
+            name: t("Part Number"),
+            attr: 'partNum',
+          },
+          {
+            name: t('Lowest price'),
+            attr: 'price',
+          },
+          {
+            name: t("quantity"),
+            attr: 'quantity'
+          }
+        ]}
+
+        actions={[{ element: showMoreActions }]}
+        datatable={INVOICES}
+        isLazy={true}
+        hasPagination={false} />
+
+      {/* <TableContainer>
           <Table className={classes.tableSpace}>
             <TableHead className={classes.partsSearchHead}>
               <TableRow>
@@ -131,7 +155,7 @@ function SearchedParts({ className, ...other }) {
                       }}
                     >
                       <Avatar width={20} height={20} />
-                      {/* <img src={shortcut} alt={name} width={24} height={24} /> */}
+                      <img src={shortcut} alt={name} width={24} height={24} />
                     </Box>
                     <Typography variant="body3" className={classes.partNumber}>{row.partNum}</Typography>
                   </TableCell>
@@ -144,7 +168,7 @@ function SearchedParts({ className, ...other }) {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
     </Card>
   );
 }

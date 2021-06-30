@@ -27,6 +27,8 @@ const useStyles = makeStyles((theme) => ({
     dataTable: {
         boxShadow: 'none',
         background: '#F6F8FC',
+        borderCollapse: 'separate',
+        borderSpacing: '0 10px',
     },
     dataTableHead: {
         '& $th': {
@@ -34,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
             background: 'none',
             color: '#7E8D99',
             paddingTop: 0,
-            paddingBottom: theme.spacing(1),
+            paddingBottom: 0,
             fontSize: theme.typography.body4.fontSize,
             fontWeight: theme.typography.fontWeightRegular
         },
@@ -43,20 +45,18 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     dataTableTr: {
-        background: theme.palette.grey[0],
-        borderBottom: '10px solid #F6F8FC',
-        '&:last-of-type': {
-            border: 0
+        "& td": {
+            background: theme.palette.grey[0],
         },
         '& $td:first-of-type': {
-            borderRadius: '10px 0 0 10px',
+            borderRadius: '20px 0 0 20px',
         },
         '& $td:last-of-type': {
-            borderRadius: '0 10px 10px 0'
-        }
+            borderRadius: '0 20px 20px 0'
+        },
     },
     tablePagination: {
-        borderTop: '10px solid #F6F8FC',
+        borderTop: 0,
         '& .MuiTablePagination-toolbar': {
             height: '59px'
         }
@@ -208,7 +208,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
             <Paper sx={{ width: '100%' }}>
                 <Scrollbars>
                     <TableContainer component={Paper}>
-                        <Table className={classes.dataTable} sx={{ minWidth: 650 }} aria-label="simple table">
+                        <Table className={classes.dataTable} aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>
                                 <TableRow>
                                     {header.map((item, i) => {

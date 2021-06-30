@@ -16,7 +16,6 @@ const useStyles = makeStyles((theme) => ({
     root: {},
     forMoreInfoCont: {
         paddingBottom: '10px',
-        marginBottom: '10px',
         borderBottom: '1px solid #E5EBF0',
     },
     forMoreInfo: {
