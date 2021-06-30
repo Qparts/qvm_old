@@ -23,9 +23,7 @@ const useStyles = makeStyles((theme) => ({
             alignItems: 'center',
             justifyContent: 'space-between'
         },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
-        }
+   
     }
 }));
 

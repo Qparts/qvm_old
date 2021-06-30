@@ -54,7 +54,13 @@ const PARTS = [
 ];
 
 const useStyles = makeStyles((theme) => ({
-  root: {}
+  root: {},
+  sideStyle:{
+    [theme.breakpoints.up('lg')]: {
+      right: -15,
+    }
+    
+  }
 }));
 
 // ----------------------------------------------------------------------
@@ -151,15 +157,11 @@ function DashboardAppView() {
 
             </Grid>
           </Grid>
-          <Grid item xs={12} md={3}>
-            <Grid container>
-              <Grid item xs={12} sx={{px:1}}>
-                <UserInfo />
+          <Grid item xs={12} md={3} position="relative" className={classes.sideStyle}>
+          <UserInfo />
                 <Advertisement
                   url='/static/images/banner-300.jpg' width='300px'
               height='250px'/>
-              </Grid>
-            </Grid>
           </Grid>
         </Grid>
 

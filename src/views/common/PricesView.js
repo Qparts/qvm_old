@@ -52,7 +52,6 @@ function PricesView(props) {
     }, [isLoading])
     return (
         <Page title="Prices | Minimal UI" className={classes.root}>
-
             <LoadingOverlay
                 active={isLoading}
                 styles={{
@@ -66,7 +65,6 @@ function PricesView(props) {
 
                 }
             >
-
                 <Container >
                     <Box sx={{ maxWidth: 480, mx: 'auto' }}>
                         <TopBar />
@@ -78,11 +76,7 @@ function PricesView(props) {
                         <Typography align="center" sx={{ color: 'text.secondary' }}>
                             {t("You can access huge numbers of auto spare parts and deal with great number of vendors")}
                         </Typography>
-
-
-
                         <Box sx={{ my: 5 }} />
-
                         <ToggleButtonGroup value={premiumPlan} exclusive sx={{ mb: 2, display: 'block' }}>
                             {availablePlans[1]?.planDurations.map((duration, index) => (
                                 <ToggleButton
@@ -103,11 +97,7 @@ function PricesView(props) {
                                 </ToggleButton>
                             ))}
                         </ToggleButtonGroup>
-
-
                     </Box>
-
-
                     <Grid container spacing={3}>
                         {planFeatures.map((plan, index) => (
                             <Grid item xs={12} md={4} key={index}>
@@ -116,7 +106,6 @@ function PricesView(props) {
                         ))}
                     </Grid>
                 </Container>
-
             </LoadingOverlay>
         </Page>
     );

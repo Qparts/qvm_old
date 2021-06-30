@@ -5,6 +5,7 @@ import {
     Box,
     MenuItem,
 } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
 import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
@@ -30,6 +31,10 @@ const PARTS = [
     },
 ];
 
+const useStyles = makeStyles((theme) => ({
+    root: {},
+}));
+
 // ----------------------------------------------------------------------
 
 
@@ -52,8 +57,8 @@ function SpecialOfferItemsSection() {
     };
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} sm={10} >
+        <Box display="flex">
+            <Box flexGrow={1} >
                 <SecContainerOffer
                     header={t('Special Offers')}
                     filter={toggleFilter}>
@@ -139,14 +144,14 @@ function SpecialOfferItemsSection() {
                         }
                     </Grid>
                 </SecContainerOffer>
-            </Grid>
-            <Grid item xs >
+            </Box>
+            <Box sx={{paddingLeft: 2}} >
                 <Advertisement
                     url='/static/images/banner120.png'
                     width='120px'
                     height='600px' />
-            </Grid>
-        </Grid>
+            </Box>
+        </Box>
     );
 }
 
