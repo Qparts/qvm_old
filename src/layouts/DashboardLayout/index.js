@@ -29,7 +29,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       paddingTop: APP_BAR_DESKTOP + 18,
       paddingLeft: theme.spacing(2),
-      // paddingRight: theme.spacing(2)
+       paddingRight: theme.spacing(2)
     }
   }
 }));
