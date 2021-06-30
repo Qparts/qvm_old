@@ -26,7 +26,7 @@ const HomeRoutes = {
       component: lazy(() => import('src/views/TermsView'))
     },
     {
-      path: '/policy',
+      path: '/privacy-policy',
       component: lazy(() => import('src/views/policy'))
     },
     {

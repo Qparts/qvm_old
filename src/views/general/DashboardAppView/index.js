@@ -56,7 +56,10 @@ const PARTS = [
 const useStyles = makeStyles((theme) => ({
   root: {},
   sideStyle:{
-    right: -15,
+    [theme.breakpoints.up('lg')]: {
+      right: -15,
+    }
+    
   }
 }));
 
@@ -154,7 +157,7 @@ function DashboardAppView() {
 
             </Grid>
           </Grid>
-          <Grid item xs={12} md={3} position="relative" className="sideStyle">
+          <Grid item xs={12} md={3} position="relative" className={classes.sideStyle}>
           <UserInfo />
                 <Advertisement
                   url='/static/images/banner-300.jpg' width='300px'
