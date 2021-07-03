@@ -8,7 +8,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles((theme) => ({
     inputStyl: {
         background: '#F6F8FC',
-        color: 'rgb(8 44 60 / 50%) !important',
+        color: theme.palette.secondary.darker + '!important',
         border: '1px solid #EEF1F5',
         borderRadius: '10px',
         padding: '13px',
@@ -55,6 +55,7 @@ export default function CustomInput(props) {
             defaultValue={props.value}
             type={props.type}
             label={props.label}
+            id={props.id}
             variant="outlined"
             {...props.getField}
             error={Boolean(props.touched && props.errors)}

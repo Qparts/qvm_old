@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import {
     Grid,
     Box,
@@ -12,7 +11,8 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import Helper from '../../../utils/helper'
-import { Orders, Search } from '../../../icons/icons';
+import { OrdersArrow, Search } from '../../../icons/icons';
+import TableAction from '../../../components/Ui/TableAction'
 
 // ----------------------------------------------------------------------
 
@@ -22,7 +22,16 @@ const useStyles = makeStyles((theme) => ({
         background: '#FFFFFF',
         boxShadow: '0px 2px 4px rgb(20 69 91 / 2%)',
         borderRadius: '10px',
-        marginTop: '14px'
+        marginTop: '14px',
+        '&:hover': {
+            borderRight: `3px solid ${theme.palette.primary.main}`,
+            '& $a span': {
+                color: theme.palette.secondary.darker,
+            },
+            '& $svg path': {
+                fill: theme.palette.secondary.darker,
+            }
+        }
     },
     offerDetailsGridChild: {
         display: 'flex',
@@ -34,9 +43,6 @@ const useStyles = makeStyles((theme) => ({
     offerDetailsGridQuantityCont: {
         margin: '2px 0 5px',
     },
-    offerDetailsGridActionsIcon: {
-        marginLeft: '5px'
-    },
     offerDetailsGridBorder: {
         paddingRight: '10px',
         marginRight: '10px',
@@ -45,19 +51,6 @@ const useStyles = makeStyles((theme) => ({
     offerDetailsGridFlex: {
         display: 'flex',
         alignItems: 'center',
-    },
-    hoverLink: {
-        '& span': {
-            color: '#CED5D8'
-        },
-        '&:hover': {
-            '& span': {
-                color: theme.palette.primary.main
-            },
-            '& $svg path': {
-                fill: theme.palette.primary.main
-            }
-        },
     }
 }));
 
@@ -97,13 +90,13 @@ function SpecialOfferInfoGrid(props) {
                                         </Box>
                                     </Box>
                                 </Box>
-                                <Box className={clsx(classes.offerDetailsGridFlex)}>
-                                    <Link to='/dashboard' className={clsx(classes.offerDetailsGridBorder, classes.offerDetailsGridFlex, classes.hoverLink)}>
-                                        <Typography variant="body4">{t("order the offer")}</Typography>
-                                        <Orders width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} className={classes.offerDetailsGridActionsIcon} />
-                                    </Link>
-                                    <Link to='/dashboard' className={classes.hoverLink}><Search width='15' height='15' fill='#CED5D8' /> </Link>
-                                </Box>
+                                <TableAction
+                                    title={t("order the offer")}
+                                    textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
+                                    icon={<Search width='15' height='15' fill='#CED5D8' />}
+                                    TableActionBorder='TableActionBorder'
+                                    link='/app/dashboard'
+                                    linkSearch='/app/dashboard' />
                             </CardContent>
                         </Card>
                     </Grid>

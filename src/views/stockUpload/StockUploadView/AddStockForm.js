@@ -105,8 +105,10 @@ function AddStockForm(props) {
                     onChange={(event) => {
                         setFieldValue("stockFile", event.currentTarget.files[0]);
                     }}
+                    file='stockFile'
                     touched={touched.stockFile}
                     errors={errors.stockFile} />
+
                 <FormControlLabel
                     control={<Checkbox checked={props.checked} onChange={props.handleChange} />}
                     label={t("special offer")}

@@ -44,16 +44,15 @@ function PartSearchView() {
     const { isLoading } = useSelector((state) => state.PartSearch);
 
     useEffect(() => {
-        return ()=>{
+        return () => {
             dispatch(cleanup())
         }
-     }, []);
+    }, []);
 
     return (
         <Page
             title={t("Search Parts")}
-            className={classes.root}
-        >
+            className={classes.root}>
 
             <LoadingOverlay
                 active={isLoading}
@@ -66,25 +65,16 @@ function PartSearchView() {
                 spinner={
                     <LoadingScreen />
 
-                }
-            >
-                <Container >
-
-                    <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("Search Parts")}</Typography>
-                        <Divider />
-                    </Box>
-
-                    <PartSearchSection />
-                    <Box sx={{ mb: 6 }} />
-
-                    <AvailabilityPartsSection />
-
-                    <Box sx={{ mb: 6 }} />
-
-                    <ProductInfoSection />
-
-                </Container>
+                }>
+                <Box sx={{ pb: 5 }}>
+                    <Typography variant="h4">{t("Search Parts")}</Typography>
+                    <Divider />
+                </Box>
+                <PartSearchSection />
+                <Box sx={{ mb: 6 }} />
+                <AvailabilityPartsSection />
+                <Box sx={{ mb: 6 }} />
+                <ProductInfoSection />
             </LoadingOverlay>
 
         </Page>

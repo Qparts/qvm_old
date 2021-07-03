@@ -12,7 +12,8 @@ import {
     Grid,
     CardContent,
     FormControl,
-    MenuItem
+    MenuItem,
+    Box
 } from '@material-ui/core';
 import { handleFilterChange } from 'src/redux/slices/catalog';
 import { useTranslation } from 'react-i18next';
@@ -21,11 +22,13 @@ import FilterResult from '../../../components/Ui/FilterResult';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {},
     filterCont: {
-        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
+        boxShadow: 'none',
         borderRadius: '20px',
+        border: '1px solid #E7F0F7',
+        margin: theme.spacing(2, 0, 1)
     },
     cardFilterContent: {
         padding: '15px',
@@ -68,7 +71,7 @@ function CarFilter() {
                             <Typography>{t("filter")}</Typography>
                         </AccordionSummary>
                         <AccordionDetails className={classes.accordionDetails}>
-                            <div className={classes.catalogFilterResult}>
+                            <Box className={classes.catalogFilterResult}>
                                 {Array.from(filterKeysMap.keys()).map((keyItem) => {
                                     return (
                                         <FilterResult key={keyItem}>
@@ -82,7 +85,7 @@ function CarFilter() {
                                         </FilterResult>
                                     );
                                 })}
-                            </div>
+                            </Box>
 
                             <Grid container spacing={1}>
                                 {filters.map(
@@ -113,7 +116,6 @@ function CarFilter() {
                             </Grid>
                         </AccordionDetails>
                     </Accordion>
-
                 </CardContent >
             </Card>
         </Grid>

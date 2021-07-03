@@ -47,7 +47,7 @@ export default function SearchTable(props) {
         type="submit"
         disabled={props.checkDisabled && query.length < 3}
       >
-        {t("Car Details")}
+        {props.title}
       </Button>
     </Form>
   );

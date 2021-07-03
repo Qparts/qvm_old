@@ -59,7 +59,7 @@ export default function CustomInput(props) {
             <TextField
                 className={classes.uploadStockFile}
                 type="file"
-                id="stockFile"
+                id={props.file}
                 onChange={props.onChange}
                 inputProps={{
                     className: classes.input,
@@ -67,7 +67,7 @@ export default function CustomInput(props) {
                 error={Boolean(props.touched && props.errors)}
                 helperText={props.touched && props.errors}
             />
-            <label htmlFor="stockFile">
+            <label htmlFor={props.file}>
                 <Button
                     variant="contained"
                     color="primary"

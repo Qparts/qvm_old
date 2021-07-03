@@ -11,6 +11,7 @@ import {
   Typography,
   CardContent
 } from '@material-ui/core';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -114,7 +115,7 @@ function SearchedCatalog({ className, ...other }) {
             <CatalogItem key={app.name} app={app} />
           ))}
         </Scrollbars>
-        <Link to='/catalog'>
+        <Link to={PATH_APP.general.catalog}>
           <Typography variant="body3" sx={{
             color: '#F20505',
             background: 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 85.42%)',

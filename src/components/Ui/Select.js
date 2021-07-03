@@ -8,7 +8,7 @@ import { TextField } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     inputStyl: {
         background: '#F6F8FC',
-        color: 'rgb(8 44 60 / 50%) !important',
+        color: theme.palette.secondary.darker + '!important',
         border: '1px solid #EEF1F5',
         borderRadius: '10px',
         padding: '13px',
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
     dateFilter: {
         position: 'absolute',
         right: '0',
-        top: '-57px',
+        top: '-47px',
         zIndex: '10',
     },
     datePadding: {

@@ -1,17 +1,14 @@
 import Page from 'src/components/Page';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import {
-    Box
+    Box,
+    Typography
 } from '@material-ui/core';
-import CatalogSearch from './CatalogSearch';
-import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import { cleanup } from 'src/redux/slices/catalog';
-import Advertisement from "./../../../components/Ui/Advertise";
 
 // ----------------------------------------------------------------------
 
@@ -33,22 +30,18 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function CatalogView() {
+function QuotationsReportView() {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
+    const { isLoading } = useSelector((state) => state.quotationsReport);
     const { t } = useTranslation();
 
-    useEffect(() => {
-        return () => {
-            dispatch(cleanup())
-        }
-    }, []);
 
     return (
         <Page
-            title={t("Parts Catalog")}
-            className={classes.root}>
+            title={t("Orders")}
+            className={classes.root}
+        >
+
             <LoadingOverlay
                 active={isLoading}
                 styles={{
@@ -57,23 +50,19 @@ function CatalogView() {
                         height: "100%",
                     },
                 }}
-                spinner={<LoadingScreen />}>
-                {showCarInfo == true ?
-                    <Box display="flex">
-                        <Box flexGrow={1}>
-                            <CarDetails />
-                        </Box>
-                        <Box sx={{ paddingLeft: 2 }} >
-                            <Advertisement
-                                url='/static/images/banner120.png'
-                                width='120px'
-                                height='600px' />
-                        </Box>
-                    </Box> : <CatalogSearch />
+                spinner={
+                    <LoadingScreen />
+
                 }
+            >
+                <Box sx={{ pb: 5 }}>
+                    <Typography variant="h4">{t("Orders")}</Typography>
+                    <hr />
+                </Box>
             </LoadingOverlay>
+
         </Page>
     );
 }
 
-export default CatalogView;
+export default QuotationsReportView;

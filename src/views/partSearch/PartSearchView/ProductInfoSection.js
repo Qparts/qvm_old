@@ -66,7 +66,8 @@ function ProductInfoSection() {
         <Box sx={{ width: '100%' }}>
 
             <SecContainer
-                header={t("Product information")}>
+                header={t("Product information")}
+                bodyP="bodyP">
                 <Datatable
                     header={[
                         {

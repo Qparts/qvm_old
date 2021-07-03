@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
@@ -57,7 +56,6 @@ function AddOffer() {
                 enqueueSnackbar(t('Offer file has been uploaded'), { variant: 'success' });
                 document.getElementById("offerFile").value = "";
                 resetForm();
-
             } catch (error) {
                 if (isMountedRef.current) {
                     setErrors({ afterSubmit: error.code || error.message });

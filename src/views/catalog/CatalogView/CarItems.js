@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     Card,
     Typography,
+    Box,
     CardContent,
     Table,
     TableRow,
@@ -17,6 +18,7 @@ import { getGroups } from 'src/redux/slices/catalog';
 import Scrollbars from 'src/components/Scrollbars';
 import Button from "./../../../components/button/CustomButton";
 import CatalogHead from "./CatalogHead";
+import CarFilter from './CarFilter';
 import CardFoot from "../../../components/Ui/CardFoot";
 
 // ----------------------------------------------------------------------
@@ -29,7 +31,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px',
     },
     cardContent: {
-        padding: '10px 15px'
+        padding: '0 15px'
     },
     catalogTable: {
         boxShadow: 'none',
@@ -82,6 +84,7 @@ function CarItems() {
         <Card className={classes.carItemsCont}>
             <CatalogHead />
             <CardContent className={classes.cardContent}>
+                {fromList && <CarFilter />}
                 <Scrollbars>
                     <TableContainer>
                         <Table className={classes.catalogTable}>
