@@ -13,6 +13,7 @@ import 'react-slideshow-image/dist/styles.css';
 import { getSpecialOfferDetails, setFilter } from 'src/redux/slices/specialOffer';
 import constants from 'src/utils/constants';
 import Datatable from 'src/components/table/DataTable';
+import { PATH_APP } from 'src/routes/paths';
 import SpecialOfferInfoGrid from './SpecialOfferInfoGrid';
 import SpecialOfferInfoActions from './SpecialOfferInfoActions';
 import SpecialOfferInfoHead from './SpecialOfferInfoHead';
@@ -87,7 +88,7 @@ function SpecialOfferDetails({ specialOfferId }) {
     }, [searchTerm])
 
     const handleBackToOffersMenu = () => {
-        history.goBack();
+        history.push(PATH_APP.general.specialOffer);
     };
 
     const handleListView = () => {

@@ -34,7 +34,7 @@ function CatalogSearch() {
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                     <MainCard title={t("Find Catalog by VIN number")} sameHeight='sameHeight'>
-                        <SearchBox handleSubmit={handleQuerySubmit} title={t("Car Details")} />
+                        <SearchBox handleSubmit={handleQuerySubmit} title={t("Car Details")} type='general' />
                     </MainCard>
                 </Grid>
 

@@ -2,13 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import {
-    Dialog,
-    DialogTitle,
-    DialogContent,
-    Box,
-    Typography,
-} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { setSelectedProduct } from '../../../redux/slices/partSearch';
 import Datatable from './../../../components/table/DataTable';
 import constants from 'src/utils/constants';

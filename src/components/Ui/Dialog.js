@@ -39,7 +39,6 @@ const useStyles = makeStyles((theme) => ({
 
 const UploadStockBtn = (props) => {
     const classes = useStyles();
-    const { t } = useTranslation();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 

@@ -1,80 +1,91 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import Box from '@material-ui/core/Box';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
+import { Box, Typography, Divider } from '@material-ui/core';
 import CardMedia from '@material-ui/core/CardMedia';
-import { CardActionArea } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
+import { Search } from '../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {}
+    productImg: {
+        width: '350px',
+        height: '170px'
+    },
+    partNumber: {
+        display: 'flex',
+        background: '#FFEDED',
+        borderRadius: '15px',
+        padding: '11px',
+        width: '80%',
+    },
+    partNumberChild: {
+        color: theme.palette.primary.main
+    },
+    partNumberCard: {
+        padding: theme.spacing(2, 0),
+        '&:last-of-type': {
+            paddingBottom: 0
+        },
+    },
+    partNumberHaed: {
+        color: theme.palette.secondary.main,
+    },
+    displayFlex: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    }
 }));
 
 // ----------------------------------------------------------------------
 
 function ProductDetails() {
     const classes = useStyles();
-    const { selectedProduct, companies } = useSelector((state) => state.PartSearch);
+    const { selectedProduct } = useSelector((state) => state.PartSearch);
     const { t } = useTranslation();
 
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box sx={{ minWidth: '350px' }}>
             {selectedProduct != null &&
-                <Card sx={{ maxWidth: 345 }}>
-                    <CardActionArea>
-                        <CardMedia
-                            component="img"
-                            sx={{ height: 200 }}
-                            src={selectedProduct.image}
-                            onError={e => {
-                                e.target.src = 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg';
-                            }}
-                        />
-                        <CardContent>
-                            <div className="row">
-                                <div className="col-md-6">
-                                    {t("Part Number")}
-                                </div>
-
-                                <div className="col-md-6">
-                                    {selectedProduct.productNumber}
-                                </div>
-
-                                <div className="col-md-6">
-                                    {t("Brand")}
-                                </div>
-
-                                <div className="col-md-6">
-                                    {selectedProduct.brand.name}
-                                </div>
-
-                                <div className="col-md-6">
-                                    {t("Description")}
-                                </div>
-
-                                <div className="col-md-6">
-                                    {selectedProduct.desc}
-                                </div>
-
-                                <div className="col-md-6">
-                                   { t("Average market price")}
-                                </div>
-
-                                <div className="col-md-6">
-                                    {selectedProduct.salesPrice}
-                                </div>
-
-
-                            </div>
-
-                        </CardContent>
-                    </CardActionArea>
-                </Card>
+                <>
+                    <CardMedia
+                        component="img"
+                        className={classes.productImg}
+                        src={selectedProduct.image}
+                        onError={e => {
+                            e.target.src = 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg';
+                        }}
+                    />
+                    <Box>
+                        <Box className={clsx(classes.partNumberCard, classes.displayFlex)}>
+                            <Box className={classes.partNumber}>
+                                <Typography variant='body2' sx={{ color: '#526C78', marginRight: '8px' }}>{t("Part Number")}</Typography>
+                                <Typography variant='body1' className={classes.partNumberChild}>{selectedProduct.productNumber}</Typography>
+                            </Box>
+                            <Search width='24px' height='24' fill='#CED5D8' style={{ cursor: 'pointer' }} />
+                        </Box>
+                        <Divider />
+                        <Box className={clsx(classes.partNumberCard, classes.displayFlex)}>
+                            <Box>
+                                <Typography className={classes.partNumberHaed} variant='body1'>{t("Brand")}</Typography>
+                                <Typography variant='body2'>{selectedProduct.brand.name}</Typography>
+                            </Box>
+                            <Box>
+                                <Typography className={classes.partNumberHaed} variant='body1'>{t("Average market price")}</Typography>
+                                <Typography variant='body2'>{selectedProduct.salesPrice}</Typography>
+                            </Box>
+                        </Box>
+                        <Divider />
+                        <Box className={classes.partNumberCard}>
+                            <Typography className={classes.partNumberHaed} variant='body1'>{t("Description")}</Typography>
+                            <Typography variant='body2'>{selectedProduct.desc}</Typography>
+                        </Box>
+                    </Box>
+                </>
             }
         </Box >
     );

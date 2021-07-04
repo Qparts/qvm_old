@@ -4,7 +4,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import {
     Box,
-    Container,
     Divider,
     Typography
 } from '@material-ui/core';
@@ -12,7 +11,6 @@ import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import AvailabilityPartsSection from './AvailabilityPartsSection';
-import PartSearchSection from './PartSearchSection';
 import ProductInfoSection from './ProductInfoSection';
 import { cleanup } from 'src/redux/slices/partSearch';
 
@@ -41,7 +39,7 @@ function PartSearchView() {
     const classes = useStyles();
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isLoading } = useSelector((state) => state.PartSearch);
+    const { isLoading, productInfoResult = [] } = useSelector((state) => state.PartSearch);
 
     useEffect(() => {
         return () => {
@@ -66,15 +64,17 @@ function PartSearchView() {
                     <LoadingScreen />
 
                 }>
-                <Box sx={{ pb: 5 }}>
+                <Box sx={{ pb: 2 }}>
                     <Typography variant="h4">{t("Search Parts")}</Typography>
                     <Divider />
                 </Box>
-                <PartSearchSection />
-                <Box sx={{ mb: 6 }} />
                 <AvailabilityPartsSection />
-                <Box sx={{ mb: 6 }} />
-                <ProductInfoSection />
+                {productInfoResult.length > 0 ?
+                    <>
+                        <Box sx={{ mb: 6 }} />
+                        <ProductInfoSection />
+                    </> : ""
+                }
             </LoadingOverlay>
 
         </Page>

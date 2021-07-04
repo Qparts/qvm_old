@@ -41,7 +41,18 @@ const useStyles = makeStyles((theme) => ({
     },
     spaceToTop: {
         marginTop: '15px'
-    }
+    },
+    inputTopBarSearch: {
+        borderRadius: '20px 0px 0px 20px',
+        '&:focus': {
+            borderRadius: '20px 0px 0px 20px',
+        }
+    },
+    inputContTopBarSearch: {
+        '& > div': {
+            borderRadius: '20px 0px 0px 20px',
+        },
+    },
 }));
 
 // ----------------------------------------------------------------------
@@ -51,7 +62,7 @@ export default function CustomInput(props) {
 
     return (
         <TextField
-            className={clsx(classes.inputCont, classes[props.spaceToTop])}
+            className={clsx(classes.inputCont, classes[props.spaceToTop], classes[props.inputContTopBarSearch])}
             defaultValue={props.value}
             type={props.type}
             label={props.label}
@@ -61,7 +72,7 @@ export default function CustomInput(props) {
             error={Boolean(props.touched && props.errors)}
             helperText={props.touched && props.errors}
             inputProps={{
-                className: clsx(classes.inputStyl, classes[props.selectBg]),
+                className: clsx(classes.inputStyl, classes[props.selectBg], classes[props.inputTopBarSearch]),
                 onChange: props.onChange,
                 name: props.name
             }} />

@@ -1,15 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
     Grid,
     Box,
     Typography,
     Avatar,
     Card,
-    CardContent
+    CardContent,
+    TablePagination
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
+import constants from 'src/utils/constants';
 import Helper from '../../../utils/helper'
 import { OrdersArrow, Search } from '../../../icons/icons';
 import TableAction from '../../../components/Ui/TableAction'
@@ -48,6 +51,15 @@ const useStyles = makeStyles((theme) => ({
         marginRight: '10px',
         borderRight: '1px solid #CED5D8',
     },
+    tablePagination: {
+        borderTop: 0,
+        '& .MuiTablePagination-toolbar': {
+            height: '59px',
+            background: theme.palette.grey[0],
+            marginTop: theme.spacing(2),
+            borderRadius: '20px',
+        }
+    },
     offerDetailsGridFlex: {
         display: 'flex',
         alignItems: 'center',
@@ -56,53 +68,113 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function SpecialOfferInfoGrid(props) {
+function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = constants.MAX,
+    onSelectedPage, size = offerProducts.length, isLazy = true, hasPagination = false }) {
+
+
     const classes = useStyles();
     const theme = useTheme();
     const { t } = useTranslation();
+    const { themeDirection } = useSelector((state) => state.settings);
+
+    const [state, setState] = useState({
+        data: isLazy == true ? offerProducts : offerProducts.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
+        page: page,
+        rowsPerPage,
+        numberOfPages: size ? Math.ceil(size / rowsPerPage) : Math.ceil(offerProducts.length / rowsPerPage),
+    });
+
+
+    useEffect(() => {
+        setState({
+            ...state,
+            page: page,
+            data: isLazy == true ? offerProducts : offerProducts.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
+
+        })
+    }, [offerProducts])
+
+
+    useEffect(() => {
+        if (!isLazy) {
+            setState({
+                ...state,
+                data: offerProducts.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
+            })
+        }
+
+    }, [rowsPerPage])
+
+    const changePagehandler = (event, newPage) => {
+        if (onSelectedPage)
+            onSelectedPage(event, newPage);
+        else setState({
+            ...state,
+            page: newPage,
+            data: offerProducts != null && offerProducts.length > 0 ?
+                offerProducts.slice(rowsPerPage * newPage, rowsPerPage * (newPage + 1)) : []
+        });
+    };
 
     return (
-        <Grid container spacing={2}>
-            {props.offerProducts.map((offerPro, index) => {
-                return (
-                    <Grid item xs={12} md={3} key={index}>
-                        <Card className={classes.offerDetailsGridCont}>
-                            <CardContent sx={{ padding: '15px' }}>
-                                <Box className={classes.offerDetailsGridChild}>
-                                    <Avatar width={20} height={20} />
-                                    <Box className={classes.offerDetailsGridInfo}>
-                                        <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.main }}> {offerPro.partNumber} </Typography>
-                                        <Box>
-                                            <Box className={clsx(classes.offerDetailsGridQuantityCont, classes.offerDetailsGridFlex)}>
-                                                <Box className={classes.offerDetailsGridBorder}>
-                                                    <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Quantity")}</Typography>
-                                                    <Typography variant="body3"> {offerPro.stock.length} </Typography>
+        <>
+            <Grid container spacing={2}>
+                {state.data.map((offerPro, index) => {
+                    return (
+                        <Grid item xs={12} md={3} key={index}>
+                            <Card className={classes.offerDetailsGridCont}>
+                                <CardContent sx={{ padding: '15px' }}>
+                                    <Box className={classes.offerDetailsGridChild}>
+                                        <Avatar width={20} height={20} />
+                                        <Box className={classes.offerDetailsGridInfo}>
+                                            <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.main }}> {offerPro.partNumber} </Typography>
+                                            <Box>
+                                                <Box className={clsx(classes.offerDetailsGridQuantityCont, classes.offerDetailsGridFlex)}>
+                                                    <Box className={classes.offerDetailsGridBorder}>
+                                                        <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Quantity")}</Typography>
+                                                        <Typography variant="body3"> {offerPro.stock.length} </Typography>
+                                                    </Box>
+                                                    <Box>
+                                                        <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Brand")}</Typography>
+                                                        <Typography variant="body3"> {offerPro.brandName} </Typography>
+                                                    </Box>
                                                 </Box>
-                                                <Box>
-                                                    <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Brand")}</Typography>
-                                                    <Typography variant="body3"> {offerPro.brandName} </Typography>
-                                                </Box>
+                                                <Typography variant="body1" sx={{ color: theme.palette.secondary.darker }}>
+                                                    {Helper.ccyFormat(offerPro.offers[0].offerPrice)} {' '}
+                                                    {t("SAR")}
+                                                </Typography>
                                             </Box>
-                                            <Typography variant="body1" sx={{ color: theme.palette.secondary.darker }}>
-                                                {Helper.ccyFormat(offerPro.offers[0].offerPrice)} {' '}
-                                                {t("SAR")}
-                                            </Typography>
                                         </Box>
                                     </Box>
-                                </Box>
-                                <TableAction
-                                    title={t("order the offer")}
-                                    textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
-                                    icon={<Search width='15' height='15' fill='#CED5D8' />}
-                                    TableActionBorder='TableActionBorder'
-                                    link='/app/dashboard'
-                                    linkSearch='/app/dashboard' />
-                            </CardContent>
-                        </Card>
-                    </Grid>
-                )
-            })}
-        </Grid>
+                                    <TableAction
+                                        title={t("order the offer")}
+                                        textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
+                                        icon={<Search width='15' height='15' fill='#CED5D8' />}
+                                        TableActionBorder='TableActionBorder'
+                                        link='/app/dashboard'
+                                        linkSearch='/app/dashboard' />
+                                </CardContent>
+                            </Card>
+                        </Grid>
+                    )
+                })}
+            </Grid>
+            {hasPagination && <TablePagination
+                rowsPerPageOptions={[]}
+                component="div"
+                count={size}
+                rowsPerPage={constants.MAX}
+                page={state.page}
+                onPageChange={changePagehandler}
+                className={classes.tablePagination}
+                labelDisplayedRows={
+                    ({ from, to, count }) => {
+                        return themeDirection == 'ltr' ? '' + from + '-' + to + t("Of") + count :
+                            '' + to + '-' + from + t("Of") + count
+                    }
+                }
+            />}
+        </>
     );
 }
 
