@@ -5,7 +5,7 @@ import React, { useState } from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import arrowIosForwardFill from '@iconify-icons/eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify-icons/eva/arrow-ios-downward-fill';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
   Collapse,
@@ -20,16 +20,28 @@ const useStyles = makeStyles((theme) => ({
   root: {},
   listItem: {
     ...theme.typography.body2,
-    height: 48,
+    width: 'auto',
+    lineHeight: '1.3',
     textTransform: 'capitalize',
-    paddingLeft: theme.spacing(5),
-    paddingRight: theme.spacing(2.5),
-    color: theme.palette.text.secondary
+    textAlign: 'center',
+    color: '#a2b4bd',
+    display: 'inline-block',
+    position: 'relative',
+    '&:hover': {
+      color: theme.palette.grey[0],
+      '& $svg path': {
+        fill: theme.palette.grey[0]
+      }
+    }
+  },
+  listIcon: {
+    display: 'block',
+    margin: 0
   },
   subIcon: {
     width: 24,
     height: 24,
-    display: 'flex',
+    display: 'block',
     alignItems: 'center',
     justifyContent: 'center',
     '&:before': {
@@ -43,29 +55,52 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   isActiveListItem: {
-    color: theme.palette.primary.main,
+    color: theme.palette.grey[0] + '!important',
     fontWeight: theme.typography.fontWeightMedium,
-    backgroundColor: alpha(
-      theme.palette.primary.main,
-      theme.palette.action.selectedOpacity
-    ),
-    '&:before': {
-      top: 0,
-      right: 0,
-      width: 3,
-      bottom: 0,
-      content: "''",
-      position: 'absolute',
-      backgroundColor: theme.palette.primary.main
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+    borderRadius: 20,
+    padding: '15px 16px 13px',
+    '& $svg path': {
+      fill: theme.palette.grey[0],
+    },
+    '& $notificationBadge': {
+      backgroundColor: theme.palette.grey[0],
+      right: '23px',
+      bottom: '32px',
     }
   },
   isActiveListItemSub: {
-    color: theme.palette.text.primary,
+    color: theme.palette.grey[0] + '!important',
     fontWeight: theme.typography.fontWeightMedium,
+    backgroundColor: theme.palette.primary.main,
+    boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
+    borderRadius: 20,
+    padding: '15px 16px 13px',
+    '& $svg path': {
+      fill: theme.palette.grey[0],
+    },
     '& $subIcon:before': {
       transform: 'scale(2)',
-      backgroundColor: theme.palette.primary.main
+      backgroundColor: theme.palette.primary.main,
+    },
+    '& $notificationBadge': {
+      backgroundColor: theme.palette.grey[0],
+      right: '23px',
+      bottom: '32px',
     }
+  },
+  notificationBadge: {
+    background: theme.palette.primary.main,
+    border: '1px solid #082C3C',
+    boxShadow: '0px 2px 4px rgb(0 0 0 / 10%)',
+    width: '8px',
+    height: '8px',
+    display: 'block',
+    position: 'absolute',
+    right: theme.direction === 'rtl' ? 0 : '5px',
+    bottom: '27px',
+    borderRadius: '50%',
   }
 }));
 
@@ -78,6 +113,7 @@ NavItem.propTypes = {
   info: PropTypes.element,
   icon: PropTypes.element,
   open: PropTypes.bool,
+  notification: PropTypes.bool,
   children: PropTypes.node,
   className: PropTypes.string
 };
@@ -88,6 +124,7 @@ function NavItem({
   href,
   info,
   icon,
+  notification,
   open = false,
   children,
   className,
@@ -118,6 +155,7 @@ function NavItem({
           {...other}
         >
           <ListItemIcon>{icon && icon}</ListItemIcon>
+          {notification ? <span className={classes.notificationBadge}></span> : ''}
           <ListItemText disableTypography primary={title} />
           {info && info}
           <Box
@@ -159,9 +197,10 @@ function NavItem({
       }}
       {...other}
     >
-      <ListItemIcon className={classes.listItemIcon}>
+      <ListItemIcon className={classes.listIcon}>
         {isSubItem ? <span className={classes.subIcon} /> : icon}
       </ListItemIcon>
+      {notification ? <span className={classes.notificationBadge}></span> : ''}
       <ListItemText disableTypography primary={title} />
 
       {info && info}

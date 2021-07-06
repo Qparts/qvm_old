@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import Logo from 'src/components/Logo';
 import React, { useState, useRef } from 'react';
+import { useSelector } from 'react-redux';
 import useOffSetTop from 'src/hooks/useOffSetTop';
 import homeFill from '@iconify-icons/eva/home-fill';
 import PopoverMenu from 'src/components/PopoverMenu';
@@ -23,24 +24,23 @@ import {
   MenuItem,
   Container,
   ListItemIcon,
-  ListItemText
+  ListItemText,
+  Fab
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
-
+import { red } from '@material-ui/core/colors';
+import { pxToRem } from 'src/utils/formatFontSize';
 // ----------------------------------------------------------------------
-
 const MENU_LINKS = [
   { title: 'home', icon: homeFill, href: '/' },
   { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.prices },
   { title: 'contactUs', icon: roundSpeed, href: PATH_HOME.dashboard },
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
-
 const APP_BAR_MOBILE = 64;
-const APP_BAR_DESKTOP = 96;
-
+const APP_BAR_DESKTOP = 70;
 const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
@@ -54,10 +54,13 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   isHome: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '&:hover': {
+      color: theme.palette.text.disabled,
+    }
   },
   isDesktopActive: {
-    color: theme.palette.primary.main
+    color: theme.palette.secondary.lighter
   },
   isMobileActive: {
     color: theme.palette.primary.main,
@@ -68,16 +71,30 @@ const useStyles = makeStyles((theme) => ({
     )
   },
   onScroll: {
-    '& $toolbar': {
-      backgroundColor: theme.palette.background.default
-    },
-    '& $isHome': {
-      color: theme.palette.text.primary
-    },
     [theme.breakpoints.up('md')]: {
       '& $toolbar': {
         height: APP_BAR_DESKTOP - 20
       }
+    }
+  },
+  navButton: {
+    fontSize: pxToRem(17),
+    boxShadow:'none',
+
+  },
+  whiteBtn:{
+    background: theme.palette.grey[0],
+    color:theme.palette.primary.main,
+    '&:hover':{
+      color: theme.palette.grey[0],
+    },
+  },
+  transparentNav:{
+    background: 'transparent',
+    '&$onScroll':{
+      '& $toolbar': {
+        backgroundColor: theme.palette.secondary.darker
+      },
     }
   }
 }));
@@ -101,12 +118,12 @@ function TopBar() {
           to={link.href}
           key={link.title}
           underline="none"
-          variant="subtitle2"
+          variant="subtitle1"
           component={RouterLink}
           activeClassName={classes.isDesktopActive}
-          // className={clsx({
-          //   [classes.isHome]: isHome
-          // })}
+          className={clsx({
+            [classes.isHome]: isHome
+          })}
           sx={{ mr: 5, color: 'text.primary' }}
         >
           {t(link.title)}
@@ -134,9 +151,6 @@ function TopBar() {
             activeClassName={classes.isMobileActive}
             sx={{ color: 'text.secondary' }}
           >
-            <ListItemIcon>
-              <Icon icon={link.icon} width={20} height={20} />
-            </ListItemIcon>
             <ListItemText>{link.title}</ListItemText>
           </MenuItem>
         ))}
@@ -146,9 +160,10 @@ function TopBar() {
 
   return (
     <AppBar
-      color="transparent"
-      className={clsx(classes.root, { [classes.onScroll]: offset })}
+      color='inherit'
+      className={clsx(classes.root, { [classes.onScroll]: offset }, {[classes.transparentNav]: isHome})}
       sx={{ boxShadow: 'none' }}
+      
     >
       <Toolbar disableGutters className={classes.toolbar}>
         <Container
@@ -172,7 +187,10 @@ function TopBar() {
             variant="contained"
             component={Link}
             target="_blank"
+            size="large"
             href={PATH_PAGE.auth.register}
+            className={classes.navButton}
+            className={clsx(classes.navButton , {[classes.whiteBtn]: isHome})}
           >
             {t("registeration")}
           </Button>

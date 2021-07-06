@@ -1,18 +1,275 @@
 {
   "home": "Home",
-  "catalog": "Parts Catalog",
+  "catalog": "Catalog",
   "prices": "Prices",
   "contactUs": "Contact Us",
   "login": "Login",
   "registeration": "Sign Up",
-  "partSearch": "Search Parts",
-  "quotationsReport": "Quotations Report",
-  "specialOffer": "Special Offers",
-  "replacements": "Replacements",
-  "specialOfferUpload": "Special Offer Upload",
+  "orders": "Orders",
+  "reports": "Reports",
+  "offers": "Offers",
+  "settings": "Settings",
+  "advertise now": "Advertise Now",
   "stockUpload": "Stock Upload",
 
   "Subscriber already registered": "Subscriber already registered",
+  "qvm orders": "Qvm's orders",
+  "daily searches": "Daily searches",
+  "qvm parts": "Qvm's parts",
+  "latest offers": "Latest offers",
+  "see all offers": "See all offers",
+  "end of offer": "End of offer",
+  "parts number": "Parts number",
+  "discount": "Discount",
+  "The offer time has passed": "The offer time has passed",
+  "The most searched parts on QVM": "The most searched parts on QVM",
+  "Find the parts you need": "Find the parts you need",
+  "Part No": "Part No",
+  "Lowest price": "Lowest price",
+  "quantity": "Quantity",
+  "Most searched catalog": "Most searched catalog",
+  "Structure No": "Structure No",
+  "Search the catalog": "Search the catalog",
+  "order": "Order",
+  "branch": "Branch",
+  "user": "User",
+  "basic": "Basic",
+  "upgrade to premium": "Upgrade to premium",
+  "use basic": "Use basic",
+  "attempts out of": "Attempts out of",
+  "parts number in your stock": "Parts number in your stock",
+  "upload stock": "Upload stock",
+  "search attempts": "Search attempts",
+  "common": {
+    "enterDetails": "Enter your details below",
+    "email": "Email Address",
+    "welcomeBack": "Hi, Welcome Back",
+    "back": "Back",
+    "search": "Search",
+    "sar": "SAR"
+  },
+  "signin": {
+    "title": "Sign into QVM Vendor Market Place",
+    "password": "Password",
+    "login": "Login",
+    "rememberMe": "Remember me",
+    "forgetPassword": "Forgot Password?",
+    "noAccount": "Don't have account?",
+    "registerNow": "Register now",
+
+    "error": {
+      "require": {
+        "email": "Email Is Required",
+        "password": "Password Is Required"
+      },
+      "invalid": {
+        "email": "Email Is Invalid",
+        "password": "Password Is Invalid"
+      }
+    }
+  },
+  "signup": {
+    "title": "Signup Request in",
+    "haveAccount": "Already have an account?",
+    "signup": "Signup",
+    "companyName": "Company Name",
+    "email": "Email",
+    "name": "Name",
+    "phone": "Mobile",
+    "password": "Password",
+    "confirmMessagePart1": "By registering you agree on QVM  and QVM ",
+    "termsConfirmation": "Terms of Use",
+    "policyConfirmation": "Privacy Policy",
+    "confirmMessagePart2": " and QVM ",
+    "defination": "You can access huge numbers of auto spare parts and deal with great number of vendors",
+    "service1": "Parts Catalog",
+    "service2": "Spare Parts Availability & Price Information",
+    "service3": "Multiple Brand Alternatives",
+    "service4": "Special Offers",
+    "service5": "Issuing and Receiving Purchase Oders (*soon)",
+
+    "error": {
+      "require": {
+        "companyName": "Company Name Is Required",
+        "email": "Email Is Required",
+        "name": "Name Is Required",
+        "phone": "Mobile Is Required",
+        "password": "Password Is Required"
+      },
+      "invalid": {
+        "email": "Email Is Invalid",
+        "phone": "Mobile Is Invalid",
+        "password": "Password Is Invalid"
+      }
+    }
+  },
+  "verification": {
+    "checkEmail": "Please check your email!",
+    "verificationMessage": "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.",
+    "code": "Verification Code",
+    "verify": "Verify",
+    "error": {
+      "require": {
+        "code": "Verification Code Is Required"
+      },
+      "invalid": {
+        "code": "Verification Code Is Invalid"
+      }
+    }
+  },
+  "confirmation": {
+    "title": "THANK YOU FOR REGISTRATION IN QVM",
+    "message": "Your request have been sent, Your application will be reviewed by our team we will contact with you soon."
+  },
+
+  "forgotPassword": {
+    "title": "Forgot your password?",
+    "message": "Please enter the email address associated with your account and We will email you a link to reset your password.",
+    "email": "Email",
+    "password": "Password",
+    "resetPassword": "Reset Password",
+    "successRequest": "Request sent successfully",
+    "confirmMessage": "We have sent a confirmation email to",
+    "newPassword": "New Password",
+    "invalidRequest": "The request is not available",
+    "error": {
+      "require": {
+        "email": "Email Is Required",
+        "password": "Password Is Required",
+        "newPassword": "New Password Is Required"
+      },
+      "invalid": {
+        "email": "Email Is Invalid",
+        "password": "Password Is Invalid"
+      }
+    }
+  },
+  "catalogTab": {
+    "title": "Parts Catalog",
+    "catalog": "Catalog",
+    "carDetails": "Car Details",
+    "catalogDetails": "Catalog Details",
+    "catalogSearch": "Catalog Search",
+    "browCatalog": "Browse Catalog",
+    "backToCatalog": "Back To Part Catalog",
+    "vinTitle": "Find Catalog by VIN number",
+    "listTitle": "Find Catalog from List",
+    "brand": "Brand",
+    "model": "Car Model",
+    "year": "Year",
+    "sales_region": "Region",
+    "car_name": "Name",
+    "steering": "Steering",
+    "body": "Body type",
+    "trans_type": "Transmission type",
+    "engine": "Engine",
+    "series": "Series",
+    "grade": "Grade",
+    "wheel_drive": "Wheel drive",
+    "spec_catalog": "Catalog",
+    "spec_vin_part": "Model code/Vin",
+    "spec_model_date": "Production start (not for USA)",
+    "spec_modification": "Restriction",
+    "body_type": "Body Type",
+    "spec_series": "Series",
+    "body_code": "Body",
+    "modification": "Modification",
+    "transmission": "Transmission",
+    "grade_code": "Grade Code",
+    "engine_code": "Engine",
+    "spec_model": "Model name",
+    "modificationId": "Modification",
+    "partDetails": "Part Details",
+    "referenceNumber": "Reference Number",
+    "partNumber": "Part Number",
+    "partName": "Part Name",
+    "details": "Details",
+    "searchButton": "search by catalog",
+    "showResults": "show results",
+    "description": "You can find the parts you are searching for from the car catalog, start now"
+  },
+  "searchTab": {
+    "title": "Search Parts",
+    "search": "Search",
+    "result": "search result for",
+    "part": "part",
+    "partNo": "Part Number",
+    "purchase": "Purchase",
+    "category": "Category",
+    "balance": "Balance",
+    "code": "Code",
+    "account": "Account",
+    "availability": "Availability",
+    "averagePrice": "Average market price",
+    "productInfo": "Product information",
+    "city": "City",
+    "branch": "Branch",
+    "contacts": "Contacts",
+    "isAvailable": "Available",
+    "name": "Name",
+    "phone": "Mobile",
+    "email": "Email",
+    "brand": "Brand",
+    "companyName": "Company Name",
+    "price": "Price",
+    "availabilityTitle": "Availability details",
+    "descripition": "Description",
+    "NoContact": "no contacts found",
+    "offer": "offer",
+    "startSearchNow": "Start Search Now",
+    "searchEmptyMessage": "In the largest assembly of spare parts dealers in the Middle East, get spare parts easier ",
+    "details": "Details",
+    "productDetails": "Product Details",
+    "noOptions": "No Options",
+    "selectLocation": "Filter results by location",
+    "searchByPartNO": "Search by part number"
+  },
+  "QuotationsReportTab": {
+    "title": "Quotations Report"
+  },
+  "specialOfferTab": {
+    "title": "Special Offers",
+    "offerDueDate": "Offer End Date",
+    "partsNo": "Parts Number",
+    "startIn": "Start in",
+    "expiresIn": "Expires in"
+  },
+  "replacementsTab": {
+    "replacements": "Replacements",
+    "title": "Replacement Parts Search",
+    "brand": "Brand",
+    "partNumber": "Part Number",
+    "description": "Description",
+    "applicableParts": "Applicable OEM Parts"
+  },
+  "specialOfferUploadTab": {
+    "title": "Special Offer Upload"
+  },
+  "stockUploadTab": {
+    "title": "Stock Upload"
+  },
+  "offerDetails": {
+    "offerNo": "Offer Number",
+    "partsNo": "Parts Number",
+    "category": "Category",
+    "quantity": "Quantity",
+    "price": "Price",
+    "search": "Search",
+    "noData": "No Data Found!!",
+    "partNo": "Part Number",
+    "brand": "Brand"
+  },
+  "setting": {
+    "name" : "Name" ,
+    "country" : "Country",
+    "region" : "Region",
+    "city" : "City",
+    "addUser": "Add User",
+    "addBranch": "Add Branch",
+    "insertUserError": "Email or mobile already exist",
+    "emailMode": "Registration verification code is sent to the new user by email, enter the code they received below",
+    "mobilMode": "Registration verification code is sent to the new user mobile number, enter the code that received below"
+  },
   "Enter your details below": "Enter your details below",
   "Email Address": "Email Address",
   "Hi, Welcome Back": "Hi, Welcome Back",
@@ -220,22 +477,7 @@
   "Use the following format when uploading the excel file": "Use the following format when uploading the excel file",
   "Stock File": "Stock File *",
   "Upload": "Upload",
-  "Branch is required": "Branch is required",
-  "The file is required": "The file is required",
-  "Offer Name": "Offer Name",
-  "Offer name is required": "Offer name is required",
-  "Offer Start Date": "Offer Start Date",
-  "Notes": "Notes",
-  "Stock file is required": "Stock File is required",
-  "Offer start date is required": "Offer start date is required",
-  "Offer end date is required": "Offer end date is required",
-  "Create Report": "Create Report",
-  "Received From": "Received From",
-  "Date": "Date",
-  "Number of items": "Number of items",
-  "Add Offer": "Add Offer",
-  "There is no parts": "There is no parts",
-  "Of": " Of ",
+
   "Stock file has been uploaded": "Stock file has been uploaded",
   "Offer file has been uploaded": "Offer file has been uploaded",
   "Who subscribed in this package" : "Who subscribed in this package",
@@ -243,10 +485,29 @@
   "Forever" : "Forever",
   "Free" :"Free",
   "Yearly" : "Yearly",
-  "Contact Our Team" :"Contact Our Team",
   "Subscribers to the package" :"Subscribers to the package ",
   "Try our free package now, and upgrade to the premium plan to grow your business" :"Try our free package now, and upgrade to the premium plan to grow your business.",
-  "Monthly" : "Monthly"
+  "Monthly" : "Monthly",
   
+  "Branch is required" : "Branch is required",
+  "The file is required" : "The file is required",
+  "Offer Name" : "Offer Name",
+  "Offer Start Date" : "Offer Start Date",
+  "Notes" : "Notes",
+  "Stock file is required" : "Stock File is required",
+  "Offer start date is required" : "Offer start date is required",
+  "Offer end date is required" : "Offer end date is required",
+  "Create Report" : "Create Report",
+  "Received From":"Received From",
+  "Date" :"Date",
+  "Number of items" : "Number of items",
+  "Add Offer" : "Add Offer",
+  "There is no parts" : "There is no parts",
+  "Of" : " Of ",
+  "Contact Our Team":  "Contact Our Team",
+  "Send": "Send",
+  "access all brands of cars and alternatives, both commercial and original" : "access all brands of cars and alternatives, both commercial and original",
+  "Show all brands": "Show all brands",
+  "Hid all brands": "Hid all brands"
 
 }

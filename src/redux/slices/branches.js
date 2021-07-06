@@ -6,9 +6,11 @@ import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
+const loginObject = JSON.parse(localStorage.getItem("loginObject"))
+
 const initialState = {
     isLoading: false,
-    branches: JSON.parse(localStorage.getItem("loginObject"))?.company.branches,
+    branches: loginObject ? loginObject.company.branches : "",
     verificationMode: null,
     verifiedEmail: null,
     error: null,

@@ -13,8 +13,8 @@ function Logo({ className, ...other }) {
     <Box
       component="img"
       alt="logo"
-      src="/static/icons/QVM-logo.png"
-      height={40}
+      src="/static/icons/QVM-whiteV.svg"
+      width={100}
       className={className}
       {...other}
     />

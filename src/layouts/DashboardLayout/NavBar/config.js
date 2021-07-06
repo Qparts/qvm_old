@@ -1,39 +1,14 @@
 import React from 'react';
-import { MLabel, MIcon } from 'src/theme';
-import { PATH_APP, PATH_PAGE } from 'src/routes/paths';
+import { Add, Catalog, LogoutIcon, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
-
-const path = (name) => `/static/icons/navbar/${name}.svg`;
-
-
-const ICONS = {
-  authenticator: <MIcon src={path('ic_authenticator')} />,
-  blog: <MIcon src={path('ic_blog')} />,
-  calendar: <MIcon src={path('ic_calendar')} />,
-  cart: <MIcon src={path('ic_cart')} />,
-  charts: <MIcon src={path('ic_charts')} />,
-  chat: <MIcon src={path('ic_chat')} />,
-  components: <MIcon src={path('ic_components')} />,
-  dashboard: <MIcon src={path('ic_dashboard')} />,
-  editor: <MIcon src={path('ic_editor')} />,
-  elements: <MIcon src={path('ic_elements')} />,
-  error: <MIcon src={path('ic_error')} />,
-  mail: <MIcon src={path('ic_mail')} />,
-  map: <MIcon src={path('ic_map')} />,
-  page: <MIcon src={path('ic_page')} />,
-  user: <MIcon src={path('ic_user')} />,
-  upload: <MIcon src={path('ic_upload')} />,
-  copy: <MIcon src={path('ic_copy')} />,
-  carousel: <MIcon src={path('ic_carousel')} />,
-  language: <MIcon src={path('ic_language')} />
-};
 
 const navConfig = [
   {
     items: [
       {
-        icon: ICONS.dashboard,
+        icon: <Dashboard width='32' height='32' fill='#a2b4bd' />,
         title: 'home',
         href: PATH_APP.general.root
       }
@@ -42,9 +17,10 @@ const navConfig = [
   {
     items: [
       {
-        title: 'partSearch',
-        icon: ICONS.user,
+        title: 'orders',
+        icon: <Orders width='32' height='32' fill='#a2b4bd' fillArr='#F20505' />,
         href: PATH_APP.general.partSearch,
+        notification: true
       },
 
     ]
@@ -52,9 +28,10 @@ const navConfig = [
   {
     items: [
       {
-        title: 'replacements',
-        icon: ICONS.user,
+        title: 'reports',
+        icon: <Chart width='32' height='32' fill='#a2b4bd' />,
         href: PATH_APP.general.replacements,
+        notification: true
       },
 
     ]
@@ -62,29 +39,10 @@ const navConfig = [
   {
     items: [
       {
-        title: 'stockUpload',
-        icon: ICONS.user,
+        title: 'offers',
+        icon: <Offer width='32' height='32' fill='#a2b4bd' />,
         href: PATH_APP.general.stockUpload,
-      },
-
-    ]
-  },
-  {
-    items: [
-      {
-        title: 'specialOfferUpload',
-        icon: ICONS.user,
-        href: PATH_APP.general.specialOfferUpload,
-      },
-
-    ]
-  },
-  {
-    items: [
-      {
-        title: 'specialOffer',
-        icon: ICONS.user,
-        href: PATH_APP.general.specialOffer,
+        notification: true
       },
 
     ]
@@ -93,7 +51,7 @@ const navConfig = [
     items: [
       {
         title: 'catalog',
-        icon: ICONS.user,
+        icon: <Catalog width='32' height='32' fill='#a2b4bd' />,
         href: PATH_APP.general.catalog,
       },
 
@@ -102,8 +60,27 @@ const navConfig = [
   {
     items: [
       {
-        title: 'quotationsReport',
-        icon: ICONS.user,
+        title: 'settings',
+        icon: <SettingsIcon width='32' height='32' fill='#a2b4bd' />,
+        href: PATH_APP.general.specialOfferUpload,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'advertise',
+        icon: <Add width='32' height='32' fill='#a2b4bd' />,
+        href: PATH_APP.general.specialOffer,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        icon: <LogoutIcon width='32' height='32' fill='#a2b4bd' />,
         href: PATH_APP.general.quotationsReport,
       },
 

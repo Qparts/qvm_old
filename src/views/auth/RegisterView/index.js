@@ -42,17 +42,22 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
-      padding: theme.spacing(7, 5, 0, 7)
+      padding: theme.spacing(4, 5, 0, 7)
     }
   },
   content: {
-    maxWidth: 480,
+    maxWidth: 600,
     margin: 'auto',
     display: 'flex',
     minHeight: '100vh',
     flexDirection: 'column',
     justifyContent: 'center',
     padding: theme.spacing(12, 0)
+  },
+  heading:{
+    color: theme.palette.secondary.main,
+    lineHeight:1,
+    marginRight: '0.5rem',
   }
 }));
 
@@ -185,16 +190,16 @@ function RegisterView() {
 
       <Container>
         <div className={classes.content}>
-          <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h4" gutterBottom>
+          <Box display="flex" alignItems="flex-end">
+            <Box >
+              <Typography variant="h3"  className={classes.heading}>
                 {t("Signup Request in")}
               </Typography>
             </Box>
             <Box
               component="img"
-              src={`/static/icons/QVM-logo.png`}
-              sx={{ width: 50, height: 50 }}
+              src={`/static/images/QVM.svg`}
+              sx={{ width: 100}}
             />
           </Box>
 
@@ -205,23 +210,10 @@ function RegisterView() {
             t(registerError.data) : registerError.status} </Alert>}
 
           <Box sx={{ mb: 3 }} />
+          
           <RegisterForm formik={formik} />
 
-          <Typography
-            variant="body2"
-            align="center"
-            sx={{ color: 'text.secondary', mt: 3 }}
-          >
-            {t("By registering you agree on QVM  and QVM")}&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("Terms of Use")}
-            </Link>
-            &nbsp;{t("and QVM")}&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("Privacy Policy")}
-            </Link>
-            .
-          </Typography>
+          
 
           <Hidden smUp>
             <Box sx={{ mt: 3, textAlign: 'center' }}>

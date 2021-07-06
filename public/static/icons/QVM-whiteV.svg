@@ -1,0 +1,24 @@
+<svg id="QVM-whiteV" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="213.289" height="103.606" viewBox="0 0 213.289 103.606">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#545454"/>
+      <stop offset="0.528" stop-color="#fff"/>
+      <stop offset="1" stop-color="#545454"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#686868"/>
+      <stop offset="0.46" stop-color="#fff"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#3b0000"/>
+      <stop offset="0.528" stop-color="#ee4036"/>
+      <stop offset="1" stop-color="#f20505"/>
+    </linearGradient>
+  </defs>
+  <path id="Path_37" data-name="Path 37" d="M361.011,146.4H338.016l-2.973,4.372L323.59,167.515,311,186.007h23.038Z" transform="translate(-175.262 -82.4)" fill="url(#linear-gradient)"/>
+  <path id="Path_45" data-name="Path 45" d="M247.6,146.4h22.995l2.929,4.372,11.5,16.743,12.59,18.492H274.573Z" transform="translate(-139.578 -82.4)" fill="url(#linear-gradient-2)"/>
+  <path id="Path_46" data-name="Path 46" d="M374,146.4h22.951l2.973,4.372,11.5,16.743,12.59,18.492H400.929Z" transform="translate(-210.722 -82.4)" fill="#fff"/>
+  <path id="Path_47" data-name="Path 47" d="M92,85.115a51.868,51.868,0,1,0-39.694,18.4A52.422,52.422,0,0,0,71.626,99.8L60.915,83.322A32.77,32.77,0,1,1,85.09,51.716a33.119,33.119,0,0,1-4.546,16.656L77.571,64H54.576L66.729,81.923l10.8,15.956,3.978,5.727h23.038Z" transform="translate(-0.5 0)" fill="#fff"/>
+  <path id="Path_48" data-name="Path 48" d="M235.811,146.4H212.816l-2.929,4.372-11.5,16.743L185.8,186.007h23.038Z" transform="translate(-104.795 -82.4)" fill="url(#linear-gradient-3)"/>
+  <path id="Path_49" data-name="Path 49" d="M124.2,146.4h22.951l2.973,4.372,11.5,16.743,12.59,18.492H151.129Z" transform="translate(-70.124 -82.4)" fill="#f20505"/>
+</svg>

@@ -6,20 +6,20 @@ function createGradient(color1, color2) {
   return `linear-gradient(to bottom, ${color1}, ${color2})`;
 }
 
-// SETUP COLORS
+// SETUP COLORS QVM THEME
 const PRIMARY = {
-  lighter: '#C8FACD',
-  light: '#5BE584',
-  main: '#00AB55',
-  dark: '#007B55',
-  darker: '#005249'
+  lighter: '#FACEC8',
+  light: '#E55B5B',
+  main: '#F20505',
+  dark: '#DB0000',
+  darker: '#CC0909'
 };
 const SECONDARY = {
-  lighter: '#D6E4FF',
-  light: '#84A9FF',
-  main: '#3366FF',
-  dark: '#1939B7',
-  darker: '#091A7A'
+  lighter: '#CED5D8',
+  light: '#8396A0',
+  main: '#14455B',
+  dark: '#0D3D52',
+  darker: '#082C3C'
 };
 const INFO = {
   lighter: '#D0F2FF',
@@ -91,12 +91,12 @@ const COMMON = {
   gradients: GRADIENTS,
   divider: GREY[500_24],
   action: {
-    hover: GREY[500_8],
+    hover: GREY[800_8],
     selected: GREY[500_16],
     disabled: GREY[500_80],
     disabledBackground: GREY[500_24],
     focus: GREY[500_24],
-    hoverOpacity: 0.08,
+    hoverOpacity: 0.09,
     disabledOpacity: 0.48
   }
 };

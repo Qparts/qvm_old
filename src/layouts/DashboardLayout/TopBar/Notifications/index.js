@@ -1,12 +1,9 @@
-import { Icon } from '@iconify/react';
 import Scrollbars from 'src/components/Scrollbars';
 import NotificationItem from './NotificationItem';
 import PopoverMenu from 'src/components/PopoverMenu';
-import bellFill from '@iconify-icons/eva/bell-fill';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useRef, useState, useEffect } from 'react';
-import doneAllFill from '@iconify-icons/eva/done-all-fill';
 import {
   markAllAsRead,
   getNotifications
@@ -23,6 +20,7 @@ import {
   ListSubheader
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import { Note } from '../../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +61,7 @@ function Notifications() {
         color={isOpen ? 'primary' : 'default'}
       >
         <Badge badgeContent={totalUnRead} color="error">
-          <Icon icon={bellFill} width={20} height={20} />
+          <Note width='24' height='24' fill='#7E8D99' />
         </Badge>
       </MIconButton>
 
@@ -84,7 +82,6 @@ function Notifications() {
           {totalUnRead > 0 && (
             <Tooltip title=" Mark all as read">
               <MIconButton color="primary" onClick={handleMarkAllAsRead}>
-                <Icon icon={doneAllFill} width={20} height={20} />
               </MIconButton>
             </Tooltip>
           )}

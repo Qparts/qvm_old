@@ -19,8 +19,7 @@ function responsiveFontSizes({ sm, md, lg }) {
   };
 }
 
-const FONT_PRIMARY = 'Be Vietnam, sans-serif'; // Google Font
-// const FONT_SECONDARY = 'CircularStd, sans-serif'; // Local Font
+const FONT_PRIMARY = 'Tajawal, sans-serif'; // Google Font
 
 const typography = {
   fontFamily: FONT_PRIMARY,
@@ -64,7 +63,7 @@ const typography = {
     ...responsiveFontSizes({ sm: 18, md: 18, lg: 18 })
   },
   subtitle1: {
-    fontSize: pxToRem(16),
+    fontSize: pxToRem(17),
     lineHeight: 1.5,
     fontWeight: 600
   },

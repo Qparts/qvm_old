@@ -29,7 +29,6 @@
     "axios": "^0.21.1",
     "axios-mock-adapter": "^1.19.0",
     "babel-polyfill": "^6.26.0",
-    "bootstrap": "^4.6.0",
     "change-case": "^4.1.2",
     "clsx": "^1.1.1",
     "d3-array": "^2.8.0",
@@ -109,6 +108,7 @@
     "simplebar-react": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "stylis-plugin-rtl": "^2.0.1",
+    "swiper": "^6.7.0",
     "yup": "^0.28.5"
   },
   "devDependencies": {
@@ -132,7 +132,9 @@
     "build:testing": "env-cmd -f .env.testing react-scripts build",
     "build:prod": "env-cmd -f .env.production react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint --ext js,jsx src/",
+    "lint:fix": "eslint --fix --ext js,jsx src/"
   },
   "eslintConfig": {
     "extends": [
@@ -144,9 +146,11 @@
     "production": [
       ">0.2%",
       "not dead",
+      "ie 11",
       "not op_mini all"
     ],
     "development": [
+      "ie 11",
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"

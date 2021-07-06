@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
     overflow: 'auto',
     minHeight: '100%',
     paddingTop: APP_BAR_MOBILE + 40,
-    paddingBottom: theme.spacing(10),
+    paddingBottom: theme.spacing(4),
     [theme.breakpoints.up('lg')]: {
       paddingTop: APP_BAR_DESKTOP + 40,
-      paddingLeft: theme.spacing(2),
+      paddingLeft: 0,
       paddingRight: theme.spacing(2)
     }
   }
