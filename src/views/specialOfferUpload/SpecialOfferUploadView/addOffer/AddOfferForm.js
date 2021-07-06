@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, FormikProvider } from 'formik';
 import { makeStyles } from '@material-ui/core/styles';
 import {
@@ -51,6 +51,7 @@ function AddOfferForm({ formik }) {
     const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
     const { t } = useTranslation();
     const classes = useStyles();
+    const [fileError, setFileError] = useState(null);
 
     return (
         <FormikProvider value={formik}>
@@ -66,11 +67,21 @@ function AddOfferForm({ formik }) {
 
                 <StockFileBtn
                     onChange={(event) => {
+                        if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx') {
+                            setFileError(t("Stock file must be Excel File"))
+                            setFieldValue("offerFile", "");
+
+                            return;
+                        }
+                        setFileError(null)
                         setFieldValue("offerFile", event.currentTarget.files[0]);
+
                     }}
                     file='offerFile'
+                    value={values.offerFile}
                     touched={touched.offerFile}
-                    errors={errors.offerFile} />
+                    errors={errors.offerFile}
+                    fileError={fileError} />
 
                 <Grid container spacing={1}>
                     <Grid item xs={12} md={6}>

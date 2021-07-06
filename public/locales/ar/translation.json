@@ -566,7 +566,8 @@
   "Of": " من ",
   "Monthly" : "شهريا",
   "Production date" : "تاريخ الإنتاج",
-  "QTY": "الكمية"
+  "QTY": "الكمية",
+  "Stock file must be Excel File" : "يجب أن يكون ملف المخزون ملف Excel"
 
 
 
