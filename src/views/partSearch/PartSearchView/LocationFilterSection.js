@@ -68,6 +68,7 @@ function LocationFilterSection() {
                 onClose={() => {
                     setOpen(false);
                 }}
+                inputValue={locationQuery}
                 onChange={(event, values) => {
                     if (locationOptions.length > 0 && values != null) {
                         dispatch(AddLocationfilter({ values: values }));

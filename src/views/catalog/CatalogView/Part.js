@@ -52,13 +52,13 @@ function Part() {
     const { t } = useTranslation();
     const [partAreaDetails, setPartAreaDetails] = useState(null);
 
+
     const mapperAreaClickHandler = async (item) => {
         let parts = part.partGroups[0].parts;
         let selectedArea = parts.find((e) => item.name == e.positionNumber);
         setPartAreaDetails(selectedArea);
     };
 
-    console.log(partAreaDetails)
 
     return (
         <>
@@ -92,10 +92,23 @@ function Part() {
                             <Typography variant='body2'>{partAreaDetails.name}</Typography>
                         </Box>
                         <Divider />
-                        <Box className={classes.partNumberCard}>
-                            <Typography className={classes.partNumberHaed} variant='body1'>{t("Description")}</Typography>
-                            <Typography variant='body2'>{partAreaDetails.description}</Typography>
-                        </Box>
+
+                        {
+                            partAreaDetails.description.split("\n").map((item, index) => {
+                                if (item)
+                                    return (
+                                        <>
+                                            <Box className={classes.partNumberCard}>
+                                                <Typography className={classes.partNumberHaed} variant='body1'>{t(item.split(":")[0])}</Typography>
+                                                <Typography variant='body2'>{item.split(":")[1]}</Typography>
+                                            </Box>
+                                            <Divider />
+                                        </>
+                                    )
+
+                            })
+                        }
+
                     </Box>
                 )}
             </CustomDialog>

@@ -564,7 +564,10 @@
   "Add Offer": "أضف العرض",
   "There is no parts": "لا توجد قطع ",
   "Of": " من ",
-  "Monthly" : "شهريا"
+  "Monthly" : "شهريا",
+  "Production date" : "تاريخ الإنتاج",
+  "QTY": "الكمية"
+
 
 
 }
