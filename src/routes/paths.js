@@ -25,7 +25,11 @@ export const PATH_PAGE = {
   common: {
     prices: path('' ,  '/prices'),
     privacy: path('' ,  '/privacy-policy'),
-    terms: path('' ,  '/term-of-use')
+    terms: path('' ,  '/term-of-use'),
+    home: path('' ,  '/'),
+    contactUs: path('' ,  '/contact-us'),
+    price: path('' ,  '/price'),
+    termsView: path('' ,  '/terms-view')
   }
 };
 
@@ -38,9 +42,9 @@ export const PATH_APP = {
   general: {
     root: path(ROOTS.app, '/dashboard'),
     dashboard: path(ROOTS.app, '/dashboard'),
+    orders: path(ROOTS.app, '/orders'),
     partSearch: path(ROOTS.app, '/part-search'),
     replacements: path(ROOTS.app, '/replacements'),
-    stockUpload: path(ROOTS.app, '/stock-upload'),
     specialOfferUpload: path(ROOTS.app, '/special-offer-upload'),
     catalog: path(ROOTS.app, '/catalog'),
     specialOffer: path(ROOTS.app, '/special-offer'),

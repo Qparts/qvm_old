@@ -1,44 +1,58 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
-import Box from '@material-ui/core/Box';
-import searchFill from '@iconify-icons/eva/search-fill';
-import { Icon } from '@iconify/react';
+import { useHistory } from 'react-router-dom';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
 import {
-    Card,
     Grid,
-    CardHeader,
+    Card,
     CardContent,
-    Typography,
-    OutlinedInput,
-    InputAdornment
+    Box,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
-import { getSpecialOfferDetails, getSpecialOffersLive, setFilter } from 'src/redux/slices/specialOffer';
-import { useSelector } from 'react-redux';
-import helper from 'src/utils/helper';
+import 'react-slideshow-image/dist/styles.css';
+import { getSpecialOfferDetails, setFilter } from 'src/redux/slices/specialOffer';
 import constants from 'src/utils/constants';
 import Datatable from 'src/components/table/DataTable';
-
+import { PATH_APP } from 'src/routes/paths';
+import SpecialOfferInfoGrid from './SpecialOfferInfoGrid';
+import SpecialOfferInfoActions from './SpecialOfferInfoActions';
+import SpecialOfferInfoHead from './SpecialOfferInfoHead';
+import Advertisement from "./../../../components/Ui/Advertise";
+import CardFoot from "../../../components/Ui/CardFoot";
+import BackBtn from "../../../components/Ui/BackBtn";
+import { OrdersArrow, Search } from '../../../icons/icons';
+import TableAction from '../../../components/Ui/TableAction';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
     root: {},
-    search: {
-        width: 240,
-        margin: 10,
-        transition: theme.transitions.create(['box-shadow', 'width'], {
-            easing: theme.transitions.easing.easeInOut,
-            duration: theme.transitions.duration.shorter
-        }),
-        '&.Mui-focused': { width: 320, boxShadow: theme.shadows[25].z8 },
-        '& fieldset': {
-            borderWidth: `1px !important`,
-            borderColor: `${theme.palette.grey[500_32]} !important`
-        }
+    backBox: {
+        marginBottom: theme.spacing(2),
+        textAlign: 'right'
     },
+    // search: {
+    //     backgroundColor: theme.palette.grey[0],
+    //     borderRadius: '10px',
+    //     width: "70%",
+    //     transition: theme.transitions.create(['width'], {
+    //         easing: theme.transitions.easing.easeInOut,
+    //         duration: theme.transitions.duration.shorter
+    //     }),
+    //     '&.Mui-focused': { width: "90%" },
+    //     '& input': {
+    //         padding: `11.5px 14px 11.5px 0`,
+    //     },
+    //     '& fieldset': {
+    //         borderWidth: `1px !important`,
+    //         borderColor: `#EEF1F5 !important`
+    //     }
+    // },
+    offerDetailsCard: {
+        background: '#F6F8FC',
+        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
+        borderRadius: '20px',
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -46,27 +60,23 @@ const useStyles = makeStyles((theme) => ({
 
 function SpecialOfferDetails({ specialOfferId }) {
     const classes = useStyles();
+    const theme = useTheme();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { offerProducts = [], searchSize, error, selectedOffer, filter } = useSelector((state) => state.specialOffer);
-    const { themeDirection } = useSelector((state) => state.settings);
+    const { offerProducts = [], searchSize, error, filter } = useSelector((state) => state.specialOffer);
     const [page, setPage] = useState(0);
-    const [searchTerm, setSearchTerm] = useState('')
-
-
-
-
+    const [searchTerm, setSearchTerm] = useState('');
+    const [listView, setListView] = useState(true);
+    let history = useHistory();
 
     useEffect(() => {
         dispatch(getSpecialOfferDetails(specialOfferId, 0, constants.MAX, ""));
     }, []);
 
-
     const changePagehandler = (event, newPage) => {
         setPage(newPage);
         dispatch(getSpecialOfferDetails(specialOfferId, newPage * constants.MAX, constants.MAX, ""));
     };
-
 
     useEffect(() => {
         const delayforSearch = setTimeout(() => {
@@ -77,77 +87,114 @@ function SpecialOfferDetails({ specialOfferId }) {
         return () => clearTimeout(delayforSearch)
     }, [searchTerm])
 
+    const handleBackToOffersMenu = () => {
+        history.push(PATH_APP.general.specialOffer);
+    };
 
+    const handleListView = () => {
+        setListView(true);
+    }
+
+    const handleGridView = () => {
+        setListView(false);
+    }
+
+    const showDetailsElement = (item) => {
+        return (
+            <TableAction
+                title={t("order the offer")}
+                textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
+                icon={<Search width='15' height='15' fill='#CED5D8' />}
+                link='/app/dashboard'
+                linkSearch='/app/dashboard'
+                mrItem="mrItem" />
+        )
+    }
 
     return (
-
-        <Box sx={{ width: '100%' }}>
-            <Card  >
-                <CardContent className={classes.cardContent}>
-
-                    <OutlinedInput
-                        value={filter}
-                        onChange={(e) => {
+        <>
+            <Box className={classes.backBox}>
+                <BackBtn
+                    onClick={handleBackToOffersMenu}
+                    variant='body3'
+                    name={t("Back to offers")}
+                />
+            </Box>
+            <Card className={classes.offerDetailsCard}>
+                <SpecialOfferInfoHead offerId={specialOfferId} />
+                <CardContent sx={{ padding: '10px 20px' }}>
+                    <SpecialOfferInfoActions
+                        search={(e) => {
                             dispatch(setFilter({ filter: e.target.value }));
                             setSearchTerm(e.target.value);
                         }}
-                        placeholder={t("Search by part number")}
-                        startAdornment={
-                            <InputAdornment position="start">
-                                <Box
-                                    component={Icon}
-                                    icon={searchFill}
-                                    sx={{ color: 'text.disabled' }}
+                        filter={filter}
+                        listView={listView}
+                        handleListView={handleListView}
+                        handleGridView={handleGridView} />
+                    {listView ?
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={9}>
+                                <Datatable
+                                    header={[
+                                        {
+                                            name: t("Part Number"),
+                                            attr: 'partNumber',
+                                        },
+                                        {
+                                            name: t("Brand"),
+                                            attr: 'brandName',
+                                        },
+                                        {
+                                            name: t("Quantity"),
+                                            attr: 'stock.length',
+                                        },
+                                        {
+                                            name: t("Price"),
+                                            attr: 'offers[0].offerPrice',
+                                            type: 'number',
+                                            label: t("SAR")
+                                        }
+                                    ]}
+                                    actions={[
+                                        {
+                                            name: '',
+                                            element: showDetailsElement
+                                        }
+                                    ]}
+                                    datatable={offerProducts}
+                                    error={error}
+                                    onSelectedPage={changePagehandler}
+                                    page={page}
+                                    isLazy={true}
+                                    size={searchSize}
+                                    rowsPerPage={constants.MAX}
+                                    hasPagination={true}
                                 />
-                            </InputAdornment>
-                        }
-                        className={classes.search}
-                    />
-
-                    <Box sx={{ mb: 3 }} />
-
-
-                    <Datatable
-                        header={[
-                            {
-                                name: t("Part Number"),
-                                attr: 'partNumber',
-                            },
-                            {
-                                name: t("Brand"),
-                                attr: 'brandName',
-                            },
-                            {
-                                name: t("Quantity"),
-                                attr: 'stock.length',
-                            },
-                            {
-                                name: t("Price"),
-                                attr: 'offers[0].offerPrice',
-                                type: 'number',
-                                label: t("SAR")
-
-                            }
-                        ]}
-
-
-                        datatable={offerProducts}
-                        error={error}
-                        onSelectedPage={changePagehandler}
-                        page={page}
-                        isLazy={true}
-                        size={searchSize}
-                        rowsPerPage={constants.MAX}
-                        hasPagination={true}
-
-                    />
-
-
-                </CardContent >
+                            </Grid>
+                            <Grid item xs={12} md={3}>
+                                <Advertisement
+                                    url='/static/images/banner-300.jpg'
+                                    width='100%'
+                                    height='250px'
+                                    advertiseMt="advertiseMt" />
+                            </Grid>
+                        </Grid>
+                        :
+                        <SpecialOfferInfoGrid
+                            offerProducts={offerProducts}
+                            error={error}
+                            onSelectedPage={changePagehandler}
+                            page={page}
+                            isLazy={true}
+                            size={searchSize}
+                            rowsPerPage={constants.MAX}
+                            hasPagination={true} />
+                    }
+                </CardContent>
+                <CardFoot />
             </Card>
-
-        </Box >
-
+        </>
     );
 }
 

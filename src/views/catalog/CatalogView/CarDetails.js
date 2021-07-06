@@ -2,7 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    Grid,
+    Card,
     Box,
     Breadcrumbs,
     Typography
@@ -10,49 +10,52 @@ import {
 import Link from "@material-ui/core/Link";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { useTranslation } from 'react-i18next';
-import CarFilter from './CarFilter';
 import CarItems from './CarItems';
 import { disappearBreadcrumbs, handleBackAction } from 'src/redux/slices/catalog';
 import GroupItems from './GroupItems';
-import Button from "./../../../components/button/CustomButton";
 import Part from './Part';
+import CatalogHead from "./CatalogHead";
+import BackBtn from "../../../components/Ui/BackBtn";
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
-    root: {}
+const useStyles = makeStyles((theme) => ({
+    root: {},
+    carDetailsCont: {
+        background: '#F6F8FC',
+        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
+        borderRadius: '20px',
+    },
+    carDetailssChild: {
+        padding: '15px',
+        background: theme.palette.grey[0],
+    },
+    backCont: {
+        background: 'inherit',
+        padding: '10px 15px',
+        textAlign: 'right'
+    },
 }));
 
 // ----------------------------------------------------------------------
 
 function CarDetails() {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const { selectedCatalog, selectedCar, fromList, groups, part, groupsStack, backToCarInfo } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
 
     return (
-        <Grid container spacing={3}>
-            {part != null || groups.length > 0 ?
-                <div className="pb-3">
-                    <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => {
-                            dispatch(handleBackAction(part, selectedCatalog, selectedCar, fromList, groupsStack, backToCarInfo));
-                        }}
-                    >
-                        {t("Back")}
-                    </Button>
-                </div>
-
-                :
-
+        <>
+            {part != null || groups.length > 0 ? '' :
                 <Breadcrumbs
                     separator={<NavigateNextIcon fontSize="small" />}
                     aria-label="breadcrumb"
                     className="breadcrumb-custom"
+                    style={{ marginBottom: '16px' }}
                 >
                     <Link color="inherit"
+                        style={{ cursor: 'pointer' }}
                         onClick={() => dispatch(disappearBreadcrumbs())}
                     >
                         {t("Catalog Search")}
@@ -60,24 +63,31 @@ function CarDetails() {
                     <Typography color="textPrimary">{t("Catalog Details")}</Typography>
                 </Breadcrumbs>
             }
-
-            <Grid item xs={12} md={12} lg={12}>
-                {groups.length == 0 ?
-                    <div style={{ width: '98%' }}>
-                        {fromList && <CarFilter />}
-                        <Box sx={{ mt: 3 }} />
-                        <CarItems />
-                    </div> :
-                    <>
+            {groups.length == 0 ?
+                <CarItems /> :
+                <Card className={classes.carDetailsCont}>
+                    <CatalogHead />
+                    <Box className={classes.backCont}>
+                        {part != null || groups.length > 0 ?
+                            <BackBtn
+                                variant='body2'
+                                onClick={() => {
+                                    dispatch(handleBackAction(part, selectedCatalog, selectedCar, fromList, groupsStack, backToCarInfo));
+                                }}
+                                name={t("Back")}
+                            /> : ''
+                        }
+                    </Box>
+                    <Box className={classes.carDetailssChild}>
                         {part == null ?
                             <GroupItems />
                             :
                             <Part />
                         }
-                    </>
-                }
-            </Grid>
-        </Grid>
+                    </Box>
+                </Card>
+            }
+        </>
     );
 }
 

@@ -1,25 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import Box from '@material-ui/core/Box';
+import {
+    CircularProgress,
+    TextField,
+    Box,
+    Autocomplete
+} from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import { Search } from '@material-ui/icons';
+import ClearIcon from '@material-ui/icons/Clear';
 import {
     partSearch, handleChangePage, searchLocation, setLocationQuery,
     AddLocationfilter, deleteLocationfilter
 } from '../../../redux/slices/partSearch';
 import constants from 'src/utils/constants';
-import { CircularProgress, TextField } from '@material-ui/core';
-import Autocomplete from '@material-ui/core/Autocomplete';
-
-import { useTranslation } from 'react-i18next';
-import { Search } from '@material-ui/icons';
-import ClearIcon from '@material-ui/icons/Clear';
-
-
+import FilterResult from '../../../components/Ui/FilterResult';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {}
+    root: {},
+    locationFilterResult: {
+        display: 'flex'
+    },
+    locationFilter: {
+        minWidth: '300px'
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -48,11 +55,10 @@ function LocationFilterSection() {
 
     return (
         <Box sx={{ width: '100%' }}>
-
             <Autocomplete
                 noOptionsText={t("No Options")}
                 id="location-filter"
-                style={{ width: 300 }}
+                className={classes.locationFilter}
                 open={open}
                 loading={loading}
                 autoComplete
@@ -115,27 +121,26 @@ function LocationFilterSection() {
                     />
                 )}
             />
+            <Box className={classes.locationFilterResult}>
+                {
+                    locationFilters.map((locationItem, index) => {
+                        return (
+                            <FilterResult key={index} bg="#fff">
+                                {locationItem.type == 'C' ? 'Country' : locationItem.type == 'T' ? 'City' : 'Region'} :  {themeDirection == 'ltr' ? locationItem.object.name : locationItem.object.nameAr}
+                                <ClearIcon
+                                    onClick={() => {
+                                        if (locationFilters.length == 1) {
+                                            setEmptyFilterFromDelete(true);
+                                        }
+                                        dispatch(deleteLocationfilter({ locationFilter: locationItem }));
 
-            <Box sx={{ mb: 6 }} />
-
-            {
-                locationFilters.map((locationItem, index) => {
-                    return (
-                        <div className="badge badge-pill badge-light " key={index} style={{ margin: 10 }}>
-                            {locationItem.type == 'C' ? 'Country' : locationItem.type == 'T' ? 'City' : 'Region'} :  {themeDirection == 'ltr' ? locationItem.object.name : locationItem.object.nameAr}
-                            <ClearIcon
-                                onClick={() => {
-                                    if (locationFilters.length == 1) {
-                                        setEmptyFilterFromDelete(true);
-                                    }
-                                    dispatch(deleteLocationfilter({ locationFilter: locationItem }));
-
-                                }}
-                            />
-                        </div>
-                    )
-                })
-            }
+                                    }}
+                                />
+                            </FilterResult>
+                        )
+                    })
+                }
+            </Box>
 
         </Box>
     );

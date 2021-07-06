@@ -13,11 +13,12 @@ import {
   ClickAwayListener
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
 const APPBAR_MOBILE = 64;
-const APPBAR_DESKTOP = 92;
+const APPBAR_DESKTOP = 69;
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -51,8 +52,9 @@ Search.propTypes = {
   className: PropTypes.string
 };
 
-function Search({ className }) {
+function Search(props, { className }) {
   const classes = useStyles();
+  const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
 
   const handleOpen = () => {
@@ -78,7 +80,11 @@ function Search({ className }) {
               autoFocus
               fullWidth
               disableUnderline
-              placeholder="Search…"
+              placeholder={t("Search")}
+              id="query"
+              value={props.value}
+              onChange={props.onChange}
+              name="query"
               startAdornment={
                 <InputAdornment position="start">
                   <Box
@@ -91,7 +97,7 @@ function Search({ className }) {
               className={classes.input}
             />
             <Button variant="contained" onClick={handleClose}>
-              Search
+              {t("Search")}
             </Button>
           </div>
         </Slide>

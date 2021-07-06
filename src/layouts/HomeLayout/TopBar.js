@@ -1,14 +1,14 @@
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import Logo from 'src/components/Logo';
+import LogoDark from 'src/components/LogoDark';
 import React, { useState, useRef } from 'react';
-import { useSelector } from 'react-redux';
 import useOffSetTop from 'src/hooks/useOffSetTop';
 import homeFill from '@iconify-icons/eva/home-fill';
 import PopoverMenu from 'src/components/PopoverMenu';
 import roundSpeed from '@iconify-icons/ic/round-speed';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
-import { PATH_HOME, PATH_PAGE } from 'src/routes/paths';
+import { PATH_PAGE } from 'src/routes/paths';
 import bookOpenFill from '@iconify-icons/eva/book-open-fill';
 import roundStreetview from '@iconify-icons/ic/round-streetview';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
@@ -23,20 +23,17 @@ import {
   Toolbar,
   MenuItem,
   Container,
-  ListItemIcon,
   ListItemText,
-  Fab
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
-import { red } from '@material-ui/core/colors';
 import { pxToRem } from 'src/utils/formatFontSize';
 // ----------------------------------------------------------------------
 const MENU_LINKS = [
-  { title: 'home', icon: homeFill, href: '/' },
-  { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.prices },
-  { title: 'contactUs', icon: roundSpeed, href: PATH_HOME.dashboard },
+  { title: 'home', icon: homeFill, href: PATH_PAGE.common.home },
+  { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.price },
+  { title: 'contactUs', icon: roundSpeed, href: PATH_PAGE.common.contactUs },
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
 const APP_BAR_MOBILE = 64;
@@ -79,19 +76,19 @@ const useStyles = makeStyles((theme) => ({
   },
   navButton: {
     fontSize: pxToRem(17),
-    boxShadow:'none',
+    boxShadow: 'none',
 
   },
-  whiteBtn:{
+  whiteBtn: {
     background: theme.palette.grey[0],
-    color:theme.palette.primary.main,
-    '&:hover':{
+    color: theme.palette.primary.main,
+    '&:hover': {
       color: theme.palette.grey[0],
     },
   },
-  transparentNav:{
+  transparentNav: {
     background: 'transparent',
-    '&$onScroll':{
+    '&$onScroll': {
       '& $toolbar': {
         backgroundColor: theme.palette.secondary.darker
       },
@@ -108,6 +105,8 @@ function TopBar() {
   const offset = useOffSetTop(100);
   const [openMenu, setOpenMenu] = useState(false);
   const isHome = pathname === '/';
+  const isLogo = (pathname === '/' || pathname === '/auth/login' || pathname === '/auth/register');
+
   const { t } = useTranslation();
 
   const renderMenuDesktop = (
@@ -161,9 +160,9 @@ function TopBar() {
   return (
     <AppBar
       color='inherit'
-      className={clsx(classes.root, { [classes.onScroll]: offset }, {[classes.transparentNav]: isHome})}
+      className={clsx(classes.root, { [classes.onScroll]: offset }, { [classes.transparentNav]: isHome })}
       sx={{ boxShadow: 'none' }}
-      
+
     >
       <Toolbar disableGutters className={classes.toolbar}>
         <Container
@@ -176,7 +175,7 @@ function TopBar() {
           }}
         >
           <RouterLink to="/">
-            <Logo />
+            {isLogo ? <Logo /> : <LogoDark />}
           </RouterLink>
           <Box sx={{ flexGrow: 1 }} />
 
@@ -190,7 +189,7 @@ function TopBar() {
             size="large"
             href={PATH_PAGE.auth.register}
             className={classes.navButton}
-            className={clsx(classes.navButton , {[classes.whiteBtn]: isHome})}
+            className={clsx(classes.navButton, { [classes.whiteBtn]: isHome })}
           >
             {t("registeration")}
           </Button>

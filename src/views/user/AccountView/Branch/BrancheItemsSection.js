@@ -42,7 +42,13 @@ function BrancheItemsSection() {
 
     useEffect(() => {
         dispatch(loadBranches(countries));
-    }, [])
+    }, []);
+
+    // const x = branches.map(user => {
+    //     user.users.map(x => {
+    //         console.log(x)
+    //     })
+    // });
 
     const noChildComponent = (branch) => {
         return (
@@ -96,8 +102,34 @@ function BrancheItemsSection() {
 
                 ]}
 
-                childData="users"
-                childHeader={[
+                // childData="users"
+                // childHeader={[
+                //     {
+                //         name: t("Name"),
+                //         attr: 'name',
+                //     },
+                //     {
+                //         name: t("Phone"),
+                //         attr: 'mobile',
+                //     },
+                //     {
+                //         name: t("Email"),
+                //         attr: 'email',
+
+                //     }]}
+                // hasChild={true}
+                datatable={branches}
+                showChildNumbers={true}
+                noChildComponent={noChildComponent}
+                childTitle={t("Users")}
+                page={page}
+                isLazy={false}
+            />
+
+            <Box sx={{ mb: 6 }} />
+
+            <Datatable
+                header={[
                     {
                         name: t("Name"),
                         attr: 'name',
@@ -110,17 +142,16 @@ function BrancheItemsSection() {
                         name: t("Email"),
                         attr: 'email',
 
-                    }]}
-                hasChild={true}
+                    },
+                    {
+                        name: t("Name"),
+                        attr: themeDirection == 'ltr' ? 'branchName' : 'branchNameAr',
+                    },
+                ]}
                 datatable={branches}
-                showChildNumbers={true}
-                noChildComponent={noChildComponent}
-                childTitle={t("Users")}
                 page={page}
                 isLazy={false}
             />
-
-
 
             <Dialog
                 aria-labelledby="customized-dialog-title"
@@ -141,13 +172,13 @@ function BrancheItemsSection() {
                         <>
                             {
                                 verificationMode == "email" ?
-                                    <h7 className="mb-0 mt-3 d-block">
+                                    <h6 className="mb-0 mt-3 d-block">
                                         {t("Check your email to get verification code")}
-                                    </h7>
+                                    </h6>
                                     :
-                                    <h7 className="mb-0 mt-3 d-block">
+                                    <h6 className="mb-0 mt-3 d-block">
                                         {t("Check your mobile to get verification code")}
-                                    </h7>
+                                    </h6>
                             }
 
                             <Box sx={{ mb: 3 }} />

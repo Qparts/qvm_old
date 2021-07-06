@@ -19,7 +19,7 @@ const navConfig = [
       {
         title: 'orders',
         icon: <Orders width='32' height='32' fill='#a2b4bd' fillArr='#F20505' />,
-        href: PATH_APP.general.partSearch,
+        href: PATH_APP.general.orders,
         notification: true
       },
 
@@ -30,7 +30,7 @@ const navConfig = [
       {
         title: 'reports',
         icon: <Chart width='32' height='32' fill='#a2b4bd' />,
-        href: PATH_APP.general.replacements,
+        href: PATH_APP.general.quotationsReport,
         notification: true
       },
 
@@ -41,7 +41,7 @@ const navConfig = [
       {
         title: 'offers',
         icon: <Offer width='32' height='32' fill='#a2b4bd' />,
-        href: PATH_APP.general.stockUpload,
+        href: PATH_APP.general.specialOffer,
         notification: true
       },
 
@@ -60,9 +60,9 @@ const navConfig = [
   {
     items: [
       {
-        title: 'settings',
+        title: 'replacements',
         icon: <SettingsIcon width='32' height='32' fill='#a2b4bd' />,
-        href: PATH_APP.general.specialOfferUpload,
+        href: PATH_APP.general.replacements,
       },
 
     ]
@@ -72,7 +72,7 @@ const navConfig = [
       {
         title: 'advertise',
         icon: <Add width='32' height='32' fill='#a2b4bd' />,
-        href: PATH_APP.general.specialOffer,
+        href: PATH_APP.general.partSearch,
       },
 
     ]

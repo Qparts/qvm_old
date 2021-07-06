@@ -1,21 +1,40 @@
-import React, { useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import CardActionArea from '@material-ui/core/CardActionArea';
-import { useSnackbar } from 'notistack';
 import {
     Card,
     Grid,
     CardContent,
     Typography
 } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 import { getGroups, getPart } from 'src/redux/slices/catalog';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {}
+    root: {},
+    CarItems: {
+        border: '1px solid #E7F0F7',
+        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
+        borderRadius: '10px'
+    },
+    CarItemsCont: {
+        padding: '16px'
+    },
+    carItemName: {
+        color: theme.palette.secondary.main,
+        fontWeight: theme.typography.fontWeightBold,
+        marginBottom: 0,
+        minHeight: '50px',
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical',
+        WebkitLineClamp: 2,
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        cursor: 'pointer'
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -23,23 +42,13 @@ const useStyles = makeStyles((theme) => ({
 function GroupItems() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { groups, selectedCar, selectedCatalog, fromList, groupsStack, groupChanged } = useSelector((state) => state.catalogs);
-    const { enqueueSnackbar } = useSnackbar();
-    const { t } = useTranslation();
-
-    useEffect(() => {
-        if (!groupChanged) {
-            enqueueSnackbar(t('There is no parts'), { variant: 'warning' });
-        }
-    }, [groupChanged])
+    const { groups, selectedCar, selectedCatalog, fromList } = useSelector((state) => state.catalogs);
 
     return (
-
         <Grid container spacing={1}>
-
             {groups.map((groupItem) => (
                 <Grid item xs={12} sm={4} md={3} key={groupItem.id}>
-                    <Card className={classes.root}>
+                    <Card className={clsx(classes.root, classes.CarItems)}>
                         <CardActionArea
                             onClick={() => {
                                 const catalogId = fromList
@@ -54,8 +63,7 @@ function GroupItems() {
                                 }
                             }}
                         >
-
-                            <CardContent>
+                            <CardContent className={classes.CarItemsCont}>
                                 <img
                                     src={
                                         groupItem.img != null
@@ -64,17 +72,14 @@ function GroupItems() {
                                     }
                                     alt={groupItem.name}
                                 />
-                                <Typography gutterBottom variant="h5" component="h5">
+                                <Typography gutterBottom variant="body1" className={classes.carItemName}>
                                     {groupItem.name}
                                 </Typography>
                             </CardContent>
                         </CardActionArea>
-
                     </Card>
                 </Grid>
             ))}
-
-
         </Grid>
     );
 }

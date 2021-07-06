@@ -7,16 +7,12 @@ import React, { useEffect } from 'react';
 import Scrollbars from 'src/components/Scrollbars';
 import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
-import MyAvatar from 'src/components/MyAvatar';
-import { PATH_APP } from 'src/routes/paths';
 import {
   Box,
   List,
   Drawer,
   Hidden,
   ListSubheader,
-  Typography,
-  Link
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 
@@ -36,7 +32,7 @@ const useStyles = makeStyles((theme) => {
     },
     drawerPaper: {
       width: DRAWER_WIDTH,
-      background: theme.palette.secondary.main,
+      background: theme.palette.secondary.darker,
       border: 'none'
     },
     subHeader: {
@@ -165,6 +161,7 @@ function NavBar({ isOpenNav, onCloseNav }) {
         <List
           disablePadding
           key={index}
+          className={classes.textCent}
           subheader={
             <ListSubheader
               disableSticky

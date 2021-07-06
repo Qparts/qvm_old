@@ -1,6 +1,6 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
 import AccordionDetails from '@material-ui/core/AccordionDetails';
@@ -11,16 +11,41 @@ import {
     Card,
     Grid,
     CardContent,
-    TextField,
+    FormControl,
+    MenuItem,
     Box
 } from '@material-ui/core';
 import { handleFilterChange } from 'src/redux/slices/catalog';
 import { useTranslation } from 'react-i18next';
+import Select from '../../../components/Ui/Select';
+import FilterResult from '../../../components/Ui/FilterResult';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
-    root: {}
+const useStyles = makeStyles((theme) => ({
+    root: {},
+    filterCont: {
+        boxShadow: 'none',
+        borderRadius: '20px',
+        border: '1px solid #E7F0F7',
+        margin: theme.spacing(2, 0, 1)
+    },
+    cardFilterContent: {
+        padding: '15px',
+        '&:last-child': {
+            padding: '15px'
+        }
+    },
+    accordionCont: {
+        border: 'none',
+        boxShadow: 'none !important',
+    },
+    accordionDetails: {
+        borderTop: '1px solid #E7F0F7'
+    },
+    catalogFilterResult: {
+        display: 'flex'
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -33,78 +58,66 @@ function CarFilter() {
 
 
     return (
-        <Grid container spacing={1}>
-            <Grid item xs={12} md={12} lg={12}>
-                <Card >
-                    <CardContent className={classes.cardContent}>
-                        <Accordion defaultExpanded>
-                            <AccordionSummary
-                                expandIcon={<ExpandMoreIcon />}
-                                aria-controls="panel1a-content"
-                                id="panel1a-header"
-                                aria-label="Expand"
-                            >
+        <Grid item xs={12} md={12} lg={12}>
+            <Card className={classes.filterCont}>
+                <CardContent className={classes.cardFilterContent}>
+                    <Accordion defaultExpanded className={classes.accordionCont}>
+                        <AccordionSummary
+                            expandIcon={<ExpandMoreIcon />}
+                            aria-controls="panel1a-content"
+                            id="panel1a-header"
+                            aria-label="Expand">
 
-                                <Typography>filter</Typography>
-                            </AccordionSummary>
-                            <AccordionDetails className="border-top d-block">
-                                <Grid container spacing={1}>
-                                    {Array.from(filterKeysMap.keys()).map((keyItem) => {
-                                        return (
-                                            <Grid
-                                                item
-                                                xs={12} sm={2} md={2}
-                                                key={keyItem}>
-                                                <div className="badge badge-pill badge-light ">
-                                                    {t(keyItem)} : {filterKeysMap.get(keyItem).value}
-                                                    <ClearIcon
-                                                        onClick={() => {
-                                                            dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, keyItem, null));
-                                                        }}
-                                                    />
-                                                </div>
-                                            </Grid>
-                                        );
-                                    })}
-                                </Grid>
+                            <Typography>{t("filter")}</Typography>
+                        </AccordionSummary>
+                        <AccordionDetails className={classes.accordionDetails}>
+                            <Box className={classes.catalogFilterResult}>
+                                {Array.from(filterKeysMap.keys()).map((keyItem) => {
+                                    return (
+                                        <FilterResult key={keyItem}>
+                                            {t(keyItem)} : {filterKeysMap.get(keyItem).value}
+                                            <ClearIcon
+                                                className={classes.clearCatalogFilterResult}
+                                                onClick={() => {
+                                                    dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, keyItem, null));
+                                                }}
+                                            />
+                                        </FilterResult>
+                                    );
+                                })}
+                            </Box>
 
-                                <Box sx={{ mt: 3 }} />
-
-
-                                <Grid container spacing={1}>
-                                    {filters.map(
-                                        (filter) =>
-                                            !filterKeysMap.has(filter.key) && (
-                                                <Grid item xs={12} sm={4} md={3} key={filter.key}>
-                                                    <TextField
-                                                        select
-                                                        fullWidth
-                                                        label={t(filter.key)}
+                            <Grid container spacing={1}>
+                                {filters.map(
+                                    (filter) =>
+                                        !filterKeysMap.has(filter.key) && (
+                                            <Grid item xs={12} sm={4} md={3} key={filter.key}>
+                                                <FormControl required style={{ width: "100%", textTransform: 'capitalize' }}>
+                                                    <Select
+                                                        label={filter.key}
                                                         id={filter.key}
-                                                        name={filter.key}
+                                                        value=''
+                                                        name="catalogFilter"
+                                                        spaceToTop="spaceToTop"
                                                         onChange={(event) => {
                                                             dispatch(handleFilterChange(filterKeysMap, selectedCatalog, selectedModel, filter.key, JSON.parse(event.target.value)));
-                                                        }}
-                                                        SelectProps={{ native: true }}
-                                                    >
-                                                        <option aria-label="None" value="" />
+                                                        }}>
+                                                        <MenuItem aria-label="None" value="" />
                                                         {filter.values.map((item, index) => (
-                                                            <option value={JSON.stringify(item)} key={index}>
+                                                            <MenuItem value={JSON.stringify(item)} key={index}>
                                                                 {item.value}
-                                                            </option>
+                                                            </MenuItem>
                                                         ))}
-                                                    </TextField>
-                                                </Grid>
-                                            )
-                                    )}
-                                </Grid>
-                            </AccordionDetails>
-                        </Accordion>
-
-                    </CardContent >
-                </Card>
-
-            </Grid>
+                                                    </Select>
+                                                </FormControl>
+                                            </Grid>
+                                        )
+                                )}
+                            </Grid>
+                        </AccordionDetails>
+                    </Accordion>
+                </CardContent >
+            </Card>
         </Grid>
     );
 }

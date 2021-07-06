@@ -30,7 +30,7 @@ function PartReplacementsSearchSection() {
             <div className="row d-flex justify-content-center">
                 <div className="col-md-6">
                     <SearchBox
-                        handleSubmit={handleReplacementsPartSearch} />
+                        handleSubmit={handleReplacementsPartSearch} title='search' type='general' />
                 </div>
             </div>
 

@@ -1,30 +1,46 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
 import ImageMapper from "react-image-mapper";
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
 import {
-    Typography
+    Typography,
+    Box,
+    Divider
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
+import { Search } from '../../../icons/icons';
+import CustomDialog from '../../../components/Ui/Dialog'
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
+    partNumberCont: {
+        marginBottom: theme.spacing(2)
+    },
+    partNumber: {
+        display: 'flex',
+        background: '#FFEDED',
+        borderRadius: '15px',
+        padding: '11px',
+        width: '80%',
+    },
+    partNumberChild: {
+        color: theme.palette.primary.main
+    },
+    partNumberCard: {
+        padding: theme.spacing(2, 0),
+        '&:last-of-type': {
+            paddingBottom: 0
         },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
-        }
+    },
+    partNumberHaed: {
+        color: theme.palette.secondary.main,
+    },
+    displayFlex: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
     }
 }));
 
@@ -32,7 +48,6 @@ const useStyles = makeStyles((theme) => ({
 
 function Part() {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const { part, partCoordinates, partImageHeight, partImageWidth } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
     const [partAreaDetails, setPartAreaDetails] = useState(null);
@@ -43,10 +58,11 @@ function Part() {
         setPartAreaDetails(selectedArea);
     };
 
-    return (
+    console.log(partAreaDetails)
 
+    return (
         <>
-            <div className="d-flex justify-content-center">
+            <Box>
                 <ImageMapper
                     heigh={(partImageHeight * 800) / partImageWidth}
                     width={800}
@@ -54,50 +70,35 @@ function Part() {
                     onClick={(area) => mapperAreaClickHandler(area)}
                     map={{ name: "my-map", areas: partCoordinates }}
                 />
-            </div>
+            </Box>
 
-
-
-            <Dialog
-                onClose={() => setPartAreaDetails(null)}
-                aria-labelledby="customized-dialog-title"
+            <CustomDialog
+                title={t("Part Details")}
+                handleClose={() => setPartAreaDetails(null)}
                 open={partAreaDetails != null}
-                className={classes.root}
             >
-                <DialogTitle>
-                    <Typography variant="h6" component="div">
-                        {t("Part Details")}
-                    </Typography>
-                </DialogTitle>
-                <DialogContent dividers sx={{ p: 2 }}>
-                    {partAreaDetails != null && (
-                        <div>
-                            <div className="row">
-                                <div className="col-md-6">{t("Reference Number")}</div>
-                                <div className="col-md-6">{partAreaDetails.id}</div>
-                            </div>
-                            <hr />
-                            <div className="row">
-                                <div className="col-md-6">{t("Part Number")}</div>
-
-                                <div className="col-md-6">{partAreaDetails.number}</div>
-                            </div>
-                            <hr />
-                            <div className="row">
-                                <div className="col-md-6">{t("Part Name")}</div>
-                                <div className="col-md-6">{partAreaDetails.name}</div>
-                            </div>
-                            <hr />
-                            <div className="row">
-                                <div className="col-md-6">{t("Description")}</div>
-                                <div className="col-md-6">{partAreaDetails.description}</div>
-                            </div>
-                        </div>
-                    )}
-
-                </DialogContent>
-            </Dialog>
-
+                {partAreaDetails != null && (
+                    <Box>
+                        <Box className={clsx(classes.partNumberCont, classes.displayFlex)}>
+                            <Box className={classes.partNumber}>
+                                <Typography variant='body2' sx={{ color: '#526C78', marginRight: '8px' }}>{t("Part Number")}</Typography>
+                                <Typography variant='body1' className={classes.partNumberChild}>{partAreaDetails.number}</Typography>
+                            </Box>
+                            <Search width='24px' height='24' fill='#CED5D8' style={{ cursor: 'pointer' }} />
+                        </Box>
+                        <Divider />
+                        <Box className={classes.partNumberCard}>
+                            <Typography className={classes.partNumberHaed} variant='body1'>{t("Part Name")}</Typography>
+                            <Typography variant='body2'>{partAreaDetails.name}</Typography>
+                        </Box>
+                        <Divider />
+                        <Box className={classes.partNumberCard}>
+                            <Typography className={classes.partNumberHaed} variant='body1'>{t("Description")}</Typography>
+                            <Typography variant='body2'>{partAreaDetails.description}</Typography>
+                        </Box>
+                    </Box>
+                )}
+            </CustomDialog>
         </>
     );
 }
