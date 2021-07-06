@@ -27,7 +27,10 @@ export default function SearchTable(props) {
   };
 
   const handleQuerySubmit = () => {
-    if (query) props.handleSubmit(query);
+    if (query) {
+      props.handleSubmit(query);
+      setQuery("");
+    }
     else props.handleSubmit("");
   };
 
@@ -59,7 +62,7 @@ export default function SearchTable(props) {
     searchBox = (
       <Box sx={{ display: 'flex' }}>
         <CustomInput
-          label={t("Search")}
+          label={t("Search by part number")}
           type='text'
           id="query"
           value={query}

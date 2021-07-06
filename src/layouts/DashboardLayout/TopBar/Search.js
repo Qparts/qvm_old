@@ -80,7 +80,7 @@ function Search(props, { className }) {
               autoFocus
               fullWidth
               disableUnderline
-              placeholder={t("Search")}
+              placeholder={t("Search by part number")}
               id="query"
               value={props.value}
               onChange={props.onChange}

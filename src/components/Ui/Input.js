@@ -63,7 +63,7 @@ export default function CustomInput(props) {
     return (
         <TextField
             className={clsx(classes.inputCont, classes[props.spaceToTop], classes[props.inputContTopBarSearch])}
-            defaultValue={props.value}
+            value={props.value}
             type={props.type}
             label={props.label}
             id={props.id}

@@ -7,9 +7,10 @@ import { setSelectedProduct } from '../../../redux/slices/partSearch';
 import Datatable from './../../../components/table/DataTable';
 import constants from 'src/utils/constants';
 import ProductDetails from './ProductDetails';
-import PartSearchAction from './PartSearchAction';
+import TableAction from '../../../components/Ui/TableAction';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
+import { Plus } from "../../../icons/icons";
 
 // ----------------------------------------------------------------------
 
@@ -50,9 +51,11 @@ function ProductInfoSection() {
 
     const showDetailsElement = (item) => {
         return (
-            <PartSearchAction
+            <TableAction
+                type='partSearch'
+                title={t("Details")}
                 onClick={() => showDetailsAction(item)}
-                title={t("Details")} />
+                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
         )
     }
 

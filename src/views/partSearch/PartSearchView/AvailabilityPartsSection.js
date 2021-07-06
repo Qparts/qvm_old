@@ -8,10 +8,11 @@ import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
 import constants from 'src/utils/constants';
 import LocationFilterSection from './LocationFilterSection';
-import PartSearchAction from './PartSearchAction';
+import TableAction from '../../../components/Ui/TableAction';
 import Input from 'src/components/Ui/Input';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
+import { Plus } from "../../../icons/icons";
 
 // ----------------------------------------------------------------------
 
@@ -64,9 +65,11 @@ function AvailabilityPartsSection() {
 
     const showDetailsElement = (item) => {
         return (
-            <PartSearchAction
+            <TableAction
+                type='partSearch'
+                title={t("Details")}
                 onClick={() => showDetailsAction(item)}
-                title={t("Details")} />
+                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
         )
     }
 
@@ -84,7 +87,7 @@ function AvailabilityPartsSection() {
     return (
         <Box sx={{ width: '100%' }}>
             <SecContainer
-                header={t('Availability')}>
+                header={t('Search Results')}>
                 <Box className={classes.availabilityActionsCont}>
                     <Box className={classes.availabilityActionsLeft}>
                         <Input

@@ -8,7 +8,7 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     TableActionIcon: {
-        marginLeft: '5px'
+        marginRight: '5px'
     },
     TableActionBorder: {
         paddingRight: '10px',
@@ -35,7 +35,10 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     mrItem: {
-        marginLeft: '15px',
+        marginRight: '15px',
+    },
+    cursor: {
+        cursor: 'pointer'
     }
 }));
 
@@ -44,17 +47,34 @@ const useStyles = makeStyles((theme) => ({
 export default function TableAction(props) {
     const classes = useStyles();
 
-    return (
-        <Box className={clsx(classes.TableActionFlex)}>
-            <Link to={props.link} className={clsx(classes[props.TableActionBorder], classes.TableActionFlex, classes.hoverLink)}>
-                <Typography variant="body4"> {props.title} </Typography>
+    let tableActions;
+
+    if (props.type === 'offerActions') {
+        tableActions = (
+            <Box className={clsx(classes.TableActionFlex)}>
+                <Link to={props.linkSearch} className={clsx(classes.hoverLink, classes[props.mrItem])}>
+                    {props.icon}
+                </Link>
+                <Link to={props.link} className={clsx(classes[props.TableActionBorder], classes.TableActionFlex, classes.hoverLink)}>
+                    <Box className={classes.TableActionIcon}>
+                        {props.textIcon}
+                    </Box>
+                    <Typography variant="body4"> {props.title} </Typography>
+                </Link>
+            </Box>
+        )
+    } else if (props.type === 'partSearch') {
+        tableActions = (
+            <Box
+                className={clsx(classes.hoverLink, classes.TableActionFlex, classes.cursor)}
+                onClick={props.onClick} >
                 <Box className={classes.TableActionIcon}>
                     {props.textIcon}
                 </Box>
-            </Link>
-            <Link to={props.linkSearch} className={clsx(classes.hoverLink, classes[props.mrItem])}>
-                {props.icon}
-            </Link>
-        </Box>
-    );
+                <Typography variant="body4"> {props.title} </Typography>
+            </Box>
+        )
+    }
+
+    return tableActions;
 }

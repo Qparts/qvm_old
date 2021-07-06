@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import React, { useState } from 'react';
 import {
     Grid,
     Box,
@@ -7,7 +6,6 @@ import {
     Avatar,
     Card,
     CardContent,
-    TablePagination
 } from '@material-ui/core';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -15,7 +13,8 @@ import clsx from 'clsx';
 import constants from 'src/utils/constants';
 import Helper from '../../../utils/helper'
 import { OrdersArrow, Search } from '../../../icons/icons';
-import TableAction from '../../../components/Ui/TableAction'
+import TableAction from '../../../components/Ui/TableAction';
+import Pagination from '../../../components/Ui/Pagination'
 
 // ----------------------------------------------------------------------
 
@@ -75,46 +74,13 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
     const classes = useStyles();
     const theme = useTheme();
     const { t } = useTranslation();
-    const { themeDirection } = useSelector((state) => state.settings);
 
     const [state, setState] = useState({
         data: isLazy == true ? offerProducts : offerProducts.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
         page: page,
-        rowsPerPage,
+        rowsPerPage: rowsPerPage,
         numberOfPages: size ? Math.ceil(size / rowsPerPage) : Math.ceil(offerProducts.length / rowsPerPage),
     });
-
-
-    useEffect(() => {
-        setState({
-            ...state,
-            page: page,
-            data: isLazy == true ? offerProducts : offerProducts.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
-
-        })
-    }, [offerProducts])
-
-
-    useEffect(() => {
-        if (!isLazy) {
-            setState({
-                ...state,
-                data: offerProducts.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
-            })
-        }
-
-    }, [rowsPerPage])
-
-    const changePagehandler = (event, newPage) => {
-        if (onSelectedPage)
-            onSelectedPage(event, newPage);
-        else setState({
-            ...state,
-            page: newPage,
-            data: offerProducts != null && offerProducts.length > 0 ?
-                offerProducts.slice(rowsPerPage * newPage, rowsPerPage * (newPage + 1)) : []
-        });
-    };
 
     return (
         <>
@@ -147,6 +113,7 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
                                         </Box>
                                     </Box>
                                     <TableAction
+                                        type='offerActions'
                                         title={t("order the offer")}
                                         textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
                                         icon={<Search width='15' height='15' fill='#CED5D8' />}
@@ -159,21 +126,17 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
                     )
                 })}
             </Grid>
-            {hasPagination && <TablePagination
-                rowsPerPageOptions={[]}
-                component="div"
-                count={size}
-                rowsPerPage={constants.MAX}
-                page={state.page}
-                onPageChange={changePagehandler}
-                className={classes.tablePagination}
-                labelDisplayedRows={
-                    ({ from, to, count }) => {
-                        return themeDirection == 'ltr' ? '' + from + '-' + to + t("Of") + count :
-                            '' + to + '-' + from + t("Of") + count
-                    }
-                }
-            />}
+
+            <Pagination
+                hasPagination={hasPagination}
+                paginationData={offerProducts}
+                state={state}
+                setState={setState}
+                size={size}
+                isLazy={isLazy}
+                rowsPerPage={rowsPerPage}
+                page={page}
+                onSelectedPage={onSelectedPage} />
         </>
     );
 }

@@ -2,18 +2,13 @@ import Page from 'src/components/Page';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Box,
-    Divider,
-    Typography
-} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import AvailabilityPartsSection from './AvailabilityPartsSection';
 import ProductInfoSection from './ProductInfoSection';
 import { cleanup } from 'src/redux/slices/partSearch';
-
 
 // ----------------------------------------------------------------------
 
@@ -64,10 +59,6 @@ function PartSearchView() {
                     <LoadingScreen />
 
                 }>
-                <Box sx={{ pb: 2 }}>
-                    <Typography variant="h4">{t("Search Parts")}</Typography>
-                    <Divider />
-                </Box>
                 <AvailabilityPartsSection />
                 {productInfoResult.length > 0 ?
                     <>

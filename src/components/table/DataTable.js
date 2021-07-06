@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -11,14 +10,13 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import Button from "../button/CustomButton";
 import constants from 'src/utils/constants';
-import TablePagination from '@material-ui/core/TablePagination';
 import helper from 'src/utils/helper';
 import Scrollbars from '../Scrollbars';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-import { useTranslation } from 'react-i18next';
+import Pagination from '../Ui/Pagination'
 
 // ----------------------------------------------------------------------
 
@@ -54,12 +52,6 @@ const useStyles = makeStyles((theme) => ({
         '& $td:last-of-type': {
             borderRadius: '0 20px 20px 0'
         },
-    },
-    tablePagination: {
-        borderTop: 0,
-        '& .MuiTablePagination-toolbar': {
-            height: '59px'
-        }
     }
 }));
 
@@ -157,11 +149,8 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     showChildNumbers, childTitle, noChildComponent }) {
 
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const { themeDirection } = useSelector((state) => state.settings);
 
     const [open, setOpen] = React.useState(false);
-    const { t } = useTranslation();
 
 
     const [state, setState] = useState({
@@ -170,38 +159,6 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
         rowsPerPage,
         numberOfPages: size ? Math.ceil(size / rowsPerPage) : Math.ceil(datatable.length / rowsPerPage),
     });
-
-
-    useEffect(() => {
-        setState({
-            ...state,
-            page: page,
-            data: isLazy == true ? datatable : datatable.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
-
-        })
-    }, [datatable])
-
-
-    useEffect(() => {
-        if (!isLazy) {
-            setState({
-                ...state,
-                data: datatable.slice(rowsPerPage * page, rowsPerPage * (page + 1)),
-            })
-        }
-
-    }, [rowsPerPage])
-
-    const changePagehandler = (event, newPage) => {
-        if (onSelectedPage)
-            onSelectedPage(event, newPage);
-        else setState({
-            ...state,
-            page: newPage,
-            data: datatable != null && datatable.length > 0 ?
-                datatable.slice(rowsPerPage * newPage, rowsPerPage * (newPage + 1)) : []
-        });
-    };
 
     return (
         <Box sx={{ width: '100%' }}>
@@ -278,21 +235,16 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                     </TableContainer>
                 </Scrollbars>
 
-                {hasPagination && <TablePagination
-                    rowsPerPageOptions={[]}
-                    component="div"
-                    count={size}
-                    rowsPerPage={constants.MAX}
-                    page={state.page}
-                    onPageChange={changePagehandler}
-                    className={classes.tablePagination}
-                    labelDisplayedRows={
-                        ({ from, to, count }) => {
-                            return themeDirection == 'ltr' ? '' + from + '-' + to + t("Of") + count :
-                                '' + to + '-' + from + t("Of") + count
-                        }
-                    }
-                />}
+                <Pagination
+                    hasPagination={hasPagination}
+                    paginationData={datatable}
+                    state={state}
+                    setState={setState}
+                    size={size}
+                    isLazy={isLazy}
+                    rowsPerPage={rowsPerPage}
+                    page={page}
+                    onSelectedPage={onSelectedPage} />
             </Paper>
         </Box>
     );

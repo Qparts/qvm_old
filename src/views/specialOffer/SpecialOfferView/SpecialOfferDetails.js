@@ -102,6 +102,7 @@ function SpecialOfferDetails({ specialOfferId }) {
     const showDetailsElement = (item) => {
         return (
             <TableAction
+                type='offerActions'
                 title={t("order the offer")}
                 textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
                 icon={<Search width='15' height='15' fill='#CED5D8' />}
