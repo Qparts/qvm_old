@@ -58,7 +58,7 @@ AddStockForm.propTypes = {
 };
 
 function AddStockForm(props) {
-    const { errors, touched, handleSubmit, getFieldProps, setFieldValue } = props.formik;
+    const { errors, touched, handleSubmit, getFieldProps, setFieldValue, values } = props.formik;
     const { t } = useTranslation();
     const classes = useStyles();
     const theme = useTheme();
@@ -67,6 +67,8 @@ function AddStockForm(props) {
     );
     const [branches, setBranches] = useState(getBranches(countries));
     const { themeDirection } = useSelector((state) => state.settings);
+    const [fileError, setFileError] = useState(null);
+
 
     return (
         <FormikProvider value={props.formik}>
@@ -103,11 +105,19 @@ function AddStockForm(props) {
                 </Select>
                 <StockFileBtn
                     onChange={(event) => {
+                        if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx') {
+                            setFileError(t("Stock file must be Excel File"))
+                            setFieldValue("stockFile", "");
+                            return;
+                        }
+                        setFileError(null)
                         setFieldValue("stockFile", event.currentTarget.files[0]);
                     }}
                     file='stockFile'
+                    value={values.stockFile}
                     touched={touched.stockFile}
-                    errors={errors.stockFile} />
+                    errors={errors.stockFile}
+                    fileError={fileError} />
 
                 <FormControlLabel
                     control={<Checkbox checked={props.checked} onChange={props.handleChange} />}

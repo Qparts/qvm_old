@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { TextField, Button, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -64,8 +64,8 @@ export default function CustomInput(props) {
                 inputProps={{
                     className: classes.input,
                 }}
-                error={Boolean(props.touched && props.errors)}
-                helperText={props.touched && props.errors}
+                error={Boolean(props.touched && props.errors) || props.fileError}
+                helperText={(props.touched && props.errors) || (props.fileError)}
             />
             <label htmlFor={props.file}>
                 <Button
@@ -75,7 +75,7 @@ export default function CustomInput(props) {
                     component="span"
                     className={clsx(classes.uploadbtn, classes.uploadStockMainBtn)}
                 >
-                    {t("upload stock file")}
+                    {props.value ? props.value.name : t("upload stock file")}
                     <Upload width='20' height='20' fill={theme.palette.primary.main} />
                 </Button>
             </label>

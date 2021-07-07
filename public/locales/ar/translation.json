@@ -517,6 +517,18 @@
   "Account Number": "رقم الحساب",
   "Bank": "البنك",
   "Account Name": "اسم الحساب",
+
+
+  "Stock file has been uploaded": "تم رفع المخزون",
+  "Offer file has been uploaded": "تم تحميل ملف العرض",
+  "Who subscribed in this package": "إعرف من يستخدم هذه الباقه من التجار",
+  "Forever": "دائما",
+  "Free": "مجانا",
+  "Yearly": "سنويا",
+  "Contact Our Team": "اتصل بفريقنا",
+  "Subscribers to the package": "المشتركين في  ",
+  "Try our free package now, and upgrade to the premium plan to grow your business" :"جرب باقتنا الأساسية الان مجانا , و قم بالترقية للباقة المميزة لنمو عملك",
+ 
   "Fill the form and we will contact you as soon as possible": "املأ النموذج وسنسعد بالتواصل معك في أقرب وقت ممكن",
   "Send": "إرسال",
   "access all brands of cars and alternatives, both commercial and original" : " تستطيع الوصول لجميع ماركات السيارات و البدائل من تجاري واصلي",
@@ -552,15 +564,12 @@
   "Add Offer": "أضف العرض",
   "There is no parts": "لا توجد قطع ",
   "Of": " من ",
-  "Stock file has been uploaded": "تم رفع المخزون",
-  "Offer file has been uploaded": "تم تحميل ملف العرض",
-  "Who subscribed in this package": "إعرف من يستخدم هذه الباقه من التجار",
-  "Forever": "دائما",
-  "Free": "مجانا",
-  "Yearly": "سنويا",
-  "Contact Our Team": "اتصل بفريقنا",
-  "Subscribers to the package": "المشتركين في  ",
-  "Try our free package now, and upgrade to the premium plan to grow your business" :"جرب باقتنا الأساسية الان مجانا , و قم بالترقية للباقة المميزة لنمو عملك",
+  "Search Results": "نتائج البحث",
   "Monthly" : "شهريا",
-  "Search Results": "نتائج البحث"
+  "Production date" : "تاريخ الإنتاج",
+  "QTY": "الكمية",
+  "Stock file must be Excel File" : "يجب أن يكون ملف المخزون ملف Excel"
+
+
+
 }
