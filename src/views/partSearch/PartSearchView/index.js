@@ -2,21 +2,13 @@ import Page from 'src/components/Page';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Box,
-    Container,
-    Divider,
-    Typography
-} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import AvailabilityPartsSection from './AvailabilityPartsSection';
-import PartSearchSection from './PartSearchSection';
 import ProductInfoSection from './ProductInfoSection';
-import LocationFilterSection from './LocationFilterSection';
 import { cleanup } from 'src/redux/slices/partSearch';
-
 
 // ----------------------------------------------------------------------
 
@@ -42,19 +34,18 @@ function PartSearchView() {
     const classes = useStyles();
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isLoading } = useSelector((state) => state.PartSearch);
+    const { isLoading, productInfoResult = [] } = useSelector((state) => state.PartSearch);
 
     useEffect(() => {
-        return ()=>{
+        return () => {
             dispatch(cleanup())
         }
-     }, []);
+    }, []);
 
     return (
         <Page
             title={t("Search Parts")}
-            className={classes.root}
-        >
+            className={classes.root}>
 
             <LoadingOverlay
                 active={isLoading}
@@ -67,28 +58,14 @@ function PartSearchView() {
                 spinner={
                     <LoadingScreen />
 
+                }>
+                <AvailabilityPartsSection />
+                {productInfoResult.length > 0 ?
+                    <>
+                        <Box sx={{ mb: 6 }} />
+                        <ProductInfoSection />
+                    </> : ""
                 }
-            >
-                <Container >
-
-                    <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("Search Parts")}</Typography>
-                        <Divider />
-                    </Box>
-
-                    <PartSearchSection />
-                    <Box sx={{ mb: 6 }} />
-
-                    <LocationFilterSection />
-                    <Box sx={{ mb: 6 }} />
-
-                    <AvailabilityPartsSection />
-
-                    <Box sx={{ mb: 6 }} />
-
-                    <ProductInfoSection />
-
-                </Container>
             </LoadingOverlay>
 
         </Page>

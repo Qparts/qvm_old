@@ -9,7 +9,7 @@ import ReactApexChart from 'react-apexcharts';
 import { ApexChartsOption } from 'src/components/Charts/Apexcharts';
 import { setSelectedOffer } from 'src/redux/slices/specialOffer';
 import helper from 'src/utils/helper';
-import { Calender, Location, Parts, Orders, Offer } from '../../../icons/icons';
+import { Calender, Location, Parts, OrdersArrow, Offer } from '../../../icons/icons';
 import CustomButton from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
@@ -149,7 +149,7 @@ export default function SpecialOfferInfo(props) {
                 </Box>
                 <Box sx={{ marginLeft: '20px' }}>
                     <CustomButton>
-                        <Orders width='24' height='24' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
+                        <OrdersArrow width='24' height='24' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
                         {t("order the offer")}
                     </CustomButton>
                 </Box>

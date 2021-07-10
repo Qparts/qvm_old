@@ -304,11 +304,11 @@ export function getInitialize() {
     dispatch(slice.actions.startLoading());
     try {
       let { data: countries } = await locationService.getCountries();
+      const { data: planFeatures } = await paymentService.getPlansFeatures();
+      const { data: plans } = await paymentService.getPlans();
       const accessToken = window.localStorage.getItem('accessToken');
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
-        const { data: plans } = await paymentService.getPlans();
-        const { data: planFeatures } = await paymentService.getPlansFeatures();
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
         let currentPlan = getCurrentPlan(plans);
         const { data: catalogs } = await catalogService.getCatalogs();
@@ -333,8 +333,8 @@ export function getInitialize() {
             loginObject: null,
             countries: countries,
             currentPlan: null,
-            planFeatures: [],
-            availablePlans: [],
+            planFeatures: planFeatures,
+            availablePlans: plans,
           })
         );
       }

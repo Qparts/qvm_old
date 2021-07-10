@@ -34,7 +34,7 @@ function CatalogSearch() {
             <Grid container spacing={2}>
                 <Grid item xs={12} md={6}>
                     <MainCard title={t("Find Catalog by VIN number")} sameHeight='sameHeight'>
-                        <SearchBox handleSubmit={handleQuerySubmit} />
+                        <SearchBox handleSubmit={handleQuerySubmit} title={t("Car Details")} type='general' />
                     </MainCard>
                 </Grid>
 
@@ -74,7 +74,6 @@ function CatalogSearch() {
                             ))}
                         </Select>
                         <Box sx={{ mt: 3 }} />
-
                         <Button
                             disabled={selectedCatalog == null || selectedModel == null}
                             onClick={getCars}
@@ -86,7 +85,11 @@ function CatalogSearch() {
                 </Grid>
             </Grid>
             <Box sx={{ mt: 6 }} />
-            <Advertisement width='728px' height='90px' url='/static/icons/ic_chrome.svg' />
+            <Advertisement
+                url='/static/images/banner90.jpg'
+                width='728px'
+                height='90px'
+                advertiseMt="advertiseMt" />
         </>
     );
 }

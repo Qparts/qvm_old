@@ -5,45 +5,23 @@ import {
     Box,
     MenuItem,
 } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
 import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
-import helper from 'src/utils/helper';
-import Offer from "./../../../components/Ui/Offer";
 import Advertisement from "./../../../components/Ui/Advertise";
 import SecContainerOffer from '../../../components/Ui/SecContainerOffer';
 import Slider from '../../../components/Ui/Slider';
 import Select from '../../../components/Ui/Select';
 import Label from '../../../components/Ui/Label';
+import OfferContainer from '../../../components/Ui/OfferContainer';
 
 // ----------------------------------------------------------------------
-
-const PARTS = [
-    {
-        shortcut: '/static/icons/ic_chrome.svg'
-    },
-    {
-        shortcut: '/static/icons/ic_drive.svg'
-    },
-    {
-        shortcut: '/static/icons/ic_dropbox.svg'
-    },
-];
-
-const useStyles = makeStyles((theme) => ({
-    root: {},
-}));
-
-// ----------------------------------------------------------------------
-
 
 function SpecialOfferItemsSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
 
-    const { specialOffers = [], companies } = useSelector((state) => state.specialOffer);
-    const { themeDirection } = useSelector((state) => state.settings);
+    const { specialOffers = [] } = useSelector((state) => state.specialOffer);
     const [filter, setFilter] = useState(false);
 
     useEffect(() => {
@@ -57,8 +35,8 @@ function SpecialOfferItemsSection() {
     };
 
     return (
-        <Grid container spacing={2}>
-            <Grid item xs={12} md={10}>
+        <Box display="flex">
+            <Box flexGrow={1} >
                 <SecContainerOffer
                     header={t('Special Offers')}
                     filter={toggleFilter}>
@@ -122,36 +100,19 @@ function SpecialOfferItemsSection() {
                         </Grid>
                         : null}
                     <Grid container spacing={2}>
-                        {specialOffers.map((specialOffer, index) => {
-                            return (
-                                <Grid item xs={12} md={3} key={index}>
-                                    <Box sx={{ marginTop: '10px' }}>
-
-                                        <Offer
-                                            company={themeDirection == 'rtl' ? companies.get(specialOffer.companyId).nameAr : companies.get(specialOffer.companyId).name}
-                                            offer={themeDirection == 'rtl' ? specialOffer.offerNameAr : specialOffer.offerName}
-                                            date={helper.toDate(specialOffer.endDate)}
-                                            partsNum={specialOffer.numberOfItems}
-                                            discount='50%'
-                                            timeLeft='70%'
-                                            width='70%'
-                                            parts={PARTS}
-                                            specialOffer={specialOffer} />
-                                    </Box>
-                                </Grid>
-                            )
-                        })
-                        }
+                        <Grid item xs={12} md={3}>
+                            <OfferContainer />
+                        </Grid>
                     </Grid>
                 </SecContainerOffer>
-            </Grid>
-            <Grid item xs={12} md={2}>
+            </Box>
+            <Box sx={{ paddingLeft: 2 }} >
                 <Advertisement
-                    url='/static/icons/ic_chrome.svg'
+                    url='/static/images/banner120.png'
                     width='120px'
                     height='600px' />
-            </Grid>
-        </Grid>
+            </Box>
+        </Box>
     );
 }
 

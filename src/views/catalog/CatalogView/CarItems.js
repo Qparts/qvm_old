@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
     Card,
     Typography,
+    Box,
     CardContent,
     Table,
     TableRow,
@@ -17,6 +18,7 @@ import { getGroups } from 'src/redux/slices/catalog';
 import Scrollbars from 'src/components/Scrollbars';
 import Button from "./../../../components/button/CustomButton";
 import CatalogHead from "./CatalogHead";
+import CarFilter from './CarFilter';
 import CardFoot from "../../../components/Ui/CardFoot";
 
 // ----------------------------------------------------------------------
@@ -29,11 +31,13 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px',
     },
     cardContent: {
-        padding: '10px 15px'
+        padding: '0 15px'
     },
     catalogTable: {
         boxShadow: 'none',
         background: 'inherit',
+        borderCollapse: 'separate',
+        borderSpacing: '0 10px',
     },
     catalogTableHead: {
         '& $th': {
@@ -41,7 +45,8 @@ const useStyles = makeStyles((theme) => ({
             background: 'none',
             color: '#7E8D99',
             paddingTop: 0,
-            paddingBottom: '5px',
+            paddingBottom: 0,
+            fontSize: theme.typography.body4.fontSize,
             fontWeight: theme.typography.fontWeightRegular
         },
         '& $th:first-of-type, & $th:last-of-type': {
@@ -49,17 +54,15 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     catalogTableTr: {
-        background: theme.palette.grey[0],
-        borderBottom: '10px solid #F6F8FC',
-        '&:last-of-type': {
-            border: 0
+        "& td": {
+            background: theme.palette.grey[0],
         },
         '& $td:first-of-type': {
-            borderRadius: '10px 0 0 10px',
+            borderRadius: '20px 0 0 20px',
         },
         '& $td:last-of-type': {
-            borderRadius: '0 10px 10px 0'
-        }
+            borderRadius: '0 20px 20px 0'
+        },
     },
     browseCatalog: {
         color: theme.palette.primary.main + '!important',
@@ -81,9 +84,10 @@ function CarItems() {
         <Card className={classes.carItemsCont}>
             <CatalogHead />
             <CardContent className={classes.cardContent}>
+                {fromList && <CarFilter />}
                 <Scrollbars>
                     <TableContainer>
-                        <Table>
+                        <Table className={classes.catalogTable}>
                             <TableHead className={classes.catalogTableHead}>
                                 <TableRow>
                                     <TableCell><Typography variant="body4">{t('Car Name')}</Typography></TableCell>
@@ -108,12 +112,12 @@ function CarItems() {
                                             const carId = fromList ? car.id : car.carId;
                                             dispatch(getGroups(catalogId, carId, null, null, car));
                                         }}>
-                                        <TableCell><Typography variant="body3">{fromList ? car.name : car.title}</Typography></TableCell>
-                                        <TableCell><Typography variant="body3">{fromList ? car.modelName : car.brand}</Typography></TableCell>
-                                        <TableCell><Typography variant="body3">{fromList ? car.parameters[5].value : car.parameters[0].value}</Typography></TableCell>
-                                        <TableCell><Typography variant="body3">{fromList ? car.parameters[3].value : car.parameters[3].value}</Typography></TableCell>
-                                        <TableCell><Typography variant="body3">{fromList ? car.parameters[7].value : car.parameters[8].value}</Typography></TableCell>
-                                        <TableCell><Typography variant="body3">{fromList ? car.parameters[6].value : car.parameters[6].value}</Typography></TableCell>
+                                        <TableCell>{fromList ? car.name : car.title}</TableCell>
+                                        <TableCell>{fromList ? car.modelName : car.brand}</TableCell>
+                                        <TableCell>{fromList ? car.parameters[5].value : car.parameters[0].value}</TableCell>
+                                        <TableCell>{fromList ? car.parameters[3].value : car.parameters[3].value}</TableCell>
+                                        <TableCell>{fromList ? car.parameters[7].value : car.parameters[8].value}</TableCell>
+                                        <TableCell>{fromList ? car.parameters[6].value : car.parameters[6].value}</TableCell>
                                         <TableCell>
                                             <Button
                                                 variant="contained"

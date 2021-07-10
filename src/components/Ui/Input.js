@@ -8,7 +8,7 @@ import clsx from 'clsx';
 const useStyles = makeStyles((theme) => ({
     inputStyl: {
         background: '#F6F8FC',
-        color: 'rgb(8 44 60 / 50%) !important',
+        color: theme.palette.secondary.darker + '!important',
         border: '1px solid #EEF1F5',
         borderRadius: '10px',
         padding: '13px',
@@ -41,7 +41,18 @@ const useStyles = makeStyles((theme) => ({
     },
     spaceToTop: {
         marginTop: '15px'
-    }
+    },
+    inputTopBarSearch: {
+        borderRadius: '20px 0px 0px 20px',
+        '&:focus': {
+            borderRadius: '20px 0px 0px 20px',
+        }
+    },
+    inputContTopBarSearch: {
+        '& > div': {
+            borderRadius: '20px 0px 0px 20px',
+        },
+    },
 }));
 
 // ----------------------------------------------------------------------
@@ -51,13 +62,17 @@ export default function CustomInput(props) {
 
     return (
         <TextField
-            className={clsx(classes.inputCont, classes[props.spaceToTop])}
-            defaultValue={props.value}
+            className={clsx(classes.inputCont, classes[props.spaceToTop], classes[props.inputContTopBarSearch])}
+            value={props.value}
             type={props.type}
             label={props.label}
+            id={props.id}
             variant="outlined"
+            {...props.getField}
+            error={Boolean(props.touched && props.errors)}
+            helperText={props.touched && props.errors}
             inputProps={{
-                className: clsx(classes.inputStyl, classes[props.selectBg]),
+                className: clsx(classes.inputStyl, classes[props.selectBg], classes[props.inputTopBarSearch]),
                 onChange: props.onChange,
                 name: props.name
             }} />

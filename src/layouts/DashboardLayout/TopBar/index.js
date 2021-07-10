@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
-import Search from './Search';
+import { useHistory } from "react-router";
+import { useDispatch } from 'react-redux';
 import Account from './Account';
 import PropTypes from 'prop-types';
 import Languages from './Languages';
@@ -11,6 +12,10 @@ import Orders from './Orders';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
 import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box, AppBar, Hidden, Toolbar, IconButton } from '@material-ui/core';
+import constants from 'src/utils/constants';
+import { PATH_APP } from 'src/routes/paths';
+import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from '../../../redux/slices/partSearch';
+import SearchBox from '../../../components/SearchBox';
 
 // ----------------------------------------------------------------------
 
@@ -23,6 +28,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     backdropFilter: 'blur(8px)',
     backgroundColor: alpha(theme.palette.background.default, 0.72),
+    marginRight:theme.spacing(1),
     [theme.breakpoints.up('lg')]: {
       paddingLeft: DRAWER_WIDTH
     }
@@ -48,6 +54,21 @@ TopBar.propTypes = {
 function TopBar({ onOpenNav, className }) {
   const classes = useStyles();
   const theme = useTheme();
+  const dispatch = useDispatch();
+  const history = useHistory();
+
+  const handlePartSearch = (search) => {
+      dispatch(resetLocationfilter());
+      dispatch(setFilter({ filter: "" }));
+      dispatch(handleChangePage({ newPage: 0 }));
+      dispatch(partSearch(search, 0, constants.MAX, ""));
+      getPartinfo(search);
+      history.push(PATH_APP.general.partSearch);
+  }
+
+  const getPartinfo = (search) => {
+      dispatch(getProductInfo(search, ""));
+  }
 
   return (
     <AppBar className={clsx(classes.root, className)}>
@@ -64,7 +85,8 @@ function TopBar({ onOpenNav, className }) {
           </IconButton>
         </Hidden>
 
-        <Search />
+        <Hidden lgDown><SearchBox type='topBarSearch' handleSubmit={handlePartSearch} /></Hidden>
+        <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handlePartSearch} /></Hidden>
         <Box sx={{ flexGrow: 1 }} />
 
         <Box

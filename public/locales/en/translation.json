@@ -530,22 +530,23 @@
   "Use the following format when uploading the excel file": "Use the following format when uploading the excel file",
   "Stock File": "Stock File *",
   "Upload": "Upload",
-  "Branch is required": "Branch is required",
-  "The file is required": "The file is required",
-  "Offer Name": "Offer Name",
-  "Offer name is required": "Offer name is required",
-  "Offer Start Date": "Offer Start Date",
-  "Notes": "Notes",
-  "Stock file is required": "Stock File is required",
-  "Offer start date is required": "Offer start date is required",
-  "Offer end date is required": "Offer end date is required",
-  "Create Report": "Create Report",
-  "Received From": "Received From",
-  "Date": "Date",
-  "Number of items": "Number of items",
-  "Add Offer": "Add Offer",
-  "There is no parts": "There is no parts",
-  "Of": " Of ",
+
   "Stock file has been uploaded": "Stock file has been uploaded",
-  "Offer file has been uploaded": "Offer file has been uploaded"
+  "Offer file has been uploaded": "Offer file has been uploaded",
+  "Who subscribed in this package" : "Who subscribed in this package",
+  "Save SR" : "Save SR ",
+  "Forever" : "Forever",
+  "Free" :"Free",
+  "Yearly" : "Yearly",
+  "Subscribers to the package" :"Subscribers to the package ",
+  "Try our free package now, and upgrade to the premium plan to grow your business" :"Try our free package now, and upgrade to the premium plan to grow your business.",
+  "Monthly" : "Monthly",
+  "Search Results": "Search Results",
+  "Production date" : "Production Date",
+  "QTY" : "Quantity",
+  "Stock file must be Excel File" : "Stock file must be Excel File"
+  
+  
+  
+
 }

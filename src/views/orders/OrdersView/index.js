@@ -2,10 +2,13 @@ import Page from 'src/components/Page';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
+import {
+    Box,
+    Typography
+} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import UploadSection from './UploadSection';
 
 // ----------------------------------------------------------------------
 
@@ -27,15 +30,18 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function StockUploadView(props) {
+function QuotationsReportView() {
     const classes = useStyles();
-    const { isLoading } = useSelector((state) => state.stockUpload);
+    const { isLoading } = useSelector((state) => state.quotationsReport);
     const { t } = useTranslation();
+
 
     return (
         <Page
-            title={t("stockUploadTab.title")}
-            className={classes.root}>
+            title={t("Orders")}
+            className={classes.root}
+        >
+
             <LoadingOverlay
                 active={isLoading}
                 styles={{
@@ -46,13 +52,17 @@ function StockUploadView(props) {
                 }}
                 spinner={
                     <LoadingScreen />
-                }>
-                <UploadSection
-                    checked={props.checked}
-                    handleChange={props.handleChange} />
+
+                }
+            >
+                <Box sx={{ pb: 5 }}>
+                    <Typography variant="h4">{t("Orders")}</Typography>
+                    <hr />
+                </Box>
             </LoadingOverlay>
+
         </Page>
     );
 }
 
-export default StockUploadView;
+export default QuotationsReportView;

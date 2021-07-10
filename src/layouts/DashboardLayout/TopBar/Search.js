@@ -52,7 +52,7 @@ Search.propTypes = {
   className: PropTypes.string
 };
 
-function Search({ className }) {
+function Search(props, { className }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const [isOpen, setOpen] = useState(false);
@@ -80,7 +80,11 @@ function Search({ className }) {
               autoFocus
               fullWidth
               disableUnderline
-              placeholder={t("Search")}
+              placeholder={t("Search by part number")}
+              id="query"
+              value={props.value}
+              onChange={props.onChange}
+              name="query"
               startAdornment={
                 <InputAdornment position="start">
                   <Box

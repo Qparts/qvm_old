@@ -44,6 +44,9 @@ const useStyles = makeStyles(() => ({
     },
     fontWeight500: {
         fontWeight: 500
+    },
+    bodyP: {
+        padding: '5px 15px 0 15px',
     }
 }));
 
@@ -54,10 +57,10 @@ const SecContainer = (props, { className, ...other }) => {
     return (
         <div className={clsx(classes.root, classes.secContainer, className)} {...other}>
             <Typography variant="h5" className={classes.secHeader}> {props.header} </Typography>
-            <Card className={classes.secBody}>
+            <Card className={clsx(classes.secBody, classes[props.bodyP])}>
                 {props.children}
             </Card>
-            <Link to='/special-offer'>
+            <Link to={props.path}>
                 <Box className={classes.secFooter}>
                     <Typography variant="caption" className={classes.more}>{props.icon}</Typography>
                     <Typography variant="body3" className={classes.fontWeight500}>{props.footer}</Typography>

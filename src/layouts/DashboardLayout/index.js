@@ -13,7 +13,8 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     minHeight: '100%',
-    overflow: 'hidden'
+    overflow: 'hidden',
+    background:'#082C3C',
   },
   main: {
     flexGrow: 1,
@@ -21,10 +22,16 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100%',
     paddingTop: APP_BAR_MOBILE + 18,
     paddingBottom: theme.spacing(4),
+   
+    
+    background: '#F6F8FC',
+    paddingLeft: theme.spacing(2),
+    paddingRight: theme.spacing(2),
     [theme.breakpoints.up('lg')]: {
       paddingTop: APP_BAR_DESKTOP + 18,
-      paddingLeft: 0,
-      // paddingRight: theme.spacing(2)
+      margin: theme.spacing(0, 1, 1,0),
+      borderBottomLeftRadius: 40,
+    borderBottomRightRadius: 40,
     }
   }
 }));

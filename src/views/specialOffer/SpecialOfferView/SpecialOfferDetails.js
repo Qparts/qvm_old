@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -7,21 +7,21 @@ import {
     Card,
     CardContent,
     Box,
-    Typography
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import clsx from 'clsx';
 import 'react-slideshow-image/dist/styles.css';
 import { getSpecialOfferDetails, setFilter } from 'src/redux/slices/specialOffer';
 import constants from 'src/utils/constants';
 import Datatable from 'src/components/table/DataTable';
+import { PATH_APP } from 'src/routes/paths';
 import SpecialOfferInfoGrid from './SpecialOfferInfoGrid';
 import SpecialOfferInfoActions from './SpecialOfferInfoActions';
 import SpecialOfferInfoHead from './SpecialOfferInfoHead';
 import Advertisement from "./../../../components/Ui/Advertise";
 import CardFoot from "../../../components/Ui/CardFoot";
 import BackBtn from "../../../components/Ui/BackBtn";
-import { Orders, Search } from '../../../icons/icons';
+import { OrdersArrow, Search } from '../../../icons/icons';
+import TableAction from '../../../components/Ui/TableAction';
 
 // ----------------------------------------------------------------------
 
@@ -52,29 +52,6 @@ const useStyles = makeStyles((theme) => ({
         background: '#F6F8FC',
         boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
         borderRadius: '20px',
-    },
-    offerDetailsGridActionsIcon: {
-        marginRight: '5px'
-    },
-    offerDetailsGridFlex: {
-        display: 'flex',
-    },
-    hoverLink: {
-        marginRight: '15px',
-        '&:last-of-type': {
-            marginRight: 0
-        },
-        '& span': {
-            color: '#CED5D8'
-        },
-        '&:hover': {
-            '& span': {
-                color: theme.palette.primary.main
-            },
-            '& $svg path': {
-                fill: theme.palette.primary.main
-            }
-        },
     }
 }));
 
@@ -111,7 +88,7 @@ function SpecialOfferDetails({ specialOfferId }) {
     }, [searchTerm])
 
     const handleBackToOffersMenu = () => {
-        history.goBack();
+        history.push(PATH_APP.general.specialOffer);
     };
 
     const handleListView = () => {
@@ -124,13 +101,14 @@ function SpecialOfferDetails({ specialOfferId }) {
 
     const showDetailsElement = (item) => {
         return (
-            <Box className={clsx(classes.offerDetailsGridFlex)}>
-                <Link to='/dashboard' className={classes.hoverLink}><Search width='15' height='15' fill='#CED5D8' /> </Link>
-                <Link to='/dashboard' className={clsx(classes.offerDetailsGridFlex, classes.hoverLink)}>
-                    <Orders width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} className={classes.offerDetailsGridActionsIcon} />
-                    <Typography variant="body4">{t("order the offer")}</Typography>
-                </Link>
-            </Box>
+            <TableAction
+                type='offerActions'
+                title={t("order the offer")}
+                textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
+                icon={<Search width='15' height='15' fill='#CED5D8' />}
+                link='/app/dashboard'
+                linkSearch='/app/dashboard'
+                mrItem="mrItem" />
         )
     }
 
@@ -196,7 +174,11 @@ function SpecialOfferDetails({ specialOfferId }) {
                                 />
                             </Grid>
                             <Grid item xs={12} md={3}>
-                                <Advertisement width='100%' height='250px' url='/static/icons/ic_chrome.svg' />
+                                <Advertisement
+                                    url='/static/images/banner-300.jpg'
+                                    width='100%'
+                                    height='250px'
+                                    advertiseMt="advertiseMt" />
                             </Grid>
                         </Grid>
                         :

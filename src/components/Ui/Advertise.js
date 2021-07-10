@@ -1,17 +1,20 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles(() => ({
     root: {},
     advertise: {
-        margin: '34px auto 0',
         '& $img': {
             width: '100%',
             height: '100%'
         }
+    },
+    advertiseMt: {
+        margin: '34px auto 0',
     }
 }));
 
@@ -20,7 +23,7 @@ const useStyles = makeStyles(() => ({
 const Advertisement = (props) => {
     const classes = useStyles();
     return (
-        <div className={classes.advertise} style={{ width: props.width, height: props.height }}>
+        <div className={clsx(classes.advertise, classes[props.advertiseMt])} style={{ width: props.width, height: props.height }}>
             <Link to='/app/dashboard'>
                 <img src={props.url} alt='Advertise' />
             </Link>

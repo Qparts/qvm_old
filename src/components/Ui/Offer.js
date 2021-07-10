@@ -1,6 +1,4 @@
 import React from 'react';
-import { useHistory } from "react-router";
-import { useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -11,9 +9,7 @@ import {
     Typography,
     List,
 } from '@material-ui/core';
-import { setSelectedOffer } from 'src/redux/slices/specialOffer';
 import { Calender } from '../../icons/icons';
-
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +35,6 @@ const useStyles = makeStyles((theme) => ({
         overflow: 'hidden',
         textOverflow: 'ellipsis',
         width: '85%',
-        cursor: 'pointer'
     },
     companyName: {
         color: '#526C78',
@@ -120,10 +115,8 @@ const useStyles = makeStyles((theme) => ({
 // ----------------------------------------------------------------------
 
 const Offer = (props, { className, ...other }) => {
-    const dispatch = useDispatch();
     const classes = useStyles();
     const { t } = useTranslation();
-    const history = useHistory();
 
     const partsAvatars = props.parts;
     const partsAvatarsPlus = partsAvatars.length - 4;
@@ -138,11 +131,7 @@ const Offer = (props, { className, ...other }) => {
             <Typography variant="body4" className={classes.companyName}>{props.company}</Typography>
             <Typography
                 variant="body3"
-                className={classes.offerHeader}
-                onClick={() => {
-                    history.push(`/app/special-offer/${props.specialOffer.id}`);
-                    dispatch(setSelectedOffer({ selectedOffer: props.specialOffer }));
-                }}>
+                className={classes.offerHeader}>
                 {props.offer}
             </Typography>
             <Box sx={{ display: 'flex' }}>

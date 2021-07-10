@@ -3,8 +3,7 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    Container,
-    Grid
+    Box
 } from '@material-ui/core';
 import CatalogSearch from './CatalogSearch';
 import CarDetails from './CarDetails';
@@ -59,21 +58,19 @@ function CatalogView() {
                     },
                 }}
                 spinner={<LoadingScreen />}>
-                <Container >
-                    {showCarInfo == true ?
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={10}>
-                                <CarDetails />
-                            </Grid>
-                            <Grid item xs={12} md={2}>
-                                <Advertisement
-                                    url='/static/icons/ic_chrome.svg'
-                                    width='120px'
-                                    height='600px' />
-                            </Grid>
-                        </Grid> : <CatalogSearch />
-                    }
-                </Container>
+                {showCarInfo == true ?
+                    <Box display="flex">
+                        <Box flexGrow={1}>
+                            <CarDetails />
+                        </Box>
+                        <Box sx={{ paddingLeft: 2 }} >
+                            <Advertisement
+                                url='/static/images/banner120.png'
+                                width='120px'
+                                height='600px' />
+                        </Box>
+                    </Box> : <CatalogSearch />
+                }
             </LoadingOverlay>
         </Page>
     );

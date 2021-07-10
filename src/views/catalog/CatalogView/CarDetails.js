@@ -10,7 +10,6 @@ import {
 import Link from "@material-ui/core/Link";
 import NavigateNextIcon from "@material-ui/icons/NavigateNext";
 import { useTranslation } from 'react-i18next';
-import CarFilter from './CarFilter';
 import CarItems from './CarItems';
 import { disappearBreadcrumbs, handleBackAction } from 'src/redux/slices/catalog';
 import GroupItems from './GroupItems';
@@ -53,7 +52,7 @@ function CarDetails() {
                     separator={<NavigateNextIcon fontSize="small" />}
                     aria-label="breadcrumb"
                     className="breadcrumb-custom"
-                    style={{ marginBottom: '13px' }}
+                    style={{ marginBottom: '16px' }}
                 >
                     <Link color="inherit"
                         style={{ cursor: 'pointer' }}
@@ -65,11 +64,7 @@ function CarDetails() {
                 </Breadcrumbs>
             }
             {groups.length == 0 ?
-                <>
-                    {fromList && <CarFilter />}
-                    <Box sx={{ mt: 3 }} />
-                    <CarItems />
-                </> :
+                <CarItems /> :
                 <Card className={classes.carDetailsCont}>
                     <CatalogHead />
                     <Box className={classes.backCont}>

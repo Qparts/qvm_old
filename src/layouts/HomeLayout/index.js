@@ -10,6 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: { height: '100%' },
   content: { 
     minHeight: '100%',
+    background:'#F6F8FC',
    },
 
 }));
