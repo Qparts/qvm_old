@@ -77,7 +77,7 @@ function PartDetails() {
                                                                 )
                                                             })
                                                         :
-                                                        <ListItemText primary={t("searchTab.NoContact")} />
+                                                        <ListItemText primary={t("no contacts found")} />
                                                 }
 
                                             </ListItem>

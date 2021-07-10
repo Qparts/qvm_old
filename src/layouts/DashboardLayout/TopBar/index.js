@@ -16,7 +16,7 @@ import { Box, AppBar, Hidden, Toolbar, IconButton } from '@material-ui/core';
 
 const DRAWER_WIDTH = 130;
 const APPBAR_MOBILE = 64;
-const APPBAR_DESKTOP = 92;
+const APPBAR_DESKTOP = 69;
 
 const useStyles = makeStyles((theme) => ({
   root: {

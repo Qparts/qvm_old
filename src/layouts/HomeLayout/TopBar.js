@@ -33,17 +33,14 @@ import { useTranslation } from 'react-i18next';
 import { red } from '@material-ui/core/colors';
 import { pxToRem } from 'src/utils/formatFontSize';
 // ----------------------------------------------------------------------
-
 const MENU_LINKS = [
-  { title: 'home', icon: homeFill, href: '/' },
-  { title: 'prices', icon: roundStreetview, href: PATH_HOME.dashboard },
-  { title: 'contactUs', icon: roundSpeed, href: PATH_HOME.dashboard },
+  { title: 'home', icon: homeFill, href: PATH_PAGE.common.home },
+  { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.price },
+  { title: 'contactUs', icon: roundSpeed, href: PATH_PAGE.common.contactUs },
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
 ];
-
 const APP_BAR_MOBILE = 64;
-const APP_BAR_DESKTOP = 96;
-
+const APP_BAR_DESKTOP = 70;
 const useStyles = makeStyles((theme) => ({
   root: {},
   toolbar: {
@@ -57,7 +54,10 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   isHome: {
-    color: theme.palette.common.white
+    color: theme.palette.common.white,
+    '&:hover': {
+      color: theme.palette.text.disabled,
+    }
   },
   isDesktopActive: {
     color: theme.palette.secondary.lighter
@@ -71,12 +71,6 @@ const useStyles = makeStyles((theme) => ({
     )
   },
   onScroll: {
-    '& $toolbar': {
-      backgroundColor: theme.palette.secondary.darker
-    },
-    // '& $isHome': {
-    //   color: theme.palette.text.primary
-    // },
     [theme.breakpoints.up('md')]: {
       '& $toolbar': {
         height: APP_BAR_DESKTOP - 20
@@ -85,6 +79,23 @@ const useStyles = makeStyles((theme) => ({
   },
   navButton: {
     fontSize: pxToRem(17),
+    boxShadow:'none',
+
+  },
+  whiteBtn:{
+    background: theme.palette.grey[0],
+    color:theme.palette.primary.main,
+    '&:hover':{
+      color: theme.palette.grey[0],
+    },
+  },
+  transparentNav:{
+    background: 'transparent',
+    '&$onScroll':{
+      '& $toolbar': {
+        backgroundColor: theme.palette.secondary.darker
+      },
+    }
   }
 }));
 
@@ -140,9 +151,6 @@ function TopBar() {
             activeClassName={classes.isMobileActive}
             sx={{ color: 'text.secondary' }}
           >
-            <ListItemIcon>
-              <Icon icon={link.icon} width={20} height={20} />
-            </ListItemIcon>
             <ListItemText>{link.title}</ListItemText>
           </MenuItem>
         ))}
@@ -152,9 +160,10 @@ function TopBar() {
 
   return (
     <AppBar
-      color="transparent"
-      className={clsx(classes.root, { [classes.onScroll]: offset })}
+      color='inherit'
+      className={clsx(classes.root, { [classes.onScroll]: offset }, {[classes.transparentNav]: isHome})}
       sx={{ boxShadow: 'none' }}
+      
     >
       <Toolbar disableGutters className={classes.toolbar}>
         <Container
@@ -181,6 +190,7 @@ function TopBar() {
             size="large"
             href={PATH_PAGE.auth.register}
             className={classes.navButton}
+            className={clsx(classes.navButton , {[classes.whiteBtn]: isHome})}
           >
             {t("registeration")}
           </Button>

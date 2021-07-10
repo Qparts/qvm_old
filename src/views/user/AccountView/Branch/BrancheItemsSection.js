@@ -8,6 +8,15 @@ import 'react-slideshow-image/dist/styles.css'
 import { loadBranches } from 'src/redux/slices/branches';
 import PersonAddIcon from '@material-ui/icons/PersonAdd';
 import Button from "src/components/button/CustomButton";
+import Dialog from '@material-ui/core/Dialog';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import DialogContent from '@material-ui/core/DialogContent';
+import AddBranch from './AddBranch';
+import AddUser from './addUser/AddUser';
+import AddUserVerification from './addUser/AddUserVerification';
+import {
+    Typography
+} from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
@@ -22,19 +31,20 @@ function BrancheItemsSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { themeDirection } = useSelector((state) => state.settings);
-    const { branches } = useSelector((state) => state.branches);
+    const { branches, verificationMode, verifiedEmail } = useSelector((state) => state.branches);
     const { countries } = useSelector(
         (state) => state.authJwt
     );
     const [page, setPage] = useState(0);
-    // const [branches, setBranches] = useState([]);
+    const [addUserIsOpen, setAddUserIsOpen] = useState(false);
+    const [selectedBranch, setSelectedBranch] = useState(null);
 
 
     useEffect(() => {
         dispatch(loadBranches(countries));
     }, [])
 
-    const noChildComponent = () => {
+    const noChildComponent = (branch) => {
         return (
             <div className="text-center py-4">
                 <PersonAddIcon fontSize="large" color="disabled" />
@@ -48,8 +58,12 @@ function BrancheItemsSection() {
                     color="primary"
                     className="mx-2"
                     round
+                    onClick={() => {
+                        setAddUserIsOpen(true);
+                        setSelectedBranch(branch);
+                    }}
                 >
-                    Add User
+                    {t("Add User")}
                 </Button>
             </div>
         )
@@ -63,19 +77,19 @@ function BrancheItemsSection() {
             <Datatable
                 header={[
                     {
-                        name: t("setting.name"),
+                        name: t("Name"),
                         attr: themeDirection == 'ltr' ? 'branchName' : 'branchNameAr',
                     },
                     {
-                        name: t("setting.country"),
+                        name: t("Country"),
                         attr: themeDirection == 'ltr' ? 'countryName' : 'countryNameAr',
                     },
                     {
-                        name: t("setting.region"),
+                        name: t("Region"),
                         attr: themeDirection == 'ltr' ? 'regionName' : 'regionNameAr',
                     },
                     {
-                        name: t("setting.city"),
+                        name: t("City"),
                         attr: themeDirection == 'ltr' ? 'cityName' : 'cityNameAr',
 
                     }
@@ -100,12 +114,50 @@ function BrancheItemsSection() {
                 hasChild={true}
                 datatable={branches}
                 showChildNumbers={true}
-                noChildComponent = {noChildComponent}
-                childTitle="Users"
+                noChildComponent={noChildComponent}
+                childTitle={t("Users")}
                 page={page}
                 isLazy={false}
             />
 
+
+
+            <Dialog
+                aria-labelledby="customized-dialog-title"
+                open={addUserIsOpen}
+                className={classes.root}
+            >
+                <DialogTitle>
+                    <Typography variant="h6" component="div">
+                        {t("Add New User")}
+                    </Typography>
+                </DialogTitle>
+                <DialogContent>
+                    {verificationMode == null || verifiedEmail == null ?
+                        <AddUser setAddUserIsOpen={setAddUserIsOpen}
+                            selectedBranch={selectedBranch}
+                            setSelectedBranch={setSelectedBranch} />
+                        :
+                        <>
+                            {
+                                verificationMode == "email" ?
+                                    <h6 className="mb-0 mt-3 d-block">
+                                        {t("Check your email to get verification code")}
+                                    </h6>
+                                    :
+                                    <h6 className="mb-0 mt-3 d-block">
+                                        {t("Check your mobile to get verification code")}
+                                    </h6>
+                            }
+
+                            <Box sx={{ mb: 3 }} />
+
+                            <AddUserVerification setAddUserIsOpen={setAddUserIsOpen} />
+                        </>
+
+                    }
+                </DialogContent>
+            </Dialog>
 
 
         </Box >

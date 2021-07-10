@@ -22,6 +22,14 @@ export const PATH_PAGE = {
     verify: path(ROOTS.auth, '/verify'),
     confirm: path(ROOTS.auth, '/confirm')
   },
+  common: {
+    prices: path('' ,  '/prices'),
+    privacy: path('' ,  '/privacy-policy'),
+    terms: path('' ,  '/term-of-use'),
+    home: path('' ,  '/'),
+    contactUs: path('' ,  '/contact-us'),
+    price: path('' ,  '/price')
+  }
 };
 
 export const PATH_HOME = {
@@ -41,6 +49,7 @@ export const PATH_APP = {
     specialOffer: path(ROOTS.app, '/special-offer'),
     specialOfferDetails: path(ROOTS.app, '/special-offer/:id'),
     quotationsReport: path(ROOTS.app, '/quotations-report'),
+    upgradeSubscription: path(ROOTS.app, '/upgrade-subscription'),
   },
 
   management: {

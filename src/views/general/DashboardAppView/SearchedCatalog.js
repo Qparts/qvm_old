@@ -49,7 +49,7 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   catalogSearch: {
-    margin: '26px auto 0',
+    margin: '34px auto 0',
     boxShadow: '0px 4px 8px rgba(20, 69, 91, 0.03)',
     borderRadius: 20,
     border: '1px solid #E7F0F7',
@@ -66,7 +66,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function ApplicationItem({ app }) {
+function CatalogItem({ app }) {
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
@@ -89,19 +89,19 @@ function ApplicationItem({ app }) {
         <img src={shortcut} alt={name} width={24} height={24} />
       </Box>
 
-      <Box sx={{ flexGrow: 1, minWidth: 160, margin: theme.spacing(0, 2) }}>
-        <Typography variant="body2" sx={{ color: '#7E8D99' }}>{t("Structure No")}</Typography>
-        <Typography variant="subtitle2">{name}</Typography>
+      <Box sx={{ flexGrow: 1, minWidth: 160, margin: theme.spacing(0, 0, 0, 2) }}>
+        <Typography variant="caption" sx={{ color: '#7E8D99' }}>{t("Structure No")}</Typography>
+        <Typography variant="body1">{name}</Typography>
       </Box>
     </div>
   );
 }
 
-TopRelatedApplications.propTypes = {
+SearchedCatalog.propTypes = {
   className: PropTypes.string
 };
 
-function TopRelatedApplications({ className, ...other }) {
+function SearchedCatalog({ className, ...other }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
@@ -111,13 +111,12 @@ function TopRelatedApplications({ className, ...other }) {
       <CardContent className={classes.CardCont}>
         <Scrollbars>
           {APPLICATIONS.map((app) => (
-            <ApplicationItem key={app.name} app={app} />
+            <CatalogItem key={app.name} app={app} />
           ))}
         </Scrollbars>
         <Link to='/catalog'>
-          <Typography variant="h5" sx={{
+          <Typography variant="body3" sx={{
             color: '#F20505',
-            fontWeight: 500,
             background: 'linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, #FFFFFF 85.42%)',
             borderRadius: '0px 0px 20px 20px',
             position: 'absolute',
@@ -139,4 +138,4 @@ function TopRelatedApplications({ className, ...other }) {
   );
 }
 
-export default TopRelatedApplications;
+export default SearchedCatalog;

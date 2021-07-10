@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
-import CustomInput from "./CustomInput";
-import Button from "./button/CustomButton";
-import { Search } from "@material-ui/icons";
 import { useTranslation } from "react-i18next";
+import { Box, FormControl, } from '@material-ui/core';
+import Button from "../components/Ui/Button";
+import CustomInput from "../components/Ui/Input";
 import Form from './Form';
 
 
 export default function SearchTable(props) {
-  //const classes = useStyles();
   const [query, setQuery] = useState("");
 
   const { currentTab = null } = props;
@@ -33,34 +32,23 @@ export default function SearchTable(props) {
 
   return (
     <Form onSubmit={handleQuerySubmit} id="search-form">
-      <div className="input-group d-flex align-items-end row">
-        <div className="col">
-          <CustomInput
-            labelText={t("common.search")}
-            id="query"
-            value={query}
-            inputProps={{
-              onChange: handleQueryChange,
-              name: "query",
-            }}
-            formControlProps={{
-              fullWidth: true,
-            }}
-          />
-        </div>
-        <div className="col-auto px-0">
-          <Button
-            type="submit"
-            justIcon
-            round
-            color="primary"
-            aria-label="edit"
-            disabled={props.checkDisabled && query.length < 3}
-          >
-            <Search />
-          </Button>
-        </div>
-      </div>
+      <FormControl required style={{ width: '100%' }}>
+        <CustomInput
+          label={t("Search")}
+          type='text'
+          id="query"
+          value={query}
+          onChange={handleQueryChange}
+          name="query"
+        />
+      </FormControl>
+      <Box sx={{ mt: 3 }} />
+      <Button
+        type="submit"
+        disabled={props.checkDisabled && query.length < 3}
+      >
+        {t("Car Details")}
+      </Button>
     </Form>
   );
 }

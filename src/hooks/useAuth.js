@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
-import { login, register, logout, verify, forgotPassword, validateResetToken , resetPassword } from 'src/redux/slices/authJwt';
+import { login, register, logout, verify, forgotPassword, validateResetToken, resetPassword } from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +32,7 @@ export default function useAuth(method = 'jwt') {
           })
         ),
 
-      register: ({ email, password, mobile, companyName, name, countryId }) =>
+      register: ({ email, password, mobile, companyName, name, countryId }) => {
         dispatch(
           register({
             email: email,
@@ -44,7 +44,10 @@ export default function useAuth(method = 'jwt') {
             regionId: "1",
             cityId: "1",
           })
-        ),
+        );
+
+      }
+      ,
 
       verify: ({ email, code }) => dispatch(
         verify({ email, code })

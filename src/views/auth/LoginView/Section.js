@@ -31,7 +31,7 @@ function Section({ className }) {
   return (
     <Card className={clsx(classes.root, className)}>
       <Typography variant="h3" sx={{ px: 5, mt: 5, mb: 15 }}>
-        {t("common.welcomeBack")}
+        {t("Hi, Welcome Back")}
       </Typography>
       <img src="/static/illustrations/illustration_login.svg" alt="login" />
     </Card>

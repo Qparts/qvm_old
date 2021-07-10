@@ -3,7 +3,6 @@
 export default function Button({ theme }) {
   return {
     MuiButton: {
-      
       styleOverrides: {
         root: {
           borderRadius: 16,
@@ -12,7 +11,6 @@ export default function Button({ theme }) {
           }
         },
         sizeLarge: {
-          
           height: 48
         },
         containedInherit: {

@@ -25,7 +25,7 @@ function ForgotPasswordForm({ formik }) {
           fullWidth
           {...getFieldProps('email')}
           type="email"
-          label={t("forgotPassword.email")}
+          label={t("Email")}
           error={
             Boolean(touched.email && errors.email) ||
             emailError(errors.afterSubmit).error
@@ -43,7 +43,7 @@ function ForgotPasswordForm({ formik }) {
             variant="contained"
             pending={isSubmitting}
           >
-            {t("forgotPassword.resetPassword")}
+            {t("Reset Password")}
           </LoadingButton>
         </Box>
       </Form>

@@ -14,7 +14,6 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import searchFill from '@iconify-icons/eva/search-fill';
 import { Icon } from '@iconify/react';
 import {
-    TextField,
     Typography,
     OutlinedInput,
     InputAdornment
@@ -22,7 +21,7 @@ import {
 import Datatable from 'src/components/table/DataTable';
 import { useTranslation } from 'react-i18next';
 import constants from 'src/utils/constants';
-
+import CustomButton from 'src/components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -65,9 +64,18 @@ function AvailabilityPartsSection() {
     };
 
 
-    const showDetails = (item) => {
+    const showDetailsAction = (item) => {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
     }
+
+    const showDetailsElement = (item) => {
+        return <CustomButton
+            onClick={() => showDetailsAction(item)}
+        >
+            {t("Details")}
+        </CustomButton>
+    }
+
 
     useEffect(() => {
         const delayDebounceFn = setTimeout(() => {
@@ -91,7 +99,7 @@ function AvailabilityPartsSection() {
                     aria-controls="panel1a-content"
                     id="panel1a-header"
                 >
-                    <Typography>{t("searchTab.availability")}</Typography>
+                    <Typography>{t("Availability")}</Typography>
                 </AccordionSummary>
                 <AccordionDetails>
                     <OutlinedInput
@@ -101,7 +109,7 @@ function AvailabilityPartsSection() {
                             dispatch(setFilter({ filter: e.target.value }));
                             setSearchTerm(e.target.value);
                         }}
-                        placeholder={t("searchTab.searchByPartNO")}
+                        placeholder={t("Search by part number")}
                         startAdornment={
                             <InputAdornment position="start">
                                 <Box
@@ -118,30 +126,31 @@ function AvailabilityPartsSection() {
                     <Datatable
                         header={[
                             {
-                                name: t("searchTab.partNo"),
+                                name: t("Part Number"),
                                 attr: 'partNumber',
                             },
                             {
-                                name: t("searchTab.brand"),
+                                name: t("Brand"),
                                 attr: 'brandName',
                             },
                             {
-                                name: t("searchTab.companyName"),
+                                name: t("Company Name"),
                                 isMapped: true,
                                 mapIndex: 0,
                                 mappedAttribute: themeDirection == 'ltr' ? 'name' : 'nameAr',
                                 attr: 'companyId'
                             },
                             {
-                                name: t("searchTab.averagePrice"),
+                                name: t("Average market price"),
                                 attr: 'retailPrice'
                             }
                         ]}
 
                         actions={[
                             {
-                                name: t("searchTab.details"),
-                                action: showDetails,
+                                name: t("Details"),
+                                // action: showDetails,
+                                element: showDetailsElement
                             }
                         ]}
                         datatable={productResult}
@@ -152,6 +161,7 @@ function AvailabilityPartsSection() {
                         maps={[companies]}
                         size={searchSize}
                         rowsPerPage={rowsPerPage}
+                        hasPagination={true}
 
                     />
 
@@ -166,7 +176,7 @@ function AvailabilityPartsSection() {
             >
                 <DialogTitle>
                     <Typography variant="h6" component="div">
-                        {t("searchTab.availabilityTitle")}
+                        {t("Availability details")}
                     </Typography>
                 </DialogTitle>
                 <DialogContent dividers sx={{ p: 2 }}>

@@ -3,10 +3,8 @@ import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-    Box,
     Container,
-    Typography,
-    Divider
+    Grid
 } from '@material-ui/core';
 import CatalogSearch from './CatalogSearch';
 import CarDetails from './CarDetails';
@@ -14,7 +12,7 @@ import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import { cleanup } from 'src/redux/slices/catalog';
-// import { Roller } from "react-spinners-css";
+import Advertisement from "./../../../components/Ui/Advertise";
 
 // ----------------------------------------------------------------------
 
@@ -50,10 +48,8 @@ function CatalogView() {
 
     return (
         <Page
-            title={t("catalogTab.title")}
-            className={classes.root}
-        >
-
+            title={t("Parts Catalog")}
+            className={classes.root}>
             <LoadingOverlay
                 active={isLoading}
                 styles={{
@@ -62,24 +58,23 @@ function CatalogView() {
                         height: "100%",
                     },
                 }}
-                spinner={
-                    <LoadingScreen />
-
-                }
-            >
+                spinner={<LoadingScreen />}>
                 <Container >
-                    <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("catalogTab.title")}</Typography>
-                        <Divider />
-                    </Box>
                     {showCarInfo == true ?
-                        <CarDetails /> :
-                        <CatalogSearch />
+                        <Grid container spacing={2}>
+                            <Grid item xs={12} md={10}>
+                                <CarDetails />
+                            </Grid>
+                            <Grid item xs={12} md={2}>
+                                <Advertisement
+                                    url='/static/icons/ic_chrome.svg'
+                                    width='120px'
+                                    height='600px' />
+                            </Grid>
+                        </Grid> : <CatalogSearch />
                     }
-
                 </Container>
             </LoadingOverlay>
-
         </Page>
     );
 }

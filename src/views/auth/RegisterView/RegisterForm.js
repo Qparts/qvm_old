@@ -13,7 +13,8 @@ import {
   TextField,
   IconButton,
   InputAdornment,
-  NativeSelect
+  Typography,
+  Link
 } from '@material-ui/core';
 import { LoadingButton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
@@ -31,6 +32,7 @@ function RegisterForm({ formik }) {
   const { countries } = useSelector(
     (state) => state.authJwt
   );
+  const { themeDirection } = useSelector((state) => state.settings);
 
 
 
@@ -42,7 +44,7 @@ function RegisterForm({ formik }) {
         <TextField
           fullWidth
           name="email"
-          label={t("signup.companyName")}
+          label={t("Company Name")}
           {...getFieldProps('companyName')}
           error={Boolean(touched.companyName && errors.companyName)}
           helperText={touched.companyName && errors.companyName}
@@ -53,7 +55,7 @@ function RegisterForm({ formik }) {
           fullWidth
           name="email"
           type="email"
-          label={t("signup.email")}
+          label={t("Email")}
           {...getFieldProps('email')}
           error={
             Boolean(touched.email && errors.email) ||
@@ -68,21 +70,21 @@ function RegisterForm({ formik }) {
 
         <Grid container >
           <Grid item xs={5} >
-            <Select
-              labelId="countryId"
+            <TextField
+              style={{ paddingInlineEnd: 10 }}
+              select
               id="countryId"
               name="countryId"
               {...getFieldProps('countryId')}
+              SelectProps={{ native: true }}
             >
-              {countries.map((country) => (
-                <MenuItem
-                  key={country.id}
-                  value={country.id}
-                >
-                  (+{country.countryCode}) {document.body.dir === "rtl" ? country.nameAr : country.name}
-                </MenuItem>
+              {countries.map((option, index) => (
+                <option key={index} value={option.id}>
+                  (+{option.countryCode}) {themeDirection === "rtl" ? option.nameAr : option.name}
+                </option>
               ))}
-            </Select>
+            </TextField>
+
           </Grid>
 
           <Grid item xs={7}>
@@ -90,7 +92,7 @@ function RegisterForm({ formik }) {
             <TextField
               fullWidth
               name="phone"
-              label={t("signup.phone")}
+              label={t("Mobile")}
               {...getFieldProps('phone')}
               error={Boolean(touched.phone && errors.phone)}
               helperText={touched.phone && errors.phone}
@@ -105,7 +107,7 @@ function RegisterForm({ formik }) {
         <TextField
           fullWidth
           name="name"
-          label={t("signup.name")}
+          label={t("Name")}
           {...getFieldProps('name')}
           error={Boolean(touched.name && errors.name)}
           helperText={touched.name && errors.name}
@@ -116,7 +118,7 @@ function RegisterForm({ formik }) {
         <TextField
           fullWidth
           type={showPassword ? 'text' : 'password'}
-          label={t("signup.password")}
+          label={t("Password")}
           {...getFieldProps('password')}
           InputProps={{
             endAdornment: (
@@ -139,6 +141,21 @@ function RegisterForm({ formik }) {
             passwordError(errors.afterSubmit).helperText
           }
         />
+        <Typography
+            variant="body2"
+            align="center"
+            sx={{ color: 'text.secondary', mt: 3 }}
+          >
+            {t("By registering you agree on QVM  and QVM")}&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              {t("Terms of Use")}
+            </Link>
+            &nbsp;{t("and QVM")}&nbsp;
+            <Link underline="always" sx={{ color: 'text.primary' }}>
+              {t("Privacy Policy")}
+            </Link>
+            .
+          </Typography>
         <Box sx={{ mt: 3 }}>
           <LoadingButton
             fullWidth
@@ -147,7 +164,7 @@ function RegisterForm({ formik }) {
             variant="contained"
             pending={isSubmitting}
           >
-            {t("signup.signup")}
+            {t("Signup")}
           </LoadingButton>
         </Box>
       </Form>

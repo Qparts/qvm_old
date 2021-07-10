@@ -91,24 +91,24 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-NewInvoice.propTypes = {
+SearchedParts.propTypes = {
   className: PropTypes.string
 };
 
-function NewInvoice({ className, ...other }) {
+function SearchedParts({ className, ...other }) {
   const classes = useStyles();
   const { t } = useTranslation();
 
   return (
     <Card className={clsx(classes.root, classes.partsSearch, className)} {...other}>
       <Scrollbars>
-        <TableContainer sx={{ minWidth: 720 }}>
+        <TableContainer>
           <Table>
             <TableHead className={classes.partsSearchHead}>
               <TableRow>
-                <TableCell>{t('Part No')}</TableCell>
-                <TableCell>{t('Lowest price')}</TableCell>
-                <TableCell>{t("quantity")}</TableCell>
+                <TableCell><Typography variant="subtitle2">{t('Part No')}</Typography></TableCell>
+                <TableCell><Typography variant="subtitle2">{t('Lowest price')}</Typography></TableCell>
+                <TableCell><Typography variant="subtitle2">{t("quantity")}</Typography></TableCell>
                 <TableCell></TableCell>
               </TableRow>
             </TableHead>
@@ -131,10 +131,10 @@ function NewInvoice({ className, ...other }) {
                       <Avatar width={20} height={20} />
                       {/* <img src={shortcut} alt={name} width={24} height={24} /> */}
                     </Box>
-                    <Typography variant="body1" className={classes.partNumber}>{row.partNum}</Typography>
+                    <Typography variant="body3" className={classes.partNumber}>{row.partNum}</Typography>
                   </TableCell>
-                  <TableCell>{fCurrency(row.price)}</TableCell>
-                  <TableCell>{row.quantity}</TableCell>
+                  <TableCell><Typography variant="body3">{fCurrency(row.price)}</Typography></TableCell>
+                  <TableCell><Typography variant="body3">{row.quantity}</Typography></TableCell>
                   <TableCell align="right">
                     <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
                   </TableCell>
@@ -148,4 +148,4 @@ function NewInvoice({ className, ...other }) {
   );
 }
 
-export default NewInvoice;
+export default SearchedParts;

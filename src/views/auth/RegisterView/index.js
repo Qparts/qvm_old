@@ -17,9 +17,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import helper from 'src/utils/helper';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
+import { register } from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -41,17 +42,22 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'space-between',
     [theme.breakpoints.up('md')]: {
       alignItems: 'flex-start',
-      padding: theme.spacing(7, 5, 0, 7)
+      padding: theme.spacing(4, 5, 0, 7)
     }
   },
   content: {
-    maxWidth: 480,
+    maxWidth: 600,
     margin: 'auto',
     display: 'flex',
     minHeight: '100vh',
     flexDirection: 'column',
     justifyContent: 'center',
     padding: theme.spacing(12, 0)
+  },
+  heading:{
+    color: theme.palette.secondary.main,
+    lineHeight:1,
+    marginRight: '0.5rem',
   }
 }));
 
@@ -59,13 +65,14 @@ const useStyles = makeStyles((theme) => ({
 
 function RegisterView() {
   const classes = useStyles();
-  const { method, register } = useAuth();
+  const { method } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { countries, error: registerError } = useSelector(
     (state) => state.authJwt
   );
@@ -73,43 +80,60 @@ function RegisterView() {
 
 
   const goToVerification = () => {
-    if (registerError == '') {
-      enqueueSnackbar('Login success', {
-        variant: 'success',
-        action: (key) => (
-          <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-            <Icon icon={closeFill} />
-          </MIconButton>
-        )
-      });
+    enqueueSnackbar('Register success', {
+      variant: 'success',
+      action: (key) => (
+        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+          <Icon icon={closeFill} />
+        </MIconButton>
+      )
+    });
 
-      history.push(
-        PATH_PAGE.auth.verify,
-        { email: email }
-      );
-    }
+    history.push(
+      PATH_PAGE.auth.verify,
+      { email: email }
+    );
   }
 
 
   useEffect(() => {
-    if (loaded){
+    if (loaded && registerError == null) {
       goToVerification();
-      setLoaded(false);
     }
-     
+    setLoaded(false);
+
   }, [loaded])
 
 
   const RegisterSchema = Yup.object().shape({
-    companyName: Yup.string().required(t("signup.error.require.companyName")),
-    name: Yup.string().required(t("signup.error.require.name")),
-    phone: Yup.string().required(t("signup.error.require.phone")),
+    companyName: Yup.string().required(t("Company Name Is Required")),
+    name: Yup.string().required(t("Name Is Required")),
+    phone: Yup.string().required(t("Mobile Is Required")),
     email: Yup.string()
-      .email(t("signup.error.invalid.email"))
-      .required(t("signup.error.require.email")),
-    password: Yup.string().required(t("signup.error.require.password"))
+      .email(t("Email Is Invalid"))
+      .required(t("Email Is Required")),
+    password: Yup.string().required(t("Password Is Required"))
   });
 
+
+  const submit = async (values) => {
+
+    await dispatch(
+      register({
+        email: values.email,
+        password: values.password,
+        mobile: helper.reconstructPhone(parseInt(values.countryId), values.phone, countries),
+        companyName: values.companyName,
+        name: values.name,
+        countryId: values.countryId,
+        regionId: "1",
+        cityId: "1",
+      })
+    );
+
+    setEmail(values.email);
+    setLoaded(true);
+  }
 
 
   const formik = useFormik({
@@ -124,28 +148,12 @@ function RegisterView() {
     validationSchema: RegisterSchema,
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
-        await register({
-          email: values.email,
-          password: values.password,
-          mobile: helper.reconstructPhone(values.countryId, values.phone, countries),
-          companyName: values.companyName,
-          name: values.name,
-          countryId: values.countryId,
-          regionId: "1",
-          cityId: "1",
-        });
-
-
-
-
+        await submit(values);
         if (isMountedRef.current) {
           setSubmitting(false);
         }
 
-        setEmail(values.email);
-        setLoaded(true);
       } catch (error) {
-        console.error(error);
         if (isMountedRef.current) {
           setErrors({ afterSubmit: error.code || error.message });
           setSubmitting(false);
@@ -162,14 +170,14 @@ function RegisterView() {
         </RouterLink>
         <Hidden smDown>
           <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-            {t("signup.haveAccount")} &nbsp;
+            {t("Already have an account?")} &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_PAGE.auth.login}
             >
-              {t("signin.login")}
+              {t("Login")}
             </Link>
             <Languages />
           </Typography>
@@ -182,41 +190,30 @@ function RegisterView() {
 
       <Container>
         <div className={classes.content}>
-          <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h4" gutterBottom>
-                {t("signup.title")}
+          <Box display="flex" alignItems="flex-end">
+            <Box >
+              <Typography variant="h3"  className={classes.heading}>
+                {t("Signup Request in")}
               </Typography>
             </Box>
             <Box
               component="img"
-              src={`/static/icons/QVM-logo.png`}
-              sx={{ width: 50, height: 50 }}
+              src={`/static/images/QVM.svg`}
+              sx={{ width: 100}}
             />
           </Box>
 
           {method === 'firebase' && <SocialLogin />}
 
 
-          {registerError && <Alert severity="error"> {t(registerError)} </Alert>}
+          {registerError != null && <Alert severity="error">  {registerError.data ?
+            t(registerError.data) : registerError.status} </Alert>}
+
           <Box sx={{ mb: 3 }} />
+          
           <RegisterForm formik={formik} />
 
-          <Typography
-            variant="body2"
-            align="center"
-            sx={{ color: 'text.secondary', mt: 3 }}
-          >
-            {t("signup.confirmMessagePart1")}&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("signup.termsConfirmation")}
-            </Link>
-            &nbsp;{t("signup.confirmMessagePart2")}&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("signup.policyConfirmation")}
-            </Link>
-            .
-          </Typography>
+          
 
           <Hidden smUp>
             <Box sx={{ mt: 3, textAlign: 'center' }}>

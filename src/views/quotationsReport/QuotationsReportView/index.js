@@ -10,6 +10,7 @@ import {
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
+import QuotationSearchSection from './searchSection/QuotationSearchSection';
 
 // ----------------------------------------------------------------------
 
@@ -39,7 +40,7 @@ function QuotationsReportView() {
 
     return (
         <Page
-            title={t("QuotationsReportTab.title")}
+            title={t("Quotations Report")}
             className={classes.root}
         >
 
@@ -58,10 +59,11 @@ function QuotationsReportView() {
             >
                 <Container >
                     <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("QuotationsReportTab.title")}</Typography>
+                        <Typography variant="h4">{t("Quotations Report")}</Typography>
                         <hr />
                     </Box>
-
+                    
+                    <QuotationSearchSection />
 
                 </Container>
             </LoadingOverlay>

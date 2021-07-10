@@ -1,12 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import Section from './Section';
+import Section from './../RegisterView/Section';
 import { useFormik } from 'formik';
 import LoginForm from './LoginForm';
 import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
 import Logo from 'src/components/Logo';
-import SocialLogin from './SocialLogin';
 import useAuth from 'src/hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { PATH_PAGE } from 'src/routes/paths';
@@ -24,9 +23,10 @@ import {
   Typography
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
+import { getInitialize } from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -52,13 +52,18 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   content: {
-    maxWidth: 480,
+    maxWidth: 600,
     margin: 'auto',
     display: 'flex',
     minHeight: '100vh',
     flexDirection: 'column',
     justifyContent: 'center',
     padding: theme.spacing(12, 0)
+  },
+  heading:{
+    color: theme.palette.secondary.main,
+    lineHeight:1,
+    marginRight: '0.5rem',
   }
 }));
 
@@ -68,6 +73,7 @@ function LoginView() {
   const classes = useStyles();
   const { method, login } = useAuth();
   const isMountedRef = useIsMountedRef();
+  const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
@@ -77,7 +83,7 @@ function LoginView() {
 
 
   useEffect(() => {
-    if (loaded && loginError == '') {
+    if (loaded && loginError == null) {
       enqueueSnackbar('Login success', {
         variant: 'success',
         action: (key) => (
@@ -91,9 +97,9 @@ function LoginView() {
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
-      .email(t("signin.error.invalid.email"))
-      .required(t("signin.error.require.email")),
-    password: Yup.string().required(t("signin.error.require.password"))
+      .email(t("Email Is Invalid"))
+      .required(t("Email Is Required")),
+    password: Yup.string().required(t("Password Is Required"))
   });
 
   const formik = useFormik({
@@ -109,6 +115,8 @@ function LoginView() {
           email: values.email,
           password: values.password
         });
+
+        await dispatch(getInitialize());
 
         setLoaded(true);
 
@@ -140,14 +148,14 @@ function LoginView() {
               mt: { md: -2 }
             }}
           >
-            {t("signin.noAccount")} &nbsp;
+            {t("Don't have account?")} &nbsp;
             <Link
               underline="none"
               variant="subtitle2"
               component={RouterLink}
               to={PATH_PAGE.auth.register}
             >
-              {t("signin.registerNow")}
+              {t("Register now")}
             </Link>
 
             <Languages />
@@ -163,25 +171,19 @@ function LoginView() {
         <div className={classes.content}>
           <Box sx={{ mb: 5, display: 'flex', alignItems: 'center' }}>
             <Box sx={{ flexGrow: 1 }}>
-              <Typography variant="h4" gutterBottom>
-                {t("signin.title")}
+              <Typography variant="h3" gutterBottom className={classes.heading}>
+                {t("Sign into QVM Vendor Market Place")}
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                {t("common.enterDetails")}
+                {t("Enter your details below")}
               </Typography>
             </Box>
-            <Tooltip title={'QVM'}>
-              <Box
-                component="img"
-                src={`/static/icons/QVM-logo.png`}
-                sx={{ width: 50, height: 50 }}
-              />
-            </Tooltip>
+            
           </Box>
 
 
-          {loginError != '' && <Alert severity="error" sx={{ mb: 5 }}>
-            {loginError}
+          {loginError != null && <Alert severity="error" sx={{ mb: 5 }}>
+            {loginError.data ? loginError.data : loginError.status}
           </Alert>}
 
           <LoginForm formik={formik} />
