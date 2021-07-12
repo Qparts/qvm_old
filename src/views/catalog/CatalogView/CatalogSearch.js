@@ -10,7 +10,7 @@ import { getCarByVin, getCarInfo, getModels, handleModelChange } from 'src/redux
 import SearchBox from './../../../components/SearchBox';
 import Advertisement from "./../../../components/Ui/Advertise";
 import MainCard from "./../../../components/Ui/MainCard";
-import Select from "./../../../components/Ui/Select";
+import TextField from "./../../../components/Ui/TextField";
 import Button from "./../../../components/Ui/Button";
 
 // ----------------------------------------------------------------------
@@ -40,7 +40,8 @@ function CatalogSearch() {
 
                 <Grid item xs={12} md={6}>
                     <MainCard title={t("Find Catalog from List")}>
-                        <Select
+                        <TextField
+                            type='select'
                             label={t("catalog")}
                             id="catalog"
                             value={selectedCatalog ? selectedCatalog.id : ""}
@@ -55,8 +56,9 @@ function CatalogSearch() {
                                     {item.name}
                                 </MenuItem>
                             ))}
-                        </Select>
-                        <Select
+                        </TextField>
+                        <TextField
+                            type='select'
                             label={t("Car Model")}
                             id="model"
                             value={selectedModel ? selectedModel.id : ""}
@@ -72,7 +74,7 @@ function CatalogSearch() {
                                     {item.name}
                                 </MenuItem>
                             ))}
-                        </Select>
+                        </TextField>
                         <Box sx={{ mt: 3 }} />
                         <Button
                             disabled={selectedCatalog == null || selectedModel == null}

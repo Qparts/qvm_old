@@ -5,7 +5,9 @@ import { Grid, MenuItem, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { getCarInfo, getCatalogs, getModels, handleModelChange } from 'src/redux/slices/catalog';
 import Button from '../../../components/Ui/Button';
-import Select from '../../../components/Ui/Select';
+import TextField from '../../../components/Ui/TextField';
+
+// ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
     catalogHead: {
@@ -14,6 +16,7 @@ const useStyles = makeStyles((theme) => ({
     }
 }));
 
+// ----------------------------------------------------------------------
 
 export default function CatalogHead() {
     const classes = useStyles();
@@ -33,7 +36,8 @@ export default function CatalogHead() {
         <div className={classes.catalogHead}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={5}>
-                    <Select
+                    <TextField
+                        type='select'
                         label={t("catalog")}
                         id="catalog"
                         value={selectedCatalog ? selectedCatalog.id : ""}
@@ -49,10 +53,11 @@ export default function CatalogHead() {
                                 {item.name}
                             </MenuItem>
                         ))}
-                    </Select>
+                    </TextField>
                 </Grid>
                 <Grid item xs={12} md={5}>
-                    <Select
+                    <TextField
+                        type='select'
                         label={t("Car Model")}
                         id="model"
                         value={selectedModel ? selectedModel.id : ""}
@@ -68,7 +73,7 @@ export default function CatalogHead() {
                                 {item.name}
                             </MenuItem>
                         ))}
-                    </Select>
+                    </TextField>
                 </Grid>
                 <Grid item xs={12} md={2}>
                     <Box sx={{ marginTop: '18px' }}>

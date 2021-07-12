@@ -3,7 +3,6 @@ import {
     Grid,
     Box,
     Typography,
-    Avatar,
     Card,
     CardContent,
 } from '@material-ui/core';
@@ -14,7 +13,8 @@ import constants from 'src/utils/constants';
 import Helper from '../../../utils/helper'
 import { OrdersArrow, Search } from '../../../icons/icons';
 import TableAction from '../../../components/Ui/TableAction';
-import Pagination from '../../../components/Ui/Pagination'
+import Pagination from '../../../components/Ui/Pagination';
+import Avatar from '../../../components/Ui/Avatar'
 
 // ----------------------------------------------------------------------
 
@@ -91,7 +91,9 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
                             <Card className={classes.offerDetailsGridCont}>
                                 <CardContent sx={{ padding: '15px' }}>
                                     <Box className={classes.offerDetailsGridChild}>
-                                        <Avatar width={20} height={20} />
+                                        <Avatar>
+                                            <img src='/static/icons/ic_chrome.svg' width={24} height={24} />
+                                        </Avatar>
                                         <Box className={classes.offerDetailsGridInfo}>
                                             <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.main }}> {offerPro.partNumber} </Typography>
                                             <Box>

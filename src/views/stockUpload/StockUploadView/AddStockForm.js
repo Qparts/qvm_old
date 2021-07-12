@@ -17,10 +17,8 @@ import { useTranslation } from 'react-i18next';
 import { getBranches } from 'src/redux/slices/branches';
 import { Download } from '../../../icons/icons';
 import StockFileBtn from '../../../components/Ui/StockFileBtn';
-import CustomInput from '../../../components/Ui/Input';
-import Select from '../../../components/Ui/Select';
+import TextField from '../../../components/Ui/TextField';
 import CustomButton from '../../../components/Ui/Button';
-import Label from '../../../components/Ui/Label';
 
 // ----------------------------------------------------------------------
 
@@ -87,7 +85,8 @@ function AddStockForm(props) {
                     <Download width='20' height='20' fill={theme.palette.primary.main} />
                 </Button>
                 <Divider />
-                <Select
+                <TextField
+                    type='select'
                     label={t("Branch")}
                     id="branch"
                     name="branch"
@@ -102,7 +101,7 @@ function AddStockForm(props) {
                             {themeDirection == 'ltr' ? option.branchName : option.branchNameAr}
                         </MenuItem>
                     ))}
-                </Select>
+                </TextField>
                 <StockFileBtn
                     onChange={(event) => {
                         if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx') {
@@ -127,26 +126,30 @@ function AddStockForm(props) {
                 {props.checked ?
                     <>
                         <Divider />
-                        <CustomInput
-                            value=""
+                        <TextField
+                            type='input'
                             name='offerName'
-                            type='text'
                             label={t('add offer name')}
                             spaceToTop='spaceToTop' />
                         <Grid container spacing={1}>
                             <Grid item xs={12} md={6}>
-                                <Label name={t("start in")} />
-                                <CustomInput value="" name='startIn' type='date' />
+                                <TextField
+                                    type='date'
+                                    id='offerStartDate'
+                                    name='offerStartDate'
+                                    label={t("Offer Start Date")} />
                             </Grid>
                             <Grid item xs={12} md={6}>
-                                <Label name={t("ends in")} />
-                                <CustomInput value="" name='endsIn' type='date' />
+                                <TextField
+                                    type='date'
+                                    id='offerEndDate'
+                                    name='offerEndDate'
+                                    label={t("Offer End Date")} />
                             </Grid>
                         </Grid>
-                        <CustomInput
-                            value=""
+                        <TextField
+                            type='input'
                             name='discount'
-                            type='text'
                             label={t('put discount value')}
                             spaceToTop='spaceToTop' />
                     </> : ""}

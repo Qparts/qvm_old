@@ -9,7 +9,8 @@
   "reports": "Reports",
   "offers": "Offers",
   "settings": "Settings",
-  "advertise now": "Advertise Now",
+  "replacements": "Replacements",
+  "advertise": "Advertise",
   "stockUpload": "Stock Upload",
 
   "Subscriber already registered": "Subscriber already registered",
@@ -35,7 +36,6 @@
   "branch": "Branch",
   "user": "User",
   "basic": "Basic",
-  "upgrade to premium": "Upgrade to premium",
   "use basic": "Use basic",
   "attempts out of": "Attempts out of",
   "parts number in your stock": "Parts number in your stock",
@@ -507,9 +507,9 @@
   "Month": "Month",
   "Year": "Year",
   "SAR": "SAR",
-  "Subscription Information": "Subscription Information",
   "Features": "Features",
   "Subscription History": "Subscription History",
+  "Subscription": "Subscription",
   "Current Plan": "Current Plan",
   "Days": "Days",
   "Checkout": "Checkout",
@@ -544,9 +544,13 @@
   "Search Results": "Search Results",
   "Production date" : "Production Date",
   "QTY" : "Quantity",
-  "Stock file must be Excel File" : "Stock file must be Excel File"
-  
-  
-  
-
+  "Stock file must be Excel File" : "Stock file must be Excel File",
+  "since": "Since",
+  "Edit": "Edit",
+  "Delete": "Delete",
+  "The package has passed": "The package has passed",
+  "Check your email to get verification code": "Check your email to get verification code",
+  "Check your mobile to get verification code": "Check your mobile to get verification code",
+  "branch is required": "Branch is required",
+  "Logout": "Logout"
 }

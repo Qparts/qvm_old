@@ -11,7 +11,7 @@ import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
 import Advertisement from "./../../../components/Ui/Advertise";
 import SecContainerOffer from '../../../components/Ui/SecContainerOffer';
 import Slider from '../../../components/Ui/Slider';
-import Select from '../../../components/Ui/Select';
+import TextField from '../../../components/Ui/TextField';
 import Label from '../../../components/Ui/Label';
 import OfferContainer from '../../../components/Ui/OfferContainer';
 
@@ -43,7 +43,8 @@ function SpecialOfferItemsSection() {
                     {filter ?
                         <Grid container spacing={2}>
                             <Grid item xs={12} md={3}>
-                                <Select
+                                <TextField
+                                    type='select'
                                     label={t("sort by")}
                                     id="sort"
                                     name="sort"
@@ -57,10 +58,11 @@ function SpecialOfferItemsSection() {
                                     <MenuItem key="branch2" value="branch2">
                                         branch2
                                     </MenuItem>
-                                </Select>
+                                </TextField>
                             </Grid>
                             <Grid item xs={12} md={3}>
-                                <Select
+                                <TextField
+                                    type='select'
                                     label={t("location")}
                                     id="location"
                                     name="location"
@@ -74,10 +76,11 @@ function SpecialOfferItemsSection() {
                                     <MenuItem key="Alex" value="Alex">
                                         Alex
                                     </MenuItem>
-                                </Select>
+                                </TextField>
                             </Grid>
                             <Grid item xs={12} md={3}>
-                                <Select
+                                <TextField
+                                    type='select'
                                     label={t("category")}
                                     id="category"
                                     name="category"
@@ -91,7 +94,7 @@ function SpecialOfferItemsSection() {
                                     <MenuItem key="KIA" value="KIA">
                                         KIA
                                     </MenuItem>
-                                </Select>
+                                </TextField>
                             </Grid>
                             <Grid item xs={12} md={3}>
                                 <Label name={t("discount value")} />

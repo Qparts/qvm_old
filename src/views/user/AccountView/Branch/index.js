@@ -1,46 +1,30 @@
-import React, {  } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
-import BrancheItemsSection from './BrancheItemsSection';
-import BrancheActionsSection from './BrancheActionsSection';
-import { Box } from '@material-ui/core';
-
-
+import {Card, CardContent, Box} from '@material-ui/core';
+import BranchesHead from './BranchesHead';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {}
+    root: {},
+    userDataCard: {
+        background: '#F6F8FC',
+        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
+        borderRadius: '20px',
+    }
 }));
 
 // ----------------------------------------------------------------------
 
 function BrancheView() {
     const classes = useStyles();
-    const dispatch = useDispatch();
-    const { t } = useTranslation();
 
     return (
-
-        <Box sx={{ width: '100%' }}>
-            <Card >
-                <CardContent className={classes.cardContent}>
-                    <BrancheActionsSection />
-
-                    <Box sx={{ mb: 6 }} />
-
-                    <BrancheItemsSection />
-
-                </CardContent >
+        <Box>
+            <Card className={classes.userDataCard}>
+                <BranchesHead />
             </Card>
-
-
         </Box >
-
     );
 }
 

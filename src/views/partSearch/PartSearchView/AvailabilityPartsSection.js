@@ -9,7 +9,7 @@ import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../
 import constants from 'src/utils/constants';
 import LocationFilterSection from './LocationFilterSection';
 import TableAction from '../../../components/Ui/TableAction';
-import Input from 'src/components/Ui/Input';
+import TextField from 'src/components/Ui/TextField';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
 import { Plus } from "../../../icons/icons";
@@ -90,13 +90,13 @@ function AvailabilityPartsSection() {
                 header={t('Search Results')}>
                 <Box className={classes.availabilityActionsCont}>
                     <Box className={classes.availabilityActionsLeft}>
-                        <Input
+                        <TextField
+                            type='input'
                             value={filter}
                             onChange={(e) => {
                                 dispatch(setFilter({ filter: e.target.value }));
                                 setSearchTerm(e.target.value);
                             }}
-                            type='text'
                             label={t("Search by part number")}
                             selectBg='selectBg' />
                     </Box>

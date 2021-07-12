@@ -5,6 +5,7 @@ import maxLengthCheck from 'src/utils/maxLengthCheck';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, OutlinedInput, FormHelperText } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import CustomButton from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -18,12 +19,15 @@ const useStyles = makeStyles((theme) => ({
       width: 56,
       height: 56
     }
+  },
+  warnMessageAlign: {
+    textAlign: 'left'
   }
 }));
 
 // ----------------------------------------------------------------------
 
-function VerifyCodeForm({ formik, closePopup }) {
+function VerifyCodeForm({ formik }) {
   const classes = useStyles();
   const {
     values,
@@ -56,54 +60,13 @@ function VerifyCodeForm({ formik, closePopup }) {
           ))}
         </Box>
 
-        <FormHelperText error={!isValid} style={{ textAlign: 'right' }}>
+        <FormHelperText error={!isValid} className={classes.warnMessageAlign}>
           {!isValid && t("Verification Code Is Required")}
         </FormHelperText>
-        {closePopup ?
 
-          <Box sx={{ mt: 3 }}>
-
-            <div className="row">
-
-              <div className="col-md-6">
-                <LoadingButton
-                  fullWidth
-                  size="large"
-                  type="submit"
-                  variant="contained"
-                  pending={isSubmitting}
-                >
-                  {t("Verify")}
-                </LoadingButton>
-              </div>
-
-              <div className="col-md-6">
-                <LoadingButton
-                  fullWidth
-                  size="large"
-                  variant="contained"
-                  onClick={() => closePopup(false)}
-                >
-                  {t("Cancel")}
-                </LoadingButton>
-
-              </div>
-
-            </div>
-          </Box>
-          :
-
-          <Box sx={{ mt: 3 }}>
-            <LoadingButton
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-              pending={isSubmitting}
-            >
-              {t("Verify")}
-            </LoadingButton>
-          </Box>}
+        <Box sx={{ marginTop: '20px' }}>
+          <CustomButton type="submit">{t("Verify")}</CustomButton>
+        </Box>
       </Form>
     </FormikProvider>
   );

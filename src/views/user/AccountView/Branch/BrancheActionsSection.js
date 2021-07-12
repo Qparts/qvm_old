@@ -1,40 +1,33 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
-import Button from "src/components/button/CustomButton";
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
+import Button from "src/components/Ui/Button";
 import AddBranch from './AddBranch';
 import AddUser from './addUser/AddUser';
-import {
-    Box, Link, Hidden, Container,
-    Typography, Alert
-} from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import AddUserVerification from './addUser/AddUserVerification';
 import { useSnackbar } from 'notistack';
 import { MIconButton } from 'src/theme';
 import { Icon } from '@iconify/react';
 import closeFill from '@iconify-icons/eva/close-fill';
-
+import CustomDialog from '../../../../components/Ui/Dialog';
+import { Branch, User } from '../../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
-        }
+const useStyles = makeStyles(() => ({
+    branchesActions: {
+        paddingBottom: '10px',
+        borderBottom: '1px solid #CED5D8',
+    },
+    branchesActionsFlex: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: "center"
+    },
+    branchesIconMr: {
+        marginRight: "5px"
     }
 }));
 
@@ -42,8 +35,8 @@ const useStyles = makeStyles((theme) => ({
 
 function BrancheActionsSection() {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const { t } = useTranslation();
+    const theme = useTheme();
     const [addBranchIsOpen, setAddBranchIsOpen] = useState(false)
     const [addUserIsOpen, setAddUserIsOpen] = useState(false)
     const { verificationMode, verifiedEmail } = useSelector((state) => state.branches);
@@ -68,85 +61,61 @@ function BrancheActionsSection() {
 
     return (
 
-        <div className="d-flex justify-content-end">
-            {/* <h6 className="flex-fill ">{t("Branches")}</h6> */}
-            <Button
-                className="round"
-                color="primary"
-                className="mx-2"
-                round
-                simple
-                onClick={() => setAddUserIsOpen(true)}
-            >
-                {t("Add User")}
-            </Button>
-            <Button
-                color="primary"
-                round
-                className="mx-2"
-                onClick={() => setAddBranchIsOpen(true)}
+        <Box className={classes.branchesActions}>
+            <Box>
+                <Button
+                    btnBg="btnBg"
+                    btnWidth="btnWidth"
+                    onClick={() => setAddUserIsOpen(true)}
+                >
+                    <User width="18px" height="18px" fill={theme.palette.primary.main} className={classes.branchesIconMr} />
+                    {t("Add User")}
+                </Button>
+                <Button
+                    onClick={() => setAddBranchIsOpen(true)}
+                    btnWidth="btnWidth"
+                >
+                    <Branch width="14px" height="18px" fill={theme.palette.grey[0]} className={classes.branchesIconMr} />
+                    {t("Add Branch")}
+                </Button>
+            </Box>
 
-            >
-                {t("Add Branch")}
-            </Button>
-
-
-
-            <Dialog
-                onClose={() => setAddBranchIsOpen(false)}
-                aria-labelledby="customized-dialog-title"
+            <CustomDialog
                 open={addBranchIsOpen}
-                className={classes.root}
+                handleClose={() => setAddBranchIsOpen(false)}
+                title={t("Add New Branch")}
+                dialogWidth='dialogWidth'
             >
-                <DialogTitle>
-                    <Typography variant="h6" component="div">
-                        {t("Add New Branch")}
-                    </Typography>
-                </DialogTitle>
-                <DialogContent >
+                <AddBranch setAddBranchIsOpen={setAddBranchIsOpen} />
+            </CustomDialog>
 
-                    <AddBranch setAddBranchIsOpen={setAddBranchIsOpen} />
-                </DialogContent>
-            </Dialog>
-
-
-            <Dialog
-                aria-labelledby="customized-dialog-title"
+            <CustomDialog
                 open={addUserIsOpen}
-                className={classes.root}
-            >
-                <DialogTitle>
-                    <Typography variant="h6" component="div">
-                        {t("Add New User")}
-                    </Typography>
-                </DialogTitle>
-                <DialogContent>
-                    {verificationMode == null || verifiedEmail == null ?
-                        <AddUser setAddUserIsOpen={setAddUserIsOpen} />
-                        :
-                        <>
-                            {
-                                verificationMode == "email" ?
-                                    <h7 className="mb-0 mt-3 d-block">
-                                        {t("Check your email to get verification code")}
-                                    </h7>
-                                    :
-                                    <h7 className="mb-0 mt-3 d-block">
-                                        {t("Check your mobile to get verification code")}
-                                    </h7>
-                            }
+                handleClose={() => setAddUserIsOpen(false)}
+                title={t("Add New User")}>
+                {verificationMode == null || verifiedEmail == null ?
+                    <AddUser setAddUserIsOpen={setAddUserIsOpen} />
+                    :
+                    <>
+                        {
+                            verificationMode == "email" ?
+                                <Typography variant="body2" sx={{ color: theme.palette.secondary.main }}>
+                                    {t("Check your email to get verification code")}
+                                </Typography>
+                                :
+                                <Typography variant="body2" sx={{ color: theme.palette.secondary.main }}>
+                                    {t("Check your mobile to get verification code")}
+                                </Typography>
+                        }
 
-                            <Box sx={{ mb: 3 }} />
+                        <Box sx={{ mb: 3 }} />
 
-                            <AddUserVerification setAddUserIsOpen={setAddUserIsOpen} />
-                        </>
+                        <AddUserVerification setAddUserIsOpen={setAddUserIsOpen} />
+                    </>
 
-                    }
-                </DialogContent>
-            </Dialog>
-
-        </div>
-
+                }
+            </CustomDialog>
+        </Box>
     );
 }
 

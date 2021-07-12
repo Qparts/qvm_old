@@ -10,16 +10,12 @@ import { Delete, Edit } from "../../../../icons/icons";
 
 // ----------------------------------------------------------------------
 
-function BrancheItemsSection() {
+function UsersItemsSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { themeDirection } = useSelector((state) => state.settings);
-    const { branches } = useSelector((state) => state.branches);
-    const { countries } = useSelector(
-        (state) => state.authJwt
-    );
+    const { countries, loginObject } = useSelector((state) => state.authJwt);
+    const users = loginObject.company.subscribers;
     const [page, setPage] = useState(0);
-
 
     useEffect(() => {
         dispatch(loadBranches(countries));
@@ -44,25 +40,20 @@ function BrancheItemsSection() {
                 header={[
                     {
                         name: t("Name"),
-                        attr: themeDirection == 'ltr' ? 'branchName' : 'branchNameAr',
+                        attr: 'name',
                     },
                     {
-                        name: t("Country"),
-                        attr: themeDirection == 'ltr' ? 'countryName' : 'countryNameAr',
+                        name: t("Phone"),
+                        attr: 'mobile',
                     },
                     {
-                        name: t("Region"),
-                        attr: themeDirection == 'ltr' ? 'regionName' : 'regionNameAr',
-                    },
-                    {
-                        name: t("City"),
-                        attr: themeDirection == 'ltr' ? 'cityName' : 'cityNameAr',
+                        name: t("Email"),
+                        attr: 'email',
 
-                    }
-
+                    },
                 ]}
                 actions={[{ element: showDetailsElement }]}
-                datatable={branches}
+                datatable={users}
                 page={page}
                 isLazy={false}
             />
@@ -70,4 +61,4 @@ function BrancheItemsSection() {
     );
 }
 
-export default BrancheItemsSection;
+export default UsersItemsSection;

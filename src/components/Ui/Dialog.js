@@ -14,7 +14,6 @@ import CloseIcon from '@material-ui/icons/Close';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
     uploadStockBtn: {
         padding: '9px 16px',
         boxShadow: 'none',
@@ -32,7 +31,12 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.secondary.main,
         borderBottom: '1px solid #EEF1F5',
         padding: theme.spacing(2)
-    }
+    },
+    dialogWidth: {
+        [theme.breakpoints.up('sm')]: {
+            minWidth: '500px',
+        },
+    },
 }));
 
 // ----------------------------------------------------------------------
@@ -48,6 +52,7 @@ const UploadStockBtn = (props) => {
             open={props.open}
             onClose={props.handleClose}
             aria-labelledby="responsive-dialog-title"
+            classes={{paper: classes[props.dialogWidth]}}
         >
             <DialogTitle id="responsive-dialog-title" className={classes.headCol}>
                 {props.title}

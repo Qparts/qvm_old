@@ -35,8 +35,8 @@ function DashboardAppView() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { t } = useTranslation();
-
   const { specialOffers = [] } = useSelector((state) => state.specialOffer);
+  const { currentPlan } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
     if (specialOffers.length == 0) {
@@ -47,83 +47,82 @@ function DashboardAppView() {
   return (
     <Page title="Dashboard App | Minimal-UI" className={classes.root}>
 
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={9}>
-          <Grid container spacing={2}>
+      {currentPlan.status != 'A' ?
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={9}>
+            <Grid container spacing={2}>
 
-            <Grid item xs={12} md={4}>
-              <QvmInfo
-                icon={<Parts width='32' height='32' fill='#F20505' />}
-                title={t('qvm parts')}
-                number='15.000' />
-            </Grid>
+              <Grid item xs={12} md={4}>
+                <QvmInfo
+                  icon={<Parts width='32' height='32' fill='#F20505' />}
+                  title={t('qvm parts')}
+                  number='15.000' />
+              </Grid>
 
-            <Grid item xs={12} md={4}>
-              <QvmInfo
-                icon={<SearchFill width='32' height='32' fill='#F20505' />}
-                title={t('daily searches')}
-                number='569.000' />
-            </Grid>
+              <Grid item xs={12} md={4}>
+                <QvmInfo
+                  icon={<SearchFill width='32' height='32' fill='#F20505' />}
+                  title={t('daily searches')}
+                  number='569.000' />
+              </Grid>
 
-            <Grid item xs={12} md={4}>
-              <QvmInfo
-                icon={<Orders width='32' height='32' fill='#9ABECD' fillArr='#fff' />}
-                title={t('qvm orders')}
-                number='195.000'
-                active='active' />
-            </Grid>
+              <Grid item xs={12} md={4}>
+                <QvmInfo
+                  icon={<Orders width='32' height='32' fill='#9ABECD' fillArr='#fff' />}
+                  title={t('qvm orders')}
+                  number='195.000'
+                  active='active' />
+              </Grid>
 
-            <Grid item xs={12} md={12} lg={12}>
-              <Advertisement
-                url='/static/images/banner90.jpg'
-                width='728px'
-                height='90px'
-                advertiseMt="advertiseMt" />
-            </Grid>
+              <Grid item xs={12} md={12} lg={12}>
+                <Advertisement
+                  url='/static/images/banner90.jpg'
+                  width='728px'
+                  height='90px'
+                  advertiseMt="advertiseMt" />
+              </Grid>
 
-            <Grid item xs={12}>
-              <SecContainer
-                header={t('latest offers')}
-                path={PATH_APP.general.specialOffer}
-                icon={<Plus width='10' height='10' fill='#F20505' />}
-                footer={t('see all offers')}>
-                <Grid container spacing={2}>
-                  <Grid item xs={12} md={4}>
-                    <OfferContainer />
+              <Grid item xs={12}>
+                <SecContainer
+                  header={t('latest offers')}
+                  path={PATH_APP.general.specialOffer}
+                  icon={<Plus width='10' height='10' fill='#F20505' />}
+                  footer={t('see all offers')}>
+                  <Grid container spacing={2}>
+                    <Grid item xs={12} md={4}>
+                      <OfferContainer />
+                    </Grid>
                   </Grid>
-                </Grid>
-              </SecContainer>
-            </Grid>
+                </SecContainer>
+              </Grid>
 
-            <Grid item xs={12} md={8}>
-              <SecContainer
-                header={t('The most searched parts on QVM')}
-                icon={<Search width='20' height='20' fill='#F20505' />}
-                footer={t('Find the parts you need')}
-                bodyP="bodyP">
-                <SearchedParts />
-              </SecContainer>
-            </Grid>
+              <Grid item xs={12} md={8}>
+                <SecContainer
+                  header={t('The most searched parts on QVM')}
+                  icon={<Search width='20' height='20' fill='#F20505' />}
+                  footer={t('Find the parts you need')}
+                  bodyP="bodyP">
+                  <SearchedParts />
+                </SecContainer>
+              </Grid>
 
-            <Grid item xs={12} md={4}>
-              <SearchedCatalog />
-            </Grid>
+              <Grid item xs={12} md={4}>
+                <SearchedCatalog />
+              </Grid>
 
+            </Grid>
+          </Grid>
+          <Grid item xs={12} md={3} position="relative" className={classes.sideStyle}>
+            <UserInfo />
+            <Advertisement
+              url='/static/images/banner-300.jpg'
+              width='100%'
+              height='250px'
+              advertiseMt="advertiseMt" />
           </Grid>
         </Grid>
-        <Grid item xs={12} md={3} position="relative" className={classes.sideStyle}>
-          <UserInfo />
-          <Advertisement
-            url='/static/images/banner-300.jpg'
-            width='100%'
-            height='250px'
-            advertiseMt="advertiseMt" />
-        </Grid>
-      </Grid>
-
-
-
-      {/* <Grid container spacing={2}>
+        :
+        <Grid container spacing={2}>
           <Grid item xs={12} md={9}>
             <Grid container spacing={2}>
 
@@ -184,11 +183,11 @@ function DashboardAppView() {
           </Grid>
 
           <Grid item xs={12} md={12} lg={12}>
-              <Advertisement
-                url='/static/images/banner90.jpg'
-                width='728px'
-                height='90px'
-                advertiseMt="advertiseMt" />
+            <Advertisement
+              url='/static/images/banner90.jpg'
+              width='728px'
+              height='90px'
+              advertiseMt="advertiseMt" />
           </Grid>
 
           <Grid item xs={12}>
@@ -197,9 +196,9 @@ function DashboardAppView() {
               icon={<Plus width='10' height='10' fill='#F20505' />}
               footer={t('see all offers')}>
               <Grid container spacing={2}>
-                  <Grid item xs={12} md={3}>
-                    <OfferContainer />
-                  </Grid>
+                <Grid item xs={12} md={3}>
+                  <OfferContainer />
+                </Grid>
               </Grid>
             </SecContainer>
           </Grid>
@@ -219,13 +218,13 @@ function DashboardAppView() {
           </Grid>
 
           <Grid item xs={12} md={3} className={classes.sideStyle}>
-                <Advertisement
-                  url='/static/images/banner-300.jpg' 
-                  width='100%'
-                  height='250px'
-                  advertiseMt="advertiseMt"/>
+            <Advertisement
+              url='/static/images/banner-300.jpg'
+              width='100%'
+              height='250px'
+              advertiseMt="advertiseMt" />
           </Grid>
-        </Grid> */}
+        </Grid>}
 
     </Page>
   );

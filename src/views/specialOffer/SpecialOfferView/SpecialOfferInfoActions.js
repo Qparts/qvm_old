@@ -8,7 +8,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { Info, Grid as GridIcon, ListIcon } from '../../../icons/icons';
-import Input from "./../../../components/Ui/Input";
+import TextField from "./../../../components/Ui/TextField";
 
 // ----------------------------------------------------------------------
 
@@ -70,10 +70,10 @@ function SpecialOfferInfoActions(props) {
         <Box className={classes.forMoreInfoCont}>
             <Grid container spacing={2}>
                 <Grid item xs={12} md={4}>
-                    <Input
+                    <TextField
+                        type='input'
                         value={props.filter}
                         onChange={props.search}
-                        type='text'
                         label={t("Search by part number")}
                         selectBg='selectBg' />
                 </Grid>

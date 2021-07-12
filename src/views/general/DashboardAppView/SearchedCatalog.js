@@ -12,6 +12,7 @@ import {
   CardContent
 } from '@material-ui/core';
 import { PATH_APP } from 'src/routes/paths';
+import Avatar from '../../../components/Ui/Avatar'
 
 // ----------------------------------------------------------------------
 
@@ -75,20 +76,9 @@ function CatalogItem({ app }) {
 
   return (
     <div className={classes.listItem}>
-      <Box
-        sx={{
-          width: 40,
-          height: 40,
-          flexShrink: 0,
-          display: 'flex',
-          borderRadius: "50%",
-          alignItems: 'center',
-          justifyContent: 'center',
-          bgcolor: 'background.neutral'
-        }}
-      >
+      <Avatar>
         <img src={shortcut} alt={name} width={24} height={24} />
-      </Box>
+      </Avatar>
 
       <Box sx={{ flexGrow: 1, minWidth: 160, margin: theme.spacing(0, 0, 0, 2) }}>
         <Typography variant="caption" sx={{ color: '#7E8D99' }}>{t("Structure No")}</Typography>
@@ -132,7 +122,7 @@ function SearchedCatalog({ className, ...other }) {
             paddingBottom: '15px'
           }}>
             {t("Search the catalog")}
-            </Typography>
+          </Typography>
         </Link>
       </CardContent>
     </Card>

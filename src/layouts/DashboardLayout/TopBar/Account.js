@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import useAuth from 'src/hooks/useAuth';
 import { PATH_APP } from 'src/routes/paths';
 import React, { useRef, useState } from 'react';
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
 
 function Account() {
   const classes = useStyles();
+  const { t } = useTranslation();
   const history = useHistory();
   const anchorRef = useRef(null);
   const { user, logout } = useAuth();
@@ -141,7 +143,7 @@ function Account() {
             variant="outlined"
             onClick={handleLogout}
           >
-            Logout
+            {t('Logout')}
           </Button>
         </Box>
       </PopoverMenu>

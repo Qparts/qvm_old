@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
     partNumberCard: {
         padding: theme.spacing(2, 0),
-        '&:last-of-type': {
+        '&:last-of-type, &:first-of-type': {
             paddingBottom: 0
         },
     },
@@ -76,6 +76,7 @@ function Part() {
                 title={t("Part Details")}
                 handleClose={() => setPartAreaDetails(null)}
                 open={partAreaDetails != null}
+                dialogWidth='dialogWidth'
             >
                 {partAreaDetails != null && (
                     <Box>
@@ -92,9 +93,8 @@ function Part() {
                             <Typography variant='body2'>{partAreaDetails.name}</Typography>
                         </Box>
                         <Divider />
-
-                        {
-                            partAreaDetails.description.split("\n").map((item, index) => {
+                        <Box className={classes.displayFlex}>
+                            {partAreaDetails.description.split("\n").map((item, index) => {
                                 if (item)
                                     return (
                                         <>
@@ -102,13 +102,11 @@ function Part() {
                                                 <Typography className={classes.partNumberHaed} variant='body1'>{t(item.split(":")[0])}</Typography>
                                                 <Typography variant='body2'>{item.split(":")[1]}</Typography>
                                             </Box>
-                                            <Divider />
                                         </>
                                     )
-
                             })
-                        }
-
+                            }
+                        </Box>
                     </Box>
                 )}
             </CustomDialog>

@@ -1,22 +1,21 @@
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify-icons/eva/eye-fill';
 import eyeOffFill from '@iconify-icons/eva/eye-off-fill';
 import { emailError, passwordError } from 'src/utils/helpError';
-import { useSelector, useDispatch } from 'react-redux';
-import { Select, MenuItem } from "@material-ui/core";
+import { useSelector } from 'react-redux';
 import {
   Box,
   Grid,
-  TextField,
   IconButton,
   InputAdornment,
+  MenuItem
 } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
-import { cleanup } from 'src/redux/slices/branches';
+import TextField from '../../../../../components/Ui/TextField';
+import CustomButton from '../../../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -24,178 +23,123 @@ AddUserForm.propTypes = {
   formik: PropTypes.object.isRequired
 };
 
-function AddUserForm({ formik, closePopup, selectedBranch, setSelectedBranch }) {
+function AddUserForm({ formik, selectedBranch }) {
   const [showPassword, setShowPassword] = useState(false);
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const { t } = useTranslation();
-  const dispatch = useDispatch();
 
   const { themeDirection } = useSelector((state) => state.settings);
 
-  const { countries } = useSelector(
-    (state) => state.authJwt
-  );
+  const { countries } = useSelector((state) => state.authJwt);
 
-  const { branches } = useSelector(
-    (state) => state.branches
-  );
-
-
-
+  const { branches } = useSelector((state) => state.branches);
 
   return (
     <FormikProvider value={formik}>
       <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
         <TextField
-          fullWidth
+          type='input'
           name="email"
-          type="email"
+          inputType="email"
           label={t("Email")}
-          {...getFieldProps('email')}
-          error={
-            Boolean(touched.email && errors.email) ||
-            emailError(errors.afterSubmit).error
-          }
-          helperText={
-            (touched.email && errors.email) ||
-            emailError(errors.afterSubmit).helperText
-          }
+          getField={getFieldProps('email')}
+          touched={touched.email || emailError(errors.afterSubmit).error}
+          errors={errors.email || emailError(errors.afterSubmit).helperText}
         />
-        <Box sx={{ mb: 3 }} />
 
-        <Grid container >
-          <Grid item xs={5} >
-
+        <Grid container spacing={1}>
+          <Grid item xs={5}>
             <TextField
-              style={{ paddingInlineEnd: 10 }}
-              select
-              fullWidth
+              type='select'
               id="countryId"
               name="countryId"
-              {...getFieldProps('countryId')}
-              SelectProps={{ native: true }}
+              spaceToTop="spaceToTop"
+              getField={getFieldProps('countryId')}
             >
               {countries.map((option, index) => (
-                <option key={index} value={option.id}>
+                <MenuItem key={index} value={option.id}>
                   (+{option.countryCode}) {themeDirection === "rtl" ? option.nameAr : option.name}
-                </option>
+                </MenuItem>
               ))}
             </TextField>
-
           </Grid>
 
           <Grid item xs={7}>
-
             <TextField
-              fullWidth
+              type='input'
+              inputType="phone"
               name="phone"
+              spaceToTop="spaceToTop"
               label={t("Mobile")}
-              {...getFieldProps('phone')}
-              error={Boolean(touched.phone && errors.phone)}
-              helperText={touched.phone && errors.phone}
+              getField={getFieldProps('phone')}
+              touched={touched.phone}
+              errors={errors.phone}
             />
           </Grid>
-
         </Grid>
 
-
-        <Box sx={{ mb: 3 }} />
-
         <TextField
-          fullWidth
+          type='input'
+          spaceToTop="spaceToTop"
           name="name"
           label={t("Name")}
-          {...getFieldProps('name')}
-          error={Boolean(touched.name && errors.name)}
-          helperText={touched.name && errors.name}
+          getField={getFieldProps('name')}
+          touched={touched.name}
+          errors={errors.name}
         />
 
-        <Box sx={{ mb: 3 }} />
-
         <TextField
-          select
-          fullWidth
+          type='select'
           label={t("Branch")}
-          placeholder={t("Branch")}
+          id="branch"
+          name="branch"
+          spaceToTop='spaceToTop'
           disabled={selectedBranch != null}
-          {...getFieldProps('branch')}
-          SelectProps={{ native: true }}
-          error={Boolean(touched.branch && errors.branch)}
-          helperText={touched.branch && errors.branch}
+          getField={getFieldProps('branch')}
+          touched={touched.branch}
+          errors={errors.branch}
         >
-          <option value="" />
+          <MenuItem value="" />
           {branches.map((option) => (
-            <option key={option.id} value={option.id}>
+            <MenuItem key={option.id} value={option.id}>
               {option.branchName}
-            </option>
+            </MenuItem>
           ))}
         </TextField>
 
-
-        <Box sx={{ mb: 3 }} />
-
         <TextField
-          fullWidth
-          type={showPassword ? 'text' : 'password'}
+          type='input'
+          spaceToTop="spaceToTop"
+          name="password"
+          inputType='password'
           label={t("Password")}
-          {...getFieldProps('password')}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <IconButton
-                  edge="end"
-                  onClick={() => setShowPassword((prev) => !prev)}
-                >
-                  <Icon icon={showPassword ? eyeFill : eyeOffFill} />
-                </IconButton>
-              </InputAdornment>
-            )
-          }}
-          error={
-            Boolean(touched.password && errors.password) ||
-            passwordError(errors.afterSubmit).error
-          }
-          helperText={
-            (touched.password && errors.password) ||
-            passwordError(errors.afterSubmit).helperText
-          }
+          getField={getFieldProps('password')}
+          touched={touched.password || passwordError(errors.afterSubmit).error}
+          errors={errors.password || passwordError(errors.afterSubmit).helperText}
         />
 
-        <Box sx={{ mt: 3 }}>
-
-          <div className="row">
-
-            <div className="col-md-6">
-              <LoadingButton
-                fullWidth
-                size="large"
-                type="submit"
-                variant="contained"
-                pending={isSubmitting}
+        {/* <TextField
+          type='input'
+          inputType='password'
+          spaceToTop="spaceToTop"
+          label={t("Password")}
+          getField={getFieldProps('password')}
+          endAdornment={(
+            <InputAdornment position="start">
+              <IconButton
+                edge="end"
+                onClick={() => setShowPassword((prev) => !prev)}
               >
-                {t("Create")}
-              </LoadingButton>
-            </div>
+                <Icon icon={showPassword ? eyeFill : eyeOffFill} />
+              </IconButton>
+            </InputAdornment>
+          )}
+          touched={touched.password || passwordError(errors.afterSubmit).error}
+          errors={errors.password || passwordError(errors.afterSubmit).helperText}
+        /> */}
 
-            <div className="col-md-6">
-              <LoadingButton
-                fullWidth
-                size="large"
-                variant="contained"
-                pending={isSubmitting}
-                onClick={() => {
-                  dispatch(cleanup());
-                  if (setSelectedBranch)
-                    setSelectedBranch(null);
-                  closePopup(false)
-                }}
-              >
-                {t("Cancel")}
-              </LoadingButton>
-
-            </div>
-
-          </div>
+        <Box sx={{ marginTop: '20px' }}>
+          <CustomButton type="submit">{t("Create")}</CustomButton>
         </Box>
 
       </Form>

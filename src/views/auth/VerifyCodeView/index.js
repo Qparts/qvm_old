@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import VerifyCodeForm from './VerifyCodeForm';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Typography, Hidden } from '@material-ui/core';
+import { Box, Typography, Hidden } from '@material-ui/core';
 import useAuth from 'src/hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { PATH_PAGE } from 'src/routes/paths';
@@ -98,22 +98,17 @@ function VerifyCodeView(props) {
         </Hidden>
       </header>
 
-      <Container>
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-
           <Typography variant="h3" gutterBottom>
             {t("Please check your email!")}
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
             {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.", { email: props.location.state.email })}
           </Typography>
-
           <Box sx={{ mt: 5, mb: 3 }}>
             <VerifyCodeForm formik={formik} />
           </Box>
-
         </Box>
-      </Container>
     </Page>
   );
 }
