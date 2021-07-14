@@ -136,9 +136,9 @@ function getLocation(
 ) {
   try {
     if (branch == null && countryId != 0 && regionId != 0 && cityId != 0) {
-      const country = countries.find((e) => e.id === countryId);
-      const region = country.regions.find((e) => e.id === regionId);
-      const city = region.cities.find((e) => e.id === cityId);
+      const country = countries.find((e) => e.id ===parseInt( countryId));
+      const region = country.regions.find((e) => e.id === parseInt(regionId));
+      const city = region.cities.find((e) => e.id === parseInt(cityId));
       return { country: country, region: region, city: city };
     } else {
       const country = countries.find((e) => e.id === branch.countryId);

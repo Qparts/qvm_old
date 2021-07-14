@@ -138,11 +138,6 @@ const routes = [
     path: PATH_PAGE.common.prices,
     component: lazy(() => import('src/views/common/PricesView'))
   },
-  // {
-  //   exact: true,
-  //   path: PATH_PAGE.common.privacy,
-  //   component: lazy(() => import('src/views/common/PrivacyPolicyView'))
-  // },
   {
     exact: true,
     path: PATH_PAGE.common.terms,

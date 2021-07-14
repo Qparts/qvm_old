@@ -75,7 +75,7 @@ export default function CustomInput(props) {
                     component="span"
                     className={clsx(classes.uploadbtn, classes.uploadStockMainBtn)}
                 >
-                    {props.value ? props.value.name : t("upload stock file")}
+                    {props.value ? props.value.name : props.label }
                     <Upload width='20' height='20' fill={theme.palette.primary.main} />
                 </Button>
             </label>

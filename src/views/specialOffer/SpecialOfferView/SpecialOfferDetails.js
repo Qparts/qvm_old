@@ -31,23 +31,6 @@ const useStyles = makeStyles((theme) => ({
         marginBottom: theme.spacing(2),
         textAlign: 'right'
     },
-    // search: {
-    //     backgroundColor: theme.palette.grey[0],
-    //     borderRadius: '10px',
-    //     width: "70%",
-    //     transition: theme.transitions.create(['width'], {
-    //         easing: theme.transitions.easing.easeInOut,
-    //         duration: theme.transitions.duration.shorter
-    //     }),
-    //     '&.Mui-focused': { width: "90%" },
-    //     '& input': {
-    //         padding: `11.5px 14px 11.5px 0`,
-    //     },
-    //     '& fieldset': {
-    //         borderWidth: `1px !important`,
-    //         borderColor: `#EEF1F5 !important`
-    //     }
-    // },
     offerDetailsCard: {
         background: '#F6F8FC',
         boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',

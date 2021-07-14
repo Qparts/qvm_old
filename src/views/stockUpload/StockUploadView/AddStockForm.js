@@ -114,6 +114,7 @@ function AddStockForm(props) {
                         setFieldValue("stockFile", event.currentTarget.files[0]);
                     }}
                     file='stockFile'
+                    label = {t("upload stock file")}
                     value={values.stockFile}
                     touched={touched.stockFile}
                     errors={errors.stockFile}
