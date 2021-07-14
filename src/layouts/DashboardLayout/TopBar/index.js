@@ -12,6 +12,7 @@ import Orders from './Orders';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
 import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box, AppBar, Hidden, Toolbar, IconButton } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import constants from 'src/utils/constants';
 import { PATH_APP } from 'src/routes/paths';
 import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from '../../../redux/slices/partSearch';
@@ -56,6 +57,7 @@ function TopBar({ onOpenNav, className }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { t } = useTranslation();
 
   const handlePartSearch = (search) => {
       dispatch(resetLocationfilter());
@@ -85,7 +87,7 @@ function TopBar({ onOpenNav, className }) {
           </IconButton>
         </Hidden>
 
-        <Hidden lgDown><SearchBox type='topBarSearch' handleSubmit={handlePartSearch} /></Hidden>
+        <Hidden lgDown><SearchBox type='topBarSearch' placeholder={t("Search by part number")} handleSubmit={handlePartSearch} /></Hidden>
         <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handlePartSearch} /></Hidden>
         <Box sx={{ flexGrow: 1 }} />
 

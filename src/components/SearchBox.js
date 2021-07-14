@@ -62,13 +62,14 @@ export default function SearchTable(props) {
     searchBox = (
       <Box sx={{ display: 'flex' }}>
         <TextField
-          placeholder={t("Search by part number")}
+          placeholder={props.placeholder}
           id="query"
           value={query}
           onChange={handleQueryChange}
           name="query"
           inputTopBarSearch='inputTopBarSearch'
           inputContTopBarSearch='inputContTopBarSearch'
+          selectBg={props.bg ? 'selectBg' : ''}
         />
         <Button
           type="submit"

@@ -1,4 +1,4 @@
-import React, { } from 'react';
+import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -21,10 +21,6 @@ const useStyles = makeStyles((theme) => ({
         margin: '10px 0 15px',
         borderTop: '1px solid #F6F8FC',
         borderBottom: '1px solid #F6F8FC',
-    },
-    planFeaturesHead: {
-        fontWeight: theme.typography.fontWeightBold,
-        color: theme.palette.secondary.main
     },
     planFeaturesChild: {
         display: 'block',
@@ -83,7 +79,7 @@ function PlanFeaturesSection() {
             }
 
             <Accordion
-                title={<Typography variant="body1" className={classes.planFeaturesHead}>{t("Features")}</Typography>}
+                head={t("Features")}
                 accordionStyle="accordionStyle">
                 <List>
                     {planFeatures.find(e => e.name == currentPlan.name).features.map((feature, index) => {

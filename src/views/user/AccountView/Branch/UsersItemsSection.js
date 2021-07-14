@@ -4,6 +4,7 @@ import { useTranslation } from 'react-i18next';
 import { Box } from '@material-ui/core';
 import Datatable from 'src/components/table/DataTable';
 import { loadBranches } from 'src/redux/slices/branches';
+import constants from 'src/utils/constants';
 import BrancheActionsSection from './BrancheActionsSection';
 import TableAction from '../../../../components/Ui/TableAction';
 import { Delete, Edit } from "../../../../icons/icons";
@@ -16,6 +17,7 @@ function UsersItemsSection() {
     const { countries, loginObject } = useSelector((state) => state.authJwt);
     const users = loginObject.company.subscribers;
     const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(constants.MAX);
 
     useEffect(() => {
         dispatch(loadBranches(countries));
@@ -34,7 +36,7 @@ function UsersItemsSection() {
     }
 
     return (
-        <Box sx={{ padding: '10px 15px 0' }}>
+        <Box sx={{ padding: users.length > constants.MAX ? '10px 15px' : '10px 15px 0' }}>
             <BrancheActionsSection />
             <Datatable
                 header={[
@@ -56,6 +58,8 @@ function UsersItemsSection() {
                 datatable={users}
                 page={page}
                 isLazy={false}
+                rowsPerPage={rowsPerPage}
+                hasPagination={users.length > constants.MAX ? true : false}
             />
         </Box>
     );

@@ -456,6 +456,7 @@
   "Expires in": "ينتهي في ",
 
   "Replacement Parts Search": "بحث القطع البديلة",
+  "Replacement Parts Search results": "نتائج بحث القطع البديلة",
   "Description": "الوصف",
   "Applicable OEM Parts": "القطع الأصلية المتوافقة",
 
@@ -576,5 +577,6 @@
   "Check your email to get verification code": "تحقق من بريدك الإلكتروني للحصول على رمز التحقق",
   "Check your mobile to get verification code": "تحقق من هاتفك المحمول للحصول على رمز التحقق",
   "branch is required": "الفرع مطلوب",
-  "Logout": "تسجيل الخروج"
+  "Logout": "تسجيل الخروج",
+  "Compatible original parts": "القطع الأصلية المتوافقة"
 }

@@ -14,10 +14,6 @@ import Accordion from "../../../../components/Ui/Accordion";
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    subscriptionHistoryHead: {
-        fontWeight: theme.typography.fontWeightBold,
-        color: theme.palette.secondary.main
-    },
     subscriptionHistoryChild: {
         display: 'block',
         padding: '0 0 10px 0',
@@ -45,7 +41,7 @@ function SubscriptionHistory() {
     return (
         <Box>
             <Accordion
-                title={<Typography variant="body1" className={classes.subscriptionHistoryHead}>{t("Subscription History")}</Typography>}
+                head={t("Subscription History")}
                 accordionStyle="accordionStyle">
                 <List>
                     {loginObject.company.subscriptions.filter(e => e.status != 'F').map((item, index) => {

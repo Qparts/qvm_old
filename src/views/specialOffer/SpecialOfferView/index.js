@@ -2,9 +2,7 @@ import Page from 'src/components/Page';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import {
-    Box,
-} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
@@ -23,7 +21,6 @@ const useStyles = makeStyles((theme) => ({
             alignItems: 'center',
             justifyContent: 'space-between'
         },
-   
     }
 }));
 

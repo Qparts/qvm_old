@@ -457,6 +457,7 @@
   "Expires in": "Expires in",
 
   "Replacement Parts Search": "Replacement Parts Search",
+  "Replacement Parts Search results": "Replacement Parts Search results",
   "Description": "Description",
   "Applicable OEM Parts": "Applicable OEM Parts",
 
@@ -552,5 +553,6 @@
   "Check your email to get verification code": "Check your email to get verification code",
   "Check your mobile to get verification code": "Check your mobile to get verification code",
   "branch is required": "Branch is required",
-  "Logout": "Logout"
+  "Logout": "Logout",
+  "Compatible original parts": "Compatible original parts"
 }

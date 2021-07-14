@@ -5,6 +5,7 @@ import {
     Accordion,
     AccordionSummary,
     AccordionDetails,
+    Typography
 } from '@material-ui/core';
 import clsx from 'clsx';
 
@@ -25,11 +26,18 @@ const useStyles = makeStyles((theme) => ({
         borderTop: '1px solid #E7F0F7',
         padding: 0
     },
+    resetBorder: {
+        borderTop: 0
+    },
     accordionStyle: {
         paddingTop: theme.spacing(1),
         borderTop: '5px solid #F6F8FC',
         marginTop: theme.spacing(1),
-    }
+    },
+    subscriptionHistoryHead: {
+        fontWeight: theme.typography.fontWeightBold,
+        color: theme.palette.secondary.main
+    },
 }));
 
 // ----------------------------------------------------------------------
@@ -47,9 +55,12 @@ export default function CustomAccordion(props) {
                 id="panel1a-header"
                 aria-label="Expand"
                 className={classes.accordionSummary}>
-                {props.title}
+                {props.title ?
+                    props.title :
+                    <Typography variant="body1" className={classes.subscriptionHistoryHead}>{props.head}</Typography>
+                }
             </AccordionSummary>
-            <AccordionDetails className={classes.accordionDetails}>
+            <AccordionDetails className={clsx(classes.accordionDetails, classes[props.resetBorder])}>
                 {props.children}
             </AccordionDetails>
         </Accordion>
