@@ -3,16 +3,15 @@ import TopBar from './TopBar';
 import Footer from './Footer';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import {Box} from '@material-ui/core'
+import { Box } from '@material-ui/core'
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
   root: { height: '100%' },
-  content: { 
+  content: {
     minHeight: '100%',
-    background:'#F6F8FC',
-   },
-
+    background: theme.palette.grey[0],
+  },
 }));
 
 // ----------------------------------------------------------------------

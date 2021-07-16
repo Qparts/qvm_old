@@ -37,6 +37,27 @@ const useStyles = makeStyles((theme) => ({
     },
     weightLight: {
         fontWeight: theme.typography.fontWeightRegular
+    },
+    homeBtn: {
+        background: 'linear-gradient(90deg, #F20505 10%, #DA1B21 100%)',
+        padding: '10px 25px 15px',
+        borderRadius: '30px',
+        minWidth: '200px',
+        transition: 'none',
+        fontSize: theme.typography.subtitle1.fontSize,
+        '&:hover': {
+            background: theme.palette.primary.main,
+            boxShadow: 'none'
+        }
+    },
+    homeBtnLight: {
+        background: 'none !important',
+        color: theme.palette.primary.main,
+        border: '2px solid' + theme.palette.primary.main,
+    },
+    flatBtn: {
+        padding: '10px 30px 12px',
+        borderRadius: '5px',
     }
 }));
 
@@ -47,6 +68,7 @@ export default function CustomButton(props) {
 
     return (
         <Button
+            to={props.to}
             variant="contained"
             disabled={props.disabled}
             onClick={props.onClick}
@@ -56,7 +78,10 @@ export default function CustomButton(props) {
                 classes[props.btnBg],
                 classes[props.btnWidth],
                 classes[props.upgradeBtn],
-                classes[props.weightLight]
+                classes[props.weightLight],
+                classes[props.homeBtn],
+                classes[props.homeBtnLight],
+                classes[props.flatBtn]
             )}
             type={props.type}
         >

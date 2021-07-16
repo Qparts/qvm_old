@@ -22,8 +22,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: '100%',
     paddingTop: APP_BAR_MOBILE + 18,
     paddingBottom: theme.spacing(4),
-   
-    
     background: '#F6F8FC',
     paddingLeft: theme.spacing(2),
     paddingRight: theme.spacing(2),

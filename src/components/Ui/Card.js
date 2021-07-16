@@ -12,6 +12,12 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
         borderRadius: '20px',
     },
+    upgradeCard: {
+        position: 'relative',
+        padding: '50px 10px 45px',
+        textAlign: 'center',
+        height: 'calc(100% - 0px)',
+    },
     cardPad: {
         padding: '10px 15px',
     },
@@ -30,7 +36,14 @@ function MainCard(props, { className, ...other }) {
     const classes = useStyles();
 
     return (
-        <Card className={clsx(classes.root, classes[props.cardPad], classes[props.cardBg], className)} {...other}>
+        <Card className={clsx(
+            classes.root,
+            classes[props.cardPad],
+            classes[props.cardBg],
+            classes[props.upgradeCard],
+            className
+        )}
+            {...other}>
             {props.children}
         </Card>
     );

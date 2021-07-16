@@ -28,7 +28,6 @@ export const PATH_PAGE = {
     terms: path('' ,  '/term-of-use'),
     home: path('' ,  '/'),
     contactUs: path('' ,  '/contact-us'),
-    price: path('' ,  '/price'),
     termsView: path('' ,  '/terms-view')
   }
 };

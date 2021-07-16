@@ -18,7 +18,6 @@ const GlobalStyles = withStyles((theme) => ({
     body: {
       width: '100%',
       height: '100%',
-      backgroundColor: '#F6F8FC !important',
       '&::-webkit-scrollbar, & *::-webkit-scrollbar': {
         width: 8,
         height: 6,

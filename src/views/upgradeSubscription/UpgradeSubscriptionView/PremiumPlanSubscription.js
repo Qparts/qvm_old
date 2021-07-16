@@ -1,35 +1,59 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import {
-    Box, Typography, TextField
+    Box,
+    Typography,
+    MenuItem,
+    Grid,
+    ListItem,
+    List,
 } from '@material-ui/core';
 import paymentService from 'src/services/paymentService';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import { LoadingButton } from '@material-ui/lab';
 import Datatable from 'src/components/table/DataTable';
 import { useSnackbar } from 'notistack';
 import constants from 'src/utils/constants';
+import TextField from '../../../components/Ui/TextField';
+import Button from '../../../components/Ui/Button';
+import StockFileBtn from '../../../components/Ui/StockFileBtn';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
+    spaceBetweenElements: {
+        marginBottom: theme.spacing(2)
+    },
+    PromotionDiscountSuccess: {
+        backgroundColor: '#dff0d8',
+        color: '#3c763d',
+        padding: '15px',
+        marginBottom: theme.spacing(2),
+        border: '1px solid transparent',
+        borderRadius: '4px',
         textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
+        display: 'block',
+        fontWeight: theme.typography.fontWeightMedium,
+    },
+    totalAmount: {
+        borderRadius: '10px',
+        border: '1px solid #E7F0F7',
+        marginBottom: '20px',
+        padding: 0
+    },
+    totalAmountChild: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '10px',
+        borderBottom: '1px solid #efefef',
+        '&:last-of-type': {
+            border: 0,
         },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
-        }
+    },
+    totalAmountNum: {
+        color: theme.palette.secondary.main,
+        fontWeight: theme.typography.fontWeightMedium
     }
 }));
 
@@ -37,9 +61,7 @@ const useStyles = makeStyles((theme) => ({
 
 function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
     const classes = useStyles();
-    const dispatch = useDispatch();
     const { t } = useTranslation();
-    const isMountedRef = useIsMountedRef();
     const { enqueueSnackbar } = useSnackbar();
     const [receipt, setReceipt] = useState(null);
 
@@ -49,20 +71,10 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
     ];
 
     const [banckAccounts, setBanckAccounts] = useState([]);
-
     const [paymentMethod, setPaymentMethod] = useState(2);
-
-
-    const { premiumPlan, loginObject } = useSelector(
-        (state) => state.authJwt
-    );
-
+    const { premiumPlan, loginObject } = useSelector((state) => state.authJwt);
     const { themeDirection } = useSelector((state) => state.settings);
-
-    const { countries } = useSelector(
-        (state) => state.authJwt
-    );
-
+    const { countries } = useSelector((state) => state.authJwt);
     const [promotion, setPromotion] = useState(null);
     const [code, setCode] = useState('');
 
@@ -79,16 +91,12 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
         planPrice + vatAmount
         : 0;
 
-
     useEffect(() => {
-
         (async () => {
             const { data: bancks } = await paymentService.getBancks();
             setBanckAccounts(bancks);
         })()
-
     }, [])
-
 
     const handlePromotionSubmit = async ({ code }) => {
         const { data: promotionValue } = await paymentService.activePromtion(code, premiumPlan.id, planDuration.id);
@@ -97,12 +105,10 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
         }
     }
 
-
     const onAttach = async (event) => {
         console.log("file", event.target.files[0]);
         setReceipt(event.target.files[0]);
     }
-
 
     const submitPaymentOrder = async () => {
         try {
@@ -148,129 +154,89 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
         }
     }
 
-
     return (
-
-        <Card >
-
-            <CardContent className={classes.cardContent}>
-                {planDuration != null &&
-                    <div className="row">
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">{t("Subscription Price")}
+        <>
+            {planDuration != null &&
+                <Box>
+                    <List className={classes.totalAmount}>
+                        <ListItem className={classes.totalAmountChild}>
+                            <Typography variant="body3">{t("Subscription Price")}</Typography>
+                            <Typography variant="body1" className={classes.totalAmountNum}>
+                                {planPrice} {t('SAR')}
                             </Typography>
-                        </div>
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">
-                                {planPrice}   {t('SAR')}
-                            </Typography>
-                        </div>
-
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">{t("Promotion Discount")}
-                            </Typography>
-                        </div>
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">
+                        </ListItem>
+                        <ListItem className={classes.totalAmountChild}>
+                            <Typography variant="body3">{t("Promotion Discount")}</Typography>
+                            <Typography variant="body1" className={classes.totalAmountNum}>
                                 {Math.round(promotion != null ? promotion.discountPercentage * price : 0)}  {t('SAR')}
                             </Typography>
-                        </div>
-
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">{t("VAT Amount")}
+                        </ListItem>
+                        <ListItem className={classes.totalAmountChild}>
+                            <Typography variant="body3">{t("VAT Amount")}</Typography>
+                            <Typography variant="body1" className={classes.totalAmountNum}>
+                                {vatAmount} {t('SAR')}
                             </Typography>
-                        </div>
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">
-                                {vatAmount}  {t('SAR')}
-                            </Typography>
-                        </div>
-
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">{t("Total Amount")}
-                            </Typography>
-                        </div>
-
-                        <div className="col-md-6">
-                            <Typography variant="subtitle2">
+                        </ListItem>
+                        <ListItem className={classes.totalAmountChild}>
+                            <Typography variant="body3">{t("Total Amount")}</Typography>
+                            <Typography variant="body1" className={classes.totalAmountNum}>
                                 {totalAmount} {t('SAR')}
                             </Typography>
-                        </div>
+                        </ListItem>
+                    </List>
 
-                        <Box sx={{ mb: 6 }} />
-
-                        {promotion == null ?
-                            <>
-                                <TextField
-                                    style={{ width: '50%', margin: 10 }}
-                                    name="promotionCode"
-                                    label={t("Promotion Code")}
-                                    value={code}
-                                    onChange={(e) => {
-                                        setCode(e.target.value);
-                                    }}
-                                />
-
-
-                                <LoadingButton
-                                    style={{ width: '40%', margin: 10 }}
-                                    fullWidth
-                                    variant="contained"
-                                    size="large"
-                                    onClick={() => handlePromotionSubmit({ code: code })}
-                                >
-                                    {t("Active Discount")}
-                                </LoadingButton>
-                            </>
-                            :
-                            <Typography variant="subtitle2">{t("Promotion discount applied")}  {promotion.promoCode}
-                            </Typography>
-
-                        }
-
-                        <Box sx={{ mb: 6 }} />
+                    {promotion == null ?
+                        <Box className={classes.spaceBetweenElements}>
+                            <Grid container spacing={2}>
+                                <Grid item xs={12} sm={8}>
+                                    <TextField
+                                        type="input"
+                                        name="promotionCode"
+                                        label={t("Promotion Code")}
+                                        value={code}
+                                        onChange={(e) => { setCode(e.target.value) }}
+                                    />
+                                </Grid>
+                                <Grid item xs={12} sm={4}>
+                                    <Button
+                                        onClick={() => handlePromotionSubmit({ code: code })}
+                                    >
+                                        {t("Active Discount")}
+                                    </Button>
+                                </Grid>
+                            </Grid>
+                        </Box>
+                        :
+                        <Typography variant="body3" className={classes.PromotionDiscountSuccess}>
+                            {t("Promotion discount applied")} {promotion.promoCode}
+                        </Typography>
+                    }
+                    <Box className={classes.spaceBetweenElements}>
                         <TextField
-                            style={{ margin: 10 }}
-                            select
-                            fullWidth
+                            type="select"
                             label={t("Payment Method")}
                             value={paymentMethod}
                             onChange={(e) => setPaymentMethod(e.target.value)}
                         >
-                            <option value="" >
-                            </option>
+                            <MenuItem value=""></MenuItem>
                             {paymentMethods.map((option) => (
-                                <option key={option.id} value={option.id}>
+                                <MenuItem key={option.id} value={option.id}>
                                     {themeDirection == 'ltr' ? option.name : option.nameAr}
-                                </option>
+                                </MenuItem>
                             ))}
                         </TextField>
+                    </Box>
 
-
-
-                        {paymentMethod == 2 &&
-                            <LoadingButton
-                                style={{ margin: 10 }}
-                                fullWidth
-                                variant="contained"
-                                size="large"
-                                onClick={() => {
-                                    submitPaymentOrder();
-                                }}
-                            >
-                                {t("Checkout")}
-                            </LoadingButton>
-                        }
-
-                        {paymentMethod == 1 &&
-                            <>
+                    {paymentMethod == 2 &&
+                        <Button
+                            onClick={() => submitPaymentOrder()}
+                        >
+                            {t("Checkout")}
+                        </Button>
+                    }
+                    {paymentMethod == 1 &&
+                        <>
+                            <Box className={classes.spaceBetweenElements}>
                                 <Datatable
                                     header={[
                                         {
@@ -289,44 +255,32 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                                             name: t("Account Name"),
                                             attr: 'owner'
                                         }
-
                                     ]}
-
-
                                     datatable={banckAccounts}
                                     page={0}
                                     isLazy={false}
                                     hasPagination={false}
-
+                                    dataTablePad='dataTablePad'
                                 />
-                                <Box sx={{ mb: 3 }} />
+                            </Box>
+                            <Box className={classes.spaceBetweenElements}>
+                                <StockFileBtn
+                                    onChange={onAttach}
+                                    title={t("Attach Transfer Receipt")}
+                                    file='attach-transfer-receipt' />
+                            </Box>
 
-                                <input type="file" onChange={onAttach} />
-
-                                <Box sx={{ mb: 6 }} />
-
-                                <LoadingButton
-                                    style={{ margin: 5 }}
-                                    fullWidth
-                                    variant="contained"
-                                    size="large"
-                                    disabled={!receipt}
-                                    onClick={() => {
-                                        submitPaymentOrder();
-                                    }}
-                                >
-                                    {t("Submit Order")}
-                                </LoadingButton>
-                            </>
-                        }
-
-                    </div>
-                }
-
-            </CardContent >
-
-        </Card>
-
+                            <Button
+                                disabled={!receipt}
+                                onClick={() => submitPaymentOrder()}
+                            >
+                                {t("Submit Order")}
+                            </Button>
+                        </>
+                    }
+                </Box>
+            }
+        </>
     );
 }
 

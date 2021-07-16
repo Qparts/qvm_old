@@ -492,7 +492,7 @@
   "Upgrade to Premium": "الترقية للباقة المميزة",
   "Pay": " ادفع",
   "Save": "وفر",
-  "Subscrip": "إشتراك الان",
+  "Subscribe": "إشتراك الان",
   "Premium Plan": " الباقة المميزة",
   "Subscription Price": "قيمة الإشتراك",
   "Promotion Discount": "الخصم الترويجي",
@@ -578,5 +578,7 @@
   "Check your mobile to get verification code": "تحقق من هاتفك المحمول للحصول على رمز التحقق",
   "branch is required": "الفرع مطلوب",
   "Logout": "تسجيل الخروج",
-  "Compatible original parts": "القطع الأصلية المتوافقة"
+  "Compatible original parts": "القطع الأصلية المتوافقة",
+  "Most popular": "الأكثر انتشاراً",
+  "Custom": "المخصصة"
 }

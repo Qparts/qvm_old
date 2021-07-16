@@ -103,6 +103,7 @@ function AddStockForm(props) {
                     ))}
                 </TextField>
                 <StockFileBtn
+                    upload
                     onChange={(event) => {
                         if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx') {
                             setFileError(t("Stock file must be Excel File"))
@@ -112,6 +113,7 @@ function AddStockForm(props) {
                         setFileError(null)
                         setFieldValue("stockFile", event.currentTarget.files[0]);
                     }}
+                    title={t("upload stock file")}
                     file='stockFile'
                     value={values.stockFile}
                     touched={touched.stockFile}

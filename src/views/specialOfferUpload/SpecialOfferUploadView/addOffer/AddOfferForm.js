@@ -30,6 +30,7 @@ function AddOfferForm({ formik }) {
                     errors={errors.offerName} />
 
                 <StockFileBtn
+                    upload
                     onChange={(event) => {
                         if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx') {
                             setFileError(t("Stock file must be Excel File"))
@@ -39,6 +40,7 @@ function AddOfferForm({ formik }) {
                         setFileError(null)
                         setFieldValue("offerFile", event.currentTarget.files[0]);
                     }}
+                    title={t("upload stock file")}
                     file='offerFile'
                     value={values.offerFile}
                     touched={touched.offerFile}

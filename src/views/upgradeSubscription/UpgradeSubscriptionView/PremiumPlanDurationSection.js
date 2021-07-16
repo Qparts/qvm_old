@@ -1,135 +1,122 @@
-import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useState } from 'react';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
-import Button from "src/components/button/CustomButton";
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
-import Dialog from '@material-ui/core/Dialog';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import DialogContent from '@material-ui/core/DialogContent';
-import {
-    Box, Link, Hidden, Container,
-    Typography, Alert
-} from '@material-ui/core';
+import { Box, Typography, Grid } from '@material-ui/core';
 import PremiumPlanSubscription from './PremiumPlanSubscription';
+import SecContainer from '../../../components/Ui/SecContainer';
+import Card from '../../../components/Ui/Card';
+import CustomDialog from '../../../components/Ui/Dialog';
+import Button from '../../../components/Ui/Button';
+
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
-        }
-    }
+    planPremiumLabel: {
+        position: 'absolute',
+        top: 0,
+        background: 'linear-gradient(90deg, #167DAC 10%, #164B63 100%)',
+        borderRadius: '0 0 30px 30px',
+        color: theme.palette.grey[0],
+        padding: '8px 20px',
+        left: '50%',
+        transform: 'translate(-50%, 0)',
+    },
 }));
 
 // ----------------------------------------------------------------------
 
 function PremiumPlanDurationSection() {
     const classes = useStyles();
-    const dispatch = useDispatch();
+    const theme = useTheme();
     const { t } = useTranslation();
-    const { premiumPlan } = useSelector(
-        (state) => state.authJwt
-    );
-
-    const { themeDirection } = useSelector((state) => state.settings);
-
+    const { premiumPlan } = useSelector((state) => state.authJwt);
     const [planDuration, setPlanDuration] = useState(null);
 
-
-
-
     return (
-
-        <>
-            <div className="row">
+        <SecContainer
+            header={t("Upgrade to Premium")}
+            secContainerMt="secContainerMt">
+            <Grid container spacing={2}>
                 {premiumPlan.planDurations.map((item, index) => {
                     return (
-                        <div className="col-md-4" key={index}>
-                            <Card >
-
-                                <CardContent className={classes.cardContent}>
-                                    <Typography variant="subtitle2" align="center">{t("Pay")}  {item.calculationDays == 30 ? t('Month') :
-                                        item.calculationDays == 180 ? 6 + ' ' + t('Months') : t('Year')}
-                                    </Typography>
-                                    <Box sx={{ mb: 3 }} />
-
-                                    <Typography variant="subtitle2" align="center">{t("Save")}
-                                        {Math.round(((item.discountPercentage * (premiumPlan.price / 360))) * item.calculationDays)} {t('SAR')}
-                                    </Typography>
-                                    <Box sx={{ mb: 3 }} />
-
-                                    <Typography variant="subtitle2" align="center">
-                                        {Math.round(((premiumPlan.price / 360) - (item.discountPercentage * (premiumPlan.price / 360))) * item.calculationDays)}
-                                        {"\n"} {t('SAR')}/{item.calculationDays == 30 ? 1 + ' ' + t('Month') : item.calculationDays == 180 ? 6 + ' ' + t('Months') : 1 + ' ' + t('Year')}
+                        <Grid item xs={12} sm={6} md={4} key={index}>
+                            <Card upgradeCard='upgradeCard'>
+                                {item.calculationDays > 180 && (
+                                    <Typography variant="subtitle1" className={classes.planPremiumLabel}> {t("Most popular")} </Typography>
+                                )}
+                                <Box sx={{ marginBottom: '10px' }}>
+                                    <Typography
+                                        variant='h4'
+                                        sx={{
+                                            color: theme.palette.secondary.main,
+                                            lineHeight: 1,
+                                            marginBottom: '15px'
+                                        }}>
+                                        {t("Pay")}  {item.calculationDays == 30 ? t('Month') :
+                                            item.calculationDays == 180 ? 6 + ' ' + t('Months') : t('Year')}
                                     </Typography>
 
-                                    <Box sx={{ mb: 3 }} />
+                                    <Typography
+                                        variant='subtitle1'
+                                        sx={{
+                                            color: theme.palette.primary.main,
+                                            fontWeight: theme.typography.fontWeightRegular,
+                                        }}>
+                                        {t("Save")} {Math.round(((item.discountPercentage * (premiumPlan.price / 360))) * item.calculationDays)} {t('SAR')}
+                                    </Typography>
+                                </Box>
 
-                                    <div className="row d-flex justify-content-center">
-                                        <Button
-                                            className="round"
-                                            color="primary"
-                                            className="mx-2"
-                                            round
-                                            simple
-                                            onClick={() => setPlanDuration(item)}
-                                        >
-                                            {t("Subscrip")}
-                                        </Button>
+                                <Typography variant="h3"
+                                    sx={{
+                                        color: theme.palette.secondary.main,
+                                        fontWeight: 400,
+                                        lineHeight: 1
+                                    }}>
+                                    {Math.round(((premiumPlan.price / 360) - (item.discountPercentage * (premiumPlan.price / 360))) * item.calculationDays)}
+                                </Typography>
 
-                                    </div>
+                                <Typography variant="body3"
+                                    sx={{
+                                        color: '#8B8B8B',
+                                        fontWeight: theme.typography.fontWeightMedium,
+                                        marginBottom: '20px',
+                                        display: 'block'
+                                    }}>
+                                    {t('SAR')} / {item.calculationDays == 30 ? 1 + ' ' + t('Month') : item.calculationDays == 180 ? 6 + ' ' + t('Months') : 1 + ' ' + t('Year')}
+                                </Typography>
 
-
-                                </CardContent >
-
+                                <Box>
+                                    <Button
+                                        btnWidth="btnWidth"
+                                        flatBtn="flatBtn"
+                                        homeBtnLight={item.calculationDays <= 180 ? 'homeBtnLight' : null}
+                                        onClick={() => setPlanDuration(item)}
+                                    >
+                                        {t("Subscribe")}
+                                    </Button>
+                                </Box>
                             </Card>
-                        </div>
+                        </Grid>
                     )
                 })}
+            </Grid>
 
-            </div>
-
-
-
-            <Dialog
-                onClose={() => setPlanDuration(null)}
-                aria-labelledby="customized-dialog-title"
+            <CustomDialog
                 open={planDuration != null}
-                className={classes.root}
+                handleClose={() => setPlanDuration(null)}
+                dialogWidth="dialogWidth"
+                title={planDuration ? t('Premium Plan') + (
+                    planDuration.calculationDays == 30 ? ' ' + t('Month') :
+                        planDuration.calculationDays == 180 ? ' ' + 6 + ' ' + t('Months') :
+                            ' ' + ' ' + t('Year')) : ''}
             >
-                <DialogTitle>
-                    <Typography variant="h6" component="div">
-                        {planDuration ? t('Premium Plan') + (
-                            planDuration.calculationDays == 30 ? ' ' + t('Month') :
-                                planDuration.calculationDays == 180 ? ' ' + 6 + ' ' + t('Months') :
-                                    ' ' + ' ' + t('Year')
-                        )
-                            : ''}
-                    </Typography>
-                </DialogTitle>
-                <DialogContent >
-
-                    <PremiumPlanSubscription
-                        planDuration={planDuration}
-                        setPlanDuration={setPlanDuration}
-                    />
-                </DialogContent>
-            </Dialog>
-
-
-        </>
-
+                <PremiumPlanSubscription
+                    planDuration={planDuration}
+                    setPlanDuration={setPlanDuration}
+                />
+            </CustomDialog>
+        </SecContainer>
     );
 }
 

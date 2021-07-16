@@ -494,7 +494,7 @@
   "pay": "Pay ",
   "Months": "Months",
   "Save": "Save ",
-  "Subscrip": "SUBSCRIP",
+  "Subscribe": "Subscribe",
   "Premium Plan": "Premium Plan ",
   "Subscription Price": "Subscription Price",
   "Promotion Discount": "Promotion Discount",
@@ -554,5 +554,7 @@
   "Check your mobile to get verification code": "Check your mobile to get verification code",
   "branch is required": "Branch is required",
   "Logout": "Logout",
-  "Compatible original parts": "Compatible original parts"
+  "Compatible original parts": "Compatible original parts",
+  "Most popular": "Most popular",
+  "Custom": "Custom"
 }
