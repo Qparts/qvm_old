@@ -35,6 +35,16 @@ const AppRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.general.market,
+      component: lazy(() => import('src/views/market/MarketView'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.general.markerService,
+      component: lazy(() => import('src/views/market/MarketView'))
+    },
+    {
+      exact: true,
       path: PATH_APP.general.replacements,
       component: lazy(() => import('src/views/replacements/ReplacementsView'))
     },

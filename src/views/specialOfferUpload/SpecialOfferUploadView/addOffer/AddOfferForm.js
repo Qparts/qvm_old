@@ -42,6 +42,7 @@ function AddOfferForm({ formik }) {
                     }}
                     title={t("upload stock file")}
                     file='offerFile'
+                    label={t("upload stock file")}
                     value={values.offerFile}
                     touched={touched.offerFile}
                     errors={errors.offerFile}

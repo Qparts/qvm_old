@@ -115,6 +115,7 @@ function AddStockForm(props) {
                     }}
                     title={t("upload stock file")}
                     file='stockFile'
+                    label = {t("upload stock file")}
                     value={values.stockFile}
                     touched={touched.stockFile}
                     errors={errors.stockFile}

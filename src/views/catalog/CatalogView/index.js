@@ -28,7 +28,11 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
-    }
+    },
+    wrapper: {
+        width: "100%",
+        height: "100%",
+    },
 }));
 
 // ----------------------------------------------------------------------
@@ -51,12 +55,7 @@ function CatalogView() {
             className={classes.root}>
             <LoadingOverlay
                 active={isLoading}
-                styles={{
-                    wrapper: {
-                        width: "100%",
-                        height: "100%",
-                    },
-                }}
+                className={classes.wrapper}
                 spinner={<LoadingScreen />}>
                 {showCarInfo == true ?
                     <Box display="flex">

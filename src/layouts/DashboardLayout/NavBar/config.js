@@ -28,6 +28,16 @@ const navConfig = [
   {
     items: [
       {
+        title: 'market',
+        icon: <Orders width='32' height='32' fill='#a2b4bd' fillArr='#F20505' />,
+        href: PATH_APP.general.market,
+        notification: true
+      },
+    ]
+  },
+  {
+    items: [
+      {
         title: 'reports',
         icon: <Chart width='32' height='32' fill='#a2b4bd' />,
         href: PATH_APP.general.quotationsReport,

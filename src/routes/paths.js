@@ -42,6 +42,8 @@ export const PATH_APP = {
     root: path(ROOTS.app, '/dashboard'),
     dashboard: path(ROOTS.app, '/dashboard'),
     orders: path(ROOTS.app, '/orders'),
+    market: path(ROOTS.app, '/market'),
+    markerService: path(ROOTS.app, '/market/:service'),
     partSearch: path(ROOTS.app, '/part-search'),
     replacements: path(ROOTS.app, '/replacements'),
     specialOfferUpload: path(ROOTS.app, '/special-offer-upload'),

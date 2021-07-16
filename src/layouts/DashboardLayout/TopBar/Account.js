@@ -15,6 +15,8 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import { User } from '../../../icons/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 
 // ----------------------------------------------------------------------
 
@@ -62,6 +64,7 @@ function Account() {
   const { t } = useTranslation();
   const history = useHistory();
   const anchorRef = useRef(null);
+  const dispatch = useDispatch();
   const { user, logout } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
@@ -77,6 +80,8 @@ function Account() {
   const handleLogout = async () => {
     try {
       await logout();
+      dispatch(updateBillingAddress(null));
+      dispatch(updateCartItems([]));
       if (isMountedRef.current) {
         history.push('/');
         handleClose();

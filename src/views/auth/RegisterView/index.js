@@ -54,9 +54,9 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     padding: theme.spacing(12, 0)
   },
-  heading:{
+  heading: {
     color: theme.palette.secondary.main,
-    lineHeight:1,
+    lineHeight: 1,
     marginRight: '0.5rem',
   }
 }));
@@ -108,7 +108,8 @@ function RegisterView() {
   const RegisterSchema = Yup.object().shape({
     companyName: Yup.string().required(t("Company Name Is Required")),
     name: Yup.string().required(t("Name Is Required")),
-    phone: Yup.string().required(t("Mobile Is Required")),
+    phone: Yup.string().trim().matches('^[0-9]*$', t('Phone number is not valid'))
+      .length(11, t('Phone number must be 11')).required(t("Mobile Is Required")),
     email: Yup.string()
       .email(t("Email Is Invalid"))
       .required(t("Email Is Required")),
@@ -192,14 +193,14 @@ function RegisterView() {
         <div className={classes.content}>
           <Box display="flex" alignItems="flex-end">
             <Box >
-              <Typography variant="h3"  className={classes.heading}>
+              <Typography variant="h3" className={classes.heading}>
                 {t("Signup Request in")}
               </Typography>
             </Box>
             <Box
               component="img"
               src={`/static/images/QVM.svg`}
-              sx={{ width: 100}}
+              sx={{ width: 100 }}
             />
           </Box>
 
@@ -210,10 +211,10 @@ function RegisterView() {
             t(registerError.data) : registerError.status} </Alert>}
 
           <Box sx={{ mb: 3 }} />
-          
+
           <RegisterForm formik={formik} />
 
-          
+
 
           <Hidden smUp>
             <Box sx={{ mt: 3, textAlign: 'center' }}>
