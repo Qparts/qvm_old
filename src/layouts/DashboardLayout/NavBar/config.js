@@ -1,4 +1,6 @@
 import React from 'react';
+import { Icon } from '@iconify/react';
+import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 import { Add, Catalog, LogoutIcon, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
 import { PATH_APP } from 'src/routes/paths';
 
@@ -29,9 +31,8 @@ const navConfig = [
     items: [
       {
         title: 'market',
-        icon: <Orders width='32' height='32' fill='#a2b4bd' fillArr='#F20505' />,
+        icon: <Icon icon={roundAddShoppingCart} color='#a2b4bd' style={{fontSize: '32px'}} />,
         href: PATH_APP.general.market,
-        notification: true
       },
     ]
   },

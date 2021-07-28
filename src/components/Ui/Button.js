@@ -40,10 +40,11 @@ const useStyles = makeStyles((theme) => ({
     },
     homeBtn: {
         background: 'linear-gradient(90deg, #F20505 10%, #DA1B21 100%)',
-        padding: '10px 25px 15px',
+        padding: '13px 25px',
         borderRadius: '30px',
         minWidth: '200px',
         transition: 'none',
+        lineHeight: '1.428571429',
         fontSize: theme.typography.subtitle1.fontSize,
         '&:hover': {
             background: theme.palette.primary.main,
@@ -56,8 +57,23 @@ const useStyles = makeStyles((theme) => ({
         border: '2px solid' + theme.palette.primary.main,
     },
     flatBtn: {
-        padding: '10px 30px 12px',
+        padding: '12px 30px',
         borderRadius: '5px',
+    },
+    mainBorderBtn: {
+        borderColor: theme.palette.primary.main,
+    },
+    whiteBtn: {
+        background: theme.palette.grey[0] + '!important',
+        color: theme.palette.primary.main,
+        transition: 'all 0.3s ease-in-out',
+        '&:hover': {
+            background: theme.palette.primary.main + '!important',
+            color: theme.palette.grey[0]
+        }
+    },
+    widthAuto: {
+        minWidth: 'auto'
     }
 }));
 
@@ -69,6 +85,10 @@ export default function CustomButton(props) {
     return (
         <Button
             to={props.to}
+            pending={props.pending}
+            target={props.target}
+            component={props.component}
+            href={props.href}
             variant="contained"
             disabled={props.disabled}
             onClick={props.onClick}
@@ -81,7 +101,10 @@ export default function CustomButton(props) {
                 classes[props.weightLight],
                 classes[props.homeBtn],
                 classes[props.homeBtnLight],
-                classes[props.flatBtn]
+                classes[props.flatBtn],
+                classes[props.mainBorderBtn],
+                classes[props.whiteBtn],
+                classes[props.widthAuto]
             )}
             type={props.type}
         >

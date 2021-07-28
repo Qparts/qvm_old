@@ -22,7 +22,7 @@ import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'home',
     icon: homeFill,
     linkTo: '/'
   },
@@ -32,7 +32,7 @@ const MENU_OPTIONS = [
     linkTo: PATH_APP.management.user.profile
   },
   {
-    label: 'Settings',
+    label: 'settings',
     icon: settings2Fill,
     linkTo: PATH_APP.management.user.account
   }
@@ -137,7 +137,7 @@ function Account() {
               }}
             />
 
-            {option.label}
+            {t(option.label)}
           </MenuItem>
         ))}
 

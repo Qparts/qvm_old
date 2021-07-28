@@ -1,12 +1,11 @@
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import React, { useEffect, useState } from 'react';
 import { Form, FormikProvider } from 'formik';
 import eyeFill from '@iconify-icons/eva/eye-fill';
 import eyeOffFill from '@iconify-icons/eva/eye-off-fill';
 import { emailError, passwordError } from 'src/utils/helpError';
-import { useSelector } from 'react-redux';
-import { Select, MenuItem } from "@material-ui/core";
 import {
   Box,
   Grid,
@@ -16,8 +15,8 @@ import {
   Typography,
   Link
 } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
 import { useTranslation } from 'react-i18next';
+import Button from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -29,13 +28,8 @@ function RegisterForm({ formik }) {
   const [showPassword, setShowPassword] = useState(false);
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const { t } = useTranslation();
-  const { countries } = useSelector(
-    (state) => state.authJwt
-  );
+  const { countries } = useSelector((state) => state.authJwt);
   const { themeDirection } = useSelector((state) => state.settings);
-
-
-
 
   return (
     <FormikProvider value={formik}>
@@ -142,30 +136,28 @@ function RegisterForm({ formik }) {
           }
         />
         <Typography
-            variant="body2"
-            align="center"
-            sx={{ color: 'text.secondary', mt: 3 }}
-          >
-            {t("By registering you agree on QVM  and QVM")}&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("Terms of Use")}
-            </Link>
-            &nbsp;{t("and QVM")}&nbsp;
-            <Link underline="always" sx={{ color: 'text.primary' }}>
-              {t("Privacy Policy")}
-            </Link>
-            .
-          </Typography>
+          variant="body2"
+          align="center"
+          sx={{ color: 'text.secondary', mt: 3 }}
+        >
+          {t("By registering you agree on QVM  and QVM")}&nbsp;
+          <Link underline="always" sx={{ color: 'text.primary' }}>
+            {t("Terms of Use")}
+          </Link>
+          &nbsp;{t("and QVM")}&nbsp;
+          <Link underline="always" sx={{ color: 'text.primary' }}>
+            {t("Privacy Policy")}
+          </Link>
+          .
+        </Typography>
         <Box sx={{ mt: 3 }}>
-          <LoadingButton
-            fullWidth
-            size="large"
+          <Button
             type="submit"
-            variant="contained"
+            homeBtn='homeBtn'
             pending={isSubmitting}
           >
             {t("Signup")}
-          </LoadingButton>
+          </Button>
         </Box>
       </Form>
     </FormikProvider>

@@ -1,16 +1,34 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Grid, Typography } from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { List, ListItem, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
+import clsx from 'clsx';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
-
-    value: {
-        color: '#526C78',
+    cartItemsLength: {
+        paddingBottom: '20px',
+        marginBottom: '10px',
+        borderBottom: '1px solid #ECF1F5',
+        display: 'block'
+    },
+    orderSummary: {
+        padding: '0',
+    },
+    orderSummaryChild: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '10px 0',
+    },
+    orderSummaryNum: {
+        color: theme.palette.secondary.main,
+        fontWeight: theme.typography.fontWeightMedium
+    },
+    orderSummaryTitle: {
+        color: 'rgb(99, 115, 129)'
     },
 }));
 
@@ -18,16 +36,13 @@ const useStyles = makeStyles((theme) => ({
 
 function OrderSummary({ }) {
     const classes = useStyles();
-    const theme = useTheme();
     const { t } = useTranslation();
-    const { themeDirection } = useSelector((state) => state.settings);
     const { cartItems } = useSelector((state) => state.market);
     const [price, setPrice] = useState(0);
     const [shippingCost, setShippingCost] = useState(50);
     const [subtotal, setSubtotal] = useState(0);
     const [tax, setTax] = useState(0);
     const [totalPrice, setTotalPrice] = useState(0);
-    const isRlt = themeDirection == 'rtl';
 
     useEffect(() => {
         let total = getPrice();
@@ -49,49 +64,41 @@ function OrderSummary({ }) {
 
     return (
         <>
-            <Typography variant="body4" className={classes.value}> {cartItems.length} {t('Product')}</Typography>
-
-            <Grid container spacing={2}>
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Total Price")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {price} {t("SAR")}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Shipping Cost")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {shippingCost} {t("SAR")}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Subtotal")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {subtotal} {t("SAR")}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Tax")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {tax} {t("SAR")}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Total Price")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {totalPrice} {t("SAR")}</Typography>
-                </Grid>
-            </Grid>
+            <Typography variant="body41" className={clsx(classes.cartItemsLength, classes.orderSummaryTitle)}>
+                ({cartItems.length}) {t('Product in cart')}
+            </Typography>
+            <List className={classes.orderSummary}>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Price")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {price} {t('SAR')}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Shipping Cost")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {shippingCost} {t('SAR')}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Subtotal")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {subtotal} {t('SAR')}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Tax")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {tax} {t('SAR')}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Total Price")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {totalPrice} {t('SAR')}
+                    </Typography>
+                </ListItem>
+            </List>
         </>
     );
 }

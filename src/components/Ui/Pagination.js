@@ -7,18 +7,18 @@ import constants from 'src/utils/constants';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     tablePagination: {
         borderTop: 0,
         '& .MuiTablePagination-toolbar': {
-            height: '59px'
+            height: '47px',
         }
     }
 }));
 
 // ----------------------------------------------------------------------
 
-export default function CustomButton(props) {
+export default function Pagination(props) {
     const classes = useStyles();
     const { t } = useTranslation();
     const { themeDirection } = useSelector((state) => state.settings);

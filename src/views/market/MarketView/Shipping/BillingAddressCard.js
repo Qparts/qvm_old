@@ -1,28 +1,34 @@
-import React, {  } from 'react';
+import React, { } from 'react';
 import { useSelector } from 'react-redux';
-import {
-    Grid,
-    Box,
-    Typography
-} from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { List, ListItem, Typography } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
-
-    value: {
-        color: '#526C78',
+    orderSummary: {
+        padding: '0',
     },
+    orderSummaryChild: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '10px 0',
+    },
+    orderSummaryNum: {
+        color: theme.palette.secondary.main,
+        fontWeight: theme.typography.fontWeightMedium
+    },
+    orderSummaryTitle: {
+        color: 'rgb(99, 115, 129)'
+    }
 }));
 
 // ----------------------------------------------------------------------
 
 function BillingAddressCard({ }) {
     const classes = useStyles();
-    const theme = useTheme();
     const { t } = useTranslation();
     const { themeDirection } = useSelector((state) => state.settings);
     const { billingAddress } = useSelector((state) => state.market);
@@ -30,58 +36,44 @@ function BillingAddressCard({ }) {
 
     return (
         <>
-            <Grid container spacing={2}>
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Name")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {billingAddress.receiver}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Phone")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {billingAddress.phone}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Billing Address")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {billingAddress.address}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("City")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {isRlt ? billingAddress.location.city.nameAr : billingAddress.location.city.name}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Region")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {isRlt ? billingAddress.location.region.nameAr : billingAddress.location.region.name}</Typography>
-                </Grid>
-
-                <Grid item md={8}>
-                    <Typography variant="subtitle1">   {t("Country")}</Typography>
-                </Grid>
-
-                <Grid item md={4}>
-                    <Typography variant="body4" className={classes.value}> {isRlt ? billingAddress.location.country.nameAr : billingAddress.location.country.name}</Typography>
-                </Grid>
-
-            </Grid>
-
-            <Box sx={{ mb: 3 }} />
+            <List className={classes.orderSummary}>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Name")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {billingAddress.receiver}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Phone")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {billingAddress.phone}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Billing Address")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {billingAddress.address}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("City")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {isRlt ? billingAddress.location.city.nameAr : billingAddress.location.city.name}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Region")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {isRlt ? billingAddress.location.region.nameAr : billingAddress.location.region.name}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.orderSummaryChild}>
+                    <Typography variant="body3" className={classes.orderSummaryTitle}>{t("Country")}</Typography>
+                    <Typography variant="body1" className={classes.orderSummaryNum}>
+                        {isRlt ? billingAddress.location.country.nameAr : billingAddress.location.country.name}
+                    </Typography>
+                </ListItem>
+            </List>
         </>
     );
 }

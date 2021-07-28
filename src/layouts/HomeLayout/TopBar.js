@@ -17,7 +17,6 @@ import {
   Box,
   List,
   Link,
-  Button,
   AppBar,
   Hidden,
   Toolbar,
@@ -29,6 +28,8 @@ import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
 import { pxToRem } from 'src/utils/formatFontSize';
+import Button from '../../components/Ui/Button';
+
 // ----------------------------------------------------------------------
 const MENU_LINKS = [
   { title: 'home', icon: homeFill, href: PATH_PAGE.common.home },
@@ -68,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
     )
   },
   onScroll: {
+    '& $toolbar': {
+      minHeight: APP_BAR_DESKTOP
+    },
     [theme.breakpoints.up('md')]: {
       '& $toolbar': {
         height: APP_BAR_DESKTOP - 20
@@ -116,6 +120,7 @@ function TopBar() {
           exact
           to={link.href}
           key={link.title}
+          target={link.title === 'login' ? "_blank" : null}
           underline="none"
           variant="subtitle1"
           component={RouterLink}
@@ -161,8 +166,7 @@ function TopBar() {
     <AppBar
       color='inherit'
       className={clsx(classes.root, { [classes.onScroll]: offset }, { [classes.transparentNav]: isHome })}
-      sx={{ boxShadow: 'none' }}
-
+      sx={{ boxShadow: isHome ? 'none' : (theme) => theme.shadows[25].z8 }}
     >
       <Toolbar disableGutters className={classes.toolbar}>
         <Container
@@ -182,14 +186,13 @@ function TopBar() {
           <Hidden mdDown>{renderMenuDesktop}</Hidden>
 
           <Button
-            underline="none"
-            variant="contained"
+            homeBtn='homeBtn'
+            btnWidth='btnWidth'
+            widthAuto='widthAuto'
+            whiteBtn={isHome ? 'whiteBtn' : null}
             component={Link}
             target="_blank"
-            size="large"
             href={PATH_PAGE.auth.register}
-            className={classes.navButton}
-            className={clsx(classes.navButton, { [classes.whiteBtn]: isHome })}
           >
             {t("registeration")}
           </Button>
@@ -222,7 +225,6 @@ function TopBar() {
             borderRadius: '50%',
             position: 'absolute',
             width: `calc(100% - 48px)`,
-            boxShadow: (theme) => theme.shadows[25].z8
           }}
         />
       )}
