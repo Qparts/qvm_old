@@ -1,8 +1,6 @@
 import NavItem from './NavItem';
 import MenuLinks from './config';
 import PropTypes from 'prop-types';
-import Logo from 'src/components/Logo';
-import useAuth from 'src/hooks/useAuth';
 import React, { useEffect } from 'react';
 import Scrollbars from 'src/components/Scrollbars';
 import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
@@ -15,6 +13,9 @@ import {
   ListSubheader,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import Logo from 'src/components/Logo';
+import useAuth from 'src/hooks/useAuth';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -134,7 +135,7 @@ function NavBar({ isOpenNav, onCloseNav }) {
   const renderContent = (
     <Scrollbars>
       <Box sx={{ px: 2.5, py: 3 }}>
-        <RouterLink to="/">
+        <RouterLink to={PATH_APP.general.root}>
           <Logo style={{margin: 'auto'}} />
         </RouterLink>
       </Box>

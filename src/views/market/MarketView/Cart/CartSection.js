@@ -1,6 +1,7 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useTheme } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
@@ -17,17 +18,19 @@ import EmptyContent from "../../../../components/Ui/EmptyContent";
 function CartSection() {
     const { t } = useTranslation();
     const history = useHistory();
+    const theme = useTheme();
     const { cartItems } = useSelector((state) => state.market);
 
     const continueShopping = (
         <>
-            {<Icon icon={roundAddShoppingCart} style={{fontSize: '20px', marginLeft: '8px'}} />}
+            {<Icon icon={roundAddShoppingCart}
+                style={{ fontSize: '20px', margin: theme.direction === 'rtl' ? theme.spacing(0, 0, 0, 1) : theme.spacing(0, 1, 0, 0)}} />}
             {t("Continue Shopping")}
         </>
     )
 
     return (
-        cartItems.length == 0 ?
+        cartItems.length === 0 ?
             <EmptyContent
                 title={t("Cart is empty")}
                 btnTitle={continueShopping}

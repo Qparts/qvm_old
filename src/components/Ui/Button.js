@@ -74,6 +74,9 @@ const useStyles = makeStyles((theme) => ({
     },
     widthAuto: {
         minWidth: 'auto'
+    },
+    btnM: {
+        marginRight: '10px'
     }
 }));
 
@@ -104,7 +107,8 @@ export default function CustomButton(props) {
                 classes[props.flatBtn],
                 classes[props.mainBorderBtn],
                 classes[props.whiteBtn],
-                classes[props.widthAuto]
+                classes[props.widthAuto],
+                classes[props.btnM]
             )}
             type={props.type}
         >

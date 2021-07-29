@@ -58,9 +58,6 @@ export const PATH_APP = {
     root: path(ROOTS.app, '/management'),
     user: {
       root: path(ROOTS.app, '/management/user'),
-      profile: path(ROOTS.app, '/management/user/profile'),
-      cards: path(ROOTS.app, '/management/user/card'),
-      list: path(ROOTS.app, '/management/user/list'),
       account: path(ROOTS.app, '/management/user/account')
     },
     // catalog : path(ROOTS.app, '/catalog')

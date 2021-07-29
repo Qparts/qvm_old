@@ -1,7 +1,7 @@
 import React from 'react';
 import Page from 'src/components/Page';
 import { useTranslation } from 'react-i18next';
-import { useTheme, makeStyles } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import { Container, Box, Typography } from '@material-ui/core';
 import Accordion from '@material-ui/core/Accordion';
 import AccordionSummary from '@material-ui/core/AccordionSummary';
@@ -126,33 +126,18 @@ function PrivacyPolicy({ formik }) {
               id="panel4a-header"
             >
               <Typography className={classes.heading}>
-                مشاركة المعلومات الخاصة بالمتاجر والتُجّار :
+                {t("Sharing information about stores and merchants")}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography sx={{ mb: 2 }}>
-                بطبيعة الحال فإن منصة QVM تسعى بالاحتفاظ بهذه المعلومات بما يحفظ
-                خصوصية التاجر والمستخدم، ومنصة QVM لا تحتفظ بهذه المعلومات إلا
-                بهدف تحسين جودة المنصة وجودة عمل المتاجر وتسهيلاً وتيسيراً
-                لأعمال التجار والمتاجر.
+                {t("Of course, the QVM platform seeks to retain this information in a manner that preserves the privacy of the merchant and user, and the QVM platform does not keep this information except for the purpose of improving the quality of the platform and the quality of the work of stores and to facilitate and facilitate the work of merchants and stores")}
               </Typography>
               <Typography sx={{ mb: 2 }}>
-                كقاعدة عامة فإن جميع هذه المعلومات لا يطلع عليها إلا بعض
-                القائمين على منصة QVM وذلك بعد حصولهم على تصريح للاطلاع عليها من
-                قِبل إدارة منصة QVM – عادة ما يكون التصريح محدد ومقيّد ويخضع
-                لرقابة قانونية وإدارية من قِبل منصة QVM – ولن يتم نشر أو بث هذه
-                المعلومات للغير.
+                {t("As a general rule, all this information is only seen by some QVM platform administrators after they obtain permission to view it from the QVM platform management - usually the permission is specific, restricted and subject to legal and administrative control by the QVM platform - and this information will not be published or broadcast to others")}
               </Typography>
               <Typography>
-                حيث أن منصة QVM تسعى للحفاظ على سلامة المستخدمين وحقوق التُجّار
-                ، فإنه – في حال ملاحظة منصة QVM لأي نشاط غير نظامي أو غير شرعي
-                يقوم به التاجر أو المستخدم – فإن منصة QVM تطبيقاً لمواد وبنود
-                وأحكام اتفاقية الاستخدام وحيث أنها تسعى بقدر الإمكان إلى الحفاظ
-                على سلامة عمل النظام فإنها قد تشارك أيٍ من هذه المعلومات مع
-                الجهات المختصة لاتخاذ اللازم حيال التاجر والمستخدم أو النظام
-                المخالف ، وذلك لحماية منصة QVM وباقي التُجّار والمتاجر
-                والمستهلكين من أي مسائلة قانونية قدّ تطرأ على المنصة أو على أحد
-                مستخدميها نتيجة لهذا النشاط الغير شرعي أو الغير نظامي.
+                {t("As the QVM platform seeks to preserve the safety of users and the rights of merchants, so - in the event that the QVM platform notices any illegal or illegal activity carried out by the merchant or the user - the QVM platform is in application of the articles, terms and provisions of the usage agreement and where it seeks as much as possible to maintain the integrity of The work of the system, it may share any of this information with the competent authorities to take the necessary action against the merchant and the user or the violating system, in order to protect the QVM platform and the rest of the merchants, merchants and consumers from any legal liability that may arise on the platform or one of its users as a result of this illegal or illegal activity")}
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -163,22 +148,22 @@ function PrivacyPolicy({ formik }) {
               id="panel5a-header"
             >
               <Typography className={classes.heading}>
-                ما هو مدى أمان سرية المعلومات الخاصة بالتُجّار أو المتاجر:
+                {t("How secure is the confidentiality of information about merchants or stores")}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                تسعى منصة QVM إلى الحفاظ على سرية معلومات مستخدمين المنصة ، وحيث أن سياسة الخصوصية الخاصة بالتُجّار أو المخزون لن تخالف أحكام اتفاقية الاستخدام أو سياسة الخصوصية وسرية المعلومات. ولكن نظراً لعدم إمكانية ضمان ذلك 100% في ( فضاء الإنترنت ) فإن فريق عمل منصة QVM ، ينوّه على يلي:
+                {t("The QVM Platform seeks to maintain the confidentiality of the information of the users of the platform, and that the privacy policy of merchants or inventory will not violate the provisions of the use agreement or the privacy and confidentiality of information policy However, since this cannot be guaranteed 100% in the (internet space), the QVM platform team notes the following")}
               </Typography>
               <ul className={classes.list}>
                 <li>
-                  تسعى منصة QVM إلى الحفاظ على جميع المعلومات الخاصة بالمخزون وألا يطلع عليها أي شخص بما يخالف السياسة المعمول بها في منصة QVM.
+                  {t("QVM seeks to keep all inventory information and not to be exposed to anyone in violation of the policy of the QVM platform")}
                 </li>
                 <li>
-                  تعمل منصة QVM على حماية معلومات التُجّار والمتاجر بموجب أنظمة حماية إلكترونية وتقنية ذات جودة عالية وتُحدّث بشكل مستمر ودوري.
+                  {t("The QVM platform protects merchants and merchants' information with high quality electronic and technical security systems that are continuously and periodically updated")}
                 </li>
                 <li>
-                  غير أنه نظراً لأن شبكة الانترنت لا يمكن ضمانها 100% لما قد يطرأ من اختراق أو فيروسات على أنظمة الحماية الالكترونية و على جدران الحماية المعمول بها في منصة QVM فإن منصة QVM تنصح التجار بالحفاظ على معلوماتهم بسرية تامة، وعدم إفشاء أي معلومات يراها التاجر أو المستخدم هامة جداً له، وهذا حرصاً من منصة QVM على حماية وتوجيه وإرشاد التٌجّار والمخزون.
+                  {t("However, since the Internet cannot be guaranteed 100% of what may occur from penetration or viruses to electronic protection systems and the firewalls in force in the QVM platform, the QVM platform advises merchants to keep their information strictly confidential, and not to disclose any information that the merchant or user sees Very important to him, and this is the QVM platform's keenness to protect, guide and guide merchants and inventory")}
                 </li>
               </ul>
             </AccordionDetails>
@@ -190,12 +175,12 @@ function PrivacyPolicy({ formik }) {
               id="panel6a-header"
             >
               <Typography className={classes.heading}>
-                الخدمات الإستراتيجية واللوجستية ( خدمات الطرف الثالث ) :
+                {t("Strategic and logistical services (third party services)")}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                يُقر التاجر والمستخدم بعلمه التام والنافي للجهالة بأنه في حال تقدّم لطلب الاشتراك في خدمة مُقدّمة عن طريق طرف ثالث ، بأنه يمنح تصريح وتخويل وإذن كامل وتام إلى منصة QVM بتزويد مُقدّم الخدمة ببيانات التاجر والمستخدم أو النظام أو المستخدم المشترك لدى مُقدِم الخدمة ، مثل: اسم المستخدم – الهاتف الشخصي – البريد الإلكتروني – رقم الهوية أو الإقامة – عنوان المنزل ، وغير ذلك من المعلومات التي يحتاجها مقدّم الخدمة ( الطرف الثالث ). وذلك حتى يتمكّن مقدم الخدمة ( الطرف الثالث ) من تقديم الخدمة المطلوبة والتي اشترك بها المستخدم.
+                {t("The merchant and the user acknowledge with full and complete knowledge that if he applies for a subscription to a service provided by a third party, he grants full and complete permission, authorization and permission to the QVM platform to provide the service provider with the data of the merchant and the user, the system or the user subscribed to the service provider, such as username , Personal phone , e-mail , ID or residence number , home address, and other information needed by the service provider (the third party) This is so that the service provider (the third party) can provide the requested service to which the user has subscribed")}
               </Typography>
             </AccordionDetails>
           </Accordion>
@@ -206,12 +191,12 @@ function PrivacyPolicy({ formik }) {
               id="panel7a-header"
             >
               <Typography className={classes.heading}>
-                قواعد وأحكام استخدام منصة QVM :
+                {t("QVM platform usage rules and conditions")}
               </Typography>
             </AccordionSummary>
             <AccordionDetails>
               <Typography>
-                إن جميع التزامات منصة QVM، وجميع التزامات التجار والمستخدمين، وجميع الحقوق الواردة في العلاقة بين التاجر والمستخدم ومنصة QVM، حيث أن هذه القواعد هي “سياسة الخصوصية وسرية المعلومات” والمنبثقة من الاتفاقية التي أبرمت بين التاجر والمستخدم ومنصة QVM عند تأسيسه للمتجر، وقد وضعت سياسة الخصوصية وسرية المعلومات لضمان المصداقية والثقة التي تحرص منصة QVM على توفيرها للتجار.
+                {t("All obligations of the QVM platform, and all obligations of merchants and users, and all rights contained in the relationship between the merchant, the user and the QVM platform, as these rules are the “Privacy Policy and Confidentiality of Information” stemming from the agreement concluded between the merchant, the user and the QVM platform when establishing the store, and the policy of Privacy and confidentiality of information to ensure the credibility and trust that the QVM platform is keen to provide to merchants")}
               </Typography>
             </AccordionDetails>
           </Accordion>
