@@ -62,6 +62,18 @@ export const PATH_APP = {
     },
   },
 
+  app: {
+    chat: {
+      root: path(ROOTS.app, '/chat'),
+      new: path(ROOTS.app, '/chat/new'),
+      conversation: [
+        path(ROOTS.app, '/chat/new'),
+        path(ROOTS.app, '/chat/:conversationKey')
+      ]
+    },
+    calendar: path(ROOTS.app, '/calendar')
+  },
+
   management: {
     root: path(ROOTS.app, '/management'),
     user: {

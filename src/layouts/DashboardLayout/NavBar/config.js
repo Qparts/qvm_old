@@ -21,7 +21,7 @@ const navConfig = [
       {
         title: 'orders',
         icon: <Orders width='32' height='32' fill='#a2b4bd' fillArr='#F20505' />,
-        href: PATH_APP.general.orders,
+        href: PATH_APP.app.chat.root,
         notification: true
       },
 

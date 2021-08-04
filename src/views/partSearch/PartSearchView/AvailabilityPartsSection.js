@@ -63,12 +63,27 @@ function AvailabilityPartsSection() {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
     }
 
+    const addToCompanyCart = (item) => {
+        console.log("cart item", item);
+    }
+
     const showDetailsElement = (item) => {
         return (
             <TableAction
                 type='partSearch'
                 title={t("Details")}
                 onClick={() => showDetailsAction(item)}
+                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
+        )
+    }
+
+
+    const addToCart = (item) => {
+        return (
+            <TableAction
+                type='partSearch'
+                title={t("Buy now")}
+                onClick={() => addToCompanyCart(item)}
                 textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
         )
     }
@@ -127,7 +142,7 @@ function AvailabilityPartsSection() {
                         }
                     ]}
 
-                    actions={[{ element: showDetailsElement }]}
+                    actions={[{ element: showDetailsElement }, { element: addToCart }]}
                     datatable={productResult}
                     error={error}
                     onSelectedPage={changePagehandler}

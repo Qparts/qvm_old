@@ -33,6 +33,20 @@ const AppRoutes = {
       path: PATH_APP.general.orders,
       component: lazy(() => import('src/views/orders/OrdersView'))
     },
+
+        // APP : CHAT
+    // ----------------------------------------------------------------------
+    {
+      exact: true,
+      path: PATH_APP.app.chat.conversation ,
+      component: lazy(() => import('src/views/orders/OrdersView'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.app.chat.root,
+      component: () => <Redirect to={PATH_APP.app.chat.new} />
+    },
+
     {
       exact: true,
       path: PATH_APP.general.market,

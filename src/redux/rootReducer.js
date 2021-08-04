@@ -47,7 +47,7 @@ const rootReducer = combineReducers({
   specialOfferUpload: specialOfferUploadReducer,
   branches: branchesReducer,
   market : marketReducer,
-  chat: chatReducer,
+  chat : chatReducer
 });
 
 export { rootPersistConfig, rootReducer };
