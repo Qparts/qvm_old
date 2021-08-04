@@ -47,7 +47,7 @@ function DashboardAppView() {
   return (
     <Page title="Dashboard App | Minimal-UI" className={classes.root}>
 
-      {currentPlan.status != 'A' ?
+      {currentPlan?.status != 'A' ?
         <Grid container spacing={2}>
           <Grid item xs={12} md={9}>
             <Grid container spacing={2}>
