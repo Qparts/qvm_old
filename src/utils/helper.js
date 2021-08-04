@@ -137,7 +137,7 @@ function getLocation(
 ) {
   try {
     if (branch == null && countryId != 0 && regionId != 0 && cityId != 0) {
-      const country = countries.find((e) => e.id ===parseInt( countryId));
+      const country = countries.find((e) => e.id === parseInt(countryId));
       const region = country.regions.find((e) => e.id === parseInt(regionId));
       const city = region.cities.find((e) => e.id === parseInt(cityId));
       return { country: country, region: region, city: city };
@@ -186,10 +186,25 @@ const gotoPremium = async (history, enqueueSnackbar, message, url, t) => {
   }
 }
 
+const handleSelectConversation = (conversationId, conversations, history) => {
+  let conversationKey = '';
+  const conversation = conversations.byId[conversationId];
+  if (conversation.type === 'GROUP') {
+    conversationKey = conversation.id;
+  } else {
+    const otherParticipant = conversation.participants.find(
+      (participant) =>
+        participant.id !== '8864c717-587d-472a-929a-8e5f298024da-0'
+    );
+    conversationKey = otherParticipant.username;
+  }
+  history.push(`/app/chat/${conversationKey}`);
+};
+
 function calculateTimeLeft(startDate, endDate) {
   let start = new Date(startDate),
-      end = new Date(endDate),
-      today = new Date();
+    end = new Date(endDate),
+    today = new Date();
   return Math.round(((today - start) / (end - start)) * 100);
 }
 
@@ -213,5 +228,6 @@ export default {
   getLocation,
   reconstructPhone,
   gotoPremium,
-  calculateTimeLeft
+  calculateTimeLeft,
+  handleSelectConversation
 };

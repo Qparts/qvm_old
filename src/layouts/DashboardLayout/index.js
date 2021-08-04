@@ -1,8 +1,12 @@
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useLocation } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +18,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     minHeight: '100%',
     overflow: 'hidden',
-    background:'#082C3C',
+    background: '#082C3C',
   },
   main: {
     flexGrow: 1,
@@ -27,9 +31,15 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2),
     [theme.breakpoints.up('lg')]: {
       paddingTop: APP_BAR_DESKTOP + 18,
-      margin: theme.spacing(0, 1, 1,0),
+      margin: theme.spacing(0, 1, 1, 0),
       borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
+      borderBottomRightRadius: 40,
+    }
+  },
+  chatPadding: {
+    padding: '64px 0 0 0',
+    [theme.breakpoints.up('lg')]: {
+      padding: '69px 0 0 0'
     }
   }
 }));
@@ -42,14 +52,40 @@ DashboardLayout.propTypes = {
 
 function DashboardLayout({ children }) {
   const classes = useStyles();
+  const { conversations } = useSelector((state) => state.chat);
   const [openNav, setOpenNav] = useState(false);
+  const { pathname } = useLocation();
+
+  // const handleSelectConversation = () => {
+  //   let conversationKey = '';
+  //   let conversation = conversations.allIds.map(conversationId => (conversations.byId[conversationId]));
+  //   if (conversation.type === 'GROUP') {
+  //     conversationKey = conversation.id;
+  //   } else {
+  //     const otherParticipant = conversation.participants.find(
+  //       (participant) =>
+  //         participant.id !== '8864c717-587d-472a-929a-8e5f298024da-0'
+  //     );
+  //     conversationKey = otherParticipant.username;
+  //   }
+  //   console.log(conversation)
+  //   return conversationKey;
+  // };
+
+  // console.log(PATH_APP.general.chat.root + '/' + handleSelectConversation())
+
+  const isChat = (
+    pathname === PATH_APP.general.chat.root  ||
+    pathname === PATH_APP.general.chat.root ||
+    pathname === PATH_APP.general.chat.new
+  );
 
   return (
     <div className={classes.root}>
       <TopBar onOpenNav={() => setOpenNav(true)} />
       <NavBar onCloseNav={() => setOpenNav(false)} isOpenNav={openNav} />
 
-      <div className={classes.main}>{children}</div>
+      <div className={clsx(classes.main, isChat ? classes.chatPadding : null)}>{children}</div>
     </div>
   );
 }

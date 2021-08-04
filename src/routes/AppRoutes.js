@@ -79,7 +79,16 @@ const AppRoutes = {
       path: PATH_APP.general.upgradeSubscription,
       component: lazy(() => import('src/views/upgradeSubscription/UpgradeSubscriptionView'))
     },
-
+    {
+      exact: true,
+      path: PATH_APP.general.chat.conversation,
+      component: lazy(() => import('src/views/ChatView'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.general.chat.root,
+      component: () => <Redirect to={PATH_APP.general.chat.new} />
+    },
 
 
 
