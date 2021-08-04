@@ -1,18 +1,18 @@
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import Logo from 'src/components/Logo';
 import Page from 'src/components/Page';
 import useAuth from 'src/hooks/useAuth';
-import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { PATH_PAGE } from 'src/routes/paths';
 import ResetPasswordForm from './ResetPasswordForm';
 import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Container, Typography, Hidden } from '@material-ui/core';
+import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
-import { useTranslation } from 'react-i18next';
+import Button from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -127,16 +127,14 @@ function ResetPasswordView() {
             </>
           ) : (
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h3" gutterBottom>
+              <Typography variant="h3"  sx={{mb: 3}}>
                 {t("The request is not available")}
               </Typography>
-
               <Button
-                size="large"
-                variant="contained"
+                homeBtn='homeBtn'
+                btnWidth='btnWidth'
                 component={RouterLink}
                 to={PATH_PAGE.auth.login}
-                sx={{ mt: 5 }}
               >
                 {t("Back")}
               </Button>

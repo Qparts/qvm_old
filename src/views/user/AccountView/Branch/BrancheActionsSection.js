@@ -21,11 +21,6 @@ const useStyles = makeStyles(() => ({
         paddingBottom: '10px',
         borderBottom: '1px solid #CED5D8',
     },
-    branchesActionsFlex: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        alignItems: "center"
-    },
     branchesIconMr: {
         marginRight: "5px"
     }

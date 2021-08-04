@@ -9,6 +9,7 @@ import LoadingOverlay from "react-loading-overlay";
 import AvailabilityPartsSection from './AvailabilityPartsSection';
 import ProductInfoSection from './ProductInfoSection';
 import { cleanup } from 'src/redux/slices/partSearch';
+import EmptyContent from "../../../components/Ui/EmptyContent";
 
 // ----------------------------------------------------------------------
 
@@ -34,7 +35,7 @@ function PartSearchView() {
     const classes = useStyles();
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isLoading, productInfoResult = [] } = useSelector((state) => state.PartSearch);
+    const { isLoading, productInfoResult = [], productResult = [] } = useSelector((state) => state.PartSearch);
 
     useEffect(() => {
         return () => {
@@ -59,12 +60,23 @@ function PartSearchView() {
                     <LoadingScreen />
 
                 }>
-                <AvailabilityPartsSection />
-                {productInfoResult.length > 0 ?
-                    <>
-                        <Box sx={{ mb: 6 }} />
-                        <ProductInfoSection />
-                    </> : ""
+                {
+                    productInfoResult.length === 0 && productResult.length === 0 ?
+                        <EmptyContent
+                            btnHome
+                            title={t("Unable to receive your order")}
+                            description={t("look like there are no results for the item you were looking for")}
+                        />
+                        :
+                        <>
+                            <AvailabilityPartsSection />
+                            {productInfoResult.length > 0 ?
+                                <>
+                                    <Box sx={{ mb: 6 }} />
+                                    <ProductInfoSection />
+                                </> : ""
+                            }
+                        </>
                 }
             </LoadingOverlay>
 

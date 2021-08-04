@@ -1,67 +1,59 @@
-import React, { } from 'react';
-import { useSelector } from 'react-redux';
-import {
-    Grid,
-    Card,
-    CardContent,
-    Typography,
-    Box
-} from '@material-ui/core';
-import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { useTranslation } from 'react-i18next';
-import CartItem from './CartItem';
+import React from 'react';
 import { useHistory } from 'react-router-dom';
-import CustomButton from 'src/components/Ui/Button';
-import { PATH_APP } from 'src/routes/paths';
+import { useSelector } from 'react-redux';
+import { useTheme } from '@material-ui/core/styles';
+import { Grid } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
+import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
+import { Icon } from '@iconify/react';
+import CartItem from './CartItem';
 import OrderSummary from '../Shipping/OrderSummary';
-import QVMCard from 'src/components/Ui/QvmCard';
+import MarketActions from '../MarketUi/MarketActions';
+import { PATH_APP } from 'src/routes/paths';
+import MainCard from "../../../../components/Ui/MainCard";
+import EmptyContent from "../../../../components/Ui/EmptyContent";
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
-    root: {},
-}));
-
-// ----------------------------------------------------------------------
-
-function CartSection(props) {
-    const classes = useStyles();
+function CartSection() {
     const { t } = useTranslation();
-    const { cartItems } = useSelector((state) => state.market);
     const history = useHistory();
+    const theme = useTheme();
+    const { cartItems } = useSelector((state) => state.market);
+
+    const continueShopping = (
+        <>
+            {<Icon icon={roundAddShoppingCart}
+                style={{ fontSize: '20px', margin: theme.direction === 'rtl' ? theme.spacing(0, 0, 0, 1) : theme.spacing(0, 1, 0, 0)}} />}
+            {t("Continue Shopping")}
+        </>
+    )
 
     return (
-        <Grid container spacing={2}>
-            <Grid item md={8} >
-                {
-                    cartItems.map((item, index) => {
-                        return <CartItem product={item.product} quantity={item.quantity} key={index} />
-                    })
-                }
+        cartItems.length === 0 ?
+            <EmptyContent
+                title={t("Cart is empty")}
+                btnTitle={continueShopping}
+                description={t("Look like you have no items in your shopping cart")}
+                img="/static/illustrations/illustration_empty_cart.svg"
+                url={() => history.push(PATH_APP.general.market)}
+            />
+            :
+            <Grid container spacing={2}>
+                <Grid item md={8} >
+                    <CartItem />
+                </Grid>
 
+                <Grid item md={4} >
+                    <MainCard title={t("Order Summary")}>
+                        <OrderSummary />
+                        <MarketActions
+                            title={t("Back to shopping")}
+                            clickAction={() => { history.push(PATH_APP.general.market) }}
+                            clickCompletePur={() => { history.push(`/app/market/cart-shipping`) }} />
+                    </MainCard>
+                </Grid>
             </Grid>
-
-            <Grid item md={4} >
-                <QVMCard title={t("Order Summary")} >
-                    <OrderSummary />
-                    <Box sx={{ marginTop: '20px' }}>
-                        <CustomButton
-                            onClick={() => { history.push(`/app/market/cart-shipping`); }}
-                        >{t("Complete the purchase")}
-                        </CustomButton>
-                    </Box>
-                    <Box sx={{ marginTop: '20px' }}>
-                        <CustomButton
-                            onClick={() => {
-                                history.push(PATH_APP.general.market);
-                            }}
-                        >{t("Back to shopping")}
-                        </CustomButton>
-                    </Box>
-                </QVMCard>
-            </Grid>
-
-        </Grid>
     );
 }
 

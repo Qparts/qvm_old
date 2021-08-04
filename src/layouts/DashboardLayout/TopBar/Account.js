@@ -15,24 +15,19 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import { User } from '../../../icons/icons';
-import { useSelector, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'home',
     icon: homeFill,
-    linkTo: '/'
+    linkTo: PATH_APP.general.dashboard
   },
   {
-    label: 'Profile',
-    icon: personFill,
-    linkTo: PATH_APP.management.user.profile
-  },
-  {
-    label: 'Settings',
+    label: 'settings',
     icon: settings2Fill,
     linkTo: PATH_APP.management.user.account
   }
@@ -137,7 +132,7 @@ function Account() {
               }}
             />
 
-            {option.label}
+            {t(option.label)}
           </MenuItem>
         ))}
 

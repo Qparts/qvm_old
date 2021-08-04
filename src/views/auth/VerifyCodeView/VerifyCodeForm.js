@@ -1,11 +1,10 @@
 import React from 'react';
 import { Form, FormikProvider } from 'formik';
-import { LoadingButton } from '@material-ui/lab';
 import maxLengthCheck from 'src/utils/maxLengthCheck';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, OutlinedInput, FormHelperText } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import CustomButton from '../../../components/Ui/Button';
+import Button from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +64,7 @@ function VerifyCodeForm({ formik }) {
         </FormHelperText>
 
         <Box sx={{ marginTop: '20px' }}>
-          <CustomButton type="submit">{t("Verify")}</CustomButton>
+          <Button type="submit" homeBtn='homeBtn'>{t("Verify")}</Button>
         </Box>
       </Form>
     </FormikProvider>

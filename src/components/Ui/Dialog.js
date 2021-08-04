@@ -22,12 +22,13 @@ const useStyles = makeStyles((theme) => ({
     },
     closeButton: {
         marginLeft: theme.spacing(4),
+        padding: theme.spacing(1),
         color: theme.palette.grey[500],
     },
     headCol: {
         color: theme.palette.secondary.main,
         borderBottom: '1px solid #EEF1F5',
-        padding: theme.spacing(2),
+        padding: theme.spacing(1, 2),
         '& h2': {
             display: 'flex',
             alignItems: 'center',

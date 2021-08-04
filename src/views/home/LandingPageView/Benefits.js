@@ -1,8 +1,9 @@
 import clsx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import {makeStyles } from '@material-ui/core/styles';
-import {Container } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
+import { Container } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 
 //-------------------------------SWIPER
 // Import Swiper React components
@@ -19,7 +20,9 @@ import SwiperCore, { Autoplay, Pagination } from 'swiper/core';
 
 // install Swiper modules
 SwiperCore.use([Autoplay, Pagination]);
+
 // ----------------------------------------------------------------------
+
 const useStyles = makeStyles((theme) => {
   return {
     root: {
@@ -37,8 +40,11 @@ const useStyles = makeStyles((theme) => {
 Benefits.propTypes = {
   className: PropTypes.string
 };
+
 function Benefits({ className }) {
   const classes = useStyles();
+  const { t } = useTranslation();
+
   return (
     <div className={clsx(classes.root, className)}>
       <Container maxWidth="lg" className="features">
@@ -58,10 +64,9 @@ function Benefits({ className }) {
           <SwiperSlide>
             <div className="box-shadow brand-variety">
               <article className="article-disc">
-                <h3>بدائل متعددة من البراندات</h3>
+                <h3> {t("Multiple Brand Alternatives")} </h3>
                 <p>
-                  انت لا تبيع أو تشتري براند واحد بل تستطيع اليوم الوصول لجميع
-                  ماركات السيارات وجميع البدائل للبراند من تجاري واصلي وغيرها
+                  {t("You don't buy or sell one brand, today you can access all brands and aftermarket alternatives")}
                 </p>
               </article>
               <figure>
@@ -72,12 +77,9 @@ function Benefits({ className }) {
           <SwiperSlide>
             <div className="box-shadow offer">
               <article className="article-disc">
-                <h3>عروض خاصة</h3>
+                <h3> {t("Special Offers")} </h3>
                 <p>
-                  اذا كان لديك مخزون تود تصريفه بشكل سريع، يمكنك إضافة جميع
-                  القطع وعرضها لجميع التجار والمستفيدين بالسعر وبالكمية التي
-                  تريدها، من اليوم لن يضيع وقتك في ارسال الايملات وتوزيع العروض
-                  المطبوعه على التجار
+                  {t("If you have stock that you want to quickly dispose, you can add display them to all suppliers and beneficiaries at the price you want and the quantity you want You don't need to send emails or print brochures to distribute on vendors")}
                 </p>
               </article>
               <figure>
@@ -88,10 +90,9 @@ function Benefits({ className }) {
           <SwiperSlide>
             <div className="box-shadow product-ex">
               <article className="article-disc">
-                <h3>اصدار و استقبال امر شراء</h3>
+                <h3> {t("Issuing and Receiving Purchase Oders (*soon)")} </h3>
                 <p>
-                  الوقت لابد من اختصاره وزيادة كفاءة الموظف لديك، لذلك تم تطوير
-                  هذه الخاصية لحجز القطع التي تريدها خلال لحظات
+                  {t("Cut the time short and make your employees work more effeciently, keep away from phone calls, official e-mails, and printed invoices")}
                 </p>
               </article>
               <figure className="product-ex">
@@ -100,17 +101,16 @@ function Benefits({ className }) {
                 </div>
                 <figcaption>
                   <header>
-                    <h5>فلتر زيت</h5>
+                    <h5> {t("Oil FIlter")} </h5>
                     <p>
-                      24.48<span>رس</span>
+                      24.48<span> {t("SAR")} </span>
                     </p>
                     <img src="/static/images/arrow-down.svg" />
                   </header>
                   <p>
-                    فلتر زيت ليساره جي ام ، مناسبه لسيارات الشيفورليه أي سي
-                    ديلكو، الأبعاد: 2.6 × 2.6 × 3.8 بوصة
+                    {t("GM Left oil filter, suitable for Chevy ACDelco vehicles")}
                   </p>
-                  <footer>إشتري الآن</footer>
+                  <footer> {t("Buy now")} </footer>
                 </figcaption>
               </figure>
             </div>

@@ -2,6 +2,7 @@ import clsx from 'clsx';
 import React from 'react';
 import { NavLink as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
+import { useTranslation } from 'react-i18next';
 import Logo from 'src/components/Logo';
 import { PATH_PAGE } from 'src/routes/paths';
 import { makeStyles } from '@material-ui/core/styles';
@@ -11,8 +12,8 @@ import Hidden from '@material-ui/core/Hidden';
 // ----------------------------------------------------------------------
 
 const MENU_LINKS = [
-  { title: 'سياسة الخصوصية', href: PATH_PAGE.common.privacy },
-  { title: ' اتفاقية الاستخدام', href: PATH_PAGE.common.termsView },
+  { title: 'Privacy Policy', href: PATH_PAGE.common.privacy },
+  { title: 'Terms of Use', href: PATH_PAGE.common.termsView },
 ];
 
 const useStyles = makeStyles((theme) => ({
@@ -49,6 +50,7 @@ Footer.propTypes = {
 
 function Footer({ className }) {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Box className={clsx(classes.root, className)} position='relative'>
@@ -56,14 +58,6 @@ function Footer({ className }) {
         <Grid container spacing={2} >
           <Hidden only={['sm', 'xs']}>
             <Grid item md={4} display="flex" alignItems="center" only="sm">
-              {/* <Link href="#" className={classes.footerLink}>
-                سياسة الخصوصية
-              </Link>
-              <span className={classes.plusLink}>
-                <Link href="#" className={classes.footerLink}>
-                  اتفاقية الاستخدام
-                </Link>
-              </span> */}
               <span className={classes.plusLink}>
                 {MENU_LINKS.map((link) => (
                   <Link
@@ -74,7 +68,7 @@ function Footer({ className }) {
                     component={RouterLink}
                     className={classes.footerLink}
                   >
-                    {link.title}
+                    {t(link.title)}
                   </Link>
                 ))}
               </span>
@@ -90,7 +84,7 @@ function Footer({ className }) {
               variant="body1"
               mb={0}
             >
-              <span className={classes.headingDisc}>2020@ جميع الحقوق محفوظة لشركة </span> q.parts
+              <span className={classes.headingDisc}>2020@ {t("All rights reserved to")} </span> q.parts
             </Typography>
           </Grid>
           <Hidden only={['sm', 'xs']}>

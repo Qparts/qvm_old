@@ -1,6 +1,5 @@
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import Logo from 'src/components/Logo';
 import Page from 'src/components/Page';
 import useAuth from 'src/hooks/useAuth';
 import React, { useEffect, useState } from 'react';
@@ -46,10 +45,7 @@ function ForgotPasswordView() {
   const [sent, setSent] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
-  const { error: forgetPasswordError } = useSelector(
-    (state) => state.authJwt
-  );
-
+  const { error: forgetPasswordError } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
     if (loaded && forgetPasswordError == '') {
@@ -101,11 +97,11 @@ function ForgotPasswordView() {
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
           {!sent ? (
             <>
-              <Typography variant="h3" gutterBottom>
+              <Typography variant="h3" sx={{color: (theme) => theme.palette.secondary.main}} gutterBottom>
                 {t("Forgot your password?")}
               </Typography>
               <Typography sx={{ color: 'text.secondary', mb: 5 }}>
-                {t("Please enter the email address associated with your account and We will email you a link to reset your password.")}
+                {t("Please enter the email address associated with your account and We will email you a link to reset your password")}
               </Typography>
 
               <ForgotPasswordForm formik={formik} />

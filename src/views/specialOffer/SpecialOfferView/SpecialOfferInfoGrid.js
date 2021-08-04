@@ -50,15 +50,6 @@ const useStyles = makeStyles((theme) => ({
         marginRight: '10px',
         borderRight: '1px solid #CED5D8',
     },
-    tablePagination: {
-        borderTop: 0,
-        '& .MuiTablePagination-toolbar': {
-            height: '59px',
-            background: theme.palette.grey[0],
-            marginTop: theme.spacing(2),
-            borderRadius: '20px',
-        }
-    },
     offerDetailsGridFlex: {
         display: 'flex',
         alignItems: 'center',
@@ -69,7 +60,6 @@ const useStyles = makeStyles((theme) => ({
 
 function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = constants.MAX,
     onSelectedPage, size = offerProducts.length, isLazy = true, hasPagination = false }) {
-
 
     const classes = useStyles();
     const theme = useTheme();

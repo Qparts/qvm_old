@@ -1,7 +1,7 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useHistory } from "react-router";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Account from './Account';
 import PropTypes from 'prop-types';
 import Languages from './Languages';
@@ -11,17 +11,14 @@ import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
 import Orders from './Orders';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
 import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, AppBar, Hidden, Toolbar, IconButton } from '@material-ui/core';
+import { Box, AppBar, Hidden, Toolbar, IconButton, Badge } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import constants from 'src/utils/constants';
 import { PATH_APP } from 'src/routes/paths';
 import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from '../../../redux/slices/partSearch';
 import SearchBox from '../../../components/SearchBox';
 import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
-import { MButton } from 'src/theme';
-import { useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
-
+import { MIconButton } from 'src/theme';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +61,6 @@ function TopBar({ onOpenNav, className }) {
   const history = useHistory();
   const { t } = useTranslation();
   const { cartItems } = useSelector((state) => state.market);
-  const { enqueueSnackbar } = useSnackbar();
 
   const handlePartSearch = (search) => {
     dispatch(resetLocationfilter());
@@ -114,28 +110,14 @@ function TopBar({ onOpenNav, className }) {
           <Hidden smDown>
             <UploadStockBtn bg={theme.palette.primary.main} color={theme.palette.grey[0]} />
           </Hidden>
-
-          <MButton
-            size="large"
-            type="button"
-            color="secandary"
-            // variant="contained"
-            startIcon={<Icon icon={roundAddShoppingCart} />}
-            sx={{ whiteSpace: 'nowrap' }}
-            onClick={() => {
-              if (cartItems.length == 0) {
-                history.push(PATH_APP.general.market);
-                enqueueSnackbar( t("No items in cart") , { variant: 'warning' });
-              } else {
-                history.push(`${PATH_APP.general.market}/cart`);
-              }
-
-            }}
-          >
-            {t("Shopping Cart")}
-          </MButton>
-
           <Languages />
+          <MIconButton
+            onClick={() => { history.push(`${PATH_APP.general.market}/cart`); }}
+          >
+            <Badge badgeContent={cartItems.length} color="error">
+              <Icon icon={roundAddShoppingCart} color='#7E8D99' />
+            </Badge>
+          </MIconButton>
           <Orders />
           <Notifications />
           <Account />
