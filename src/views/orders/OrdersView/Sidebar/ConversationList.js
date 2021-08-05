@@ -44,6 +44,8 @@ function ConversationList({
     // dispatch(updateCurrentContact(friendId));
     console.log("item" , item);
     dispatch(setActiveConversation(item));
+    console.log("activeConversationId" , activeConversationId);
+    console.log("activeConversation" , activeConversation);
     history.push(`/app/chat/${item._id}`);
   };
 

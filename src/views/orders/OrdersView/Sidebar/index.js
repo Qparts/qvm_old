@@ -114,36 +114,45 @@ function Sidebar() {
     console.log("companyUsers", companyUsers);
 
 
-    // for (let userConversation of userConversations) {
-    //   if (userConversation.members.includes(result.id.toString()))
-    //     selectedConversation = userConversation;
-    // }
+    let users = [];
+
+    for (let companyUser of companyUsers) {
+      users.push({
+        id: companyUser.id,
+        companyId: companyUser.company.id,
+        // email: user.subscriber.email,
+        // mobile: user.subscriber.mobile,
+        name: companyUser.name,
+        companyName: companyUser.company.name,
+        companyNameAr: companyUser.company.nameAr,
+      })
+    }
 
     if (selectedConversation == null) {
-      companyUsers.push({
+      users.push({
         id: user.subscriber.id,
         companyId: user.subscriber.companyId,
-        email: user.subscriber.email,
-        mobile: user.subscriber.mobile,
+        // email: user.subscriber.email,
+        // mobile: user.subscriber.mobile,
         name: user.subscriber.name,
         companyName: user.company.name,
         companyNameAr: user.company.nameAr,
       });
 
       const response = await chatService.createUserConversation({
-        members: companyUsers
+        members: users
       })
       selectedConversation = response.data;
     }
 
     dispatch(getContacts(user.subscriber.id));
 
-    // dispatch(setActiveConversation(selectedConversation));
+    dispatch(setActiveConversation(selectedConversation));
 
 
-    // if (handleSearchSelect) {
-    //   handleSearchSelect(selectedConversation);
-    // }
+    if (handleSearchSelect) {
+      handleSearchSelect(selectedConversation);
+    }
 
   };
 

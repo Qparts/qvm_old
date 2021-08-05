@@ -63,7 +63,8 @@ function RoomInfo({ conversation, className, ...other }) {
   const { isOpenSidebarInfo, activeConversation } = useSelector((state) => state.chat);
   const isMoblie = useBreakpoints('down', 'lg');
   const { user } = useSelector((state) => state.authJwt);
-  const currentContact = activeConversation?.members?.filter(x => x.id != user.subscriber.id);
+  const currentContact = activeConversation?.members?.filter(x => x.id != user.subscriber.id
+    && x.companyId != user.company.companyId);
 
   useEffect(() => {
     if (isMoblie) return dispatch(onCloseSidebarInfo());

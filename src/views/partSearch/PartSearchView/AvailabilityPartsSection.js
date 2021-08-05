@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@material-ui/core';
+import { Box, Grid, Typography, Divider } from '@material-ui/core';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
@@ -13,6 +13,7 @@ import TextField from 'src/components/Ui/TextField';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
 import { Plus } from "../../../icons/icons";
+import PurchaseOrderSection from './PurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
@@ -48,6 +49,7 @@ function AvailabilityPartsSection() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const [openAddToPO, setOpenAddToPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
         rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
@@ -65,6 +67,8 @@ function AvailabilityPartsSection() {
 
     const addToCompanyCart = (item) => {
         console.log("cart item", item);
+        dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
+        setOpenAddToPO(true);
     }
 
     const showDetailsElement = (item) => {
@@ -86,6 +90,11 @@ function AvailabilityPartsSection() {
                 onClick={() => addToCompanyCart(item)}
                 textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
         )
+    }
+
+    const closeOrderDailog = () => {
+        dispatch(setSelectedPart({ selectedPart: null }));
+        setOpenAddToPO(false)
     }
 
     useEffect(() => {
@@ -157,10 +166,22 @@ function AvailabilityPartsSection() {
             </SecContainer>
 
             <CustomDialog
-                open={selectedPart != null}
+                open={selectedPart != null && openAddToPO == false}
                 handleClose={() => dispatch(setSelectedPart({ selectedPart: null }))}
                 title={t("Availability details")}>
                 <PartDetails />
+            </CustomDialog>
+
+
+            <CustomDialog
+                open={openAddToPO}
+                handleClose={closeOrderDailog}
+                title={t("Add to Purchase Order")}>
+
+                {selectedPart != null &&
+                    <PurchaseOrderSection
+                        closeOrderDailog={closeOrderDailog} />
+                }
             </CustomDialog>
         </Box >
     );

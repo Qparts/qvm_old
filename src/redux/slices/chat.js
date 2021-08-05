@@ -88,9 +88,9 @@ const slice = createSlice({
       state.onlineUsers = action.payload;
     },
 
-    updateCurrentContactSuccess(state, action) {
-      state.currentContact = action.payload;
-    },
+    // updateCurrentContactSuccess(state, action) {
+    //   state.currentContact = action.payload;
+    // },
 
     // RESET ACTIVE CONVERSATION
     resetActiveConversation(state) {
@@ -161,6 +161,7 @@ export function getConversation(conversationKey) {
     dispatch(slice.actions.startLoading());
     try {
       const response = await chatService.getConversationMessage(conversationKey);
+      // console.log("conversationKey slice" , conversationKey);
       dispatch(
         slice.actions.getConversationSuccess({ messages: response.data, conversationKey })
       );
@@ -189,18 +190,18 @@ export function createNewMessage(value, messages) {
 }
 
 
-export function updateCurrentContact(friendId) {
-  return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
-    slice.actions.updateCurrentContactSuccess(null);
-    try {
-      const friendDetails = await chatService.getConversationDetails(friendId);
-      const currentFriend = friendDetails.data[0];
-      dispatch(
-        slice.actions.updateCurrentContactSuccess(currentFriend)
-      );
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
+// export function updateCurrentContact(friendId) {
+//   return async (dispatch) => {
+//     dispatch(slice.actions.startLoading());
+//     slice.actions.updateCurrentContactSuccess(null);
+//     try {
+//       const friendDetails = await chatService.getConversationDetails(friendId);
+//       const currentFriend = friendDetails.data[0];
+//       dispatch(
+//         slice.actions.updateCurrentContactSuccess(currentFriend)
+//       );
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }
