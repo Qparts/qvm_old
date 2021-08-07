@@ -1,12 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
-import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
-import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -52,40 +49,14 @@ DashboardLayout.propTypes = {
 
 function DashboardLayout({ children }) {
   const classes = useStyles();
-  const { conversations } = useSelector((state) => state.chat);
   const [openNav, setOpenNav] = useState(false);
-  const { pathname } = useLocation();
-
-  // const handleSelectConversation = () => {
-  //   let conversationKey = '';
-  //   let conversation = conversations.allIds.map(conversationId => (conversations.byId[conversationId]));
-  //   if (conversation.type === 'GROUP') {
-  //     conversationKey = conversation.id;
-  //   } else {
-  //     const otherParticipant = conversation.participants.find(
-  //       (participant) =>
-  //         participant.id !== '8864c717-587d-472a-929a-8e5f298024da-0'
-  //     );
-  //     conversationKey = otherParticipant.username;
-  //   }
-  //   console.log(conversation)
-  //   return conversationKey;
-  // };
-
-  // console.log(PATH_APP.general.chat.root + '/' + handleSelectConversation())
-
-  const isChat = (
-    pathname === PATH_APP.general.chat.root  ||
-    pathname === PATH_APP.general.chat.root ||
-    pathname === PATH_APP.general.chat.new
-  );
 
   return (
     <div className={classes.root}>
       <TopBar onOpenNav={() => setOpenNav(true)} />
       <NavBar onCloseNav={() => setOpenNav(false)} isOpenNav={openNav} />
 
-      <div className={clsx(classes.main, isChat ? classes.chatPadding : null)}>{children}</div>
+      <div className={clsx(classes.main)}>{children}</div>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import paymentService from 'src/services/paymentService';
 import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from 'src/redux/slices/partSearch';
 import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
+import { setActiveConversation } from 'src/redux/slices/chat';
 
 function toDate(mil) {
   const d = new Date(mil);
@@ -188,19 +189,10 @@ const gotoPremium = async (history, enqueueSnackbar, message, url, t) => {
   }
 }
 
-const handleSelectConversation = (conversationId, conversations, history) => {
-  let conversationKey = '';
-  const conversation = conversations.byId[conversationId];
-  if (conversation.type === 'GROUP') {
-    conversationKey = conversation.id;
-  } else {
-    const otherParticipant = conversation.participants.find(
-      (participant) =>
-        participant.id !== '8864c717-587d-472a-929a-8e5f298024da-0'
-    );
-    conversationKey = otherParticipant.username;
-  }
-  history.push(`/app/chat/${conversationKey}`);
+const handleSelectConversation = (item, dispatch, history, url) => {
+  console.log("item" , item);
+  dispatch(setActiveConversation(item));
+  history.push(url);
 };
 
 const handlePartSearch = (dispatch, history, url, constants, search) => {

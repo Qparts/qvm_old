@@ -87,7 +87,7 @@ const AppRoutes = {
     {
       exact: true,
       path: PATH_APP.general.chat.conversation,
-      component: lazy(() => import('src/views/ChatView'))
+      component: lazy(() => import('src/views/orders/OrdersView'))
     },
     {
       exact: true,

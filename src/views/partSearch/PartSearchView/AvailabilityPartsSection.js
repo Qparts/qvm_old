@@ -15,6 +15,7 @@ import TextField from 'src/components/Ui/TextField';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
 import { Plus } from "../../../icons/icons";
+import PurchaseOrderSection from './PurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
@@ -50,6 +51,7 @@ function AvailabilityPartsSection() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const [openAddToPO, setOpenAddToPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
         rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
@@ -67,6 +69,8 @@ function AvailabilityPartsSection() {
 
     const addToCompanyCart = (item) => {
         console.log("cart item", item);
+        dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
+        setOpenAddToPO(true);
     }
 
     const showDetailsElement = (item) => {
@@ -88,6 +92,11 @@ function AvailabilityPartsSection() {
                 onClick={() => addToCompanyCart(item)}
                 textIcon={<Icon icon={roundAddShoppingCart} color='#CED5D8' style={{ fontSize: '14px' }} />} />
         )
+    }
+
+    const closeOrderDailog = () => {
+        dispatch(setSelectedPart({ selectedPart: null }));
+        setOpenAddToPO(false)
     }
 
     useEffect(() => {
@@ -159,10 +168,22 @@ function AvailabilityPartsSection() {
             </SecContainer>
 
             <CustomDialog
-                open={selectedPart != null}
+                open={selectedPart != null && openAddToPO == false}
                 handleClose={() => dispatch(setSelectedPart({ selectedPart: null }))}
                 title={t("Availability details")}>
                 <PartDetails />
+            </CustomDialog>
+
+
+            <CustomDialog
+                open={openAddToPO}
+                handleClose={closeOrderDailog}
+                title={t("Add to Purchase Order")}>
+
+                {selectedPart != null &&
+                    <PurchaseOrderSection
+                        closeOrderDailog={closeOrderDailog} />
+                }
             </CustomDialog>
         </Box >
     );

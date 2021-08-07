@@ -1,19 +1,19 @@
-import axios from 'src/utils/axios';
 import { createSlice } from '@reduxjs/toolkit';
-import objFromArray from 'src/utils/objFromArray';
+import chatService from 'src/services/chatService';
 
 // ----------------------------------------------------------------------
 
 const initialState = {
   isLoading: false,
   error: false,
-  contacts: { byId: {}, allIds: [] },
-  conversations: { byId: {}, allIds: [] },
   activeConversationId: null,
-  participants: [],
-  recipients: [],
+  activeConversation: null,
   isOpenSidebarConversation: true,
-  isOpenSidebarInfo: true
+  isOpenSidebarInfo: true,
+  userConversations: [],
+  messages: [],
+  onlineUsers: [],
+  currentContact: null
 };
 
 const slice = createSlice({
@@ -32,31 +32,16 @@ const slice = createSlice({
     },
 
     // GET CONTACT SSUCCESS
-    getContactsSuccess(state, action) {
-      const contacts = action.payload;
-
-      state.contacts.byId = objFromArray(contacts);
-      state.contacts.allIds = Object.keys(state.contacts.byId);
-    },
-
-    // GET CONVERSATIONS
-    getConversationsSuccess(state, action) {
-      const conversations = action.payload;
-
-      state.conversations.byId = objFromArray(conversations);
-      state.conversations.allIds = Object.keys(state.conversations.byId);
+    getUserConversationsSuccess(state, action) {
+      state.userConversations = action.payload;
     },
 
     // GET CONVERSATION
     getConversationSuccess(state, action) {
       const conversation = action.payload;
-
       if (conversation) {
-        state.conversations.byId[conversation.id] = conversation;
-        state.activeConversationId = conversation.id;
-        if (!state.conversations.allIds.includes(conversation.id)) {
-          state.conversations.allIds.push(conversation.id);
-        }
+        state.activeConversationId = action.payload.conversationKey;
+        state.messages = action.payload.messages;
       } else {
         state.activeConversationId = null;
       }
@@ -87,19 +72,25 @@ const slice = createSlice({
       state.conversations.byId[conversationId].messages.push(newMessage);
     },
 
-    markConversationAsReadSuccess(state, action) {
-      const { conversationId } = action.payload;
-      const conversation = state.conversations.byId[conversationId];
-      if (conversation) {
-        conversation.unreadCount = 0;
-      }
+    setActiveConversation(state, action) {
+      state.activeConversation = action.payload;
     },
 
-    // GET PARTICIPANTS
-    getParticipantsSuccess(state, action) {
-      const participants = action.payload;
-      state.participants = participants;
+    createMessageSuccess(state, action) {
+      state.messages = action.payload;
     },
+
+    updateRecivedMessages(state, action) {
+      state.messages = [...state.messages, action.payload];
+    },
+
+    updateOnlineUsers(state, action) {
+      state.onlineUsers = action.payload;
+    },
+
+    // updateCurrentContactSuccess(state, action) {
+    //   state.currentContact = action.payload;
+    // },
 
     // RESET ACTIVE CONVERSATION
     resetActiveConversation(state) {
@@ -141,38 +132,27 @@ export const {
   onCloseSidebarInfo,
   resetActiveConversation,
   onOpenSidebarConversation,
-  onCloseSidebarConversation
+  onCloseSidebarConversation,
+  setActiveConversation,
+  updateRecivedMessages,
+  updateOnlineUsers,
+
 } = slice.actions;
 
 // ----------------------------------------------------------------------
 
-export function getContacts() {
+export function getContacts(userId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/chat/contacts');
-      dispatch(slice.actions.getContactsSuccess(response.data.contacts));
+      const { data: userConversations } = await chatService.getUserConversations(userId);
+      dispatch(slice.actions.getUserConversationsSuccess(userConversations));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-// ----------------------------------------------------------------------
-
-export function getConversations() {
-  return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/chat/conversations');
-      dispatch(
-        slice.actions.getConversationsSuccess(response.data.conversations)
-      );
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
 
 // ----------------------------------------------------------------------
 
@@ -180,11 +160,10 @@ export function getConversation(conversationKey) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await axios.get('/api/chat/conversation', {
-        params: { conversationKey }
-      });
+      const response = await chatService.getConversationMessage(conversationKey);
+      // console.log("conversationKey slice" , conversationKey);
       dispatch(
-        slice.actions.getConversationSuccess(response.data.conversation)
+        slice.actions.getConversationSuccess({ messages: response.data, conversationKey })
       );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -194,34 +173,35 @@ export function getConversation(conversationKey) {
 
 // ----------------------------------------------------------------------
 
-export function markConversationAsRead(conversationId) {
+
+export function createNewMessage(value, messages) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      await axios.get('/api/chat/conversation/mark-as-seen', {
-        params: { conversationId }
-      });
-      dispatch(slice.actions.markConversationAsReadSuccess({ conversationId }));
-    } catch (error) {
-      dispatch(slice.actions.hasError(error));
-    }
-  };
-}
-
-// ----------------------------------------------------------------------
-
-export function getParticipants(conversationKey) {
-  return async (dispatch) => {
-    dispatch(slice.actions.startLoading());
-    try {
-      const response = await axios.get('/api/chat/participants', {
-        params: { conversationKey }
-      });
+      const response = await chatService.createMessage(value);
+      const newMessages = [...messages, response.data];
       dispatch(
-        slice.actions.getParticipantsSuccess(response.data.participants)
+        slice.actions.createMessageSuccess(newMessages)
       );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
+
+
+// export function updateCurrentContact(friendId) {
+//   return async (dispatch) => {
+//     dispatch(slice.actions.startLoading());
+//     slice.actions.updateCurrentContactSuccess(null);
+//     try {
+//       const friendDetails = await chatService.getConversationDetails(friendId);
+//       const currentFriend = friendDetails.data[0];
+//       dispatch(
+//         slice.actions.updateCurrentContactSuccess(currentFriend)
+//       );
+//     } catch (error) {
+//       dispatch(slice.actions.hasError(error));
+//     }
+//   };
+// }

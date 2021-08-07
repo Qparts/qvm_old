@@ -1,10 +1,11 @@
 import Scrollbars from 'src/components/Scrollbars';
-import ConversationItem from 'src/views/ChatView/Sidebar/ConversationItem';
+import ConversationItem from 'src/views/orders/OrdersView/Sidebar/ConversationItem';
 import PopoverMenu from 'src/components/PopoverMenu';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Box,
   List,
@@ -24,10 +25,11 @@ function Notifications() {
 
   const { t } = useTranslation();
   const history = useHistory();
+  const dispatch = useDispatch();
   const anchorRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
-  const { conversations, isOpenSidebarConversation } = useSelector((state) => state.chat);
-  const totalUnRead = conversations.allIds.filter((item) => conversations.byId[item].unreadCount > 0).length;
+  const { userConversations, isOpenSidebarConversation } = useSelector((state) => state.chat);
+  const totalUnRead = 5;
 
   return (
     <>
@@ -61,13 +63,13 @@ function Notifications() {
         <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
           <Scrollbars>
             <List disablePadding>
-              {conversations.allIds.slice(0, 5).map((conversationId) => (
+              {userConversations.map((item) => (
                 <ConversationItem
-                  key={conversationId}
+                  key={item._id}
                   isOpenSidebarConversation={isOpenSidebarConversation}
-                  conversation={conversations.byId[conversationId]}
+                  conversation={item}
                   isSelected={false}
-                  onSelectConversation={() => helper.handleSelectConversation(conversationId, conversations, history, setOpen(false))}
+                  onSelectConversation={() => helper.handleSelectConversation(item, dispatch, history, `/app/chat/${item._id}`,  setOpen(false))}
                 />
               ))}
             </List>

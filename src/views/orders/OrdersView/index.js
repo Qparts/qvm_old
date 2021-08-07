@@ -1,68 +1,44 @@
+import Sidebar from './Sidebar';
 import Page from 'src/components/Page';
-import React from 'react';
+import ChatWindow from './ChatWindow';
+import React, { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { getConversation, getContacts } from 'src/redux/slices/chat';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
-import {
-    Box,
-    Typography
-} from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
-import LoadingScreen from 'src/components/LoadingScreen';
-import LoadingOverlay from "react-loading-overlay";
+import { Box } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
+    card: {
+        height: '89.8vh',
+        display: 'flex',
+        borderTop: '5px solid' + theme.palette.secondary.darker,
+        [theme.breakpoints.up('lg')]: {
+            height: '87.75vh',
         }
     }
 }));
 
 // ----------------------------------------------------------------------
 
-function QuotationsReportView() {
+function ChatView() {
     const classes = useStyles();
-    const { isLoading } = useSelector((state) => state.quotationsReport);
-    const { t } = useTranslation();
+    const dispatch = useDispatch();
 
+    useEffect(() => {
+        dispatch(getConversation());
+        dispatch(getContacts());
+    }, [dispatch]);
 
     return (
-        <Page
-            title={t("Orders")}
-            className={classes.root}
-        >
-
-            <LoadingOverlay
-                active={isLoading}
-                styles={{
-                    wrapper: {
-                        width: "100%",
-                        height: "100%",
-                    },
-                }}
-                spinner={
-                    <LoadingScreen />
-
-                }
-            >
-                <Box sx={{ pb: 5 }}>
-                    <Typography variant="h4">{t("Orders")}</Typography>
-                    <hr />
-                </Box>
-            </LoadingOverlay>
-
+        <Page title="Chat-App | Minimal-UI">
+            <Box className={classes.card}>
+                <Sidebar />
+                <ChatWindow />
+            </Box>
         </Page>
     );
 }
 
-export default QuotationsReportView;
+export default ChatView;

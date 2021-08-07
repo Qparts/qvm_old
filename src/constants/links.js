@@ -9,6 +9,7 @@ const CATALOG_SERVICE = `${BASE_URL}/catalog`;
 const PRODUCT_SERVICE = `${BASE_URL}/product`;
 const PLAN_SERVICE = `${BASE_URL}/plan`;
 const INVOICE_SERVICE = `${BASE_URL}/invoice`;
+const CHAT_SERVICE = `${BASE_URL}/chat`
 
 
 const subscriber = {
@@ -26,6 +27,8 @@ const subscriber = {
   getResetPassword: (token) => `${SUBSCRIBER_SERVICE}/reset-password/${token}`,
   putInvoiceTemplate: `${SUBSCRIBER_SERVICE}/invoice-template`,
   getCompanies: `${SUBSCRIBER_SERVICE}/companies/`,
+  getCompaniesByName: (name) => `${SUBSCRIBER_SERVICE}/company/search-name/${name}`,
+  getUsersByCompanyId: (companyId) => `${SUBSCRIBER_SERVICE}/company/${companyId}/users`
 };
 
 const upload = {
@@ -116,8 +119,8 @@ const product = {
   getProductReplacement: `${PRODUCT_SERVICE}/search-replacement-product`,
   getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
   specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
-  postQvmStockUpload : `${PRODUCT_SERVICE}/stock-upload`,
-  postQvmSpecialOfferUploadRequest : `${PRODUCT_SERVICE}/special-offer-upload`
+  postQvmStockUpload: `${PRODUCT_SERVICE}/stock-upload`,
+  postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`
 }
 
 const plan = {
@@ -133,6 +136,14 @@ const invoice = {
   pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`
 }
 
+const chat = {
+  getUserConversations: (userId) => `${CHAT_SERVICE}/conversation/${userId}`,
+  postNewChat: `${CHAT_SERVICE}/conversation/`,
+  postNewMessage: `${CHAT_SERVICE}/messages/`,
+  getConversationMessages: (conversationKey) => `${CHAT_SERVICE}/messages/${conversationKey}`
+
+}
+
 
 export default {
   subscriber,
@@ -144,5 +155,6 @@ export default {
   catalog,
   product,
   plan,
-  invoice
+  invoice,
+  chat
 };

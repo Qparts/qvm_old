@@ -60,6 +60,7 @@ export const PATH_APP = {
         path(ROOTS.app, '/chat/:conversationKey')
       ]
     },
+    calendar: path(ROOTS.app, '/calendar')
   },
 
   management: {

@@ -11,9 +11,7 @@ import {
   ListItemAvatar
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import chatService from 'src/services/chatService';
 import links from 'src/constants/links';
-import { updateCurrentContact } from 'src/redux/slices/chat';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // ----------------------------------------------------------------------
-
 
 ConversationItem.propTypes = {
   isSelected: PropTypes.bool,
@@ -117,9 +114,9 @@ function ConversationItem({
         <div className={clsx({ [classes.avatarGroup]: isGroup })}>
 
           <div className={classes.avatar} >
-            <Avatar alt={friends[0].companyName} src={uploadUrl.getCompanyLogo(`logo_${friends[0].companyId}.png`)} />
+            <Avatar alt={friends[0]?.companyName} src={uploadUrl.getCompanyLogo(`logo_${friends[0]?.companyId}.png`)} />
             <BadgeStatus
-              status={onlineUsers.findIndex(x => x.userId == friends[0].id) > -1 ? "online" : "away"}
+              status={onlineUsers.findIndex(x => x.userId == friends[0]?.id) > -1 ? "online" : "away"}
               sx={{ right: 2, bottom: 2, position: 'absolute' }}
             />
           </div>
@@ -133,23 +130,10 @@ function ConversationItem({
         </div>
       </ListItemAvatar>
 
-
-
-      {/* {friends && <div className={classes.avatar} >
-        <Avatar alt={friends[0].companyName} src={uploadUrl.getCompanyLogo(`logo_${friends[0].companyId}.png`)} />
-        <BadgeStatus
-          status={onlineUsers.findIndex(x => x.userId == friends[0].id) > -1 ? "online" : "away"}
-          sx={{ right: 2, bottom: 2, position: 'absolute' }}
-        />
-      </div>} */}
-
-
-
-
       {isOpenSidebarConversation && friends && (
         <>
           <ListItemText
-            primary={friends[0].companyName}
+            primary={friends[0]?.companyName}
             primaryTypographyProps={{
               noWrap: true,
               variant: 'subtitle2'
