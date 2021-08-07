@@ -25,8 +25,7 @@ const initialState = {
   planFeatures: [],
   catalogs: [],
   bancks: [],
-  validResetToken: false,
-  currentSocket: null,
+  validResetToken: false
 };
 
 const slice = createSlice({
@@ -112,10 +111,6 @@ const slice = createSlice({
       localStorage.setItem("loginObject", JSON.stringify(action.payload.loginObject));
     },
 
-    updateCurrentSocket(state, action) {
-      state.currentSocket = action.payload;
-    },
-
     updateCurrentPlan(state) {
       let currentPlan = getCurrentPlan(state.availablePlans);
       state.currentPlan = currentPlan;
@@ -138,8 +133,7 @@ export default slice.reducer;
 // Actions
 export const {
   updateLoginObject,
-  updateCurrentPlan,
-  updateCurrentSocket
+  updateCurrentPlan
 } = slice.actions;
 
 // ----------------------------------------------------------------------

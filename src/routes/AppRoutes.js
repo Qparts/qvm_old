@@ -15,13 +15,18 @@ const AppRoutes = {
     // ----------------------------------------------------------------------
     {
       exact: true,
-      path: PATH_APP.general.dashboard,
-      component: lazy(() => import('src/views/general/DashboardAppView'))
+      path: PATH_APP.general.root,
+      component: lazy(() => import('src/views/generalSearch/GeneralSearchView'))
     },
     {
       exact: true,
       path: PATH_APP.root,
       component: () => <Redirect to={PATH_APP.general.root} />
+    },
+    {
+      exact: true,
+      path: PATH_APP.general.dashboard,
+      component: lazy(() => import('src/views/general/DashboardAppView'))
     },
     {
       exact: true,
@@ -33,20 +38,6 @@ const AppRoutes = {
       path: PATH_APP.general.orders,
       component: lazy(() => import('src/views/orders/OrdersView'))
     },
-
-        // APP : CHAT
-    // ----------------------------------------------------------------------
-    {
-      exact: true,
-      path: PATH_APP.app.chat.conversation ,
-      component: lazy(() => import('src/views/orders/OrdersView'))
-    },
-    {
-      exact: true,
-      path: PATH_APP.app.chat.root,
-      component: () => <Redirect to={PATH_APP.app.chat.new} />
-    },
-
     {
       exact: true,
       path: PATH_APP.general.market,

@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@material-ui/core';
+import { Icon } from '@iconify/react';
+import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
@@ -84,7 +86,7 @@ function AvailabilityPartsSection() {
                 type='partSearch'
                 title={t("Buy now")}
                 onClick={() => addToCompanyCart(item)}
-                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
+                textIcon={<Icon icon={roundAddShoppingCart} color='#CED5D8' style={{ fontSize: '14px' }} />} />
         )
     }
 

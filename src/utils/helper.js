@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
 import paymentService from 'src/services/paymentService';
+import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from 'src/redux/slices/partSearch';
+import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 
 function toDate(mil) {
   const d = new Date(mil);
@@ -201,6 +203,33 @@ const handleSelectConversation = (conversationId, conversations, history) => {
   history.push(`/app/chat/${conversationKey}`);
 };
 
+const handlePartSearch = (dispatch, history, url, constants, search) => {
+  dispatch(resetLocationfilter());
+  dispatch(setFilter({ filter: "" }));
+  dispatch(handleChangePage({ newPage: 0 }));
+  dispatch(partSearch(search, 0, constants, ""));
+  getPartinfo(search, dispatch);
+  history.push(url);
+}
+
+const getPartinfo = (search, dispatch) => {
+  dispatch(getProductInfo(search, ""));
+};
+
+const handleLogout = async (logout, dispatch, isMountedRef, history, url, enqueueSnackbar) => {
+  try {
+    await logout();
+    dispatch(updateBillingAddress(null));
+    dispatch(updateCartItems([]));
+    if (isMountedRef.current) {
+      history.push(url);
+    }
+  } catch (error) {
+    console.error(error);
+    enqueueSnackbar('Unable to logout', { variant: 'error' });
+  }
+};
+
 function calculateTimeLeft(startDate, endDate) {
   let start = new Date(startDate),
     end = new Date(endDate),
@@ -229,5 +258,7 @@ export default {
   reconstructPhone,
   gotoPremium,
   calculateTimeLeft,
-  handleSelectConversation
+  handleSelectConversation,
+  handlePartSearch,
+  handleLogout
 };

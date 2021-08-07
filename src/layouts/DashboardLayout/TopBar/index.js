@@ -14,10 +14,12 @@ import { Box, AppBar, Hidden, Toolbar, IconButton, Badge } from '@material-ui/co
 import { useTranslation } from 'react-i18next';
 import constants from 'src/utils/constants';
 import { PATH_APP } from 'src/routes/paths';
-import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from '../../../redux/slices/partSearch';
+import helper from 'src/utils/helper';
 import SearchBox from '../../../components/SearchBox';
 import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 import { MIconButton } from 'src/theme';
+import { useSnackbar } from 'notistack';
+import Button from 'src/components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -58,20 +60,13 @@ function TopBar({ onOpenNav, className }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const history = useHistory();
+  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
   const { cartItems } = useSelector((state) => state.market);
+  const { currentPlan, loginObject } = useSelector((state) => state.authJwt);
 
-  const handlePartSearch = (search) => {
-    dispatch(resetLocationfilter());
-    dispatch(setFilter({ filter: "" }));
-    dispatch(handleChangePage({ newPage: 0 }));
-    dispatch(partSearch(search, 0, constants.MAX, ""));
-    getPartinfo(search);
-    history.push(PATH_APP.general.partSearch);
-  }
-
-  const getPartinfo = (search) => {
-    dispatch(getProductInfo(search, ""));
+  const handleGeneralSearch = (search) => {
+    helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, constants.MAX, search)
   }
 
   return (
@@ -89,8 +84,8 @@ function TopBar({ onOpenNav, className }) {
           </IconButton>
         </Hidden>
 
-        <Hidden lgDown><SearchBox type='topBarSearch' placeholder={t("Search by part number")} handleSubmit={handlePartSearch} /></Hidden>
-        <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handlePartSearch} /></Hidden>
+        <Hidden lgDown><SearchBox type='topBarSearch' placeholder={t("Search by part number")} handleSubmit={handleGeneralSearch} /></Hidden>
+        <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handleGeneralSearch} /></Hidden>
         <Box sx={{ flexGrow: 1 }} />
 
         <Box
@@ -106,9 +101,21 @@ function TopBar({ onOpenNav, className }) {
             }
           }}
         >
-          <Hidden smDown>
-            <UploadStockBtn bg={theme.palette.primary.main} color={theme.palette.grey[0]} />
-          </Hidden>
+          {
+          (loginObject) &&
+          (currentPlan.status != 'A') &&
+            <Button
+              btnWidth="btnWidth"
+              onClick={() => { helper.gotoPremium(history, enqueueSnackbar, t('There is a pending subscription'), PATH_APP.general.upgradeSubscription, t) }}
+            >
+              {t("Upgrade to Premium")}
+            </Button>
+          }
+          <Box>
+            <Hidden smDown>
+              <UploadStockBtn bg={theme.palette.grey[0]} color={theme.palette.secondary.main} />
+            </Hidden>
+          </Box>
           <Languages />
           <MIconButton
             onClick={() => { history.push(`${PATH_APP.general.market}/cart`); }}

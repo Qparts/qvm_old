@@ -14,7 +14,6 @@ import {
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import Logo from 'src/components/Logo';
-import useAuth from 'src/hooks/useAuth';
 import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
@@ -76,6 +75,7 @@ function reduceChild({ array, item, pathname, level, t }) {
         info={item.info}
         href={item.href}
         notification={item.notification}
+        logoutAttr={item.logoutAttr}
         title={t(item.title)}
         open={Boolean(match)}
       >
@@ -96,6 +96,7 @@ function reduceChild({ array, item, pathname, level, t }) {
         icon={item.icon}
         info={item.info}
         notification={item.notification}
+        logoutAttr={item.logoutAttr}
         title={t(item.title)}
       />
     ];
@@ -124,7 +125,7 @@ function NavBar({ isOpenNav, onCloseNav }) {
   const { t } = useTranslation();
   const classes = useStyles();
   const { pathname } = useLocation();
-  const { user } = useAuth();
+
   useEffect(() => {
     if (isOpenNav && onCloseNav) {
       onCloseNav();

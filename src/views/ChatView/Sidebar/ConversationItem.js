@@ -76,6 +76,8 @@ function ConversationItem({
   const displayLastActivity = last(conversation.messages).createdAt;
   const isUnread = conversation.unreadCount > 0;
 
+  console.log('conversation in ConversationItem', conversation)
+
   return (
     <ListItem
       button

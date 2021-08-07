@@ -39,7 +39,7 @@ export const PATH_HOME = {
 export const PATH_APP = {
   root: ROOTS.app,
   general: {
-    root: path(ROOTS.app, '/dashboard'),
+    root: path(ROOTS.app, '/search'),
     dashboard: path(ROOTS.app, '/dashboard'),
     orders: path(ROOTS.app, '/orders'),
     market: path(ROOTS.app, '/market'),
@@ -60,18 +60,6 @@ export const PATH_APP = {
         path(ROOTS.app, '/chat/:conversationKey')
       ]
     },
-  },
-
-  app: {
-    chat: {
-      root: path(ROOTS.app, '/chat'),
-      new: path(ROOTS.app, '/chat/new'),
-      conversation: [
-        path(ROOTS.app, '/chat/new'),
-        path(ROOTS.app, '/chat/:conversationKey')
-      ]
-    },
-    calendar: path(ROOTS.app, '/calendar')
   },
 
   management: {

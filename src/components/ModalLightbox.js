@@ -112,7 +112,7 @@ function ModalLightbox({
 
   const showIndex = (
     <Typography variant="subtitle2">{`${photoIndex + 1} / ${
-      images?.length
+      images.length
     }`}</Typography>
   );
 
@@ -140,7 +140,7 @@ function ModalLightbox({
             setPhotoIndex((photoIndex + images.length - 1) % images.length)
           }
           onMoveNextRequest={() =>
-            setPhotoIndex((photoIndex + 1) % images?.length)
+            setPhotoIndex((photoIndex + 1) % images.length)
           }
           toolbarButtons={toolbarButtons}
           reactModalStyle={customStyles}

@@ -61,7 +61,7 @@ function PartSearchView() {
 
                 }>
                 {
-                    productInfoResult.length === 0 && productResult.length === 0 ?
+                    productInfoResult.length === 0 && productResult.length === 0 && isLoading === false ?
                         <EmptyContent
                             btnHome
                             title={t("Unable to receive your order")}
@@ -69,7 +69,7 @@ function PartSearchView() {
                         />
                         :
                         <>
-                            <AvailabilityPartsSection />
+                            {productResult.length > 0 ? <AvailabilityPartsSection /> : ""}
                             {productInfoResult.length > 0 ?
                                 <>
                                     <Box sx={{ mb: 6 }} />

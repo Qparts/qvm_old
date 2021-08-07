@@ -1,8 +1,9 @@
 import React from 'react';
 import { Icon } from '@iconify/react';
 import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
-import { Add, Catalog, LogoutIcon, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
-import { PATH_APP } from 'src/routes/paths';
+import homeFill from '@iconify-icons/eva/home-fill';
+import { Catalog, LogoutIcon, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
+import { PATH_APP, PATH_PAGE } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -10,9 +11,19 @@ const navConfig = [
   {
     items: [
       {
-        icon: <Dashboard width='32' height='32' fill='#a2b4bd' />,
         title: 'home',
-        href: PATH_APP.general.root
+        icon: <Icon icon={homeFill} color='#a2b4bd' style={{fontSize: '32px'}} />,
+        href: PATH_APP.general.root,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        icon: <Dashboard width='32' height='32' fill='#a2b4bd' />,
+        title: 'dashboard',
+        href: PATH_APP.general.dashboard
       }
     ]
   },
@@ -21,7 +32,7 @@ const navConfig = [
       {
         title: 'orders',
         icon: <Orders width='32' height='32' fill='#a2b4bd' fillArr='#F20505' />,
-        href: PATH_APP.app.chat.root,
+        href: PATH_APP.general.orders,
         notification: true
       },
 
@@ -81,18 +92,9 @@ const navConfig = [
   {
     items: [
       {
-        title: 'advertise',
-        icon: <Add width='32' height='32' fill='#a2b4bd' />,
-        href: PATH_APP.general.partSearch,
-      },
-
-    ]
-  },
-  {
-    items: [
-      {
         icon: <LogoutIcon width='32' height='32' fill='#a2b4bd' />,
-        href: PATH_APP.general.quotationsReport,
+        href: PATH_PAGE.auth.login,
+        logoutAttr: 'logout',
       },
 
     ]

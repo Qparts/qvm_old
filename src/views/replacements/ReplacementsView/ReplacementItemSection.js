@@ -46,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
         },
         '& img': {
             width: '160px',
+            maxHeight: '190px',
             margin: 'auto'
         },
     },
