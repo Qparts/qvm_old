@@ -33,7 +33,6 @@ function VerifyCodeForm({ formik }) {
     errors,
     isValid,
     touched,
-    isSubmitting,
     handleSubmit,
     getFieldProps
   } = formik;

@@ -30,6 +30,7 @@ function Notifications() {
   const [isOpen, setOpen] = useState(false);
   const { userConversations, isOpenSidebarConversation } = useSelector((state) => state.chat);
   const totalUnRead = 5;
+  // const totalUnRead = conversations.allIds.filter((item) => conversations.byId[item].unreadCount > 0).length
 
   return (
     <>

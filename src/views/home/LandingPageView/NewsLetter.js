@@ -38,12 +38,19 @@ const useStyles = makeStyles((theme) => {
       "& label": {
         backgroundColor: theme.palette.grey[0],
         borderRadius: 10,
-      }
+      },
+      '@media (max-width: 442px)': {
+        width: '90%',
+      },
     },
     margin: {
       marginLeft: 15,
       height: 56,
       width: '20%',
+      '@media (max-width: 442px)': {
+        width: '75%',
+        marginTop: theme.spacing(2)
+      },
     }
   };
 

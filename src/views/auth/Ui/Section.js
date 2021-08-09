@@ -5,6 +5,7 @@ import { Card, Typography, ListItemText } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import src from 'react-map-gl';
 import { pxToRem } from 'src/utils/formatFontSize';
+
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({

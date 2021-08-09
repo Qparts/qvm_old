@@ -13,7 +13,7 @@ import {
   varFadeInUp
 } from 'src/components/Animate';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Typography } from '@material-ui/core';
+import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import Logo from 'src/components/Logo';
 import { pxToRem } from 'src/utils/formatFontSize';
 import Button from '../../../components/Ui/Button';
@@ -90,6 +90,9 @@ const useStyles = makeStyles((theme) => ({
   description: {
     fontSize: pxToRem(26),
     color: theme.palette.secondary.light,
+    [theme.breakpoints.down('sm')]: {
+      fontSize: pxToRem(20),
+    },
   },
 }));
 // ----------------------------------------------------------------------
@@ -130,7 +133,7 @@ function Hero({ className }) {
             <motion.div variants={varFadeInUp}>
               <Typography variant="h1" sx={{ color: 'common.white' }} display="flex" justifyContent="center" alignItems="flex-end" className={classes.title}>
                 {t("Vendor marketplace")}
-                <Logo width={170} ml={2} />
+                <Hidden smDown><Logo width={170} ml={2} /></Hidden>
               </Typography>
             </motion.div>
             <motion.div variants={varFadeInUp}>

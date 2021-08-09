@@ -76,7 +76,10 @@ const useStyles = makeStyles((theme) => ({
         minWidth: 'auto'
     },
     btnM: {
-        marginRight: '10px'
+        marginRight: theme.spacing(1.25),
+        '@media (max-width: 449px)': {
+            marginBottom: theme.spacing(2)
+        }
     }
 }));
 
