@@ -31,8 +31,15 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
     textAlign: 'center',
     color: '#a2b4bd',
-    display: 'inline-block',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start',
+    paddingLeft: theme.spacing(1.25),
     position: 'relative',
+    '& .MuiListItemText-root': {
+      flex: 'initial',
+      paddingLeft: theme.spacing(1.25),
+    },
     '&:hover': {
       color: theme.palette.grey[0],
       '& $svg path': {
@@ -65,8 +72,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
     backgroundColor: theme.palette.primary.main,
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-    borderRadius: 20,
-    padding: '15px 16px 13px',
     '& $svg path': {
       fill: theme.palette.grey[0],
     },
@@ -104,8 +109,8 @@ const useStyles = makeStyles((theme) => ({
     height: '8px',
     display: 'block',
     position: 'absolute',
-    right: theme.direction === 'rtl' ? 0 : '5px',
-    bottom: '27px',
+    left: theme.direction === 'rtl' ? '27px' : '12px',
+    top: '27px',
     borderRadius: '50%',
   }
 }));

@@ -1,10 +1,11 @@
 import clsx from 'clsx';
 import React from 'react';
 import { useHistory } from "react-router";
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import Account from './Account';
 import PropTypes from 'prop-types';
 import Languages from './Languages';
+import UpgradeBtn from './UpgradeBtn';
 import { Icon } from '@iconify/react';
 import Notifications from './Notifications';
 import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
@@ -16,10 +17,8 @@ import constants from 'src/utils/constants';
 import { PATH_APP } from 'src/routes/paths';
 import helper from 'src/utils/helper';
 import SearchBox from '../../../components/SearchBox';
-import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
-import { MIconButton } from 'src/theme';
-import { useSnackbar } from 'notistack';
-import Button from 'src/components/Ui/Button';
+// import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
+// import { MIconButton } from 'src/theme';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       paddingLeft: DRAWER_WIDTH,
       marginRight: theme.spacing(1),
-    }
+    },
   },
   toolbar: {
     minHeight: APPBAR_MOBILE,
@@ -60,10 +59,8 @@ function TopBar({ onOpenNav, className }) {
   const theme = useTheme();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { enqueueSnackbar } = useSnackbar();
   const { t } = useTranslation();
-  const { cartItems } = useSelector((state) => state.market);
-  const { currentPlan, loginObject } = useSelector((state) => state.authJwt);
+  // const { cartItems } = useSelector((state) => state.market);
 
   const handleGeneralSearch = (search) => {
     helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, constants.MAX, search)
@@ -94,36 +91,27 @@ function TopBar({ onOpenNav, className }) {
             alignItems: 'center',
             '& > *': {
               ml: {
-                xs: 0.5,
+                xs: 0,
                 sm: 2,
                 lg: 3
               }
             }
           }}
         >
-          {
-          (loginObject) &&
-          (currentPlan.status != 'A') &&
-            <Button
-              btnWidth="btnWidth"
-              onClick={() => { helper.gotoPremium(history, enqueueSnackbar, t('There is a pending subscription'), PATH_APP.general.upgradeSubscription, t) }}
-            >
-              {t("Upgrade to Premium")}
-            </Button>
-          }
+          <Hidden mdDown><UpgradeBtn /></Hidden>
           <Box>
-            <Hidden smDown>
+            <Hidden mdDown>
               <UploadStockBtn bg={theme.palette.grey[0]} color={theme.palette.secondary.main} />
             </Hidden>
           </Box>
           <Languages />
-          <MIconButton
+          {/* <MIconButton
             onClick={() => { history.push(`${PATH_APP.general.market}/cart`); }}
           >
             <Badge badgeContent={cartItems.length} color="error">
               <Icon icon={roundAddShoppingCart} color='#7E8D99' />
             </Badge>
-          </MIconButton>
+          </MIconButton> */}
           <Notifications />
           <Account />
         </Box>

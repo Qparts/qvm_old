@@ -1,32 +1,17 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Grid, Typography, Divider } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 import TextField from 'src/components/Ui/TextField';
 import Button from 'src/components/Ui/Button';
 import { updateOrders } from 'src/redux/slices/partSearch';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme) => ({
-    root: {},
-    locationFilterResult: {
-        display: 'flex'
-    },
-    locationFilter: {
-        minWidth: '300px'
-    }
-}));
-
-// ----------------------------------------------------------------------
-
 function PurchaseOrderSection(props) {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { selectedPart, companies, orders } = useSelector((state) => state.PartSearch);
-    const { themeDirection } = useSelector((state) => state.settings);
     const [quantity, setQuantity] = useState(0);
 
     const addToOrder = () => {

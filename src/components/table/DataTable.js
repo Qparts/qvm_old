@@ -30,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
         background: '#F6F8FC',
         borderCollapse: 'separate',
         borderSpacing: '0 10px',
+        '@media (max-width: 655px) and (min-width: 300px)': {
+            minWidth: '582px',
+        },
     },
     dataTablePad: {
         padding: '0 10px'

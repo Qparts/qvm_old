@@ -3,8 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@material-ui/core';
-import { Icon } from '@iconify/react';
-import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
+// import { Icon } from '@iconify/react';
+// import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
@@ -39,9 +39,21 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         borderBottom: '1px solid #E5EBF0',
         paddingBottom: '10px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            display: 'block',
+            width: '100%',
+            minWidth: '100%',
+        },
     },
     availabilityActionsLeft: {
         width: '300px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            width: '100%',
+            minWidth: '100%',
+            marginBottom: theme.spacing(2)
+        },
     }
 }));
 
@@ -67,11 +79,21 @@ function AvailabilityPartsSection() {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
     }
 
-    const addToCompanyCart = (item) => {
-        console.log("cart item", item);
-        dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
-        setOpenAddToPO(true);
-    }
+    // const addToCompanyCart = (item) => {
+    //     console.log("cart item", item);
+    //     dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
+    //     setOpenAddToPO(true);
+    // }
+
+    // const addToCart = (item) => {
+    //     return (
+    //         <TableAction
+    //             type='partSearch'
+    //             title={t("Buy now")}
+    //             onClick={() => addToCompanyCart(item)}
+    //             textIcon={<Icon icon={roundAddShoppingCart} color='#CED5D8' style={{ fontSize: '14px' }} />} />
+    //     )
+    // }
 
     const showDetailsElement = (item) => {
         return (
@@ -83,16 +105,6 @@ function AvailabilityPartsSection() {
         )
     }
 
-
-    const addToCart = (item) => {
-        return (
-            <TableAction
-                type='partSearch'
-                title={t("Buy now")}
-                onClick={() => addToCompanyCart(item)}
-                textIcon={<Icon icon={roundAddShoppingCart} color='#CED5D8' style={{ fontSize: '14px' }} />} />
-        )
-    }
 
     const closeOrderDailog = () => {
         dispatch(setSelectedPart({ selectedPart: null }));
@@ -153,7 +165,8 @@ function AvailabilityPartsSection() {
                         }
                     ]}
 
-                    actions={[{ element: showDetailsElement }, { element: addToCart }]}
+                    // actions={[{ element: showDetailsElement }, { element: addToCart }]}
+                    actions={[{ element: showDetailsElement }]}
                     datatable={productResult}
                     error={error}
                     onSelectedPage={changePagehandler}

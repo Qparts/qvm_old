@@ -19,22 +19,42 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px',
         padding: '15px',
         position: 'relative',
+        minHeight: '381px',
+        '@media (max-width: 1100px) and (min-width: 960px)': {
+            minHeight: '409px',
+        },
+        '@media (max-width: 750px) and (min-width: 600px)': {
+            minHeight: '409px',
+        },
+        '@media (max-width: 599px) and (min-width: 300px)': {
+            minHeight: 'auto',
+        },
     },
     replacementsFlex: {
         display: 'flex',
         alignItems: 'center',
+        '@media (max-width: 1100px) and (min-width: 960px)': {
+            display: 'block',
+        },
+        '@media (max-width: 750px) and (min-width: 600px)': {
+            display: 'block',
+        },
+        '@media (max-width: 405px) and (min-width: 300px)': {
+            display: 'block',
+        },
     },
     replacementsFlexSapceBet: {
         justifyContent: 'space-between'
     },
     replacementsInfo: {
-        margin: theme.spacing(2, 0)
+        margin: theme.spacing(2, 0),
+        textAlign: 'left'
     },
     replacementsValues: {
         color: theme.palette.secondary.main,
         marginLeft: theme.spacing(1)
     },
-    slider:{
+    slider: {
         border: '1px solid #a8a8a8',
         justifyContent: 'center',
         width: '202px',

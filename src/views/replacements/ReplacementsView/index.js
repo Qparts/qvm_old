@@ -82,7 +82,7 @@ function ReplacementsView() {
                                 {
                                     partReplacements.map((replacementItem, index) => {
                                         return (
-                                            <Grid item xs={12} md={4} key={index}>
+                                            <Grid item xs={12} sm={6} md={4} key={index}>
                                                 <ReplacementItemSection replacementItem={replacementItem} />
                                             </Grid>
                                         )

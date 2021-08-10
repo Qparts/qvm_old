@@ -35,7 +35,7 @@ function SpecialOfferItemsSection() {
             filter={toggleFilter}>
             {filter ?
                 <Grid container spacing={2}>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <TextField
                             type='select'
                             label={t("sort by")}
@@ -53,7 +53,7 @@ function SpecialOfferItemsSection() {
                             </MenuItem>
                         </TextField>
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <TextField
                             type='select'
                             label={t("location")}
@@ -71,7 +71,7 @@ function SpecialOfferItemsSection() {
                             </MenuItem>
                         </TextField>
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <TextField
                             type='select'
                             label={t("category")}
@@ -89,14 +89,14 @@ function SpecialOfferItemsSection() {
                             </MenuItem>
                         </TextField>
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} sm={6} md={3}>
                         <Label name={t("discount value")} />
                         <Slider />
                     </Grid>
                 </Grid>
                 : null}
             <Grid container spacing={2}>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} sm={6} md={3}>
                     <OfferContainer />
                 </Grid>
             </Grid>

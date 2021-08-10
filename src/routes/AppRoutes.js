@@ -38,16 +38,16 @@ const AppRoutes = {
       path: PATH_APP.general.orders,
       component: lazy(() => import('src/views/orders/OrdersView'))
     },
-    {
-      exact: true,
-      path: PATH_APP.general.market,
-      component: lazy(() => import('src/views/market/MarketView'))
-    },
-    {
-      exact: true,
-      path: PATH_APP.general.markerService,
-      component: lazy(() => import('src/views/market/MarketView'))
-    },
+    // {
+    //   exact: true,
+    //   path: PATH_APP.general.market,
+    //   component: lazy(() => import('src/views/market/MarketView'))
+    // },
+    // {
+    //   exact: true,
+    //   path: PATH_APP.general.markerService,
+    //   component: lazy(() => import('src/views/market/MarketView'))
+    // },
     {
       exact: true,
       path: PATH_APP.general.replacements,

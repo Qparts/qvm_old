@@ -26,6 +26,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px',
         padding: '20px',
         position: 'relative',
+        textAlign: 'left'
     },
     offerHeader: {
         color: theme.palette.secondary.darker,
@@ -51,7 +52,6 @@ const useStyles = makeStyles((theme) => ({
         borderBottom: '1px solid #ECF1F5',
         padding: '10px 0',
         color: '#526C78',
-        textAlign: 'left'
     },
     partsNumCont: {
         display: 'flex'
