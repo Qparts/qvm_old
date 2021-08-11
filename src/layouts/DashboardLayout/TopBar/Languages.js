@@ -61,7 +61,7 @@ function Languages() {
         onClick={() => setOpen(true)}
         className={clsx(classes.btnLang, { [classes.isSelected]: isOpen })}
       >
-        <img src={currentLang.icon} alt={currentLang.label} />
+        <img src={langStorage ? currentLang.icon : null} alt={langStorage ? currentLang.label: null} />
       </MIconButton>
 
       <PopoverMenu

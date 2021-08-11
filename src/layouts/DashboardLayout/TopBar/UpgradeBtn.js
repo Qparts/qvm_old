@@ -13,10 +13,10 @@ function UpgradeBtn() {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation();
-    const { currentPlan, loginObject } = useSelector((state) => state.authJwt);
+    const { currentPlan } = useSelector((state) => state.authJwt);
 
     return (
-        (loginObject) &&
+        (currentPlan) &&
         (currentPlan.status != 'A') &&
         <Button
             btnWidth="btnWidth"

@@ -30,8 +30,13 @@ const useStyles = makeStyles((theme) => ({
         background: '#F6F8FC',
         borderCollapse: 'separate',
         borderSpacing: '0 10px',
-        '@media (max-width: 655px) and (min-width: 300px)': {
+        '@media (max-width: 655px)': {
             minWidth: '582px',
+        },
+    },
+    dataTableCata: {
+        '@media (max-width: 799px)': {
+            minWidth: '735px',
         },
     },
     dataTablePad: {
@@ -155,7 +160,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     actions = [], error, onSelectedPage, onRowSelect,
     maps, size = datatable.length, isLazy = true, hasPagination = false,
     onRowsPerPageChange, hasChild = false, childData, childHeader,
-    showChildNumbers, childTitle, noChildComponent, dataTablePad }) {
+    showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata }) {
 
     const classes = useStyles();
 
@@ -174,7 +179,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
             <Paper sx={{ width: '100%' }}>
                 <Scrollbars>
                     <TableContainer component={Paper}>
-                        <Table className={clsx(classes.dataTable, classes[dataTablePad])} aria-label="simple table">
+                        <Table className={clsx(classes.dataTable, classes[dataTablePad], classes[dataTableCata])} aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>
                                 <TableRow>
                                     {header.map((item, i) => {

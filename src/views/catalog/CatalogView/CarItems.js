@@ -96,7 +96,8 @@ function CarItems() {
                     page={page}
                     isLazy={false}
                     rowsPerPage={rowsPerPage}
-                    hasPagination={cars.length > constants.MAX ? true : false} />
+                    hasPagination={cars.length > constants.MAX ? true : false}
+                    dataTableCata='dataTableCata' />
                 {/* 
                 <Scrollbars>
                     <TableContainer>

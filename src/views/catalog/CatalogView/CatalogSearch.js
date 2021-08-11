@@ -16,7 +16,7 @@ import Button from "./../../../components/Ui/Button";
 
 function CatalogSearch() {
     const dispatch = useDispatch();
-    const { models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
+    const { models, selectedCatalog, selectedModel } = useSelector((state) => state.catalogs);
     const { catalogs } = useSelector((state) => state.authJwt);
     const { t } = useTranslation();
 

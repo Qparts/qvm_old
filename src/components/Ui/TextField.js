@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         padding: '13px',
         fontSize: theme.typography.body3.fontSize,
+        textAlign: 'left',
         '&:focus': {
             background: '#F6F8FC',
             borderRadius: '10px',
