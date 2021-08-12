@@ -16,10 +16,22 @@ import { Branch, User } from '../../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     branchesActions: {
         paddingBottom: '10px',
         borderBottom: '1px solid #CED5D8',
+    },
+    branchesActionBtnCont: {
+        '& button': {
+            '@media (max-width: 355px)': {
+                width: '100%'
+            },
+            '&:first-of-type': {
+                '@media (max-width: 355px)': {
+                    margin: theme.spacing(0, 0, 1.5)
+                },
+            }
+        }
     },
     branchesIconMr: {
         marginRight: "5px"
@@ -57,7 +69,7 @@ function BrancheActionsSection() {
     return (
 
         <Box className={classes.branchesActions}>
-            <Box>
+            <Box className={classes.branchesActionBtnCont}>
                 <Button
                     btnBg="btnBg"
                     btnWidth="btnWidth"
@@ -94,11 +106,11 @@ function BrancheActionsSection() {
                     <>
                         {
                             verificationMode == "email" ?
-                                <Typography variant="body2" sx={{ color: theme.palette.secondary.main }}>
+                                <Typography variant="body2" sx={{ color: theme.palette.secondary.main, textAlign: 'center' }}>
                                     {t("Check your email to get verification code")}
                                 </Typography>
                                 :
-                                <Typography variant="body2" sx={{ color: theme.palette.secondary.main }}>
+                                <Typography variant="body2" sx={{ color: theme.palette.secondary.main, textAlign: 'center' }}>
                                     {t("Check your mobile to get verification code")}
                                 </Typography>
                         }

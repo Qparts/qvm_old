@@ -68,6 +68,7 @@ function ProductInfoSection() {
                     isLazy={false}
                     rowsPerPage={rowsPerPage}
                     hasPagination={true}
+                    dataTableGeneral='dataTableGeneral'
                 />
             </SecContainer>
 
