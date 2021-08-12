@@ -2,7 +2,6 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-    Card,
     Box,
     Breadcrumbs,
     Typography
@@ -16,16 +15,12 @@ import GroupItems from './GroupItems';
 import Part from './Part';
 import CatalogHead from "./CatalogHead";
 import BackBtn from "../../../components/Ui/BackBtn";
+import Card from "../../../components/Ui/Card";
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
     root: {},
-    carDetailsCont: {
-        background: '#F6F8FC',
-        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
-        borderRadius: '20px',
-    },
     carDetailssChild: {
         padding: '15px',
         background: theme.palette.grey[0],
@@ -65,7 +60,7 @@ function CarDetails() {
             }
             {groups.length == 0 ?
                 <CarItems /> :
-                <Card className={classes.carDetailsCont}>
+                <Card cardBg='cardBg'>
                     <CatalogHead />
                     <Box className={classes.backCont}>
                         {part != null || groups.length > 0 ?

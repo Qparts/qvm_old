@@ -19,13 +19,19 @@ const useStyles = makeStyles((theme) => ({
         borderBottom: '1px solid #ECF1F5',
     },
     cardBod: {
-        padding: '20px'
+        padding: '20px',
+        '&:last-child': {
+            paddingBottom: '20px'
+        }
     },
     addMargin: {
         margin: '34px auto 0'
     },
     sameHeight: {
         height: 'calc(100% - 0px)'
+    },
+    cardPadd: {
+        padding: '20px 15px'
     }
 }));
 
@@ -41,7 +47,7 @@ function MainCard(props, { className, ...other }) {
     return (
         <Card className={clsx(classes.root, classes[props.addMargin], classes[props.sameHeight], className)} {...other}>
             <CardHeader className={classes.cardHead} title={props.title} />
-            <CardContent className={classes.cardBod}>
+            <CardContent className={clsx(classes.cardBod, classes[props.cardPadd])}>
                 {props.children}
             </CardContent>
         </Card>

@@ -1,68 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    Card,
-    Typography,
-    Box,
-    CardContent,
-    Table,
-    TableRow,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableContainer,
-} from '@material-ui/core';
+import { CardContent } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { getGroups } from 'src/redux/slices/catalog';
-import Scrollbars from 'src/components/Scrollbars';
+import Datatable from 'src/components/table/DataTable';
 import Button from "./../../../components/button/CustomButton";
+import constants from 'src/utils/constants';
 import CatalogHead from "./CatalogHead";
 import CarFilter from './CarFilter';
 import CardFoot from "../../../components/Ui/CardFoot";
+import Card from "../../../components/Ui/Card";
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
     root: {},
-    carItemsCont: {
-        background: '#F6F8FC',
-        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
-        borderRadius: '20px',
-    },
     cardContent: {
         padding: '0 15px'
-    },
-    catalogTable: {
-        boxShadow: 'none',
-        background: 'inherit',
-        borderCollapse: 'separate',
-        borderSpacing: '0 10px',
-    },
-    catalogTableHead: {
-        '& $th': {
-            border: 'none',
-            background: 'none',
-            color: '#7E8D99',
-            paddingTop: 0,
-            paddingBottom: 0,
-            fontSize: theme.typography.body4.fontSize,
-            fontWeight: theme.typography.fontWeightRegular
-        },
-        '& $th:first-of-type, & $th:last-of-type': {
-            boxShadow: 'none',
-        }
-    },
-    catalogTableTr: {
-        "& td": {
-            background: theme.palette.grey[0],
-        },
-        '& $td:first-of-type': {
-            borderRadius: '20px 0 0 20px',
-        },
-        '& $td:last-of-type': {
-            borderRadius: '0 20px 20px 0'
-        },
     },
     browseCatalog: {
         color: theme.palette.primary.main + '!important',
@@ -79,12 +34,70 @@ function CarItems() {
     const dispatch = useDispatch();
     const { cars, selectedCatalog, fromList } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(constants.MAX);
+
+    const showDetailsAction = (item) => {
+        const element = JSON.parse(item);
+        const catalogId = fromList ? selectedCatalog.id : element.catalogId;
+        const carId = fromList ? element.id : element.carId;
+        dispatch(getGroups(catalogId, carId, null, null, element));
+    }
+
+    const showDetailsElement = (item) => {
+        return (
+            <Button
+                variant="contained"
+                simple
+                component="span"
+                className={classes.browseCatalog}
+                onClick={() => showDetailsAction(item)}
+            >
+                {t("Browse Catalog")}
+            </Button>
+        )
+    }
 
     return (
-        <Card className={classes.carItemsCont}>
+        <Card cardBg='cardBg'>
             <CatalogHead />
             <CardContent className={classes.cardContent}>
                 {fromList && <CarFilter />}
+                <Datatable
+                    header={[
+                        {
+                            name: t("Car Name"),
+                            attr: fromList ? 'name' : 'title',
+                        },
+                        {
+                            name: t("Brand"),
+                            attr: fromList ? 'modelName' : 'brand',
+                        },
+                        {
+                            name: t("year"),
+                            attr: fromList ? 'parameters[5].value' : 'parameters[0].value'
+                        },
+                        {
+                            name: t("Engine"),
+                            attr: fromList ? 'parameters[3].value' : 'parameters[3].value'
+                        },
+                        {
+                            name: t("Transmission type"),
+                            attr: fromList ? 'parameters[7].value' : 'parameters[8].value'
+                        },
+                        {
+                            name: t("Region"),
+                            attr: fromList ? 'parameters[6].value' : 'parameters[6].value'
+                        }
+                    ]}
+
+                    actions={[{ element: showDetailsElement }]}
+                    datatable={cars}
+                    page={page}
+                    isLazy={false}
+                    rowsPerPage={rowsPerPage}
+                    hasPagination={cars.length > constants.MAX ? true : false} />
+                {/* 
                 <Scrollbars>
                     <TableContainer>
                         <Table className={classes.catalogTable}>
@@ -96,9 +109,9 @@ function CarItems() {
                                     <TableCell><Typography variant="body4">{t('Engine')}</Typography></TableCell>
                                     <TableCell><Typography variant="body4">{t('Transmission type')}</Typography></TableCell>
                                     <TableCell><Typography variant="body4">{t('Region')}</Typography></TableCell>
-                                    {/* {cars[0].parameters.map((param) => (
+                                    {cars[0].parameters.map((param) => (
                                                 <TableCell key={param.key}> {t("catalogTab." + param.key)}</TableCell>
-                                            ))} */}
+                                            ))}
                                     <TableCell></TableCell>
                                 </TableRow>
                             </TableHead>
@@ -137,7 +150,7 @@ function CarItems() {
                             </TableBody>
                         </Table>
                     </TableContainer>
-                </Scrollbars>
+                </Scrollbars> */}
             </CardContent >
             <CardFoot />
         </Card>

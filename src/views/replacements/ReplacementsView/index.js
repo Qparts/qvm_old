@@ -2,18 +2,14 @@ import Page from 'src/components/Page';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Box,
-    Container,
-    Typography
-} from '@material-ui/core';
+import { Box, Typography, Grid } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import PartReplacementsSearchSection from './PartReplacementsSearchSection';
 import ReplacementItemSection from './ReplacementItemSection';
 import { cleanup } from 'src/redux/slices/replacements';
-
+import SecContainer from '../../../components/Ui/SecContainer';
 
 // ----------------------------------------------------------------------
 
@@ -52,7 +48,6 @@ function ReplacementsView() {
             title={t("replacementsTab.title")}
             className={classes.root}
         >
-
             <LoadingOverlay
                 active={isLoading}
                 styles={{
@@ -63,53 +58,34 @@ function ReplacementsView() {
                 }}
                 spinner={
                     <LoadingScreen />
-
                 }
             >
-                <Container >
-                    <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("Replacement Parts Search")}</Typography>
-                        <hr />
+                <PartReplacementsSearchSection />
+                {partReplacements.length ?
+                    <SecContainer
+                        header={t('Replacement Parts Search results')}>
+                        <Grid container spacing={2}>
+                            {
+                                partReplacements.map((replacementItem, index) => {
+                                    return (
+                                        <Grid item xs={12} md={4} key={index}>
+                                            <ReplacementItemSection replacementItem={replacementItem} />
+                                        </Grid>
+                                    )
+                                })
+                            }
+                        </Grid>
+                    </SecContainer>
+                    : ""}
+                {
+                    error != null && error == 'Search limit exceeded!' &&
+                    <Box>
+                        <Typography variant="h3" gutterBottom>
+                            {error}
+                        </Typography>
                     </Box>
-
-                    <PartReplacementsSearchSection />
-
-                    <Box sx={{ mb: 6 }} />
-
-                    <div className="row">
-                        {
-                            partReplacements.map((replacementItem, index) => {
-                                return (
-                                    <div className="col-md-6" key={index}>
-                                        <ReplacementItemSection replacementItem={replacementItem} />
-                                        <Box sx={{ mb: 6 }} />
-                                    </div>
-
-                                )
-                            })
-                        }
-                    </div>
-
-
-                    {
-                        error != null && error == 'Search limit exceeded!' &&
-
-                        <div className="row d-flex justify-content-center">
-
-
-
-                            <div className="col-md-6">
-
-                                <Typography variant="h3" gutterBottom>
-                                    {error}
-                                </Typography>
-                            </div>
-                        </div>
-                    }
-
-                </Container>
+                }
             </LoadingOverlay>
-
         </Page>
     );
 }

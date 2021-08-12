@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Icon } from '@iconify/react';
 import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
 import useAuth from 'src/hooks/useAuth';
 import { PATH_APP } from 'src/routes/paths';
 import React, { useRef, useState } from 'react';
@@ -14,6 +15,8 @@ import { alpha, makeStyles } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import { User } from '../../../icons/icons';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 
 // ----------------------------------------------------------------------
 
@@ -58,8 +61,10 @@ const useStyles = makeStyles((theme) => ({
 
 function Account() {
   const classes = useStyles();
+  const { t } = useTranslation();
   const history = useHistory();
   const anchorRef = useRef(null);
+  const dispatch = useDispatch();
   const { user, logout } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
@@ -75,6 +80,8 @@ function Account() {
   const handleLogout = async () => {
     try {
       await logout();
+      dispatch(updateBillingAddress(null));
+      dispatch(updateCartItems([]));
       if (isMountedRef.current) {
         history.push('/');
         handleClose();
@@ -141,7 +148,7 @@ function Account() {
             variant="outlined"
             onClick={handleLogout}
           >
-            Logout
+            {t('Logout')}
           </Button>
         </Box>
       </PopoverMenu>

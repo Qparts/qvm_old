@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
@@ -14,23 +13,13 @@ import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme) => ({
-    root: {}
-}));
-
-// ----------------------------------------------------------------------
-
 function PartDetails() {
-    const classes = useStyles();
     const { t } = useTranslation();
     const { selectedPart, companies } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
 
-    const { countries } = useSelector(
-        (state) => state.authJwt
-    );
+    const { countries } = useSelector((state) => state.authJwt);
     const [openItemID, setOpenItemID] = useState(0);
-
 
     const handleClick = (itemID) => {
         if (openItemID != itemID)
@@ -47,8 +36,6 @@ function PartDetails() {
                     component="nav"
                     aria-labelledby="availability-details-subheader"
                 >
-
-
                     {
                         selectedPart.stock.map((item, index) => {
                             return (
@@ -79,7 +66,6 @@ function PartDetails() {
                                                         :
                                                         <ListItemText primary={t("no contacts found")} />
                                                 }
-
                                             </ListItem>
                                         </List>
                                     </Collapse>

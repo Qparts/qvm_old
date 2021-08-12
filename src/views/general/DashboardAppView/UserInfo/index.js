@@ -1,10 +1,11 @@
-import clsx from 'clsx';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Card, Typography, Box } from '@material-ui/core';
+import clsx from 'clsx';
 import { Edit, Company } from '../../../../icons/icons';
 import UploadStockBtn from '../../../../components/Ui/UploadStockBtn';
 import Basic from './Basic';
@@ -19,7 +20,6 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '20px 0 154px 20px',
         background: 'rgb(229 234 244 / 45%)',
         boxShadow: 'none',
-        // marginBottom: '50px'
     },
     companyInfo: {
         fontSize: '0.875rem',
@@ -39,6 +39,8 @@ UserInfo.propTypes = {
 function UserInfo({ className, ...other }) {
     const classes = useStyles();
     const theme = useTheme();
+    const { loginObject, currentPlan } = useSelector((state) => state.authJwt);
+    const { themeDirection } = useSelector((state) => state.settings);
     const { t } = useTranslation();
 
     return (
@@ -58,13 +60,15 @@ function UserInfo({ className, ...other }) {
             }}>
                 <Company width='26' height='32' fill='#7E8D99' />
             </Typography>
-            <Typography variant="h5" className={classes.headColor}>الحميدان</Typography>
+            <Typography variant="h5" className={classes.headColor}>
+                {themeDirection == 'rtl' ? loginObject.company.nameAr : loginObject.company.name}
+            </Typography>
             <Box sx={{ marginBottom: '15px', display: 'flex', justifyContent: 'center' }}>
-                <Typography variant="body2" className={classes.companyInfo}>50 {t("order")} - </Typography>
-                <Typography variant="body2" className={classes.companyInfo}>5 {t("branch")} - </Typography>
-                <Typography variant="body2" className={classes.companyInfo}>3 {t("user")}</Typography>
+                <Typography variant="body2" className={classes.companyInfo}>
+                    {loginObject.company.branches.length} {t("branch")} - {loginObject.company.subscribers.length} {t("user")}
+                </Typography>
             </Box>
-            <Basic />
+            {currentPlan.status != 'A' ? <Basic /> : <Premium />}
             <Typography variant="subtitle2" className={classes.companyInfo} sx={{ display: 'block', marginTop: '30px' }}> {t("parts number in your stock")} </Typography>
             <Typography variant="h2" className={classes.headColor} sx={{ fontWeight: theme.typography.fontWeightRegular }}>15.030</Typography>
             <Typography variant="body1" sx={{ margin: '10px auto 45px' }}>

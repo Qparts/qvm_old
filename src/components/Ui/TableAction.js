@@ -17,8 +17,10 @@ const useStyles = makeStyles((theme) => ({
     },
     TableActionFlex: {
         display: 'flex',
+        alignItems: 'center'
     },
     hoverLink: {
+        lineHeight: 1,
         '& span': {
             color: '#CED5D8'
         },
@@ -35,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     mrItem: {
-        marginRight: '15px',
+        marginLeft: '15px',
     },
     cursor: {
         cursor: 'pointer'
@@ -52,14 +54,14 @@ export default function TableAction(props) {
     if (props.type === 'offerActions') {
         tableActions = (
             <Box className={clsx(classes.TableActionFlex)}>
-                <Link to={props.linkSearch} className={clsx(classes.hoverLink, classes[props.mrItem])}>
-                    {props.icon}
-                </Link>
                 <Link to={props.link} className={clsx(classes[props.TableActionBorder], classes.TableActionFlex, classes.hoverLink)}>
                     <Box className={classes.TableActionIcon}>
                         {props.textIcon}
                     </Box>
                     <Typography variant="body4"> {props.title} </Typography>
+                </Link>
+                <Link to={props.linkSearch} className={clsx(classes.hoverLink, classes[props.mrItem])}>
+                    {props.icon}
                 </Link>
             </Box>
         )
@@ -72,6 +74,27 @@ export default function TableAction(props) {
                     {props.textIcon}
                 </Box>
                 <Typography variant="body4"> {props.title} </Typography>
+            </Box>
+        )
+    } else if (props.type === 'setting') {
+        tableActions = (
+            <Box className={classes.TableActionFlex}>
+                <Box
+                    className={clsx(classes.hoverLink, classes.TableActionFlex, classes.cursor, classes.TableActionBorder)}
+                    onClick={props.onClick} >
+                    <Box className={classes.TableActionIcon}>
+                        {props.textIcon}
+                    </Box>
+                    <Typography variant="body4"> {props.title} </Typography>
+                </Box>
+                <Box
+                    className={clsx(classes.hoverLink, classes.TableActionFlex, classes.cursor)}
+                    onClick={props.onClick} >
+                    <Box className={classes.TableActionIcon}>
+                        {props.textIconDel}
+                    </Box>
+                    <Typography variant="body4"> {props.titleDel} </Typography>
+                </Box>
             </Box>
         )
     }

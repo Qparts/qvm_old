@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import paymentService from 'src/services/paymentService';
 
 function toDate(mil) {
   const d = new Date(mil);
@@ -62,7 +63,7 @@ function currencyRoundedFormat(num) {
   let str = formatter.format(num);
   try {
     str = str.replace(/[a-z]{3}/i, "").trim();
-  } catch (ex) {}
+  } catch (ex) { }
   return str;
 }
 
@@ -136,9 +137,9 @@ function getLocation(
 ) {
   try {
     if (branch == null && countryId != 0 && regionId != 0 && cityId != 0) {
-      const country = countries.find((e) => e.id === countryId);
-      const region = country.regions.find((e) => e.id === regionId);
-      const city = region.cities.find((e) => e.id === cityId);
+      const country = countries.find((e) => e.id ===parseInt( countryId));
+      const region = country.regions.find((e) => e.id === parseInt(regionId));
+      const city = region.cities.find((e) => e.id === parseInt(cityId));
       return { country: country, region: region, city: city };
     } else {
       const country = countries.find((e) => e.id === branch.countryId);
@@ -172,6 +173,27 @@ function reconstructPhone(countryId, phone, countries) {
     : countryCode + modifiedPhone;
 }
 
+const gotoPremium = async (history, enqueueSnackbar, message, url, t) => {
+  try {
+    const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
+    if (pendingSubscriptions != null && pendingSubscriptions != "")
+      enqueueSnackbar(message, { variant: 'warning' });
+    else
+      history.push(url);
+
+  } catch (error) {
+    enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
+  }
+}
+
+function calculateTimeLeft(startDate, endDate) {
+  let start = new Date(startDate),
+      end = new Date(endDate),
+      today = new Date();
+  return Math.round(((today - start) / (end - start)) * 100);
+}
+
+
 export default {
   toDate,
   toDayAndMonth,
@@ -190,4 +212,6 @@ export default {
   useIsMounted,
   getLocation,
   reconstructPhone,
+  gotoPremium,
+  calculateTimeLeft
 };

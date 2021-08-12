@@ -2,12 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-import {
-    Card,
-    Typography,
-    Box
-} from '@material-ui/core';
-
+import { Card, Typography, Box } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
@@ -47,6 +42,9 @@ const useStyles = makeStyles(() => ({
     },
     bodyP: {
         padding: '5px 15px 0 15px',
+    },
+    secContainerMt: {
+        marginTop: 0
     }
 }));
 
@@ -55,7 +53,7 @@ const useStyles = makeStyles(() => ({
 const SecContainer = (props, { className, ...other }) => {
     const classes = useStyles();
     return (
-        <div className={clsx(classes.root, classes.secContainer, className)} {...other}>
+        <div className={clsx(classes.root, classes.secContainer, classes[props.secContainerMt], className)} {...other}>
             <Typography variant="h5" className={classes.secHeader}> {props.header} </Typography>
             <Card className={clsx(classes.secBody, classes[props.bodyP])}>
                 {props.children}

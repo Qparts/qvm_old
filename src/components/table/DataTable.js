@@ -1,13 +1,16 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import Box from '@material-ui/core/Box';
-import Table from '@material-ui/core/Table';
-import TableBody from '@material-ui/core/TableBody';
-import TableCell from '@material-ui/core/TableCell';
-import TableContainer from '@material-ui/core/TableContainer';
-import TableHead from '@material-ui/core/TableHead';
-import TableRow from '@material-ui/core/TableRow';
-import Paper from '@material-ui/core/Paper';
+import {
+    Box,
+    Table,
+    TableBody,
+    TableCell,
+    TableContainer,
+    TableHead,
+    TableRow,
+    Paper
+} from '@material-ui/core';
+import clsx from 'clsx';
 import Button from "../button/CustomButton";
 import constants from 'src/utils/constants';
 import helper from 'src/utils/helper';
@@ -16,7 +19,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
-import Pagination from '../Ui/Pagination'
+import Pagination from '../Ui/Pagination';
 
 // ----------------------------------------------------------------------
 
@@ -27,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
         background: '#F6F8FC',
         borderCollapse: 'separate',
         borderSpacing: '0 10px',
+    },
+    dataTablePad: {
+        padding: '0 10px'
     },
     dataTableHead: {
         '& $th': {
@@ -146,7 +152,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     actions = [], error, onSelectedPage, onRowSelect,
     maps, size = datatable.length, isLazy = true, hasPagination = false,
     onRowsPerPageChange, hasChild = false, childData, childHeader,
-    showChildNumbers, childTitle, noChildComponent }) {
+    showChildNumbers, childTitle, noChildComponent, dataTablePad }) {
 
     const classes = useStyles();
 
@@ -165,7 +171,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
             <Paper sx={{ width: '100%' }}>
                 <Scrollbars>
                     <TableContainer component={Paper}>
-                        <Table className={classes.dataTable} aria-label="simple table">
+                        <Table className={clsx(classes.dataTable, classes[dataTablePad])} aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>
                                 <TableRow>
                                     {header.map((item, i) => {

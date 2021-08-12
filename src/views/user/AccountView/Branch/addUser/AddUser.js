@@ -2,31 +2,21 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import {
-    Grid,
-} from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import { useSnackbar } from 'notistack';
 import { addUser } from 'src/redux/slices/branches';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AddUserForm from './AddUserForm';
 import helper from 'src/utils/helper';
-// ----------------------------------------------------------------------
-
-const useStyles = makeStyles((theme) => ({
-    root: {}
-}));
 
 // ----------------------------------------------------------------------
 
 function AddUser(props) {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const isMountedRef = useIsMountedRef();
-    const { enqueueSnackbar } = useSnackbar();
     const [loaded, setLoaded] = useState(false);
     const { countries } = useSelector(
         (state) => state.authJwt
@@ -50,7 +40,7 @@ function AddUser(props) {
             phone: '',
             email: '',
             password: '',
-            branch: props.selectedBranch ? props.selectedBranch.id : 0
+            branch: props.selectedBranch ? props.selectedBranch.id : ''
         },
         validationSchema: userSchema,
         onSubmit: async (values, { setErrors, setSubmitting }) => {

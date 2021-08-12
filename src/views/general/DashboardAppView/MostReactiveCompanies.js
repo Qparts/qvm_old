@@ -9,7 +9,7 @@ import {
     MenuItem
 } from '@material-ui/core';
 import { More } from '../../../icons/icons';
-import Select from '../../../components/Ui/Select';
+import TextField from '../../../components/Ui/TextField';
 import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
@@ -66,7 +66,8 @@ function MostSearchedParts({ className, ...other }) {
 
     return (
         <Card className={clsx(classes.root, classes.reactiveCompanies, className)} {...other}>
-            <Select
+            <TextField
+                type='select'
                 id='mostReactive'
                 name='mostReactive'
                 value={t("one week")}
@@ -86,7 +87,7 @@ function MostSearchedParts({ className, ...other }) {
                 <MenuItem key={t("one year")} value={t("one year")}>
                     {t("one year")}
                 </MenuItem>
-            </Select>
+            </TextField>
 
             <Datatable
                 header={[

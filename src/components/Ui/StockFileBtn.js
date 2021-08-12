@@ -1,7 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { TextField, Button, Box } from '@material-ui/core';
-import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import { Upload } from '../../icons/icons';
 
@@ -51,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 export default function CustomInput(props) {
     const classes = useStyles();
-    const { t } = useTranslation();
     const theme = useTheme();
 
     return (
@@ -75,8 +73,8 @@ export default function CustomInput(props) {
                     component="span"
                     className={clsx(classes.uploadbtn, classes.uploadStockMainBtn)}
                 >
-                    {props.value ? props.value.name : t("upload stock file")}
-                    <Upload width='20' height='20' fill={theme.palette.primary.main} />
+                    {props.value ? props.value.name : props.title}
+                    {props.upload ? <Upload width='20' height='20' fill={theme.palette.primary.main} /> : null}
                 </Button>
             </label>
         </Box>

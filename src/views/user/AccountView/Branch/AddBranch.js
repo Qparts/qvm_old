@@ -2,23 +2,52 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import {
-    Grid,
-    TextField
-} from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
-import { useSnackbar } from 'notistack';
-import { createBranch } from 'src/redux/slices/branches';
+import { Grid, Box, MenuItem, Typography } from '@material-ui/core';
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
-
 import PlacesAutocomplete from "react-places-autocomplete";
+import { createBranch } from 'src/redux/slices/branches';
+import TextField from '../../../../components/Ui/TextField';
+import CustomButton from '../../../../components/Ui/Button';
+import { Location } from '../../../../icons/icons';
+
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {}
+    root: {},
+    map: {
+        height: '300px',
+        overflow: 'hidden',
+        position: 'relative'
+    },
+    autocompleteDropdownContainer: {
+        left: 0,
+        top: 0,
+        zIndex: 99999999999,
+        backgroundColor: theme.palette.grey[0],
+        width: '100%',
+        border: '1px solid #D2D2D2',
+        boxShadow: '0 2px 10px 0 rgba(30, 35, 67, 0.14)',
+        position: 'absolute',
+        '&:empty': {
+            borderWidth: 0,
+        }
+    },
+    inputSuggestion: {
+        width: '100%',
+        padding: '15px 10px',
+        borderBottom: '1px solid #D2D2D2',
+        display: 'flex',
+        alignItems: 'flex-start',
+        color: theme.palette.secondary.darker,
+        fontWeight: theme.typography.fontWeightRegular,
+        '& svg': {
+            margin: '8px 5px 0 0',
+        },
+        '&:hover': {
+            backgroundColor: '#f1f1f1 !important'
+        }
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -27,26 +56,17 @@ function AddBranch(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const isMountedRef = useIsMountedRef();
-    const { enqueueSnackbar } = useSnackbar();
-
-    const { countries } = useSelector(
-        (state) => state.authJwt
-    );
-
+    const { countries } = useSelector((state) => state.authJwt);
     const { themeDirection } = useSelector((state) => state.settings);
-
 
     const [cities, setCities] = useState([]);
     const [regions, setRegions] = useState([]);
     const [location, setLocation] = useState({});
 
-
-
     const [branchName, setBranchName] = useState("");
-    const [countryId, setCountryId] = useState(0);
-    const [regionId, setRegionId] = useState(0);
-    const [cityId, setCityId] = useState(0);
+    const [countryId, setCountryId] = useState('');
+    const [regionId, setRegionId] = useState('');
+    const [cityId, setCityId] = useState('');
     const [address, setAddress] = useState('');
 
     const onMapClicked = (t, map, coord) => {
@@ -74,37 +94,28 @@ function AddBranch(props) {
     };
 
     return (
+        <>
+            <TextField
+                type='input'
+                id="name"
+                name="name"
+                label={t("Name")}
+                onChange={(e) => {
+                    setBranchName(e.target.value)
+                }}
+            />
 
-        <Grid container >
-
-            {/* <Card>
-                <CardContent> */}
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={12}>
+            <Grid container spacing={1}>
+                <Grid item xs={12} sm={4}>
                     <TextField
-                        fullWidth
-                        label={t("Name")}
-                        required={true}
-                        onChange={(e) => {
-                            setBranchName(e.target.value)
-                        }}
-                    />
-                </Grid>
-
-
-                <Grid item xs={12} sm={12}>
-                    <TextField
-                        select
-                        fullWidth
+                        type='select'
+                        spaceToTop="spaceToTop"
                         label={t("Country")}
-                        id="countryId"
                         value={countryId}
-                        name="countryId"
-
                         onChange={(event) => {
                             setCountryId(event.target.value);
-                            setRegionId(0);
-                            setCityId(0);
+                            setRegionId('');
+                            setCityId('');
                             const country = countries.find(
                                 (x) => x.id === parseInt(event.target.value)
                             );
@@ -112,62 +123,46 @@ function AddBranch(props) {
                             setRegions(newregions);
                             setCities([]);
                         }}
-
-                        SelectProps={{ native: true }}
                     >
-                        <option aria-label="None" value="" />
+                        <MenuItem aria-label="None" value="" />
                         {countries?.map((item, index) => (
-                            <option value={item.id} key={index}>
+                            <MenuItem value={item.id} key={index}>
                                 {themeDirection == 'ltr' ? item.name : item.nameAr}
-                            </option>))
+                            </MenuItem>))
                         }
                     </TextField>
-
                 </Grid>
 
-                <Grid item xs={12} sm={12}>
-
+                <Grid item xs={12} sm={4}>
                     <TextField
-                        select
-                        fullWidth
+                        type='select'
+                        spaceToTop="spaceToTop"
                         label={t("Region")}
-                        id="regionId"
                         value={regionId}
-                        name="regionId"
-
                         onChange={(event) => {
                             setRegionId(event.target.value);
-                            setCityId(0);
+                            setCityId('');
                             const newCities = regions.find(
                                 (x) => x.id === parseInt(event.target.value)
                             ).cities;
                             setCities(newCities);
                         }}
-
-                        SelectProps={{ native: true }}
                     >
-                        <option aria-label="None" value="" />
+                        <MenuItem aria-label="None" value="" />
                         {regions?.map((item, index) => (
-                            <option value={item.id} key={index}>
+                            <MenuItem value={item.id} key={index}>
                                 {themeDirection == 'ltr' ? item.name : item.nameAr}
-                            </option>))
+                            </MenuItem>))
                         }
                     </TextField>
-
                 </Grid>
 
-
-                <Grid item xs={12} sm={12}>
-
+                <Grid item xs={12} sm={4}>
                     <TextField
-                        select
-                        fullWidth
-                        required
+                        type='select'
+                        spaceToTop="spaceToTop"
                         label={t("City")}
-                        id="cityId"
                         value={cityId}
-                        name="cityId"
-
                         onChange={(event) => {
                             setCityId(event.target.value);
                             const city = cities.find((e) => e.id == event.target.value);
@@ -177,142 +172,118 @@ function AddBranch(props) {
                             newLocation.mapZoom = city.mapZoom;
                             setLocation(newLocation);
                         }}
-
-                        SelectProps={{ native: true }}
                     >
-                        <option aria-label="None" value="" />
+                        <MenuItem aria-label="None" value="" />
                         {cities?.map((item, index) => (
-                            <option value={item.id} key={index}>
+                            <MenuItem value={item.id} key={index}>
                                 {themeDirection == 'ltr' ? item.name : item.nameAr}
-                            </option>))
+                            </MenuItem>))
                         }
                     </TextField>
-
                 </Grid>
-
-
-
-
-                <Grid item xs={12} md={12}>
-                    {countryId != 0 &&
-                        regionId != 0 &&
-                        cityId != 0 &&
-                        (
-                            <div style={{ minHeight: 300 }}>
-
-
-                                <div className="mt-form auto-complete">
-                                    <PlacesAutocomplete
-                                        value={address}
-                                        onChange={handleSearchChange}
-                                        onSelect={handleSelect}
-                                    >
-                                        {({
-                                            getInputProps,
-                                            suggestions,
-                                            getSuggestionItemProps,
-                                            loading,
-                                        }) => (
-                                            <div className="mb-2">
-                                                <div className="MuiFormControl-root undefined makeStyles-formControl-556 MuiFormControl-fullWidth">
-                                                    <div className="MuiInputBase-root MuiInput-root MuiInput-underline makeStyles-underline MuiInputBase-formControl MuiInput-formControl">
-                                                        <input
-                                                            {...getInputProps({
-                                                                placeholder: `${t("Search Places")} ...`,
-                                                                className:
-                                                                    "MuiInputBase-input MuiInput-input",
-                                                            })}
-                                                        />
-                                                    </div>
-                                                </div>
-                                                <div className="position-relative">
-                                                    <div className="autocomplete-dropdown-container position-absolute">
-                                                        {loading && <div>{t("Loading")}...</div>}
-                                                        {suggestions.map((suggestion, index) => {
-                                                            const style = suggestion.active
-                                                                ? {
-                                                                    backgroundColor: "rgba(0, 0, 0, 0.04)",
-                                                                    cursor: "pointer",
-                                                                }
-                                                                : {
-                                                                    backgroundColor: "#ffffff",
-                                                                    cursor: "pointer",
-                                                                };
-                                                            return (
-                                                                <div
-                                                                    key={index}
-                                                                    className="input-suggestion"
-                                                                    {...getSuggestionItemProps(suggestion, {
-                                                                        style,
-                                                                    })}
-                                                                >
-                                                                    <i className="material-icons">
-                                                                        location_on{" "}
-                                                                    </i>{" "}
-                                                                    <span>{suggestion.description}</span>
-                                                                </div>
-                                                            );
-                                                        })}
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        )}
-                                    </PlacesAutocomplete>
-                                </div>
-
-
-
-                                <div className="map-container">
-                                    <Map
-                                        style={{
-                                            width: "100%",
-                                            height: "100%",
-                                            position: "relative",
-                                        }}
-                                        google={props.google}
-                                        initialCenter={{
-                                            lat: location.latitude,
-                                            lng: location.longitude,
-                                        }}
-                                        center={{
-                                            lat: location.latitude,
-                                            lng: location.longitude,
-                                        }}
-                                        onClick={onMapClicked}
-                                    >
-                                        <Marker
-                                            position={{
-                                                lat: location.latitude,
-                                                lng: location.longitude,
-                                            }}
-                                        />
-                                    </Map>
-                                </div>
-                            </div>
-                        )}
-                </Grid>
-
-
-
-
             </Grid>
 
+            {countryId != 0 &&
+                regionId != 0 &&
+                cityId != 0 &&
+                (
+                    <Box style={{ minHeight: 300 }}>
+                        <Box className="mt-form auto-complete">
+                            <PlacesAutocomplete
+                                value={address}
+                                onChange={handleSearchChange}
+                                onSelect={handleSelect}
+                            >
+                                {({
+                                    getInputProps,
+                                    suggestions,
+                                    getSuggestionItemProps,
+                                    loading,
+                                }) => (
+                                    <Box>
+                                        <Box>
+                                            <TextField
+                                                type='inputMap'
+                                                spaceToTop='spaceToTop'
+                                                getInputProps={getInputProps}
+                                                label={`${t("Search Places")} ...`}
+                                            />
+                                        </Box>
+                                        <Box sx={{ position: 'relative', marginTop: '5px' }}>
+                                            <Box className={classes.autocompleteDropdownContainer}>
+                                                {loading && <Box>{t("Loading")}...</Box>}
+                                                {suggestions.map((suggestion, index) => {
+                                                    const style = suggestion.active
+                                                        ? {
+                                                            backgroundColor: "rgba(0, 0, 0, 0.04)",
+                                                            cursor: "pointer",
+                                                        }
+                                                        : {
+                                                            backgroundColor: "#ffffff",
+                                                            cursor: "pointer",
+                                                        };
+                                                    return (
+                                                        <Typography
+                                                            variant="h6"
+                                                            key={index}
+                                                            className={classes.inputSuggestion}
+                                                            {...getSuggestionItemProps(suggestion, {
+                                                                style,
+                                                            })}
+                                                        >
+                                                            <Location width='17px' height='17px' fill='#7E8D99' />
+                                                            <span>{suggestion.description}</span>
+                                                        </Typography>
+                                                    );
+                                                })}
+                                            </Box>
+                                        </Box>
+                                    </Box>
+                                )}
+                            </PlacesAutocomplete>
+                        </Box>
 
-            <LoadingButton
-                fullWidth
-                variant="contained"
-                size="large"
-                disabled={branchName == "" || countryId == 0 || regionId == 0 || cityId == 0 || !location.latitude || !location.longitude}
-                onClick={() => {
-                    dispatch(createBranch(branchName, countryId, regionId, cityId, location, countries));
-                    props.setAddBranchIsOpen(false);
-                }}
-            >
-                {t("Create")}
-            </LoadingButton>
+                        <Box className={classes.map}>
+                            <Map
+                                style={{
+                                    width: "100%",
+                                    height: "100%",
+                                    position: "relative",
+                                }}
+                                google={props.google}
+                                initialCenter={{
+                                    lat: location.latitude,
+                                    lng: location.longitude,
+                                }}
+                                center={{
+                                    lat: location.latitude,
+                                    lng: location.longitude,
+                                }}
+                                onClick={onMapClicked}
+                            >
+                                <Marker
+                                    position={{
+                                        lat: location.latitude,
+                                        lng: location.longitude,
+                                    }}
+                                />
+                            </Map>
+                        </Box>
+                    </Box>
+                )}
 
-        </Grid >
-
+            <Box sx={{ marginTop: '20px' }}>
+                <CustomButton
+                    disabled={branchName == "" || countryId == 0 || regionId == 0 || cityId == 0 || !location.latitude || !location.longitude}
+                    onClick={() => {
+                        dispatch(createBranch(branchName, countryId, regionId, cityId, location, countries));
+                        props.setAddBranchIsOpen(false);
+                    }}
+                >
+                    {t("Create")}
+                </CustomButton>
+            </Box>
+        </>
     );
 }
 

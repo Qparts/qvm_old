@@ -65,7 +65,7 @@ export default function SpecialOfferInfo(props) {
     const { selectedOffer, companies } = useSelector((state) => state.specialOffer);
     const { themeDirection } = useSelector((state) => state.settings);
 
-    const chartData = [75];
+    const chartData = [helper.calculateTimeLeft(selectedOffer.startDate, selectedOffer.endDate)];
     const chartOptions = merge(ApexChartsOption(), {
         colors: [theme.palette.primary.main],
         chart: { sparkline: { enabled: true } },

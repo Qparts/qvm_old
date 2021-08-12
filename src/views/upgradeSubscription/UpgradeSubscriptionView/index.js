@@ -2,11 +2,6 @@ import Page from 'src/components/Page';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Box,
-    Container,
-    Typography
-} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
@@ -23,19 +18,6 @@ import { Icon } from '@iconify/react';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
-        }
-    }
 }));
 
 // ----------------------------------------------------------------------
@@ -48,9 +30,7 @@ function UpgradeSubscriptionView() {
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const location = useLocation();
     const history = useHistory();
-    const { planFeatures, currentPlan, loginObject } = useSelector(
-        (state) => state.authJwt
-    );
+    const { currentPlan, loginObject } = useSelector((state) => state.authJwt);
 
     const tapId = new URLSearchParams(location.search).get("tap_id");
 
@@ -63,8 +43,6 @@ function UpgradeSubscriptionView() {
             updatePaymentOrder();
         }
     }, [])
-
-
 
     const updatePaymentOrder = async () => {
         try {
@@ -97,8 +75,6 @@ function UpgradeSubscriptionView() {
 
     }
 
-
-
     return (
         <Page
             title={t("Upgrade to Premium")}
@@ -118,16 +94,8 @@ function UpgradeSubscriptionView() {
 
                 }
             >
-                <Container >
-                    <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("Upgrade to Premium")}</Typography>
-                        <hr />
-                    </Box>
-
-                    <PremiumPlanDurationSection />
-                </Container>
+                <PremiumPlanDurationSection />
             </LoadingOverlay>
-
         </Page>
     );
 }

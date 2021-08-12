@@ -4,7 +4,6 @@ import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import {
     Grid,
-    Card,
     CardContent,
     Box,
 } from '@material-ui/core';
@@ -22,6 +21,7 @@ import CardFoot from "../../../components/Ui/CardFoot";
 import BackBtn from "../../../components/Ui/BackBtn";
 import { OrdersArrow, Search } from '../../../icons/icons';
 import TableAction from '../../../components/Ui/TableAction';
+import Card from '../../../components/Ui/Card';
 
 // ----------------------------------------------------------------------
 
@@ -30,28 +30,6 @@ const useStyles = makeStyles((theme) => ({
     backBox: {
         marginBottom: theme.spacing(2),
         textAlign: 'right'
-    },
-    // search: {
-    //     backgroundColor: theme.palette.grey[0],
-    //     borderRadius: '10px',
-    //     width: "70%",
-    //     transition: theme.transitions.create(['width'], {
-    //         easing: theme.transitions.easing.easeInOut,
-    //         duration: theme.transitions.duration.shorter
-    //     }),
-    //     '&.Mui-focused': { width: "90%" },
-    //     '& input': {
-    //         padding: `11.5px 14px 11.5px 0`,
-    //     },
-    //     '& fieldset': {
-    //         borderWidth: `1px !important`,
-    //         borderColor: `#EEF1F5 !important`
-    //     }
-    // },
-    offerDetailsCard: {
-        background: '#F6F8FC',
-        boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
-        borderRadius: '20px',
     }
 }));
 
@@ -121,7 +99,7 @@ function SpecialOfferDetails({ specialOfferId }) {
                     name={t("Back to offers")}
                 />
             </Box>
-            <Card className={classes.offerDetailsCard}>
+            <Card cardBg='cardBg'>
                 <SpecialOfferInfoHead offerId={specialOfferId} />
                 <CardContent sx={{ padding: '10px 20px' }}>
                     <SpecialOfferInfoActions

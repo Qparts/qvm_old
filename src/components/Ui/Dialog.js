@@ -1,5 +1,4 @@
 import React from 'react';
-import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import {
     Dialog,
@@ -14,7 +13,6 @@ import CloseIcon from '@material-ui/icons/Close';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
     uploadStockBtn: {
         padding: '9px 16px',
         boxShadow: 'none',
@@ -23,16 +21,27 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     closeButton: {
-        position: 'absolute',
-        right: theme.spacing(1),
-        top: theme.spacing(1),
+        marginLeft: theme.spacing(4),
         color: theme.palette.grey[500],
     },
     headCol: {
         color: theme.palette.secondary.main,
         borderBottom: '1px solid #EEF1F5',
+        padding: theme.spacing(2),
+        '& h2': {
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+        }
+    },
+    dialogContent: {
         padding: theme.spacing(2)
-    }
+    },
+    dialogWidth: {
+        [theme.breakpoints.up('sm')]: {
+            minWidth: '500px',
+        },
+    },
 }));
 
 // ----------------------------------------------------------------------
@@ -48,6 +57,7 @@ const UploadStockBtn = (props) => {
             open={props.open}
             onClose={props.handleClose}
             aria-labelledby="responsive-dialog-title"
+            classes={{ paper: classes[props.dialogWidth] }}
         >
             <DialogTitle id="responsive-dialog-title" className={classes.headCol}>
                 {props.title}
@@ -57,7 +67,7 @@ const UploadStockBtn = (props) => {
                     </IconButton>
                 ) : null}
             </DialogTitle>
-            <DialogContent>
+            <DialogContent className={classes.dialogContent}>
                 <DialogContentText style={{ margin: 0 }}>
                     {props.children}
                 </DialogContentText>

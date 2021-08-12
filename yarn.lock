@@ -1909,6 +1909,11 @@
   resolved "https://registry.yarnpkg.com/@iconify-icons/vscode-icons/-/vscode-icons-1.1.4.tgz#dfa29a2bcfeb5a3915209daa974a8336df9dd3d4"
   integrity sha512-dI5Os/QQlfPu81+ECkiCZxgdnc1VyLwBnwzLK6izFQ5y1orFP4DakDVNcXH7QoG5CuXh001vBQ0Thtorjhn6aQ==
 
+"@iconify/icons-clarity@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@iconify/icons-clarity/-/icons-clarity-1.1.1.tgz#b981c07d58cc022d563ee1ba0bff928fdd580314"
+  integrity sha512-OOKMBzd+M/ApoJ6cxkph+Rblr1rlV+rl7hdz1YgHkjXoE/RZyNYXvj2aVmpFkskEXHnkLFjnOGNLI1P4NhmSig==
+
 "@iconify/react@^1.1.4":
   version "1.1.4"
   resolved "https://registry.yarnpkg.com/@iconify/react/-/react-1.1.4.tgz#c778eddbaf196e55705d0bedff00d039dc1de8d3"

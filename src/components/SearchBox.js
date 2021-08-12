@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Box, FormControl } from '@material-ui/core';
 import Button from "../components/Ui/Button";
-import CustomInput from "../components/Ui/Input";
+import TextField from "../components/Ui/TextField";
 import Form from './Form';
 import { Search } from '../icons/icons';
 import SearchSm from '../layouts/DashboardLayout/TopBar/Search'
@@ -40,9 +40,9 @@ export default function SearchTable(props) {
     searchBox = (
       <>
         <FormControl required style={{ width: '100%' }}>
-          <CustomInput
+          <TextField
+            type='input'
             label={t("Search")}
-            type='text'
             id="query"
             value={query}
             onChange={handleQueryChange}
@@ -61,15 +61,15 @@ export default function SearchTable(props) {
   } else if (props.type === 'topBarSearch') {
     searchBox = (
       <Box sx={{ display: 'flex' }}>
-        <CustomInput
-          label={t("Search by part number")}
-          type='text'
+        <TextField
+          placeholder={props.placeholder}
           id="query"
           value={query}
           onChange={handleQueryChange}
           name="query"
           inputTopBarSearch='inputTopBarSearch'
           inputContTopBarSearch='inputContTopBarSearch'
+          selectBg={props.bg ? 'selectBg' : ''}
         />
         <Button
           type="submit"

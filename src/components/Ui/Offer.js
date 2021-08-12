@@ -10,6 +10,8 @@ import {
     List,
 } from '@material-ui/core';
 import { Calender } from '../../icons/icons';
+import ProgressBar from './ProgressBar';
+import Avatar from './Avatar'
 
 // ----------------------------------------------------------------------
 
@@ -26,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         position: 'relative',
     },
     offerHeader: {
-        color: '#082C3C',
+        color: theme.palette.secondary.darker,
         margin: '15px 0',
         minHeight: '50px',
         display: '-webkit-box',
@@ -56,23 +58,19 @@ const useStyles = makeStyles((theme) => ({
     },
     brands: {
         display: 'flex',
-        margin: '0 0 0 15px',
+        margin: '0 0 0 10px',
+        paddingBottom: 0,
         '& $li': {
-            background: '#F4F6F8',
-            borderRadius: '50%',
-            padding: '8px',
+            padding: '0 0 0 8px',
+            '&:first-of-type': {
+                padding: 0
+            },
             '& $img': {
-                width: '20px',
-                height: '20px',
+                width: '18px',
+                height: '18px',
                 margin: 'auto',
             }
         }
-    },
-    brandLastChild: {
-        background: theme.palette.secondary.main + '!important',
-        color: theme.palette.grey[0],
-        width: '35px',
-        height: '35px',
     },
     discount: {
         position: 'absolute',
@@ -88,28 +86,9 @@ const useStyles = makeStyles((theme) => ({
         lineHeight: 1
     },
     partsNumber: {
-        color: '#082C3C',
+        color: theme.palette.secondary.darker,
         marginTop: '17px'
     },
-    timeLeft: {
-        display: 'flex',
-        color: '#526C78'
-    },
-    timeLeftPercent: {
-        margin: '-2px 0 0 10px',
-        color: '#082C3C'
-    },
-    progress: {
-        background: '#ECF1F5',
-        borderRadius: '10px',
-        height: '5px',
-    },
-    progressBody: {
-        display: 'block',
-        height: '100%',
-        background: 'linear-gradient(270deg, #F20505 0%, #F2BE05 100%)',
-        borderRadius: '10px',
-    }
 }));
 
 // ----------------------------------------------------------------------
@@ -146,20 +125,25 @@ const Offer = (props, { className, ...other }) => {
                     <List className={classes.brands}>
                         {x.map((partAva) => (
                             <ListItem key={Math.random() * 2856984.368}>
-                                <img src={partAva.shortcut} alt={partAva.shortcut} />
+                                <Avatar avatarWidth='avatarWidth'>
+                                    <img src={partAva.shortcut} alt={partAva.shortcut} />
+                                </Avatar>
                             </ListItem>
                         ))}
-                        {partsAvatars.length > 4 ? <ListItem className={classes.brandLastChild}> {"+" + partsAvatarsPlus} </ListItem> : null}
+                        {partsAvatars.length > 4 ?
+                            <ListItem>
+                                <Avatar lastChildBg='lastChildBg'>
+                                {"+" + partsAvatarsPlus}
+                                </Avatar>
+                            </ListItem> : null
+                        }
                     </List>
                 </Box>
             </Box>
-            <Typography variant="caption" className={classes.timeLeft}>
-                {t('The offer time has passed')}
-                <Typography variant="subtitle2" className={classes.timeLeftPercent}>{props.timeLeft}</Typography>
-            </Typography>
-            <Box className={classes.progress}>
-                <Typography variant="caption" width={props.width} className={classes.progressBody} />
-            </Box>
+            <ProgressBar
+                title={t('The offer time has passed')}
+                timeLeft={props.timeLeft}
+                width={props.width} />
         </Card>
     )
 }

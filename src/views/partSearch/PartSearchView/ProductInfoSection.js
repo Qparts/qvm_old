@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@material-ui/core';
@@ -14,26 +13,7 @@ import { Plus } from "../../../icons/icons";
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
-        }
-    }
-}));
-
-// ----------------------------------------------------------------------
-
 function ProductInfoSection() {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [page, setPage] = useState(0);
@@ -60,8 +40,7 @@ function ProductInfoSection() {
     }
 
     return (
-        <Box sx={{ width: '100%' }}>
-
+        <Box>
             <SecContainer
                 header={t("Product information")}
                 bodyP="bodyP">

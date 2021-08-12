@@ -47,8 +47,7 @@ function OfferContainer() {
                             date={helper.toDate(specialOffer.endDate)}
                             partsNum={specialOffer.numberOfItems}
                             discount='50%'
-                            timeLeft='70%'
-                            width='70%'
+                            timeLeft={helper.calculateTimeLeft(specialOffer.startDate, specialOffer.endDate) + '%'}
                             parts={PARTS} />
                     </Box>
                 )

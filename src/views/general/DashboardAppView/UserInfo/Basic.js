@@ -1,12 +1,16 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
 import ReactApexChart from 'react-apexcharts';
+import { useHistory } from "react-router";
+import { useSnackbar } from 'notistack';
 import { ApexChartsOption } from 'src/components/Charts/Apexcharts';
 import { merge } from 'lodash';
 import { fNumber } from 'src/utils/formatNumber';
+import helper from 'src/utils/helper';
+import { PATH_APP } from 'src/routes/paths';
+import Button from '../../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -45,6 +49,8 @@ const useStyles = makeStyles((theme) => ({
 function Basic() {
     const classes = useStyles();
     const theme = useTheme();
+    const history = useHistory();
+    const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation();
 
     const chartData = [1, 9];
@@ -111,9 +117,14 @@ function Basic() {
     return (
         <>
             <Typography variant="h6" sx={{ fontWeight: 500, marginBottom: '8px' }}>{t("basic")}</Typography>
-            <Link to='/app/dashboard' className={classes.upgrade}>
-                <Typography variant="body3" sx={{ fontWeight: 500 }}>{t("upgrade to premium")}</Typography>
-            </Link>
+            <Button
+                upgradeBtn="upgradeBtn"
+                btnWidth="btnWidth"
+                weightLight="weightLight"
+                onClick={() => { helper.gotoPremium(history, enqueueSnackbar, t('There is a pending subscription'), PATH_APP.general.upgradeSubscription, t) }}
+            >
+                {t("Upgrade to Premium")}
+            </Button>
             <Typography variant="h6" sx={{ fontWeight: 500, margin: '30px auto 10px' }}>{t("use basic")}</Typography>
             <div dir="ltr">
                 <ReactApexChart

@@ -7,7 +7,7 @@ import { ApexChartsOption } from 'src/components/Charts/Apexcharts';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { Card, Box, MenuItem, Typography } from '@material-ui/core';
-import Select from '../../../components/Ui/Select';
+import TextField from '../../../components/Ui/TextField';
 
 // ----------------------------------------------------------------------
 
@@ -66,7 +66,8 @@ function PartsSearchRate({ className, ...other }) {
         <Card className={clsx(classes.root, className)} {...other}>
             <Box className={classes.cardHeaderChart} >
                 <Typography variant="h5"> {t("Search rate for parts in your stock")} </Typography>
-                <Select
+                <TextField
+                    type='select'
                     id='partsSearched'
                     name='partsSearched'
                     value={t("one week")}
@@ -85,7 +86,7 @@ function PartsSearchRate({ className, ...other }) {
                     <MenuItem key={t("one year")} value={t("one year")}>
                         {t("one year")}
                     </MenuItem>
-                </Select>
+                </TextField>
             </Box>
             <Box sx={{ mt: 3, mx: 3 }} dir="ltr">
                 <ReactApexChart

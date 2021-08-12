@@ -13,6 +13,8 @@ import replacementsReducer from './slices/replacements';
 import stockUploadReducer from './slices/stockUpload';
 import specialOfferUploadReducer from './slices/specialOfferUpload';
 import branchesReducer from './slices/branches';
+import marketReducer from './slices/market';
+
 
 
 // ----------------------------------------------------------------------
@@ -44,7 +46,8 @@ const rootReducer = combineReducers({
   replacements: replacementsReducer,
   stockUpload: stockUploadReducer,
   specialOfferUpload: specialOfferUploadReducer,
-  branches: branchesReducer
+  branches: branchesReducer,
+  market : marketReducer
 });
 
 export { rootPersistConfig, rootReducer };

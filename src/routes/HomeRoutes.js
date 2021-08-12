@@ -18,7 +18,7 @@ const HomeRoutes = {
       component: lazy(() => import('src/views/contact'))
     },
     {
-      path: '/price',
+      path: '/prices',
       component: lazy(() => import('src/views/price'))
     },
     {

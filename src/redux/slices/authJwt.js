@@ -24,6 +24,7 @@ const initialState = {
   premiumPlan: null,
   planFeatures: [],
   catalogs: [],
+  bancks: [],
   validResetToken: false
 };
 
@@ -53,6 +54,7 @@ const slice = createSlice({
       state.planFeatures = action.payload.planFeatures;
       state.availablePlans = action.payload.availablePlans;
       state.premiumPlan = action.payload.premiumPlan;
+      state.bancks = action.payload.bancks;
       state.catalogs = action.payload.catalogs;
     },
 
@@ -312,6 +314,7 @@ export function getInitialize() {
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
         let currentPlan = getCurrentPlan(plans);
         const { data: catalogs } = await catalogService.getCatalogs();
+        const { data: bancks } = await paymentService.getBancks();
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
@@ -322,6 +325,7 @@ export function getInitialize() {
             planFeatures: planFeatures,
             availablePlans: plans,
             catalogs: catalogs,
+            bancks: bancks,
             premiumPlan: plans.find(e => e.name == 'Premium Plan')
           })
         );
@@ -335,6 +339,7 @@ export function getInitialize() {
             currentPlan: null,
             planFeatures: planFeatures,
             availablePlans: plans,
+            bancks: []
           })
         );
       }
@@ -345,7 +350,8 @@ export function getInitialize() {
           user: null,
           currentPlan: null,
           planFeatures: [],
-          availablePlans: []
+          availablePlans: [],
+          bancks: []
         })
       );
     }
