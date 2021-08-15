@@ -690,7 +690,9 @@
   "Rejected" : "مرفوض",
   "Accepted" : "مقبول",
   "Pending" : "معلق",
-  "Type a message" : "اكتب رسالة",
-  "Orders" :"الطلبات"
+  "Orders" :"الطلبات",
+  "Messages" : "الرسائل",
+  "You have {{count}} unread messages" : "لديك {{count}} رسائل غير مقروءة",
+  "New" : "جديده"
 
 }

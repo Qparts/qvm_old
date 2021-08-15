@@ -594,7 +594,6 @@
   "View All": "View All",
   "To": "To",
   "Recipients": "Recipients",
-  "Type a message": "Type a message",
   "Search contacts": "Search contacts...",
   "Not found": "Not found",
   "users in group": "Users in group",
@@ -650,6 +649,9 @@
   "Accepted" : "Accepted",
   "Pending" : "Pending",
   "Type a message" : "Type a message",
-  "Orders" :"Orders"
+  "Orders" :"Orders",
+  "Messages" : "Messages",
+  "You have {{count}} unread messages" : "You have {{count}} unread messages",
+  "New" : "New"
 
 }

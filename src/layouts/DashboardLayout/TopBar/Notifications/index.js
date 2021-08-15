@@ -5,6 +5,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useRef, useState, useEffect } from 'react';
 import doneAllFill from '@iconify-icons/eva/done-all-fill';
+import { useTranslation } from 'react-i18next';
 import {
   markAllAsRead,
   getNotifications
@@ -43,11 +44,11 @@ function Notifications() {
   const anchorRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { notifications } = useSelector((state) => state.notifications);
   const { unseenMessages } = useSelector((state) => state.chat);
   const totalUnRead = notifications.filter((item) => item.isUnRead === true)
     .length;
-
   useEffect(() => {
     dispatch(getNotifications());
   }, [dispatch]);
@@ -70,15 +71,16 @@ function Notifications() {
 
       <PopoverMenu
         width={360}
-        open={isOpen && unseenMessages.length > 0}
+        open={isOpen}
         onClose={() => setOpen(false)}
         anchorEl={anchorRef.current}
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1">Messages</Typography>
+            <Typography variant="subtitle1">{t("Messages")}</Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              You have {unseenMessages.length} unread messages
+              {t("You have {{count}} unread messages",
+                { count: unseenMessages.length })}
             </Typography>
           </Box>
 
@@ -91,39 +93,44 @@ function Notifications() {
           )}
         </Box>
 
-        <Divider />
+        {unseenMessages.length > 0 &&
+          <>
+            <Divider />
 
-        <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
-          <Scrollbars>
-            <List
-              disablePadding
-              subheader={
-                <ListSubheader
-                  disableSticky
-                  disableGutters
-                  className={classes.listSubheader}
+            <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
+              <Scrollbars>
+                <List
+                  disablePadding
+                  subheader={
+                    <ListSubheader
+                      disableSticky
+                      disableGutters
+                      className={classes.listSubheader}
+                    >
+                      {t("New")}
+                    </ListSubheader>
+                  }
                 >
-                  New
-                </ListSubheader>
-              }
-            >
-              {unseenMessages.map((message) => (
-                <UnseenMessage
-                  key={message._id}
-                  message={message}
-                />
-              ))}
-            </List>
-          </Scrollbars>
-        </Box>
+                  {unseenMessages.map((message) => (
+                    <UnseenMessage
+                      key={message._id}
+                      message={message}
+                      setOpen={setOpen}
+                    />
+                  ))}
+                </List>
+              </Scrollbars>
+            </Box>
 
-        <Divider />
+            <Divider />
 
-        <Box sx={{ p: 1 }}>
-          <Button fullWidth disableRipple component={RouterLink} to="#">
-            View All
-          </Button>
-        </Box>
+            <Box sx={{ p: 1 }}>
+              <Button fullWidth disableRipple component={RouterLink} to="#">
+                {t("View All")}
+              </Button>
+            </Box>
+          </>}
+
       </PopoverMenu>
     </>
   );

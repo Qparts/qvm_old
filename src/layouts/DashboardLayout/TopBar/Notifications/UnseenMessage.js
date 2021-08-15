@@ -63,7 +63,7 @@ UnseenMessage.propTypes = {
 const uploadUrl = links.upload;
 
 
-function UnseenMessage({ message, className }) {
+function UnseenMessage({ message, setOpen , className }) {
   const classes = useStyles();
   const { userConversations, onlineUsers } = useSelector((state) => state.chat);
   const { t } = useTranslation();
@@ -90,6 +90,7 @@ function UnseenMessage({ message, className }) {
         })
 
       dispatch(getUnseenMessages(user.subscriber.id, userConversations));
+      setOpen(false);
       history.push(`/app/chat/${message.conversationId}`);
     } catch (error) {
       console.log("error", error);
