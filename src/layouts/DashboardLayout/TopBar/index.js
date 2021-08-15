@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Account from './Account';
 import PropTypes from 'prop-types';
 import Languages from './Languages';
+import UpgradeBtn from './UpgradeBtn';
 import { Icon } from '@iconify/react';
 import Notifications from './Notifications';
 import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
@@ -17,8 +18,8 @@ import constants from 'src/utils/constants';
 import { PATH_APP } from 'src/routes/paths';
 import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from '../../../redux/slices/partSearch';
 import SearchBox from '../../../components/SearchBox';
-import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
-import { MIconButton } from 'src/theme';
+// import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
+// import { MIconButton } from 'src/theme';
 
 // ----------------------------------------------------------------------
 
@@ -100,24 +101,27 @@ function TopBar({ onOpenNav, className }) {
             alignItems: 'center',
             '& > *': {
               ml: {
-                xs: 0.5,
+                xs: 0,
                 sm: 2,
                 lg: 3
               }
             }
           }}
         >
-          <Hidden smDown>
-            <UploadStockBtn bg={theme.palette.primary.main} color={theme.palette.grey[0]} />
-          </Hidden>
+          <Hidden mdDown><UpgradeBtn /></Hidden>
+          <Box>
+            <Hidden mdDown>
+              <UploadStockBtn bg={theme.palette.grey[0]} color={theme.palette.secondary.main} />
+            </Hidden>
+          </Box>
           <Languages />
-          <MIconButton
+          {/* <MIconButton
             onClick={() => { history.push(`${PATH_APP.general.market}/cart`); }}
           >
             <Badge badgeContent={cartItems.length} color="error">
               <Icon icon={roundAddShoppingCart} color='#7E8D99' />
             </Badge>
-          </MIconButton>
+          </MIconButton> */}
           {/* <Orders /> */}
           <Notifications />
           <Account />
