@@ -1,12 +1,10 @@
 import NavItem from './NavItem';
 import MenuLinks from './config';
 import PropTypes from 'prop-types';
-import Logo from 'src/components/Logo';
-import useAuth from 'src/hooks/useAuth';
 import React, { useEffect } from 'react';
 import Scrollbars from 'src/components/Scrollbars';
 import { Link as RouterLink, useLocation, matchPath } from 'react-router-dom';
-import { alpha, makeStyles } from '@material-ui/core/styles';
+import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 import {
   Box,
   List,
@@ -15,6 +13,10 @@ import {
   ListSubheader,
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
+import Logo from 'src/components/Logo';
+import { PATH_APP } from 'src/routes/paths';
+import UploadStockBtn from 'src/components/Ui/UploadStockBtn';
+import UpgradeBtn from '../TopBar/UpgradeBtn';
 
 // ----------------------------------------------------------------------
 
@@ -33,11 +35,15 @@ const useStyles = makeStyles((theme) => {
     drawerPaper: {
       width: DRAWER_WIDTH,
       background: theme.palette.secondary.darker,
-      border: 'none'
+      border: 'none',
+      textAlign: 'center',
+      [theme.breakpoints.down('md')]: {
+        width: DRAWER_WIDTH + 45
+      }
     },
     subHeader: {
       ...theme.typography.overline,
-      marginTop: theme.spacing(3),
+      marginTop: theme.spacing(2),
       marginBottom: theme.spacing(2),
       paddingLeft: theme.spacing(5),
       color: theme.palette.text.primary
@@ -50,7 +56,10 @@ const useStyles = makeStyles((theme) => {
         : theme.palette.primary.lighter
     },
     textCent: {
-      textAlign: 'center'
+      textAlign: 'center',
+      '&:last-of-type ul a': {
+        paddingLeft: theme.spacing(5)
+      }
     }
   };
 });
@@ -75,6 +84,7 @@ function reduceChild({ array, item, pathname, level, t }) {
         info={item.info}
         href={item.href}
         notification={item.notification}
+        logoutAttr={item.logoutAttr}
         title={t(item.title)}
         open={Boolean(match)}
       >
@@ -95,6 +105,7 @@ function reduceChild({ array, item, pathname, level, t }) {
         icon={item.icon}
         info={item.info}
         notification={item.notification}
+        logoutAttr={item.logoutAttr}
         title={t(item.title)}
       />
     ];
@@ -120,10 +131,11 @@ NavBar.propTypes = {
 };
 
 function NavBar({ isOpenNav, onCloseNav }) {
+  const theme = useTheme();
   const { t } = useTranslation();
   const classes = useStyles();
   const { pathname } = useLocation();
-  const { user } = useAuth();
+
   useEffect(() => {
     if (isOpenNav && onCloseNav) {
       onCloseNav();
@@ -134,9 +146,15 @@ function NavBar({ isOpenNav, onCloseNav }) {
   const renderContent = (
     <Scrollbars>
       <Box sx={{ px: 2.5, py: 3 }}>
-        <RouterLink to="/">
-          <Logo style={{margin: 'auto'}} />
+        <RouterLink to={PATH_APP.general.root}>
+          <Logo style={{ margin: 'auto' }} />
         </RouterLink>
+      </Box>
+      <Box sx={{mt: 1}}>
+        <Box sx={{ mb: 2 }}><Hidden mdUp> <UpgradeBtn /> </Hidden></Box>
+        <Hidden mdUp>
+          <UploadStockBtn bg={theme.palette.grey[0]} color={theme.palette.secondary.main} />
+        </Hidden>
       </Box>
 
       {/* <Link

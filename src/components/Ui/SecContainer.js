@@ -19,6 +19,7 @@ const useStyles = makeStyles(() => ({
         borderRadius: '20px 20px 0 0',
         padding: '10px 15px',
         color: '#14455B',
+        textAlign: 'left'
     },
     secBody: {
         background: '#F6F8FC',

@@ -1,12 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, FormikProvider } from 'formik';
-import { emailError } from 'src/utils/helpError';
 import { Box, TextField } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
 import { passwordError } from 'src/utils/helpError';
 import { useTranslation } from 'react-i18next';
-
+import Button from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -37,15 +35,13 @@ function ResetPasswordForm({ formik }) {
           }
         />
         <Box sx={{ mt: 3 }}>
-          <LoadingButton
-            fullWidth
-            size="large"
+          <Button
             type="submit"
-            variant="contained"
+            homeBtn='homeBtn'
             pending={isSubmitting}
           >
             {t("Reset Password")}
-          </LoadingButton>
+          </Button>
         </Box>
       </Form>
     </FormikProvider>

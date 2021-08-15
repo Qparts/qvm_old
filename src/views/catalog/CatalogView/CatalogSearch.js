@@ -8,7 +8,6 @@ import {
 import { useTranslation } from 'react-i18next';
 import { getCarByVin, getCarInfo, getModels, handleModelChange } from 'src/redux/slices/catalog';
 import SearchBox from './../../../components/SearchBox';
-import Advertisement from "./../../../components/Ui/Advertise";
 import MainCard from "./../../../components/Ui/MainCard";
 import TextField from "./../../../components/Ui/TextField";
 import Button from "./../../../components/Ui/Button";
@@ -17,7 +16,7 @@ import Button from "./../../../components/Ui/Button";
 
 function CatalogSearch() {
     const dispatch = useDispatch();
-    const { models, selectedCatalog, selectedModel, isLoading } = useSelector((state) => state.catalogs);
+    const { models, selectedCatalog, selectedModel } = useSelector((state) => state.catalogs);
     const { catalogs } = useSelector((state) => state.authJwt);
     const { t } = useTranslation();
 
@@ -86,12 +85,6 @@ function CatalogSearch() {
 
                 </Grid>
             </Grid>
-            <Box sx={{ mt: 6 }} />
-            <Advertisement
-                url='/static/images/banner90.jpg'
-                width='728px'
-                height='90px'
-                advertiseMt="advertiseMt" />
         </>
     );
 }

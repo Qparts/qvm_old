@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import { useTranslation } from 'react-i18next';
@@ -10,19 +9,11 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
-    root: {}
-}));
-
-// ----------------------------------------------------------------------
-
 function AddProduct({ selectedProduct, setOpenConfirm }) {
     const { t } = useTranslation();
     const isMountedRef = useIsMountedRef();
     const dispatch = useDispatch();
-    const { cartItems } = useSelector(
-        (state) => state.market
-    );
+    const { cartItems } = useSelector((state) => state.market);
 
     const addToCartSchema = Yup.object().shape({
         quantity: Yup.number()
@@ -58,7 +49,6 @@ function AddProduct({ selectedProduct, setOpenConfirm }) {
             {selectedProduct &&
                 <AddProductToCartForm formik={formik} selectedProduct={selectedProduct} />
             }
-
         </>
     );
 }

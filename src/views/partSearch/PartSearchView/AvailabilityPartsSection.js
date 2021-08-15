@@ -3,6 +3,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@material-ui/core';
+// import { Icon } from '@iconify/react';
+// import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
@@ -13,6 +15,7 @@ import TextField from 'src/components/Ui/TextField';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
 import { Plus } from "../../../icons/icons";
+import PurchaseOrderSection from './PurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
@@ -36,9 +39,21 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         borderBottom: '1px solid #E5EBF0',
         paddingBottom: '10px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            display: 'block',
+            width: '100%',
+            minWidth: '100%',
+        },
     },
     availabilityActionsLeft: {
         width: '300px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            width: '100%',
+            minWidth: '100%',
+            marginBottom: theme.spacing(2)
+        },
     }
 }));
 
@@ -48,6 +63,7 @@ function AvailabilityPartsSection() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const [openAddToPO, setOpenAddToPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
         rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
@@ -63,6 +79,22 @@ function AvailabilityPartsSection() {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
     }
 
+    // const addToCompanyCart = (item) => {
+    //     console.log("cart item", item);
+    //     dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
+    //     setOpenAddToPO(true);
+    // }
+
+    // const addToCart = (item) => {
+    //     return (
+    //         <TableAction
+    //             type='partSearch'
+    //             title={t("Buy now")}
+    //             onClick={() => addToCompanyCart(item)}
+    //             textIcon={<Icon icon={roundAddShoppingCart} color='#CED5D8' style={{ fontSize: '14px' }} />} />
+    //     )
+    // }
+
     const showDetailsElement = (item) => {
         return (
             <TableAction
@@ -71,6 +103,12 @@ function AvailabilityPartsSection() {
                 onClick={() => showDetailsAction(item)}
                 textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
         )
+    }
+
+
+    const closeOrderDailog = () => {
+        dispatch(setSelectedPart({ selectedPart: null }));
+        setOpenAddToPO(false)
     }
 
     useEffect(() => {
@@ -127,6 +165,7 @@ function AvailabilityPartsSection() {
                         }
                     ]}
 
+                    // actions={[{ element: showDetailsElement }, { element: addToCart }]}
                     actions={[{ element: showDetailsElement }]}
                     datatable={productResult}
                     error={error}
@@ -142,10 +181,22 @@ function AvailabilityPartsSection() {
             </SecContainer>
 
             <CustomDialog
-                open={selectedPart != null}
+                open={selectedPart != null && openAddToPO == false}
                 handleClose={() => dispatch(setSelectedPart({ selectedPart: null }))}
                 title={t("Availability details")}>
                 <PartDetails />
+            </CustomDialog>
+
+
+            <CustomDialog
+                open={openAddToPO}
+                handleClose={closeOrderDailog}
+                title={t("Add to Purchase Order")}>
+
+                {selectedPart != null &&
+                    <PurchaseOrderSection
+                        closeOrderDailog={closeOrderDailog} />
+                }
             </CustomDialog>
         </Box >
     );

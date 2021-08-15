@@ -42,6 +42,15 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.body1.fontSize,
     borderColor: "#88A2AE",
     color: '#637381',
+    [theme.breakpoints.down('sm')]: {
+      width: '100%',
+      borderRadius: 0,
+      borderBottom: 0,
+      borderLeft: '1px solid #88A2AE !important',
+      '&:last-of-type': {
+        borderBottom: '1px solid #88A2AE',
+      }
+    },
   }
 }));
 

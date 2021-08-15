@@ -2,16 +2,12 @@ import Page from 'src/components/Page';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Box
-} from '@material-ui/core';
 import CatalogSearch from './CatalogSearch';
 import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import { cleanup } from 'src/redux/slices/catalog';
-import Advertisement from "./../../../components/Ui/Advertise";
 
 // ----------------------------------------------------------------------
 
@@ -58,17 +54,7 @@ function CatalogView() {
                 className={classes.wrapper}
                 spinner={<LoadingScreen />}>
                 {showCarInfo == true ?
-                    <Box display="flex">
-                        <Box flexGrow={1}>
-                            <CarDetails />
-                        </Box>
-                        <Box sx={{ paddingLeft: 2 }} >
-                            <Advertisement
-                                url='/static/images/banner120.png'
-                                width='120px'
-                                height='600px' />
-                        </Box>
-                    </Box> : <CatalogSearch />
+                    <CarDetails /> : <CatalogSearch />
                 }
             </LoadingOverlay>
         </Page>

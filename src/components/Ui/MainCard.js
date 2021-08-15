@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
         padding: '10px 15px',
         background: theme.palette.grey[0],
         borderBottom: '1px solid #ECF1F5',
+        '& .MuiCardHeader-content': {
+            flex: 'initial'
+        }
     },
     cardBod: {
         padding: '20px',

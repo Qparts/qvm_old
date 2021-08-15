@@ -1,7 +1,5 @@
 import React, { } from 'react';
 import Page from 'src/components/Page';
-import Logo from 'src/components/Logo';
-import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
@@ -51,10 +49,8 @@ function ConfirmView(props) {
             {t("THANK YOU FOR REGISTRATION IN QVM")}
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            {t("Your request have been sent, Your application will be reviewed by our team we will contact with you soon.")}
+            {t("Your request have been sent, Your application will be reviewed by our team we will contact with you soon")}
           </Typography>
-
-
         </Box>
       </Container>
     </Page>

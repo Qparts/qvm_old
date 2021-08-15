@@ -1,7 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
 import PropTypes from 'prop-types';
-import useBreakpoints from 'src/hooks/useBreakpoints';
 import {
   varFadeInUp,
   varFadeInDown,
@@ -10,7 +9,9 @@ import {
 } from 'src/components/Animate';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid, Box, Container, Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import { pxToRem } from 'src/utils/formatFontSize';
+
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => {
@@ -23,7 +24,7 @@ const useStyles = makeStyles((theme) => {
     },
     heading: {
       marginBottom: theme.spacing(5),
-      color:theme.palette.secondary.dark,
+      color: theme.palette.secondary.dark,
     },
     headingWeight: {
       fontWeight: 800,
@@ -31,30 +32,34 @@ const useStyles = makeStyles((theme) => {
     headingDisc: {
       fontSize: pxToRem(22),
       fontWeight: 700,
-      color:theme.palette.grey[600],
+      color: theme.palette.grey[600],
+      [theme.breakpoints.down('sm')]: {
+        fontSize: pxToRem(18)
+      },
     },
-    catalougSec:{
+    catalougSec: {
       position: 'relative'
     },
     article: {
       zIndex: 1,
       position: 'absolute',
       transform: 'translate(0 , -50%)',
-      left: 15,
-      top:' 50%',
+      top: ' 50%',
       [theme.breakpoints.up('md')]: {
-        width: 'calc(60% - 80px)',
+        width: 'calc(60% - 108px)',
       },
- 
     },
-    articleHeading:{
+    articleHeading: {
       fontSize: pxToRem(38),
-      color:theme.palette.secondary.dark,
+      color: theme.palette.secondary.dark,
       [theme.breakpoints.down('md')]: {
-        fontSize:pxToRem(25),
-      }
+        fontSize: pxToRem(25),
+      },
+      [theme.breakpoints.down('sm')]: {
+        fontSize: pxToRem(22)
+      },
     },
-    articleDisc:{
+    articleDisc: {
       fontSize: pxToRem(17),
       lineHeight: 1.7
     },
@@ -65,19 +70,20 @@ const useStyles = makeStyles((theme) => {
       top: 0,
       background: '#F7F7F7',
       [theme.breakpoints.down('md')]: {
-       left: -24,
+        left: -24,
       }
     },
     catImageAlign: {
-     display:'flex',
-     [theme.breakpoints.up('md')]: {
-      justifyContent:'flex-end',
-     },
-     [theme.breakpoints.down('md')]: {
-      marginLeft: '-24px',
-     }
+      display: 'flex',
+      [theme.breakpoints.up('md')]: {
+        justifyContent: 'flex-end',
+      },
+      [theme.breakpoints.down('md')]: {
+        marginLeft: '-24px',
+      }
     },
-    catImage:{
+    catImage: {
+      transform: theme.direction === 'ltr' ? 'scaleX(-1)' : 'scaleX(1)',
       [theme.breakpoints.up('sm')]: {
         maxWidth: '80%',
       },
@@ -95,14 +101,15 @@ Catalog.propTypes = {
 };
 function Catalog({ className }) {
   const classes = useStyles();
-  const isDesktop = useBreakpoints('up', 'lg');
+  const { t } = useTranslation();
+
   return (
-    <div className={clsx(classes.root, className)}>
+    <Box className={clsx(classes.root, className)}>
       <Container maxWidth="lg">
-        <div className={classes.heading}>
+        <Box className={classes.heading}>
           <MotionInView variants={varFadeInDown}>
             <Typography variant="h2" align="center" className={classes.headingWeight}>
-            المميزات
+              {t("Features")}
             </Typography>
           </MotionInView>
           <MotionInView variants={varFadeInUp}>
@@ -111,39 +118,37 @@ function Catalog({ className }) {
               className={classes.headingDisc}
               variant="overline"
               align="center"
-              sx={{ color: 'text.secondary', display: 'block' }}
+              sx={{ color: 'text.secondary', display: 'block', textTransform: "unset" }}
             >
-             لدينا مجموعة متنوعة من الخدمات التي تسهل اعمالك اليومية
+              {t("We provide different types of services to facilitate your daily tasks")}
             </Typography>
           </MotionInView>
-        </div>
-        <Box position='relative'  width="100%">
+        </Box>
+        <Box position='relative' width="100%">
           <Box position='absolute' className={classes.catalougSecBg} />
           <Grid container direction="row" justifyContent="center" >
             <Grid item lg={10} md={10} sm={12} className={classes.catalougSec}>
-              <Box position='relative'>
-                <article className={classes.article}>
-                  <MotionInView variants={varFadeInRight}>
-                                    <Typography variant="h3" mb={2} className={classes.articleHeading}>
-                                      كتالوج لقطع غيار السيارات 
-                                    </Typography>
-                                    <p className={classes.articleDisc}>
-                                    خبير قطع الغيار لا يمكنه الاستغناء عن الكتالوج ولذلك تم توفير هذه الميزه ليتمكن من تصفح العديد من كتالوجات السيارات المتاحة لدينا، والوصول للقطع المطلوبة بشكل أسهل والتأكد من شكلها، لتجاوز حدوث خطأ اثناء الطلب!!
-                                    </p>
-                  </MotionInView>
-                </article>
+              <article className={classes.article}>
                 <MotionInView variants={varFadeInRight}>
-                                  <picture className={classes.catImageAlign}>
-                                      <source media="(max-width: 960px)" srcset="/static/images/cataloug-img-sm.png" />
-                                      <img className={classes.catImage} src="/static/images/cataloug-img.png" />
-                                  </picture>
+                  <Typography variant="h3" mb={2} className={classes.articleHeading}>
+                    {t("Auto Spare Parts Catalog")}
+                  </Typography>
+                  <Typography variant="subtitle1" sx={{ fontWeight: (theme) => theme.typography.fontWeightRegular }}>
+                    {t("Even auto spare parts experts cannot perform daily businesses without auto spare parts catalog That's why we have provided this feature to browse variety of available catalogs, and to find the required item as easy as possible and without unintentional errors")}
+                  </Typography>
                 </MotionInView>
-              </Box>
+              </article>
+              <MotionInView variants={varFadeInRight}>
+                <picture className={classes.catImageAlign}>
+                  <source media="(max-width: 960px)" srcset="/static/images/cataloug-img-sm.png" />
+                  <img className={classes.catImage} src="/static/images/cataloug-img.png" />
+                </picture>
+              </MotionInView>
             </Grid>
           </Grid>
         </Box>
       </Container>
-    </div>
+    </Box>
   );
 }
 

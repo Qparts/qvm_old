@@ -1,5 +1,8 @@
 import { useEffect, useRef } from "react";
 import paymentService from 'src/services/paymentService';
+import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from 'src/redux/slices/partSearch';
+import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
+import { setActiveConversation } from 'src/redux/slices/chat';
 
 function toDate(mil) {
   const d = new Date(mil);
@@ -137,7 +140,7 @@ function getLocation(
 ) {
   try {
     if (branch == null && countryId != 0 && regionId != 0 && cityId != 0) {
-      const country = countries.find((e) => e.id ===parseInt( countryId));
+      const country = countries.find((e) => e.id === parseInt(countryId));
       const region = country.regions.find((e) => e.id === parseInt(regionId));
       const city = region.cities.find((e) => e.id === parseInt(cityId));
       return { country: country, region: region, city: city };
@@ -186,10 +189,43 @@ const gotoPremium = async (history, enqueueSnackbar, message, url, t) => {
   }
 }
 
+const handleSelectConversation = (item, dispatch, history, url) => {
+  console.log("item" , item);
+  dispatch(setActiveConversation(item));
+  history.push(url);
+};
+
+const handlePartSearch = (dispatch, history, url, constants, search) => {
+  dispatch(resetLocationfilter());
+  dispatch(setFilter({ filter: "" }));
+  dispatch(handleChangePage({ newPage: 0 }));
+  dispatch(partSearch(search, 0, constants, ""));
+  getPartinfo(search, dispatch);
+  history.push(url);
+}
+
+const getPartinfo = (search, dispatch) => {
+  dispatch(getProductInfo(search, ""));
+};
+
+const handleLogout = async (logout, dispatch, isMountedRef, history, url, enqueueSnackbar) => {
+  try {
+    await logout();
+    dispatch(updateBillingAddress(null));
+    dispatch(updateCartItems([]));
+    if (isMountedRef.current) {
+      history.push(url);
+    }
+  } catch (error) {
+    console.error(error);
+    enqueueSnackbar('Unable to logout', { variant: 'error' });
+  }
+};
+
 function calculateTimeLeft(startDate, endDate) {
   let start = new Date(startDate),
-      end = new Date(endDate),
-      today = new Date();
+    end = new Date(endDate),
+    today = new Date();
   return Math.round(((today - start) / (end - start)) * 100);
 }
 
@@ -213,5 +249,8 @@ export default {
   getLocation,
   reconstructPhone,
   gotoPremium,
-  calculateTimeLeft
+  calculateTimeLeft,
+  handleSelectConversation,
+  handlePartSearch,
+  handleLogout
 };

@@ -1,38 +1,32 @@
 import React, { useState, useEffect } from 'react';
+import { useSelector } from 'react-redux';
 import { Form, FormikProvider } from 'formik';
-import { makeStyles } from '@material-ui/core/styles';
+import { useTheme } from '@material-ui/core/styles';
 import {
     Grid,
-    Divider,
     Checkbox,
-    TextField,
     FormControlLabel,
     Typography,
-    Box,
+    MenuItem,
+    Box
 } from '@material-ui/core';
-import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
+import MainCard from '../../../../components/Ui/MainCard';
+import TextField from '../../../../components/Ui/TextField';
 
 // ----------------------------------------------------------------------
-
-const useStyles = makeStyles((theme) => ({
-    root: {}
-}));
-
-// ----------------------------------------------------------------------
-
 
 function BillingAddressForm({ formik }) {
-    const classes = useStyles();
+    const theme = useTheme();
     const { countries } = useSelector((state) => state.authJwt);
     const loginObject = JSON.parse(localStorage.getItem("loginObject"));
     const defaultBranch = loginObject.company.branches.filter(e => e.id == loginObject.company.defaultBranchId)[0];
     const { t } = useTranslation();
     const { themeDirection } = useSelector((state) => state.settings);
     const isRlt = themeDirection == 'rtl';
-    const [countryId, setCountryId] = useState(values ? values.countryId : 0);
-    const [regionId, setRegionId] = useState(values ? values.regionId : 0);
-    const [cityId, setCityId] = useState(values ? values.cityId : 0);
+    const [countryId, setCountryId] = useState(values ? values.countryId : '');
+    const [regionId, setRegionId] = useState(values ? values.regionId : '');
+    const [cityId, setCityId] = useState(values ? values.cityId : '');
     const [regions, setRegions] = useState([]);
     const [cities, setCities] = useState([]);
 
@@ -40,7 +34,6 @@ function BillingAddressForm({ formik }) {
         errors,
         values,
         touched,
-        isSubmitting,
         handleSubmit,
         getFieldProps,
         setFieldValue,
@@ -65,166 +58,147 @@ function BillingAddressForm({ formik }) {
 
 
     return (
-        <div >
-            <Typography variant="h5" >  {t("Billing Address")} </Typography>
-            <Divider />
-            <Box sx={{ mb: 3 }} />
+        <MainCard title={t('Billing Address')}>
+
             <FormikProvider value={formik}>
                 <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
-                    <Typography variant="body2" >  {t("Delivery to the branch")} </Typography>
-                    <FormControlLabel
-                        control={
-                            <Checkbox
-                                checked={values.deliverToBranch}
-                                {...getFieldProps('deliverToBranch')}
-                            />
-                        }
-                        label={isRlt ? defaultBranch.nameAr : defaultBranch.name}
-                        sx={{ mt: 3 }}
-                    />
+                    <Box sx={{
+                            paddingBottom: theme.spacing(1),
+                            marginBottom: theme.spacing(3),
+                            borderBottom: '1px solid #ECF1F5',
+                    }}>
+                        <Typography variant="body2" > {t("Delivery to the branch")} </Typography>
+                        <FormControlLabel
+                            control={
+                                <Checkbox
+                                    checked={values.deliverToBranch}
+                                    {...getFieldProps('deliverToBranch')}
+                                />
+                            }
+                            label={isRlt ? defaultBranch.nameAr : defaultBranch.name}
+                        />
+                    </Box>
+                    <Grid container spacing={2} direction="column">
+                        <Grid item container spacing={2}>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    type='input'
+                                    label={t('Full Name')}
+                                    id="receiver"
+                                    name="receiver"
+                                    getField={getFieldProps('receiver')}
+                                    touched={touched.receiver}
+                                    errors={errors.receiver} />
+                            </Grid>
 
-                    <Box sx={{ mb: 3 }} />
-
-                    <Grid container spacing={3} direction="column">
-
-
-                        <Grid item>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth
-                                        required
-                                        label={t("Full Name")}
-                                        {...getFieldProps('receiver')}
-                                        error={Boolean(touched.receiver && errors.receiver)}
-                                        helperText={touched.receiver && errors.receiver}
-                                    />
-                                </Grid>
-
-                                <Grid item xs={12} sm={6}>
-                                    <TextField
-                                        fullWidth
-                                        required
-                                        label={t("Phone")}
-                                        {...getFieldProps('phone')}
-                                        error={Boolean(touched.phone && errors.phone)}
-                                        helperText={touched.phone && errors.phone}
-                                    />
-                                </Grid>
+                            <Grid item xs={12} sm={6}>
+                                <TextField
+                                    type='input'
+                                    label={t('Phone')}
+                                    id="phone"
+                                    name="phone"
+                                    getField={getFieldProps('phone')}
+                                    touched={touched.phone}
+                                    errors={errors.phone} />
                             </Grid>
                         </Grid>
 
-                        <Grid item>
+                        <Grid item xs={12}>
                             <TextField
-                                fullWidth
-                                label={t("Billing Address")}
-                                {...getFieldProps('address')}
-                                error={Boolean(touched.address && errors.address)}
-                                helperText={touched.address && errors.address}
-                            />
+                                type='input'
+                                label={t('Billing Address')}
+                                id="address"
+                                name="address"
+                                getField={getFieldProps('address')}
+                                touched={touched.address}
+                                errors={errors.address} />
                         </Grid>
 
-                        <Grid item>
-                            <Grid container spacing={2}>
-                                <Grid item xs={12} sm={4}>
-                                    <TextField
-                                        select
-                                        fullWidth
-                                        required
-                                        label={t("Country")}
-                                        id="countryId"
-                                        value={countryId}
-                                        name="countryId"
-                                        error={Boolean(touched.countryId && errors.countryId)}
-                                        helperText={touched.countryId && errors.countryId}
-                                        onChange={(event) => {
-                                            setFieldValue("countryId", event.target.value);
-                                            setFieldValue("regionId", '');
-                                            setFieldValue("cityId", '');
-                                            setCountryId(event.target.value);
-                                            setRegionId(0);
-                                            setCityId(0);
-                                            const country = countries.find((x) => x.id === parseInt(event.target.value));
-                                            const newregions = country != null ? country.regions : [];
-                                            setRegions(newregions);
-                                            setCities([]);
-                                        }}
+                        <Grid item container spacing={2}>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    type='select'
 
-                                        SelectProps={{ native: true }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        {countries?.map((item, index) => (
-                                            <option value={item.id} key={index}>
-                                                {themeDirection == 'ltr' ? item.name : item.nameAr}
-                                            </option>))
-                                        }
-                                    </TextField>
-                                </Grid>
-                                <Grid item xs={12} sm={4}>
-                                    <TextField
-                                        select
-                                        fullWidth
-                                        required
-                                        label={t("Region")}
-                                        id="regionId"
-                                        value={regionId}
-                                        name="regionId"
-                                        error={Boolean(touched.regionId && errors.regionId)}
-                                        helperText={touched.regionId && errors.regionId}
-                                        onChange={(event) => {
-                                            setFieldValue("regionId", event.target.value);
-                                            setFieldValue("cityId", '');
-                                            setRegionId(event.target.value);
-                                            setCityId(0);
-                                            const newCities = regions.find((x) => x.id === parseInt(event.target.value)).cities;
-                                            setCities(newCities);
-                                        }}
+                                    label={t("Country")}
+                                    value={countryId}
+                                    id="countryId"
+                                    touched={touched.countryId}
+                                    errors={errors.countryId}
+                                    onChange={(event) => {
+                                        setFieldValue("countryId", event.target.value);
+                                        setFieldValue("regionId", '');
+                                        setFieldValue("cityId", '');
+                                        setCountryId(event.target.value);
+                                        setRegionId('');
+                                        setCityId('');
+                                        const country = countries.find((x) => x.id === parseInt(event.target.value));
+                                        const newregions = country != null ? country.regions : [];
+                                        setRegions(newregions);
+                                        setCities([]);
+                                    }}
+                                >
+                                    <MenuItem aria-label="None" value="" />
+                                    {countries?.map((item, index) => (
+                                        <MenuItem value={item.id} key={index}>
+                                            {themeDirection == 'ltr' ? item.name : item.nameAr}
+                                        </MenuItem>))
+                                    }
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    type='select'
 
-                                        SelectProps={{ native: true }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        {regions?.map((item, index) => (
-                                            <option value={item.id} key={index}>
-                                                {themeDirection == 'ltr' ? item.name : item.nameAr}
-                                            </option>))
-                                        }
-                                    </TextField>
-                                </Grid>
-                                <Grid item xs={12} sm={4}>
-                                    <TextField
-                                        select
-                                        fullWidth
-                                        required
-                                        label={t("City")}
-                                        id="cityId"
-                                        value={cityId}
-                                        name="cityId"
-                                        error={Boolean(touched.cityId && errors.cityId)}
-                                        helperText={touched.cityId && errors.cityId}
-                                        onChange={(event) => {
-                                            setFieldValue("cityId", event.target.value)
-                                            setCityId(event.target.value);
-                                        }}
-
-                                        SelectProps={{ native: true }}
-                                    >
-                                        <option aria-label="None" value="" />
-                                        {cities?.map((item, index) => (
-                                            <option value={item.id} key={index}>
-                                                {themeDirection == 'ltr' ? item.name : item.nameAr}
-                                            </option>))
-                                        }
-                                    </TextField>
-                                </Grid>
+                                    label={t("Region")}
+                                    value={regionId}
+                                    id="regionId"
+                                    name="regionId"
+                                    touched={touched.regionId}
+                                    errors={errors.regionId}
+                                    onChange={(event) => {
+                                        setFieldValue("regionId", event.target.value);
+                                        setFieldValue("cityId", '');
+                                        setRegionId(event.target.value);
+                                        setCityId('');
+                                        const newCities = regions.find((x) => x.id === parseInt(event.target.value)).cities;
+                                        setCities(newCities);
+                                    }}
+                                >
+                                    <MenuItem aria-label="None" value="" />
+                                    {regions?.map((item, index) => (
+                                        <MenuItem value={item.id} key={index}>
+                                            {themeDirection == 'ltr' ? item.name : item.nameAr}
+                                        </MenuItem>))
+                                    }
+                                </TextField>
+                            </Grid>
+                            <Grid item xs={12} sm={4}>
+                                <TextField
+                                    type='select'
+                                    label={t("Region")}
+                                    value={cityId}
+                                    id="cityId"
+                                    name="cityId"
+                                    touched={touched.cityId}
+                                    errors={errors.cityId}
+                                    onChange={(event) => {
+                                        setFieldValue("cityId", event.target.value)
+                                        setCityId(event.target.value);
+                                    }}
+                                >
+                                    <MenuItem aria-label="None" value="" />
+                                    {cities?.map((item, index) => (
+                                        <MenuItem value={item.id} key={index}>
+                                            {themeDirection == 'ltr' ? item.name : item.nameAr}
+                                        </MenuItem>))
+                                    }
+                                </TextField>
                             </Grid>
                         </Grid>
-
                     </Grid>
-
-
                 </Form>
             </FormikProvider>
-        </div>
+        </MainCard>
     );
 }
 

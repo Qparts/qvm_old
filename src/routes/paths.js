@@ -39,11 +39,11 @@ export const PATH_HOME = {
 export const PATH_APP = {
   root: ROOTS.app,
   general: {
-    root: path(ROOTS.app, '/dashboard'),
+    root: path(ROOTS.app, '/search'),
     dashboard: path(ROOTS.app, '/dashboard'),
     orders: path(ROOTS.app, '/orders'),
-    market: path(ROOTS.app, '/market'),
-    markerService: path(ROOTS.app, '/market/:service'),
+    // market: path(ROOTS.app, '/market'),
+    // markerService: path(ROOTS.app, '/market/:service'),
     partSearch: path(ROOTS.app, '/part-search'),
     replacements: path(ROOTS.app, '/replacements'),
     specialOfferUpload: path(ROOTS.app, '/special-offer-upload'),
@@ -52,15 +52,21 @@ export const PATH_APP = {
     specialOfferDetails: path(ROOTS.app, '/special-offer/:id'),
     quotationsReport: path(ROOTS.app, '/quotations-report'),
     upgradeSubscription: path(ROOTS.app, '/upgrade-subscription'),
+    chat: {
+      root: path(ROOTS.app, '/chat'),
+      new: path(ROOTS.app, '/chat/new'),
+      conversation: [
+        path(ROOTS.app, '/chat/new'),
+        path(ROOTS.app, '/chat/:conversationKey')
+      ]
+    },
+    calendar: path(ROOTS.app, '/calendar')
   },
 
   management: {
     root: path(ROOTS.app, '/management'),
     user: {
       root: path(ROOTS.app, '/management/user'),
-      profile: path(ROOTS.app, '/management/user/profile'),
-      cards: path(ROOTS.app, '/management/user/card'),
-      list: path(ROOTS.app, '/management/user/list'),
       account: path(ROOTS.app, '/management/user/account')
     },
     // catalog : path(ROOTS.app, '/catalog')

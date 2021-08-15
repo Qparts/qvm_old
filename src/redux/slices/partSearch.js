@@ -22,7 +22,8 @@ const initialState = {
     page: 0,
     rowsPerPage: 5,
     query: "",
-    locationQuery: ""
+    locationQuery: "",
+    orders: []
 };
 
 
@@ -137,6 +138,10 @@ const slice = createSlice({
             state.rowsPerPage = action.payload.rowsPerPage;
         },
 
+        updateOrders(state, action) {
+            state.orders = action.payload;
+        }
+
     }
 
 });
@@ -158,6 +163,7 @@ export const {
     setSelectedProduct,
     handleChangePage,
     handleChangeRowsPerPage,
+    updateOrders,
     cleanup
 } = slice.actions;
 

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import Page from 'src/components/Page';
 import { useTranslation } from 'react-i18next';
 import Card from '@material-ui/core/Card';
@@ -10,7 +11,8 @@ import {
   Typography,
   Grid
 } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
+import Button from '../../components/Ui/Button';
+
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
@@ -18,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     minHeight: '100%',
     alignItems: 'center',
-    padding: theme.spacing(12, 0, 0)
+    padding: theme.spacing(13, 0, 0)
   },
   heading: {
     color: theme.palette.secondary.main,
@@ -32,6 +34,8 @@ const useStyles = makeStyles((theme) => ({
 function RegisterForm({ formik }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { countries } = useSelector((state) => state.authJwt);
+  const { themeDirection } = useSelector((state) => state.settings);
 
   return (
     <Page className={classes.root}>
@@ -58,11 +62,21 @@ function RegisterForm({ formik }) {
               label={t('Email')}
               variant="outlined"
             />
-            <Grid container sx={{ mb: 3 }}>
+            <Grid container spacing={2}>
               <Grid item xs={5}>
                 <TextField
-                  style={{ paddingInlineEnd: 10 }}
+                  sx={{ mb: 3 }}
+                  select
+                  fullWidth
+                  id="countryId"
+                  name="countryId"
+                  SelectProps={{ native: true }}
                 >
+                  {countries.map((option, index) => (
+                    <option key={index} value={option.id}>
+                      (+{option.countryCode}) {themeDirection === "rtl" ? option.nameAr : option.name}
+                    </option>
+                  ))}
                 </TextField>
               </Grid>
               <Grid item xs={7}>
@@ -87,14 +101,8 @@ function RegisterForm({ formik }) {
               multiline
               rowsMax={4}
             />
-               <LoadingButton
-            fullWidth
-            size="large"
-            type="submit"
-            variant="contained"
-          >
-            {t("Send")}
-          </LoadingButton>
+
+            <Button homeBtn='homeBtn'>{t("Send")} </Button>
           </form>
         </Card>
       </Container>

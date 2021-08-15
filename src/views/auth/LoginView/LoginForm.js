@@ -16,7 +16,7 @@ import {
   InputAdornment,
   FormControlLabel
 } from '@material-ui/core';
-import { LoadingButton } from '@material-ui/lab';
+import Button from '../../../components/Ui/Button';
 import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
@@ -108,18 +108,16 @@ function LoginForm({ formik }) {
           >
             {t("Forgot Password?")}
           </Link>
-
         </Box>
 
-        <LoadingButton
-          fullWidth
-          size="large"
+        <Button
           type="submit"
-          variant="contained"
+          homeBtn='homeBtn'
           pending={isSubmitting}
         >
           {t("Login")}
-        </LoadingButton>
+        </Button>
+
       </Form>
     </FormikProvider>
   );

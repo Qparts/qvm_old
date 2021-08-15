@@ -1,12 +1,11 @@
 import clsx from 'clsx';
 import React from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
 import { motion } from 'framer-motion';
 import { BASE_IMG } from 'src/utils/getImages';
-import flashFill from '@iconify-icons/eva/flash-fill';
-import { Link as RouterLink } from 'react-router-dom';
-import { PATH_APP, PATH_HOME, PATH_PAGE } from 'src/routes/paths';
+import { useTranslation } from 'react-i18next';
+import { PATH_PAGE } from 'src/routes/paths';
 import LazySize from 'src/components/LazySize';
 import {
   varFadeIn,
@@ -14,29 +13,31 @@ import {
   varFadeInUp
 } from 'src/components/Animate';
 import { makeStyles } from '@material-ui/core/styles';
-import { Button, Box, Link, Container, Typography } from '@material-ui/core';
+import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import Logo from 'src/components/Logo';
 import { pxToRem } from 'src/utils/formatFontSize';
+import Button from '../../../components/Ui/Button';
+
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
   root: {
     position: 'relative',
-    height:'100vh',
+    height: '100vh',
     top: 0,
-      left: 0,
-      width: '100%',
-      height: '100vh',
-      display: 'flex',
-      
-      alignItems: 'center',
-      [theme.breakpoints.up('md')]: {
-        position: 'fixed',
-      }
+    left: 0,
+    width: '100%',
+    height: '100vh',
+    display: 'flex',
+
+    alignItems: 'center',
+    [theme.breakpoints.up('md')]: {
+      position: 'fixed',
+    }
   },
   content: {
     zIndex: 10,
-    maxWidth: 520,
+    maxWidth: 650,
     margin: 'auto',
     textAlign: 'center',
     position: 'relative',
@@ -83,22 +84,16 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   title: {
-      fontSize: pxToRem(48),
-      lineHeight: 1,
+    fontSize: pxToRem(48),
+    lineHeight: 1,
   },
   description: {
     fontSize: pxToRem(26),
     color: theme.palette.secondary.light,
-  },
-  whiteBtn: {
-    background: theme.palette.grey[0],
-    color:theme.palette.primary.main,
-    boxShadow:'none',
-    marginLeft: 10,
-    '&:hover':{
-      color: theme.palette.grey[0],
+    [theme.breakpoints.down('sm')]: {
+      fontSize: pxToRem(20),
     },
-  }
+  },
 }));
 // ----------------------------------------------------------------------
 const getImg = (width) =>
@@ -108,6 +103,8 @@ Hero.propTypes = {
 };
 function Hero({ className }) {
   const classes = useStyles();
+  const { t } = useTranslation();
+
   return (
     <>
       <motion.div
@@ -128,42 +125,42 @@ function Hero({ className }) {
           noPlaceholder
           alt="hero"
           src="/static/images/hero-artical.svg"
-          
+
           className={classes.heroImg}
         />
         <Container maxWidth="lg">
           <div className={classes.content}>
             <motion.div variants={varFadeInUp}>
               <Typography variant="h1" sx={{ color: 'common.white' }} display="flex" justifyContent="center" alignItems="flex-end" className={classes.title}>
-              منصة التجار
-              <Logo width={170} ml={2} />
+                {t("Vendor marketplace")}
+                <Hidden smDown><Logo width={170} ml={2} /></Hidden>
               </Typography>
             </motion.div>
             <motion.div variants={varFadeInUp}>
-              <Box component="p" sx={{ py: 3 }} className={classes.description}>
-              أكبر تجمع لتجار قطع الغيار بالشرق الأوسط
+              <Box component="p" sx={{ padding: (theme) => theme.spacing(3, 0, 5) }} className={classes.description}>
+                {t("The largest gathering of spare parts dealers in the Middle East")}
               </Box>
             </motion.div>
 
             <motion.div variants={varFadeInUp}>
               <Button
-                size="large"
-                variant="contained"
+                btnWidth="btnWidth"
+                homeBtn="homeBtn"
+                btnM="btnM"
                 component={RouterLink}
                 to={PATH_PAGE.auth.login}
               >
-                تسجيل الدخول
+                {t("login")}
               </Button>
               <Button
-                className={classes.whiteBtn}
-                size="large"
-                variant="contained"
+                btnWidth="btnWidth"
+                homeBtn="homeBtn"
+                whiteBtn="whiteBtn"
                 component={RouterLink}
-                to={PATH_PAGE.auth.login}
+                to={PATH_PAGE.auth.register}
               >
-                إنشاء حساب
+                {t("registeration")}
               </Button>
-              
             </motion.div>
           </div>
         </Container>

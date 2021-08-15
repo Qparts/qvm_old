@@ -5,34 +5,29 @@ import { useTranslation } from 'react-i18next';
 import useAuth from 'src/hooks/useAuth';
 import { PATH_APP } from 'src/routes/paths';
 import React, { useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import homeFill from '@iconify-icons/eva/home-fill';
 import PopoverMenu from 'src/components/PopoverMenu';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import personFill from '@iconify-icons/eva/person-fill';
 import settings2Fill from '@iconify-icons/eva/settings-2-fill';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import { alpha, makeStyles } from '@material-ui/core/styles';
 import { Button, Box, Divider, MenuItem, Typography } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import { User } from '../../../icons/icons';
-import { useSelector, useDispatch } from 'react-redux';
-import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
+import { useDispatch } from 'react-redux';
+import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
 const MENU_OPTIONS = [
   {
-    label: 'Home',
+    label: 'home',
     icon: homeFill,
-    linkTo: '/'
+    linkTo: PATH_APP.general.root
   },
   {
-    label: 'Profile',
-    icon: personFill,
-    linkTo: PATH_APP.management.user.profile
-  },
-  {
-    label: 'Settings',
+    label: 'settings',
     icon: settings2Fill,
     linkTo: PATH_APP.management.user.account
   }
@@ -65,7 +60,9 @@ function Account() {
   const history = useHistory();
   const anchorRef = useRef(null);
   const dispatch = useDispatch();
-  const { user, logout } = useAuth();
+  const { logout } = useAuth();
+  const { user, loginObject } = useSelector((state) => state.authJwt);
+  const { themeDirection } = useSelector((state) => state.settings);
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar } = useSnackbar();
   const [isOpen, setOpen] = useState(false);
@@ -75,21 +72,6 @@ function Account() {
   };
   const handleClose = () => {
     setOpen(false);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      dispatch(updateBillingAddress(null));
-      dispatch(updateCartItems([]));
-      if (isMountedRef.current) {
-        history.push('/');
-        handleClose();
-      }
-    } catch (error) {
-      console.error(error);
-      enqueueSnackbar('Unable to logout', { variant: 'error' });
-    }
   };
 
   return (
@@ -108,14 +90,17 @@ function Account() {
         onClose={handleClose}
         anchorEl={anchorRef.current}
       >
-        <Box sx={{ my: 2, px: 2.5 }}>
-          <Typography variant="subtitle1" noWrap>
-            {user.length > 0 ? user.subscriber.name : ''}
-          </Typography>
-          <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user.length > 0 ? user.subscriber.email : ''}
-          </Typography>
-        </Box>
+        {
+          (loginObject) &&
+          <Box sx={{ my: 2, px: 2.5 }}>
+            <Typography variant="subtitle1" noWrap>
+              {themeDirection == 'ltr' ? user.company.name : user.company.nameAr}
+            </Typography>
+            <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
+              {user.subscriber.email}
+            </Typography>
+          </Box>
+        }
 
         <Divider sx={{ my: 1 }} />
 
@@ -137,7 +122,7 @@ function Account() {
               }}
             />
 
-            {option.label}
+            {t(option.label)}
           </MenuItem>
         ))}
 
@@ -146,7 +131,7 @@ function Account() {
             fullWidth
             color="inherit"
             variant="outlined"
-            onClick={handleLogout}
+            onClick={() => helper.handleLogout(logout, dispatch, isMountedRef, history, '/', enqueueSnackbar)}
           >
             {t('Logout')}
           </Button>

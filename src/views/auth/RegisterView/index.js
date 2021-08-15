@@ -1,24 +1,21 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import Section from './Section';
+import Section from '../Ui/Section';
+import Header from '../Ui/Header';
 import { useFormik } from 'formik';
 import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
-import Logo from 'src/components/Logo';
 import { useSnackbar } from 'notistack';
-import useAuth from 'src/hooks/useAuth';
 import RegisterForm from './RegisterForm';
 import { PATH_PAGE } from 'src/routes/paths';
 import closeFill from '@iconify-icons/eva/close-fill';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import SocialLogin from 'src/views/auth/LoginView/SocialLogin';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import helper from 'src/utils/helper';
 import { useSelector, useDispatch } from 'react-redux';
-import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
 import { register } from 'src/redux/slices/authJwt';
 
@@ -28,21 +25,6 @@ const useStyles = makeStyles((theme) => ({
   root: {
     [theme.breakpoints.up('md')]: {
       display: 'flex'
-    }
-  },
-  header: {
-    top: 0,
-    zIndex: 9,
-    lineHeight: 0,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
-    padding: theme.spacing(3),
-    justifyContent: 'space-between',
-    [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-start',
-      padding: theme.spacing(4, 5, 0, 7)
     }
   },
   content: {
@@ -58,6 +40,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     lineHeight: 1,
     marginRight: '0.5rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.typography.h4.fontSize
+    }
   }
 }));
 
@@ -65,7 +50,6 @@ const useStyles = makeStyles((theme) => ({
 
 function RegisterView() {
   const classes = useStyles();
-  const { method } = useAuth();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory();
@@ -165,25 +149,11 @@ function RegisterView() {
 
   return (
     <Page title="Register | Minimal-UI" className={classes.root}>
-      <header className={classes.header}>
-        <RouterLink to="/">
-          <Logo />
-        </RouterLink>
-        <Hidden smDown>
-          <Typography variant="body2" sx={{ mt: { md: -2 } }}>
-            {t("Already have an account?")} &nbsp;
-            <Link
-              underline="none"
-              variant="subtitle2"
-              component={RouterLink}
-              to={PATH_PAGE.auth.login}
-            >
-              {t("Login")}
-            </Link>
-            <Languages />
-          </Typography>
-        </Hidden>
-      </header>
+
+      <Header
+        auth={t("Already have an account?")}
+        url={PATH_PAGE.auth.login}
+        title={t("Login")} />
 
       <Hidden mdDown>
         <Section />
@@ -197,15 +167,7 @@ function RegisterView() {
                 {t("Signup Request in")}
               </Typography>
             </Box>
-            <Box
-              component="img"
-              src={`/static/images/QVM.svg`}
-              sx={{ width: 100 }}
-            />
           </Box>
-
-          {method === 'firebase' && <SocialLogin />}
-
 
           {registerError != null && <Alert severity="error">  {registerError.data ?
             t(registerError.data) : registerError.status} </Alert>}
@@ -218,13 +180,13 @@ function RegisterView() {
 
           <Hidden smUp>
             <Box sx={{ mt: 3, textAlign: 'center' }}>
-              Already have an account?&nbsp;
+              {t("Already have an account?")}&nbsp;
               <Link
                 variant="subtitle2"
                 to={PATH_PAGE.auth.login}
                 component={RouterLink}
               >
-                Login
+                {t("Login")}
               </Link>
             </Box>
           </Hidden>

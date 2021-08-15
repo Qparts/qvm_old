@@ -2,7 +2,10 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
+import { NavLink as RouterLink, useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useSnackbar } from 'notistack';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import arrowIosForwardFill from '@iconify-icons/eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify-icons/eva/arrow-ios-downward-fill';
 import { makeStyles } from '@material-ui/core/styles';
@@ -13,6 +16,9 @@ import {
   ListItemIcon,
   ListItemText
 } from '@material-ui/core';
+import useAuth from 'src/hooks/useAuth';
+import helper from 'src/utils/helper';
+import { PATH_PAGE } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -25,8 +31,15 @@ const useStyles = makeStyles((theme) => ({
     textTransform: 'capitalize',
     textAlign: 'center',
     color: '#a2b4bd',
-    display: 'inline-block',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'start',
+    paddingLeft: theme.spacing(1.25),
     position: 'relative',
+    '& .MuiListItemText-root': {
+      flex: 'initial',
+      paddingLeft: theme.spacing(1.25),
+    },
     '&:hover': {
       color: theme.palette.grey[0],
       '& $svg path': {
@@ -59,8 +72,6 @@ const useStyles = makeStyles((theme) => ({
     fontWeight: theme.typography.fontWeightMedium,
     backgroundColor: theme.palette.primary.main,
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
-    borderRadius: 20,
-    padding: '15px 16px 13px',
     '& $svg path': {
       fill: theme.palette.grey[0],
     },
@@ -98,8 +109,8 @@ const useStyles = makeStyles((theme) => ({
     height: '8px',
     display: 'block',
     position: 'absolute',
-    right: theme.direction === 'rtl' ? 0 : '5px',
-    bottom: '27px',
+    left: theme.direction === 'rtl' ? '27px' : '12px',
+    top: '27px',
     borderRadius: '50%',
   }
 }));
@@ -125,6 +136,7 @@ function NavItem({
   info,
   icon,
   notification,
+  logoutAttr,
   open = false,
   children,
   className,
@@ -132,11 +144,22 @@ function NavItem({
 }) {
   const classes = useStyles();
   const [show, setShow] = useState(open);
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { logout } = useAuth();
+  const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar } = useSnackbar();
   const isSubItem = level > 0;
 
   const handleShow = () => {
     setShow((show) => !show);
   };
+
+  const logoutFun = () => {
+    if (logoutAttr) {
+      helper.handleLogout(logout, dispatch, isMountedRef, history, PATH_PAGE.auth.login, enqueueSnackbar);
+    }
+  }
 
   if (children) {
     return (
@@ -175,6 +198,7 @@ function NavItem({
       button
       to={href}
       exact={open}
+      onClick={logoutFun}
       disableGutters
       component={RouterLink}
       activeClassName={

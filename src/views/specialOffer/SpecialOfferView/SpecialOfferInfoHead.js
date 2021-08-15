@@ -18,40 +18,96 @@ const useStyles = makeStyles((theme) => ({
     offerDetailsHead: {
         background: theme.palette.grey[0],
         padding: '0 15px',
-        borderBottom: '1px solid #E5EBF0'
+        borderBottom: '1px solid #E5EBF0',
+        '@media (max-width: 870px)': {
+            display: 'block !important',
+        },
     },
     offerName: {
         color: theme.palette.secondary.darker,
-        margin: '7px 0 4px',
+        margin: theme.spacing(1, 0, 0.5),
         lineHeight: 1,
+        '@media (max-width: 470px)': {
+            marginBottom: theme.spacing(1),
+        },
+    },
+    offerTime: {
+        display: 'flex',
+        '@media (max-width: 470px)': {
+            display: 'block',
+        },
     },
     offerItemInfo: {
-        padding: '28px 20px',
+        padding: theme.spacing(3.5, 2.5),
         textAlign: 'center',
         borderRight: '1px solid #EEF1F5',
         borderLeft: '1px solid #EEF1F5',
         lineHeight: 1,
+        '@media (max-width: 870px)': {
+            borderLeft: 0
+        },
+        '@media (max-width: 470px)': {
+            borderRight: 0,
+            borderBottom: '1px solid #EEF1F5',
+            padding: theme.spacing(1.75, 0)
+        },
     },
     offerItemInfoNum: {
         lineHeight: 1,
         marginTop: '10px',
-        fontWeight: 400,
+        fontWeight: 400
     },
     offerDetailsFlex: {
         display: 'flex',
         alignItems: 'center',
+        '@media (max-width: 470px)': {
+            justifyContent: 'center'
+        },
     },
     mainCont: {
-        justifyContent: 'space-between',
+        justifyContent: 'space-between'
     },
     secPadding: {
-        padding: '20px 0'
+        padding: '20px 0',
+        '@media (max-width: 870px)': {
+            justifyContent: 'center'
+        },
+        '@media (max-width: 470px)': {
+            display: 'block !important'
+        },
     },
     orderOffer: {
         marginRight: '10px'
     },
+    chartCont: {
+        marginLeft: theme.spacing(2.5),
+        '@media (max-width: 470px)': {
+            margin: theme.spacing(0, 0, 1.5, 0)
+        },
+    },
     chart: {
         '& .apexcharts-canvas': { margin: 'auto' },
+    },
+    textRight: {
+        textAlign: 'left',
+        '@media (max-width: 470px)': {
+            textAlign: 'center'
+        },
+    },
+    placeOrder: {
+        '@media (max-width: 870px)': {
+            justifyContent: 'center',
+            borderTop: '1px solid #EEF1F5'
+        },
+        '@media (max-width: 470px)': {
+            display: 'block'
+        },
+    },
+    btnOrder: {
+        marginLeft: '20px',
+        '@media (max-width: 470px)': {
+            margin: theme.spacing(1.75, 0)
+        },
     }
 }));
 
@@ -96,7 +152,7 @@ export default function SpecialOfferInfo(props) {
     return (
         <Box className={clsx(classes.offerDetailsHead, classes.offerDetailsFlex, classes.mainCont)}>
             <Box className={clsx(classes.offerDetailsFlex, classes.secPadding)}>
-                <Box sx={{ marginRight: '20px' }}>
+                <Box className={classes.chartCont}>
                     <ReactApexChart
                         type="radialBar"
                         series={chartData}
@@ -105,9 +161,9 @@ export default function SpecialOfferInfo(props) {
                         height={86}
                         className={classes.chart}
                     />
-                    <Typography variant="caption" sx={{color: '#7F929C'}}> {t('The offer time has passed')} </Typography>
+                    <Typography variant="caption" sx={{ color: '#7F929C' }}> {t('The offer time has passed')} </Typography>
                 </Box>
-                <Box>
+                <Box className={classes.textRight}>
                     <Typography variant="body3" sx={{ color: theme.palette.primary.main }}>
                         {themeDirection == 'rtl' ? companies.get(selectedOffer.companyId).nameAr :
                             companies.get(selectedOffer.companyId).name}
@@ -116,7 +172,7 @@ export default function SpecialOfferInfo(props) {
                         {themeDirection == 'rtl' ? selectedOffer.offerNameAr :
                             selectedOffer.offerName}
                     </Typography>
-                    <Box sx={{ display: 'flex' }}>
+                    <Box className={classes.offerTime}>
                         <Box className={classes.offerDetailsFlex} sx={{ marginRight: '10px' }}>
                             <Calender width='16' height='16' fill='#7E8D99' />
                             <Typography variant="caption" sx={{ color: '#7E8D99', margin: '0 4px 0 7px' }}> {t('Start in')}</Typography>
@@ -133,7 +189,7 @@ export default function SpecialOfferInfo(props) {
                     </Box>
                 </Box>
             </Box>
-            <Box className={classes.offerDetailsFlex}>
+            <Box className={clsx(classes.offerDetailsFlex, classes.placeOrder)}>
                 <Box className={classes.offerItemInfo}>
                     <Parts width='26' height='26' fill='#7E8D99' />
                     <Typography variant="caption" sx={{ display: 'block', color: '#526C78' }}> {t("parts number")} </Typography>
@@ -147,7 +203,7 @@ export default function SpecialOfferInfo(props) {
                         <Typography variant="caption"> {t("SAR")} </Typography>
                     </Typography>
                 </Box>
-                <Box sx={{ marginLeft: '20px' }}>
+                <Box className={classes.btnOrder}>
                     <CustomButton>
                         <OrdersArrow width='24' height='24' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
                         {t("order the offer")}

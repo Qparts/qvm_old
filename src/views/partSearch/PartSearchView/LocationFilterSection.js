@@ -25,7 +25,16 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex'
     },
     locationFilter: {
-        minWidth: '300px'
+        minWidth: '300px',
+        '& .MuiAutocomplete-inputRoot': {
+            '@media (max-width: 700px) and (min-width: 300px)': {
+                paddingRight: '0 !important'
+            },
+        },
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            minWidth: '100%',
+            width: '100%',
+        },
     }
 }));
 

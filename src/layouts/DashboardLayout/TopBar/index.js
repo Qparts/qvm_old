@@ -5,23 +5,20 @@ import { useDispatch } from 'react-redux';
 import Account from './Account';
 import PropTypes from 'prop-types';
 import Languages from './Languages';
+import UpgradeBtn from './UpgradeBtn';
 import { Icon } from '@iconify/react';
 import Notifications from './Notifications';
 import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
-import Orders from './Orders';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
 import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Box, AppBar, Hidden, Toolbar, IconButton } from '@material-ui/core';
+import { Box, AppBar, Hidden, Toolbar, IconButton, Badge } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import constants from 'src/utils/constants';
 import { PATH_APP } from 'src/routes/paths';
-import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from '../../../redux/slices/partSearch';
+import helper from 'src/utils/helper';
 import SearchBox from '../../../components/SearchBox';
-import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
-import { MButton } from 'src/theme';
-import { useSelector } from 'react-redux';
-import { useSnackbar } from 'notistack';
-
+// import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
+// import { MIconButton } from 'src/theme';
 
 // ----------------------------------------------------------------------
 
@@ -34,10 +31,10 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: 'none',
     backdropFilter: 'blur(8px)',
     backgroundColor: alpha(theme.palette.background.default, 0.72),
-    marginRight: theme.spacing(1),
     [theme.breakpoints.up('lg')]: {
-      paddingLeft: DRAWER_WIDTH
-    }
+      paddingLeft: DRAWER_WIDTH,
+      marginRight: theme.spacing(1),
+    },
   },
   toolbar: {
     minHeight: APPBAR_MOBILE,
@@ -63,20 +60,10 @@ function TopBar({ onOpenNav, className }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation();
-  const { cartItems } = useSelector((state) => state.market);
-  const { enqueueSnackbar } = useSnackbar();
+  // const { cartItems } = useSelector((state) => state.market);
 
-  const handlePartSearch = (search) => {
-    dispatch(resetLocationfilter());
-    dispatch(setFilter({ filter: "" }));
-    dispatch(handleChangePage({ newPage: 0 }));
-    dispatch(partSearch(search, 0, constants.MAX, ""));
-    getPartinfo(search);
-    history.push(PATH_APP.general.partSearch);
-  }
-
-  const getPartinfo = (search) => {
-    dispatch(getProductInfo(search, ""));
+  const handleGeneralSearch = (search) => {
+    helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, constants.MAX, search)
   }
 
   return (
@@ -94,8 +81,8 @@ function TopBar({ onOpenNav, className }) {
           </IconButton>
         </Hidden>
 
-        <Hidden lgDown><SearchBox type='topBarSearch' placeholder={t("Search by part number")} handleSubmit={handlePartSearch} /></Hidden>
-        <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handlePartSearch} /></Hidden>
+        <Hidden lgDown><SearchBox type='topBarSearch' placeholder={t("Search by part number")} handleSubmit={handleGeneralSearch} /></Hidden>
+        <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handleGeneralSearch} /></Hidden>
         <Box sx={{ flexGrow: 1 }} />
 
         <Box
@@ -104,39 +91,27 @@ function TopBar({ onOpenNav, className }) {
             alignItems: 'center',
             '& > *': {
               ml: {
-                xs: 0.5,
+                xs: 0,
                 sm: 2,
                 lg: 3
               }
             }
           }}
         >
-          <Hidden smDown>
-            <UploadStockBtn bg={theme.palette.primary.main} color={theme.palette.grey[0]} />
-          </Hidden>
-
-          <MButton
-            size="large"
-            type="button"
-            color="secandary"
-            // variant="contained"
-            startIcon={<Icon icon={roundAddShoppingCart} />}
-            sx={{ whiteSpace: 'nowrap' }}
-            onClick={() => {
-              if (cartItems.length == 0) {
-                history.push(PATH_APP.general.market);
-                enqueueSnackbar( t("No items in cart") , { variant: 'warning' });
-              } else {
-                history.push(`${PATH_APP.general.market}/cart`);
-              }
-
-            }}
-          >
-            {t("Shopping Cart")}
-          </MButton>
-
+          <Hidden mdDown><UpgradeBtn /></Hidden>
+          <Box>
+            <Hidden mdDown>
+              <UploadStockBtn bg={theme.palette.grey[0]} color={theme.palette.secondary.main} />
+            </Hidden>
+          </Box>
           <Languages />
-          <Orders />
+          {/* <MIconButton
+            onClick={() => { history.push(`${PATH_APP.general.market}/cart`); }}
+          >
+            <Badge badgeContent={cartItems.length} color="error">
+              <Icon icon={roundAddShoppingCart} color='#7E8D99' />
+            </Badge>
+          </MIconButton> */}
           <Notifications />
           <Account />
         </Box>

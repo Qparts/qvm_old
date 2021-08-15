@@ -17,7 +17,6 @@ import {
   Box,
   List,
   Link,
-  Button,
   AppBar,
   Hidden,
   Toolbar,
@@ -29,12 +28,22 @@ import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
 import { pxToRem } from 'src/utils/formatFontSize';
+import Button from '../../components/Ui/Button';
+
 // ----------------------------------------------------------------------
 const MENU_LINKS = [
   { title: 'home', icon: homeFill, href: PATH_PAGE.common.home },
   { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.prices },
   { title: 'contactUs', icon: roundSpeed, href: PATH_PAGE.common.contactUs },
   { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
+];
+const MENU_LINKS_MOB = [
+  { title: 'home', href: PATH_PAGE.common.home },
+  { title: 'prices', href: PATH_PAGE.common.prices },
+  { title: 'contactUs', href: PATH_PAGE.common.contactUs },
+  { title: 'Privacy Policy', href: PATH_PAGE.common.privacy },
+  { title: 'Terms of Use', href: PATH_PAGE.common.termsView },
+  { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login },
 ];
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 70;
@@ -50,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
       height: APP_BAR_DESKTOP
     }
   },
+  navColor: { color: theme.palette.secondary.darker },
   isHome: {
     color: theme.palette.common.white,
     '&:hover': {
@@ -60,14 +70,13 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.lighter
   },
   isMobileActive: {
-    color: theme.palette.primary.main,
+    color: theme.palette.secondary.lighter + '!important',
     fontWeight: theme.typography.fontWeightMedium,
-    backgroundColor: alpha(
-      theme.palette.primary.main,
-      theme.palette.action.selectedOpacity
-    )
   },
   onScroll: {
+    '& $toolbar': {
+      minHeight: APP_BAR_DESKTOP
+    },
     [theme.breakpoints.up('md')]: {
       '& $toolbar': {
         height: APP_BAR_DESKTOP - 20
@@ -93,6 +102,56 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: theme.palette.secondary.darker
       },
     }
+  },
+  navMobile: {
+    '& .MuiPopover-paper': {
+      width: '100%',
+      maxWidth: '100%',
+      height: '100%',
+      top: '64px !important',
+      left: '0 !important',
+      borderRadius: 0,
+      margin: 0,
+      border: 0,
+      boxShadow: 'none',
+      backgroundColor: theme.palette.grey[0],
+      paddingTop: theme.spacing(4),
+      '& > span': { display: 'none' },
+      '& a, & li': { textAlign: 'center' },
+      '& li a': {
+        color: theme.palette.grey[0],
+        padding: theme.spacing(1.6, 3) + '!important',
+        margin: 'auto',
+      },
+      '& a': {
+        color: theme.palette.secondary.darker,
+        padding: theme.spacing(1.5, 2),
+        '& span': {
+          fontSize: theme.typography.h4.fontSize,
+          fontWeight: theme.typography.fontWeightMedium,
+        },
+        '&:last-of-type': {
+          paddingTop: theme.spacing(5)
+        }
+      }
+    }
+  },
+  navMobileHome: {
+    '& .MuiPopover-paper': {
+      backgroundColor: theme.palette.secondary.darker,
+      '& li a': {
+        color: theme.palette.primary.main,
+        '&:hover': {
+          color: theme.palette.grey[0]
+        },
+      },
+      '& a': {
+        color: theme.palette.grey[0],
+      }
+    }
+  },
+  navBg: {
+    backgroundColor: theme.palette.secondary.darker
   }
 }));
 
@@ -100,6 +159,7 @@ const useStyles = makeStyles((theme) => ({
 
 function TopBar() {
   const classes = useStyles();
+  const { t } = useTranslation();
   const anchorRef = useRef(null);
   const { pathname } = useLocation();
   const offset = useOffSetTop(100);
@@ -107,7 +167,20 @@ function TopBar() {
   const isHome = pathname === '/';
   const isLogo = (pathname === '/' || pathname === '/auth/login' || pathname === '/auth/register');
 
-  const { t } = useTranslation();
+
+  const registeration = (
+    <Button
+      homeBtn='homeBtn'
+      btnWidth='btnWidth'
+      widthAuto='widthAuto'
+      whiteBtn={isHome ? 'whiteBtn' : null}
+      component={Link}
+      target="_blank"
+      href={PATH_PAGE.auth.register}
+    >
+      {t("registeration")}
+    </Button>
+  )
 
   const renderMenuDesktop = (
     <div>
@@ -116,31 +189,31 @@ function TopBar() {
           exact
           to={link.href}
           key={link.title}
+          target={link.title === 'login' ? "_blank" : null}
           underline="none"
           variant="subtitle1"
           component={RouterLink}
           activeClassName={classes.isDesktopActive}
-          className={clsx({
-            [classes.isHome]: isHome
-          })}
+          className={isHome ? classes.isHome : classes.navColor}
           sx={{ mr: 5, color: 'text.primary' }}
         >
           {t(link.title)}
         </Link>
-      ))}
+      ))
+      }
 
-    </div>
+    </div >
   );
 
   const renderMenuMobile = (
     <PopoverMenu
-      width={220}
       open={openMenu}
       anchorEl={anchorRef.current}
       onClose={() => setOpenMenu(false)}
+      className={isHome ? clsx(classes.navMobile, classes.navMobileHome) : classes.navMobile}
     >
       <List>
-        {MENU_LINKS.map((link) => (
+        {MENU_LINKS_MOB.map((link) => (
           <MenuItem
             exact
             to={link.href}
@@ -150,9 +223,10 @@ function TopBar() {
             activeClassName={classes.isMobileActive}
             sx={{ color: 'text.secondary' }}
           >
-            <ListItemText>{link.title}</ListItemText>
+            <ListItemText>{t(link.title)}</ListItemText>
           </MenuItem>
         ))}
+        <MenuItem> {registeration} </MenuItem>
       </List>
     </PopoverMenu>
   );
@@ -160,9 +234,8 @@ function TopBar() {
   return (
     <AppBar
       color='inherit'
-      className={clsx(classes.root, { [classes.onScroll]: offset }, { [classes.transparentNav]: isHome })}
-      sx={{ boxShadow: 'none' }}
-
+      className={clsx(classes.root, { [classes.onScroll]: offset }, { [classes.transparentNav]: isHome }, openMenu && isHome ? classes.navBg : { [classes.transparentNav]: isHome })}
+      sx={{ boxShadow: isHome ? 'none' : (theme) => theme.shadows[25].z8 }}
     >
       <Toolbar disableGutters className={classes.toolbar}>
         <Container
@@ -181,18 +254,7 @@ function TopBar() {
 
           <Hidden mdDown>{renderMenuDesktop}</Hidden>
 
-          <Button
-            underline="none"
-            variant="contained"
-            component={Link}
-            target="_blank"
-            size="large"
-            href={PATH_PAGE.auth.register}
-            className={classes.navButton}
-            className={clsx(classes.navButton, { [classes.whiteBtn]: isHome })}
-          >
-            {t("registeration")}
-          </Button>
+          <Hidden mdDown>{registeration}</Hidden>
 
           <Hidden mdUp>
             <MIconButton
@@ -222,7 +284,6 @@ function TopBar() {
             borderRadius: '50%',
             position: 'absolute',
             width: `calc(100% - 48px)`,
-            boxShadow: (theme) => theme.shadows[25].z8
           }}
         />
       )}

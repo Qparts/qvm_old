@@ -1,57 +1,36 @@
 import Scrollbars from 'src/components/Scrollbars';
-import NotificationItem from './NotificationItem';
+import ConversationItem from 'src/views/orders/OrdersView/Sidebar/ConversationItem';
 import PopoverMenu from 'src/components/PopoverMenu';
-import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import React, { useRef, useState, useEffect } from 'react';
-import {
-  markAllAsRead,
-  getNotifications
-} from 'src/redux/slices/notifications';
-import { makeStyles } from '@material-ui/core/styles';
+import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
+import React, { useRef, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import {
   Box,
   List,
   Badge,
   Button,
-  Tooltip,
   Divider,
   Typography,
-  ListSubheader
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import { PATH_APP } from 'src/routes/paths';
+import helper from 'src/utils/helper';
 import { Note } from '../../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  listSubheader: {
-    ...theme.typography.overline,
-    lineHeight: 'unset',
-    textTransform: 'uppercase',
-    padding: theme.spacing(1, 2.5)
-  }
-}));
-
-// ----------------------------------------------------------------------
-
 function Notifications() {
-  const classes = useStyles();
+
+  const { t } = useTranslation();
+  const history = useHistory();
+  const dispatch = useDispatch();
   const anchorRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
-  const dispatch = useDispatch();
-  const { notifications } = useSelector((state) => state.notifications);
-  const totalUnRead = notifications.filter((item) => item.isUnRead === true)
-    .length;
-
-  useEffect(() => {
-    dispatch(getNotifications());
-  }, [dispatch]);
-
-  const handleMarkAllAsRead = () => {
-    dispatch(markAllAsRead());
-  };
+  const { userConversations, isOpenSidebarConversation } = useSelector((state) => state.chat);
+  const totalUnRead = 5;
+  // const totalUnRead = conversations.allIds.filter((item) => conversations.byId[item].unreadCount > 0).length
 
   return (
     <>
@@ -73,72 +52,38 @@ function Notifications() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1">Notifications</Typography>
+            <Typography variant="subtitle1"> {t("messages")} </Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              You have {totalUnRead} unread messages
+              {t('messages unread', { unReadNum: totalUnRead })}
             </Typography>
           </Box>
-
-          {totalUnRead > 0 && (
-            <Tooltip title=" Mark all as read">
-              <MIconButton color="primary" onClick={handleMarkAllAsRead}>
-              </MIconButton>
-            </Tooltip>
-          )}
         </Box>
 
         <Divider />
 
         <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
           <Scrollbars>
-            <List
-              disablePadding
-              subheader={
-                <ListSubheader
-                  disableSticky
-                  disableGutters
-                  className={classes.listSubheader}
-                >
-                  New
-                </ListSubheader>
-              }
-            >
-              {notifications.slice(0, 2).map((notification) => (
-                <NotificationItem
-                  key={notification.id}
-                  notification={notification}
-                />
-              ))}
-            </List>
-
-            <List
-              disablePadding
-              subheader={
-                <ListSubheader
-                  disableSticky
-                  disableGutters
-                  className={classes.listSubheader}
-                >
-                  Before that
-                </ListSubheader>
-              }
-            >
-              {notifications.slice(2, 5).map((notification) => (
-                <NotificationItem
-                  key={notification.id}
-                  notification={notification}
+            <List disablePadding>
+              {userConversations.map((item) => (
+                <ConversationItem
+                  key={item._id}
+                  isOpenSidebarConversation={isOpenSidebarConversation}
+                  conversation={item}
+                  isSelected={false}
+                  onSelectConversation={() => helper.handleSelectConversation(item, dispatch, history, `/app/chat/${item._id}`,  setOpen(false))}
                 />
               ))}
             </List>
           </Scrollbars>
         </Box>
 
-        <Divider />
-
         <Box sx={{ p: 1 }}>
-          <Button fullWidth disableRipple component={RouterLink} to="#">
-            View All
-          </Button>
+          <Button
+            onClick={() => setOpen(false)}
+            fullWidth
+            disableRipple
+            component={RouterLink}
+            to={PATH_APP.general.chat.root}> {t("View All")} </Button>
         </Box>
       </PopoverMenu>
     </>

@@ -1,14 +1,7 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import {
-    Grid,
-    Card,
-    CardContent,
-    Typography
-} from '@material-ui/core';
-import editFill from '@iconify-icons/eva/edit-fill';
-import CustomButton from 'src/components/Ui/Button';
-import { makeStyles } from '@material-ui/core/styles';
+import { Grid, Typography } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import OrderSummary from './OrderSummary';
 import Box from '@material-ui/core/Box';
@@ -19,34 +12,20 @@ import BillingAddressForm from './BillingAddressForm';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import Checkout from './Checkout';
+import MarketActions from '../MarketUi/MarketActions';
 import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 import helper from 'src/utils/helper';
 import BillingAddressCard from './BillingAddressCard';
 import { useHistory } from 'react-router-dom';
 import { PATH_APP } from 'src/routes/paths';
-import QVMCard from 'src/components/Ui/QvmCard';
-
-
-// ----------------------------------------------------------------------
-
-const useStyles = makeStyles((theme) => ({
-    root: {
-        marginBottom: theme.spacing(3)
-    },
-    center: {
-        display: 'block',
-        marginLeft: 'auto',
-        marginRight: 'auto',
-        width: '20%'
-    }
-}));
+import MainCard from 'src/components/Ui/MainCard';
 
 // ----------------------------------------------------------------------
 
 const steps = ['Billing Address', 'Payment Method', 'The request has been placed'];
 
-function ShippingSection(props) {
-    const classes = useStyles();
+function ShippingSection() {
+    const theme = useTheme();
     const { t } = useTranslation();
     const { billingAddress } = useSelector((state) => state.market);
     const dispatch = useDispatch();
@@ -112,47 +91,28 @@ function ShippingSection(props) {
 
     const renderContent = () => {
         if (activeStep === 0) {
-            return (
-                <BillingAddressForm formik={formik} />
-            );
+            return <BillingAddressForm formik={formik} />
         }
         if (activeStep === 1) {
-            return (
-                <>
-                    <Checkout />
-                    <CustomButton
-                        onClick={() => handleNext()}
-                    >{t("Complete the purchase")}</CustomButton>
-
-                </>
-            );
+            return <Checkout />
         }
 
         if (activeStep === 2) {
             return (
-                <>
-                    <Box component="img" src='/static/icons/success.svg' className={classes.center} />
-
-                    <Box sx={{ marginTop: '20px' }}>
-                        <Typography variant="subtitle1" className={classes.center}> {t('The request has been successfully placed')} </Typography>
-                    </Box>
-                    <Box sx={{ marginTop: '20px' }}>
-                        <CustomButton onClick={() => {
-                            history.push(PATH_APP.general.market);
-                            dispatch(updateBillingAddress(null));
-                            dispatch(updateCartItems([]));
-                        }}>{t("Continue Shopping")}</CustomButton>
-                    </Box>
-                </>
+                <MainCard title={t("The request has been successfully placed")}>
+                    <Box component="img" src='/static/icons/success.svg' sx={{ margin: 'auto', width: '20%' }} />
+                    <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.main, marginTop: '20px', textAlign: 'center' }}>
+                        {t('The request has been successfully placed')}
+                    </Typography>
+                </MainCard>
             );
         }
         return;
     };
 
-
     return (
         <>
-            <Box sx={{ width: '100%' }}>
+            <Box sx={{ marginBottom: theme.spacing(3) }}>
                 <Stepper activeStep={activeStep}>
                     {steps.map((label) => {
                         const stepProps = {};
@@ -168,42 +128,43 @@ function ShippingSection(props) {
 
             <Grid container spacing={2}>
                 <Grid item md={8} >
-                    <QVMCard>
+                    <>
                         {renderContent()}
-                    </QVMCard>
+                    </>
                 </Grid>
 
                 <Grid item md={4} >
-                    <QVMCard
-                        title={t("Order Summary")}
-                        action={() => history.push('/app/market/cart')}
-                        actionTitle={t("Edit")}
-                        icon={editFill}
-                    >
-                        <Box sx={{ mb: 3 }} />
-
+                    <MainCard title={t("Order Summary")}>
                         <OrderSummary />
+                        {activeStep == 0 &&
 
-                        <Box sx={{ mb: 3 }} />
-
-                        {activeStep == 0 && <CustomButton
-                            onClick={() => {
-                                formik.handleSubmit();
-                            }}
-                        >{t("Complete the purchase")}</CustomButton>
+                            <MarketActions
+                                edit
+                                clickAction={() => history.push('/app/market/cart')}
+                                clickCompletePur={() => { formik.handleSubmit() }} />
                         }
-                    </QVMCard>
+                    </MainCard>
 
                     {activeStep > 0 &&
-                        <QVMCard
-                            title={t("Billing Address")}
-                            action={() => setActiveStep(0)}
-                            actionTitle={t("Edit")}
-                            icon={editFill}
-                        >
-                            <BillingAddressCard />
-
-                        </QVMCard>
+                        <Box sx={{ mt: 2 }}>
+                            <MainCard title={t("Billing Address")}>
+                                <BillingAddressCard />
+                                {activeStep === 2 ?
+                                    <MarketActions
+                                        activeStep={activeStep}
+                                        clickContinueSh={() => {
+                                            history.push(PATH_APP.general.market);
+                                            dispatch(updateBillingAddress(null));
+                                            dispatch(updateCartItems([]));
+                                        }} />
+                                    :
+                                    <MarketActions
+                                        edit
+                                        clickAction={() => setActiveStep(0)}
+                                        clickCompletePur={() => handleNext()} />
+                                }
+                            </MainCard>
+                        </Box>
                     }
                 </Grid>
             </Grid>
