@@ -1,11 +1,9 @@
-import { Icon } from '@iconify/react';
 import Scrollbars from 'src/components/Scrollbars';
+import NotificationItem from './NotificationItem';
 import PopoverMenu from 'src/components/PopoverMenu';
 import { Link as RouterLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import React, { useRef, useState, useEffect } from 'react';
-import doneAllFill from '@iconify-icons/eva/done-all-fill';
-import { useTranslation } from 'react-i18next';
 import {
   markAllAsRead,
   getNotifications
@@ -22,8 +20,7 @@ import {
   ListSubheader
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
-import { Chart, Info, Mail, Orders, OrdersArrow, Parts } from '../../../../icons/icons';
-import UnseenMessage from './UnseenMessage';
+import { Note } from '../../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -44,11 +41,11 @@ function Notifications() {
   const anchorRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
   const dispatch = useDispatch();
-  const { t } = useTranslation();
   const { notifications } = useSelector((state) => state.notifications);
   const { unseenMessages } = useSelector((state) => state.chat);
   const totalUnRead = notifications.filter((item) => item.isUnRead === true)
     .length;
+
   useEffect(() => {
     dispatch(getNotifications());
   }, [dispatch]);
@@ -64,8 +61,8 @@ function Notifications() {
         onClick={() => setOpen(true)}
         color={isOpen ? 'primary' : 'default'}
       >
-        <Badge badgeContent={unseenMessages.length > 0 ? unseenMessages.length : null} color="error">
-          <Mail width='24' height='24' fill='#7E8D99' fillArr='#F20505' />
+        <Badge badgeContent={unseenMessages.length} color="error">
+          <Note width='24' height='24' fill='#7E8D99' />
         </Badge>
       </MIconButton>
 
@@ -77,60 +74,73 @@ function Notifications() {
       >
         <Box sx={{ display: 'flex', alignItems: 'center', py: 2, px: 2.5 }}>
           <Box sx={{ flexGrow: 1 }}>
-            <Typography variant="subtitle1">{t("Messages")}</Typography>
+            <Typography variant="subtitle1">Notifications</Typography>
             <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-              {t("You have {{count}} unread messages",
-                { count: unseenMessages.length })}
+              You have {totalUnRead} unread messages
             </Typography>
           </Box>
 
-          {unseenMessages.length > 0 && (
+          {totalUnRead > 0 && (
             <Tooltip title=" Mark all as read">
               <MIconButton color="primary" onClick={handleMarkAllAsRead}>
-                <Icon icon={doneAllFill} width={20} height={20} />
               </MIconButton>
             </Tooltip>
           )}
         </Box>
 
-        {unseenMessages.length > 0 &&
-          <>
-            <Divider />
+        <Divider />
 
-            <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
-              <Scrollbars>
-                <List
-                  disablePadding
-                  subheader={
-                    <ListSubheader
-                      disableSticky
-                      disableGutters
-                      className={classes.listSubheader}
-                    >
-                      {t("New")}
-                    </ListSubheader>
-                  }
+        <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
+          <Scrollbars>
+            <List
+              disablePadding
+              subheader={
+                <ListSubheader
+                  disableSticky
+                  disableGutters
+                  className={classes.listSubheader}
                 >
-                  {unseenMessages.map((message) => (
-                    <UnseenMessage
-                      key={message._id}
-                      message={message}
-                      setOpen={setOpen}
-                    />
-                  ))}
-                </List>
-              </Scrollbars>
-            </Box>
+                  New
+                </ListSubheader>
+              }
+            >
+              {notifications.slice(0, 2).map((notification) => (
+                <NotificationItem
+                  key={notification.id}
+                  notification={notification}
+                />
+              ))}
+            </List>
 
-            <Divider />
+            <List
+              disablePadding
+              subheader={
+                <ListSubheader
+                  disableSticky
+                  disableGutters
+                  className={classes.listSubheader}
+                >
+                  Before that
+                </ListSubheader>
+              }
+            >
+              {notifications.slice(2, 5).map((notification) => (
+                <NotificationItem
+                  key={notification.id}
+                  notification={notification}
+                />
+              ))}
+            </List>
+          </Scrollbars>
+        </Box>
 
-            <Box sx={{ p: 1 }}>
-              <Button fullWidth disableRipple component={RouterLink} to="#">
-                {t("View All")}
-              </Button>
-            </Box>
-          </>}
+        <Divider />
 
+        <Box sx={{ p: 1 }}>
+          <Button fullWidth disableRipple component={RouterLink} to="#">
+            View All
+          </Button>
+        </Box>
       </PopoverMenu>
     </>
   );

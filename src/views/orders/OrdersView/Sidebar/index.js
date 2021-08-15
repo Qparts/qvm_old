@@ -17,7 +17,9 @@ import {
   onOpenSidebarConversation,
   onCloseSidebarConversation,
   getContacts,
-  setActiveConversation
+  setActiveConversation,
+  getCompanyUsers,
+  getSelectedConversation
 } from 'src/redux/slices/chat';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
@@ -55,10 +57,11 @@ function Sidebar() {
     conversations,
     isOpenSidebarConversation,
     activeConversationId,
-    userConversations
+    userConversations,
+    onlineUsers
   } = useSelector((state) => state.chat);
 
-  const { user } = useSelector((state) => state.authJwt);
+  const { user, currentSocket } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
     if (isMoblie) {
@@ -79,13 +82,12 @@ function Sidebar() {
     setSearchQuery('');
   };
 
+  //search for companies by name to create new conversation.
   const handleChangeSearch = async (event) => {
     try {
       const { value } = event.target;
       setSearchQuery(value);
       if (value) {
-        console.log("value", value)
-        // const response = await chatService.chatSearch(value, user.subscriber.id);
         const response = await chatService.chatSearch(value);
         setSearchResults(response.data);
       } else {
@@ -96,65 +98,59 @@ function Sidebar() {
     }
   };
 
-  const handleSearchFocus = (event) => {
+  const handleSearchFocus = () => {
     setSearchFocused(true);
   };
 
+  //navigate to conversation chat window.
   const handleSearchSelect = (result) => {
     setSearchFocused(false);
     setSearchQuery('');
     history.push(`/app/chat/${result._id}`);
   };
 
+
+
   const handleSelectContact = async (result) => {
-    let selectedConversation = null;
     if (result.id == user.subscriber.companyId)
       return;
-    let { data: companyUsers = [] } = await chatService.getCompanyUsers(result.id);
-    console.log("companyUsers", companyUsers);
 
+    //get conversation from currant conversations
+    let selectedConversation = getSelectedConversation(userConversations, result.id);
 
-    let users = [];
-
-    for (let companyUser of companyUsers) {
-      users.push({
-        id: companyUser.id,
-        companyId: companyUser.company.id,
-        // email: user.subscriber.email,
-        // mobile: user.subscriber.mobile,
-        name: companyUser.name,
-        companyName: companyUser.company.name,
-        companyNameAr: companyUser.company.nameAr,
-      })
-    }
-
+    //if selected company not exist in the current conversation create new conversation 
+    //with the members of the selected company.
     if (selectedConversation == null) {
-      users.push({
-        id: user.subscriber.id,
-        companyId: user.subscriber.companyId,
-        // email: user.subscriber.email,
-        // mobile: user.subscriber.mobile,
-        name: user.subscriber.name,
-        companyName: user.company.name,
-        companyNameAr: user.company.nameAr,
-      });
+
+      let users = await getCompanyUsers(result.id, user);
 
       const response = await chatService.createUserConversation({
         members: users
       })
-      selectedConversation = response.data;
-    }
 
-    dispatch(getContacts(user.subscriber.id));
+      selectedConversation = response.data;
+
+      //update conversation list in the online members of the selected company.
+      selectedConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
+        let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
+        if (onlineUserIndex != -1) {
+          currentSocket.current.emit("updateContacts", member.id);
+        }
+      })
+
+      //update login user conversation list.
+      dispatch(getContacts(user.subscriber.id));
+    }
 
     dispatch(setActiveConversation(selectedConversation));
 
-
+    //navigate to selected conversation's chat window.
     if (handleSearchSelect) {
       handleSearchSelect(selectedConversation);
     }
 
   };
+
 
   const handleToggleConversation = () => {
     if (isOpenSidebarConversation) {

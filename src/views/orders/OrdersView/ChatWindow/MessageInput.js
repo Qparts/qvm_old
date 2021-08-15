@@ -9,6 +9,7 @@ import EmojiPicker from 'src/components/EmojiPicker';
 import attach2Fill from '@iconify-icons/eva/attach-2-fill';
 import roundAddPhotoAlternate from '@iconify-icons/ic/round-add-photo-alternate';
 import { makeStyles } from '@material-ui/core/styles';
+import { useTranslation } from 'react-i18next';
 import {
   Box,
   Input,
@@ -51,6 +52,7 @@ function MessageInput({
   const fileInputRef = useRef(null);
   const [message, setMessage] = useState('');
   const { user } = useSelector((state) => state.authJwt);
+  const { t } = useTranslation();
 
 
   const handleAttach = () => {
@@ -91,7 +93,7 @@ function MessageInput({
         disableUnderline
         onKeyUp={handleKeyUp}
         onChange={handleChangeMessage}
-        placeholder="Type a message"
+        placeholder={t("Type a message")}
         className={classes.input}
         startAdornment={
           <InputAdornment position="start">

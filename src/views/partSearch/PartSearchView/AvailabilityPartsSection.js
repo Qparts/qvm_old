@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@material-ui/core';
-// import { Icon } from '@iconify/react';
-// import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
+import { Box, Grid, Typography, Divider } from '@material-ui/core';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
@@ -16,6 +14,8 @@ import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
 import { Plus } from "../../../icons/icons";
 import PurchaseOrderSection from './PurchaseOrderSection';
+import CustomButton from 'src/components/Ui/Button';
+import SendPurchaseOrderSection from './SendPurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
@@ -39,21 +39,9 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         borderBottom: '1px solid #E5EBF0',
         paddingBottom: '10px',
-        minWidth: '300px',
-        '@media (max-width: 700px) and (min-width: 300px)': {
-            display: 'block',
-            width: '100%',
-            minWidth: '100%',
-        },
     },
     availabilityActionsLeft: {
         width: '300px',
-        minWidth: '300px',
-        '@media (max-width: 700px) and (min-width: 300px)': {
-            width: '100%',
-            minWidth: '100%',
-            marginBottom: theme.spacing(2)
-        },
     }
 }));
 
@@ -64,8 +52,9 @@ function AvailabilityPartsSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [openAddToPO, setOpenAddToPO] = useState(false);
+    const [openSendPO, setOpenSendPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
-        rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
+        rowsPerPage, error, query, locationFilters, filter, orders } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -79,21 +68,10 @@ function AvailabilityPartsSection() {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
     }
 
-    // const addToCompanyCart = (item) => {
-    //     console.log("cart item", item);
-    //     dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
-    //     setOpenAddToPO(true);
-    // }
-
-    // const addToCart = (item) => {
-    //     return (
-    //         <TableAction
-    //             type='partSearch'
-    //             title={t("Buy now")}
-    //             onClick={() => addToCompanyCart(item)}
-    //             textIcon={<Icon icon={roundAddShoppingCart} color='#CED5D8' style={{ fontSize: '14px' }} />} />
-    //     )
-    // }
+    const addToCompanyCart = (item) => {
+        dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
+        setOpenAddToPO(true);
+    }
 
     const showDetailsElement = (item) => {
         return (
@@ -105,6 +83,16 @@ function AvailabilityPartsSection() {
         )
     }
 
+
+    const addToCart = (item) => {
+        return (
+            <TableAction
+                type='partSearch'
+                title={t("Add To PO")}
+                onClick={() => addToCompanyCart(item)}
+                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
+        )
+    }
 
     const closeOrderDailog = () => {
         dispatch(setSelectedPart({ selectedPart: null }));
@@ -138,6 +126,18 @@ function AvailabilityPartsSection() {
                             label={t("Search by part number")}
                             selectBg='selectBg' />
                     </Box>
+
+                    <Box className={classes.availabilityActionsRight}>
+                        <CustomButton
+                            btnBg="btnBg"
+                            mainBorderBtn='mainBorderBtn'
+                            disabled={orders.length == 0}
+                            onClick={() => setOpenSendPO(true)}
+                        >
+                            {t("Send PO")}
+                        </CustomButton>
+                    </Box>
+
                     <Box className={classes.availabilityActionsRight}>
                         <LocationFilterSection />
                     </Box>
@@ -165,8 +165,7 @@ function AvailabilityPartsSection() {
                         }
                     ]}
 
-                    // actions={[{ element: showDetailsElement }, { element: addToCart }]}
-                    actions={[{ element: showDetailsElement }]}
+                    actions={[{ element: showDetailsElement }, { element: addToCart }]}
                     datatable={productResult}
                     error={error}
                     onSelectedPage={changePagehandler}
@@ -176,7 +175,7 @@ function AvailabilityPartsSection() {
                     size={searchSize}
                     rowsPerPage={rowsPerPage}
                     hasPagination={true}
-                    dataTableGeneral='dataTableGeneral'
+
                 />
             </SecContainer>
 
@@ -197,6 +196,15 @@ function AvailabilityPartsSection() {
                     <PurchaseOrderSection
                         closeOrderDailog={closeOrderDailog} />
                 }
+            </CustomDialog>
+
+
+            <CustomDialog
+                fullWidth={true}
+                open={openSendPO}
+                handleClose={() => setOpenSendPO(false)}
+                title={t("Send PO")}>
+                <SendPurchaseOrderSection setOpenSendPO={setOpenSendPO} orders={orders}/>
             </CustomDialog>
         </Box >
     );

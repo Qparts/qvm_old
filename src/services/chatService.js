@@ -31,12 +31,26 @@ function createMessage(message) {
 }
 
 
+function updateMessage(message) {
+  return http.put(chatUrl.postNewMessage, message);
+}
+
+function getUnseenMessages(conversations) {
+  return http.post(chatUrl.unseenMessages, conversations);
+}
+
+function markConversationAsSee(conversationId , sender){
+  return http.put(chatUrl.putSeenConversationMessages(conversationId , sender));
+}
+
 export default {
   chatSearch,
   getUserConversations,
-  // getConversationDetails,
   getConversationMessage,
   createMessage,
   createUserConversation,
-  getCompanyUsers
+  getCompanyUsers,
+  updateMessage,
+  getUnseenMessages,
+  markConversationAsSee,
 };

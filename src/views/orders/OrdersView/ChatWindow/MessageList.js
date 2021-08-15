@@ -31,6 +31,8 @@ function MessageList({ className, ...other }) {
   } = useSelector((state) => state.chat);
 
   const { user } = useSelector((state) => state.authJwt);
+
+  //members of active conversation.
   const currentContact = activeConversation?.members?.filter(x => x.id != user.subscriber.id);
 
 
@@ -50,7 +52,7 @@ function MessageList({ className, ...other }) {
       className={classes.scroll}
     >
       <div className={clsx(classes.root, className)} {...other}>
-        {currentContact && pathname != '/app/chat/new' && messages?.map((message) => (
+        { pathname != '/app/chat/new' && messages?.map((message) => (
           <MessageItem
             key={message._id}
             message={message}

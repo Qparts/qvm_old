@@ -121,12 +121,6 @@ function ConversationItem({
             />
           </div>
 
-          {/* {isOnlineGroup && (
-            <BadgeStatus
-              status="online"
-              sx={{ right: 2, bottom: 2, position: 'absolute' }}
-            />
-          )} */}
         </div>
       </ListItemAvatar>
 

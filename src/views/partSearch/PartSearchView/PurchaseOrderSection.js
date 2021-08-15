@@ -1,26 +1,42 @@
 import React, { useState } from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Grid, Typography } from '@material-ui/core';
+import { Box, Grid, Typography, Divider } from '@material-ui/core';
 import TextField from 'src/components/Ui/TextField';
 import Button from 'src/components/Ui/Button';
-import { updateOrders } from 'src/redux/slices/partSearch';
+import { addOrder } from 'src/redux/slices/partSearch';
+
+// ----------------------------------------------------------------------
+
+const useStyles = makeStyles((theme) => ({
+    root: {},
+    locationFilterResult: {
+        display: 'flex'
+    },
+    locationFilter: {
+        minWidth: '300px'
+    }
+}));
 
 // ----------------------------------------------------------------------
 
 function PurchaseOrderSection(props) {
+    const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const { selectedPart, companies, orders } = useSelector((state) => state.PartSearch);
+    const { themeDirection } = useSelector((state) => state.settings);
     const [quantity, setQuantity] = useState(0);
 
+    //add order item to purchase from specific company.
     const addToOrder = () => {
         const order = {
             companyId: selectedPart.companyId,
             quantity: quantity,
             order: selectedPart
         };
-        dispatch(updateOrders([...orders, order]));
+        dispatch(addOrder(order));
         props.closeOrderDailog();
     }
 
@@ -85,7 +101,8 @@ function PurchaseOrderSection(props) {
                     noWrap
                     variant="body2"
                 >
-                    {companies.get(selectedPart.companyId).name}
+                    {themeDirection == 'ltr' ? companies.get(selectedPart.companyId).name
+                        : companies.get(selectedPart.companyId).nameAr}
                 </Typography>
             </Grid>
 

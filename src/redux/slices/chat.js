@@ -11,9 +11,9 @@ const initialState = {
   isOpenSidebarConversation: true,
   isOpenSidebarInfo: true,
   userConversations: [],
+  unseenMessages: [],
   messages: [],
   onlineUsers: [],
-  currentContact: null
 };
 
 const slice = createSlice({
@@ -36,7 +36,12 @@ const slice = createSlice({
       state.userConversations = action.payload;
     },
 
-    // GET CONVERSATION
+    //MESSAGE WITH I STATUS.
+    getUnseenMessagesSuccess(state, action) {
+      state.unseenMessages = action.payload;
+    },
+
+    // GET MESSAGES OF SELECTED  CONVERSATION.
     getConversationSuccess(state, action) {
       const conversation = action.payload;
       if (conversation) {
@@ -47,59 +52,44 @@ const slice = createSlice({
       }
     },
 
-    // ON SEND MESSAGE
-    onSendMessage(state, action) {
-      const conversation = action.payload;
-      const {
-        conversationId,
-        messageId,
-        message,
-        contentType,
-        attachments,
-        createdAt,
-        senderId
-      } = conversation;
 
-      const newMessage = {
-        id: messageId,
-        body: message,
-        contentType: contentType,
-        attachments: attachments,
-        createdAt: createdAt,
-        senderId: senderId
-      };
-
-      state.conversations.byId[conversationId].messages.push(newMessage);
-    },
-
+    //SET ACTIVE CONVERSATION AND ACTIVE CONVERSATION KEY
     setActiveConversation(state, action) {
-      state.activeConversation = action.payload;
+      const conversation = action.payload;
+      state.activeConversation = conversation;
+      state.activeConversationId = conversation?._id;
     },
 
+    //CREATE NEW MESSAGE SUCCESS
     createMessageSuccess(state, action) {
       state.messages = action.payload;
     },
 
+    //APPAND ARRIVAL MESSAGE TO MESSAGE LIST IF ACTOIVE CONVERSATION ID
+    // EQUALS ARRIVALE MESSAGE CONVERSATION ID.
     updateRecivedMessages(state, action) {
       state.messages = [...state.messages, action.payload];
     },
 
+    //UPDATE ORDERR IN THE RECIVER SIDE.
+    updateRecivedOrderMessages(state, action) {
+      console.log("RecivedOrderMessages", JSON.parse(action.payload.text));
+      let updatedOrder = action.payload;
+      let newMessages = [...state.messages];
+      let orderIndex = newMessages.findIndex(x => x._id == updatedOrder._id);
+      newMessages[orderIndex] = updatedOrder;
+      state.messages = newMessages;
+
+    },
+
+    //UDATE ONLINE USERS.
     updateOnlineUsers(state, action) {
       state.onlineUsers = action.payload;
     },
 
-    // updateCurrentContactSuccess(state, action) {
-    //   state.currentContact = action.payload;
-    // },
-
-    // RESET ACTIVE CONVERSATION
-    resetActiveConversation(state) {
-      state.activeConversationId = null;
-    },
-
-    addRecipient(state, action) {
-      const recipients = action.payload;
-      state.recipients = recipients;
+    //UPDATE ACTIVE CONVERSATION ID.
+    setActiveConversationId(state, action) {
+      state.activeConversationId = action.payload;
     },
 
     // SIDEBAR
@@ -127,20 +117,22 @@ export default slice.reducer;
 // Actions
 export const {
   addRecipient,
-  onSendMessage,
   onOpenSidebarInfo,
   onCloseSidebarInfo,
-  resetActiveConversation,
+  // resetActiveConversation,
+  setActiveConversationId,
   onOpenSidebarConversation,
   onCloseSidebarConversation,
   setActiveConversation,
   updateRecivedMessages,
+  updateRecivedOrderMessages,
   updateOnlineUsers,
 
 } = slice.actions;
 
 // ----------------------------------------------------------------------
 
+//GET ALL CONVERSATION OF LOGIN USER.
 export function getContacts(userId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
@@ -153,15 +145,31 @@ export function getContacts(userId) {
   };
 }
 
+//GET UNSEEN MESSAGES OF LOGIN USER (FOR ALL USER'S CONVERSATIONS)
+export function getUnseenMessages(sender, userConversations) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      var conversations = userConversations.map((item) => {
+        return item._id;
+      });
+      const { data: unseenMessages } = await chatService.getUnseenMessages({ sender: sender, conversations: conversations });
+      dispatch(slice.actions.getUnseenMessagesSuccess(unseenMessages));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
 
 // ----------------------------------------------------------------------
 
+//GET MESSAGES OF SPECIFIC CONVERSATION.
 export function getConversation(conversationKey) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await chatService.getConversationMessage(conversationKey);
-      // console.log("conversationKey slice" , conversationKey);
       dispatch(
         slice.actions.getConversationSuccess({ messages: response.data, conversationKey })
       );
@@ -173,7 +181,7 @@ export function getConversation(conversationKey) {
 
 // ----------------------------------------------------------------------
 
-
+//CREATE NEW MESSAGE.
 export function createNewMessage(value, messages) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
@@ -190,18 +198,42 @@ export function createNewMessage(value, messages) {
 }
 
 
-// export function updateCurrentContact(friendId) {
-//   return async (dispatch) => {
-//     dispatch(slice.actions.startLoading());
-//     slice.actions.updateCurrentContactSuccess(null);
-//     try {
-//       const friendDetails = await chatService.getConversationDetails(friendId);
-//       const currentFriend = friendDetails.data[0];
-//       dispatch(
-//         slice.actions.updateCurrentContactSuccess(currentFriend)
-//       );
-//     } catch (error) {
-//       dispatch(slice.actions.hasError(error));
-//     }
-//   };
-// }
+//GET CONVERSATION MEMBERS BY ADDING LOGIN USER TO COMPANY SUBSCRIBERS.
+export const getCompanyUsers = async (companyId, user) => {
+  try {
+    let { data: companyUsers = [] } = await chatService.getCompanyUsers(companyId);
+    let users = [];
+    for (let companyUser of companyUsers) {
+      users.push({
+        id: companyUser.id,
+        companyId: companyUser.company.id,
+        name: companyUser.name,
+        companyName: companyUser.company.name,
+        companyNameAr: companyUser.company.nameAr,
+      })
+    }
+
+    users.push({
+      id: user.subscriber.id,
+      companyId: user.subscriber.companyId,
+      name: user.subscriber.name,
+      companyName: user.company.name,
+      companyNameAr: user.company.nameAr,
+    });
+
+    return users;
+  } catch (error) {
+    console.log("error", error);
+  }
+
+}
+
+
+//CHECK IF THE SELECTED CONVERSATION ALREAY EXIST IN THE CURRENT CONVERSATION OF THR LOGIN USER.
+export const getSelectedConversation = (userConversations, companyId) => {
+  for (let conversation of userConversations) {
+    if (conversation.members.findIndex(x => x.companyId == companyId) != -1) {
+      return conversation;
+    }
+  }
+}
