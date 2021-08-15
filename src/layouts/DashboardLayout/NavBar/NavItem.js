@@ -74,11 +74,6 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: '0px 4px 8px rgba(0, 0, 0, 0.3)',
     '& $svg path': {
       fill: theme.palette.grey[0],
-    },
-    '& $notificationBadge': {
-      backgroundColor: theme.palette.grey[0],
-      right: '23px',
-      bottom: '32px',
     }
   },
   isActiveListItemSub: {
@@ -95,11 +90,6 @@ const useStyles = makeStyles((theme) => ({
       transform: 'scale(2)',
       backgroundColor: theme.palette.primary.main,
     },
-    '& $notificationBadge': {
-      backgroundColor: theme.palette.grey[0],
-      right: '23px',
-      bottom: '32px',
-    }
   },
   notificationBadge: {
     background: theme.palette.primary.main,
@@ -144,6 +134,7 @@ function NavItem({
 }) {
   const classes = useStyles();
   const [show, setShow] = useState(open);
+  const [notifi, setNotifi] = useState(notification);
   const history = useHistory();
   const dispatch = useDispatch();
   const { logout } = useAuth();
@@ -158,6 +149,8 @@ function NavItem({
   const logoutFun = () => {
     if (logoutAttr) {
       helper.handleLogout(logout, dispatch, isMountedRef, history, PATH_PAGE.auth.login, enqueueSnackbar);
+    } else if(notifi === true) {
+      setNotifi(false);
     }
   }
 
@@ -178,7 +171,7 @@ function NavItem({
           {...other}
         >
           <ListItemIcon>{icon && icon}</ListItemIcon>
-          {notification ? <span className={classes.notificationBadge}></span> : ''}
+          {notifi === true ? <span className={classes.notificationBadge}></span> : ''}
           <ListItemText disableTypography primary={title} />
           {info && info}
           <Box
@@ -224,7 +217,7 @@ function NavItem({
       <ListItemIcon className={classes.listIcon}>
         {isSubItem ? <span className={classes.subIcon} /> : icon}
       </ListItemIcon>
-      {notification ? <span className={classes.notificationBadge}></span> : ''}
+      {notifi === true ? <span className={classes.notificationBadge}></span> : ''}
       <ListItemText disableTypography primary={title} />
 
       {info && info}

@@ -38,7 +38,7 @@ function CatalogSearch() {
                 </Grid>
 
                 <Grid item xs={12} md={6}>
-                    <MainCard title={t("Find Catalog from List")}>
+                    <MainCard title={t("Find Catalog from List")} cardMt='cardMt'>
                         <TextField
                             type='select'
                             label={t("catalog")}

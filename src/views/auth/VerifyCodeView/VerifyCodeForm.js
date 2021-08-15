@@ -63,7 +63,7 @@ function VerifyCodeForm({ formik }) {
         </FormHelperText>
 
         <Box sx={{ marginTop: '20px' }}>
-          <Button type="submit" homeBtn='homeBtn'>{t("Verify")}</Button>
+          <Button type="submit">{t("Verify")}</Button>
         </Box>
       </Form>
     </FormikProvider>

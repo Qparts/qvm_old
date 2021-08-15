@@ -8,17 +8,23 @@ import Avatar from '../../../../components/Ui/Avatar';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     partsMb: {
         marginBottom: '7px'
     },
     CompanyContactFlex: {
         display: 'flex',
         alignItems: 'center',
-        justifyContent: 'flex-end'
+        justifyContent: 'flex-end',
+        [theme.breakpoints.down('sm')]: {
+            justifyContent: 'center'
+        },
     },
     CompanyContactMt: {
-        marginTop: '43px'
+        marginTop: theme.spacing(5.375),
+        [theme.breakpoints.down('sm')]: {
+            marginTop: theme.spacing(2)
+        },
     }
 }));
 

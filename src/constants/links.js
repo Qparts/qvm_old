@@ -9,8 +9,7 @@ const CATALOG_SERVICE = `${BASE_URL}/catalog`;
 const PRODUCT_SERVICE = `${BASE_URL}/product`;
 const PLAN_SERVICE = `${BASE_URL}/plan`;
 const INVOICE_SERVICE = `${BASE_URL}/invoice`;
-const CHAT_SERVICE = `${BASE_URL}/chat`
-
+const CHAT_SERVICE = `${BASE_URL}/chat`;
 
 const subscriber = {
   postLogin: `${SUBSCRIBER_SERVICE}/login`,
@@ -27,15 +26,17 @@ const subscriber = {
   getResetPassword: (token) => `${SUBSCRIBER_SERVICE}/reset-password/${token}`,
   putInvoiceTemplate: `${SUBSCRIBER_SERVICE}/invoice-template`,
   getCompanies: `${SUBSCRIBER_SERVICE}/companies/`,
-  getCompaniesByName: (name) => `${SUBSCRIBER_SERVICE}/company/search-name/${name}`,
-  getUsersByCompanyId: (companyId) => `${SUBSCRIBER_SERVICE}/company/${companyId}/users`
+  getCompaniesByName: (name) =>
+    `${SUBSCRIBER_SERVICE}/company/search-name/${name}`,
+  getUsersByCompanyId: (companyId) =>
+    `${SUBSCRIBER_SERVICE}/company/${companyId}/users`
 };
 
 const upload = {
   postCompanyLogo: `${UPLOAD_SERVICE}/logo`,
   postBankReceipt: `http://localhost:3000/upload/receipt`,
-  getCompanyLogo: (fileName) => `${UPLOAD_SERVICE}/logo/${fileName}`,
-}
+  getCompanyLogo: (fileName) => `${UPLOAD_SERVICE}/logo/${fileName}`
+};
 
 const setting = {
   addBranch: `${SUBSCRIBER_SERVICE}/branch`,
@@ -45,7 +46,7 @@ const setting = {
   putDefaultPolicy: `${SUBSCRIBER_SERVICE}/default-policy`,
   putDefaultCustomer: `${SUBSCRIBER_SERVICE}/default-customer`,
   putDefaultBranch: `${SUBSCRIBER_SERVICE}/default-branch`,
-  putSettingVariables: `${SUBSCRIBER_SERVICE}/setting-variables`,
+  putSettingVariables: `${SUBSCRIBER_SERVICE}/setting-variables`
 };
 
 const customer = {
@@ -54,7 +55,7 @@ const customer = {
   postCustomer: `${CUSTOMER_SERVICE}/customer`,
   postSupplier: `${CUSTOMER_SERVICE}/supplier`,
   getCustomers: `${CUSTOMER_SERVICE}/customers`,
-  getSuppliers: `${CUSTOMER_SERVICE}/suppliers`,
+  getSuppliers: `${CUSTOMER_SERVICE}/suppliers`
 };
 
 const location = {
@@ -100,17 +101,29 @@ const stock = {
   getSalesCreditBalance: `${STOCK_SERVICE}/sales-credit-balance`,
   postCreditPayment: (type) => `${STOCK_SERVICE}/credit-payment/${type}`,
   getPendingItems: `${STOCK_SERVICE}/pending-items`,
-  putPendingItems: `${STOCK_SERVICE}/pending-item`,
+  putPendingItems: `${STOCK_SERVICE}/pending-item`
 };
 
 const catalog = {
   getCatalogs: `${CATALOG_SERVICE}/catalogs`,
   getModels: (catalogid) => `${CATALOG_SERVICE}/models?catalogid=${catalogid}`,
-  getCars: (catalogId, modelId, params) => `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''} `,
+  getCars: (catalogId, modelId, params) =>
+    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${
+      params != null ? 'params=' + params : ''
+    } `,
   getCarByVIN: (vin) => `${CATALOG_SERVICE}/cars/vin?query=${vin}`,
-  getFilters: (catalogId, modelId, params) => `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''} `,
-  getGroups: (catalogId, carId, groupId, criterias) => `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''}&${criterias != null ? 'criterias=' + criterias : ''} `,
-  getPart: (catalogId, carId, groupId, criterias) => `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''}&${criterias != null ? 'criterias=' + criterias : ''} `,
+  getFilters: (catalogId, modelId, params) =>
+    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${
+      params != null ? 'params=' + params : ''
+    } `,
+  getGroups: (catalogId, carId, groupId, criterias) =>
+    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${
+      groupId ? 'groupid=' + groupId : ''
+    }&${criterias != null ? 'criterias=' + criterias : ''} `,
+  getPart: (catalogId, carId, groupId, criterias) =>
+    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${
+      groupId ? 'groupid=' + groupId : ''
+    }&${criterias != null ? 'criterias=' + criterias : ''} `
 };
 
 const product = {
@@ -120,30 +133,30 @@ const product = {
   getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
   specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
   postQvmStockUpload: `${PRODUCT_SERVICE}/stock-upload`,
-  postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`
-}
+  postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`,
+  getDashboardMetrics: `${PRODUCT_SERVICE}/dashboard-metrics`
+};
 
 const plan = {
   getPlans: `${PLAN_SERVICE}/plans`,
   getPlansFeatures: `${PLAN_SERVICE}/plans-features`,
-  getPromtion: `${PLAN_SERVICE}//promo-code?`,
-}
+  getPromtion: `${PLAN_SERVICE}//promo-code?`
+};
 
 const invoice = {
   getBanks: `${INVOICE_SERVICE}/banks`,
   paymentOrder: `${INVOICE_SERVICE}/payment-order`,
   wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
   pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`
-}
+};
 
 const chat = {
   getUserConversations: (userId) => `${CHAT_SERVICE}/conversation/${userId}`,
   postNewChat: `${CHAT_SERVICE}/conversation/`,
   postNewMessage: `${CHAT_SERVICE}/messages/`,
-  getConversationMessages: (conversationKey) => `${CHAT_SERVICE}/messages/${conversationKey}`
-
-}
-
+  getConversationMessages: (conversationKey) =>
+    `${CHAT_SERVICE}/messages/${conversationKey}`
+};
 
 export default {
   subscriber,

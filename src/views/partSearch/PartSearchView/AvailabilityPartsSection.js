@@ -176,7 +176,7 @@ function AvailabilityPartsSection() {
                     size={searchSize}
                     rowsPerPage={rowsPerPage}
                     hasPagination={true}
-
+                    dataTableGeneral='dataTableGeneral'
                 />
             </SecContainer>
 

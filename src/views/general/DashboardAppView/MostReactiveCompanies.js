@@ -4,12 +4,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import {
-    Card,
-    MenuItem
-} from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import { More } from '../../../icons/icons';
-import TextField from '../../../components/Ui/TextField';
+// import TextField from '../../../components/Ui/TextField';
 import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
@@ -66,7 +63,7 @@ function MostSearchedParts({ className, ...other }) {
 
     return (
         <Card className={clsx(classes.root, classes.reactiveCompanies, className)} {...other}>
-            <TextField
+            {/* <TextField
                 type='select'
                 id='mostReactive'
                 name='mostReactive'
@@ -87,7 +84,7 @@ function MostSearchedParts({ className, ...other }) {
                 <MenuItem key={t("one year")} value={t("one year")}>
                     {t("one year")}
                 </MenuItem>
-            </TextField>
+            </TextField> */}
 
             <Datatable
                 header={[

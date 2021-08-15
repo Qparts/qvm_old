@@ -4,12 +4,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import {
-    Card,
-    MenuItem
-} from '@material-ui/core';
+import { Card } from '@material-ui/core';
 import { More } from '../../../icons/icons';
-import TextField from '../../../components/Ui/TextField';
 import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
@@ -37,7 +33,7 @@ const INVOICES = [
     },
 ];
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
     root: {},
     partsSearch: {
         boxShadow: 'none',
@@ -66,29 +62,6 @@ function MostSearchedParts({ className, ...other }) {
 
     return (
         <Card className={clsx(classes.root, classes.partsSearch, className)} {...other}>
-            <TextField
-                type='select'
-                id='partsSearched'
-                name='partsSearched'
-                value={t("one week")}
-                dateFilter='dateFilter'
-                datePadding='datePadding'
-                dateFilterWidth="dateFilterWidth"
-            >
-                <MenuItem key={t("one week")} value={t("one week")}>
-                    {t("one week")}
-                </MenuItem>
-                <MenuItem key={t("one month")} value={t("one month")}>
-                    {t("one month")}
-                </MenuItem>
-                <MenuItem key={t("6 months")} value={t("6 months")}>
-                    {t("6 months")}
-                </MenuItem>
-                <MenuItem key={t("one year")} value={t("one year")}>
-                    {t("one year")}
-                </MenuItem>
-            </TextField>
-
             <Datatable
                 header={[
                     {
