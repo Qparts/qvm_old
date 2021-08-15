@@ -30,8 +30,8 @@ const useStyles = makeStyles((theme) => ({
         background: '#F6F8FC',
         borderCollapse: 'separate',
         borderSpacing: '0 10px',
-        '@media (max-width: 413px)': {
-            minWidth: '341px',
+        '@media (max-width: 369px)': {
+            minWidth: '298px',
         },
     },
     dataTableGeneral: {

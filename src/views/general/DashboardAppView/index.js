@@ -12,8 +12,9 @@ import PartsSearchRate from './PartsSearchRate';
 import MostSearchedParts from './MostSearchedParts';
 import MostReactiveCompanies from './MostReactiveCompanies';
 import SecContainer from '../../../components/Ui/SecContainer';
-import { Parts, SearchFill, Orders, Search, Upload, Plus } from '../../../icons/icons';
+import { Parts, SearchFill, Search, Upload, Plus } from '../../../icons/icons';
 import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
+import { getDashboardMetrics } from 'src/redux/slices/dashboard';
 import { PATH_APP } from 'src/routes/paths';
 import OfferContainer from '../../../components/Ui/OfferContainer'
 
@@ -35,13 +36,17 @@ function DashboardAppView() {
   const classes = useStyles();
   const { t } = useTranslation();
   const { specialOffers = [] } = useSelector((state) => state.specialOffer);
+  const { numOfParts, partsSearchCount } = useSelector((state) => state.dashboard);
   const { currentPlan } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
     if (specialOffers.length == 0) {
       dispatch(getSpecialOffersLive());
     }
+    dispatch(getDashboardMetrics());
   }, []);
+
+  // console.log()
 
   return (
     <Page title="Dashboard App | Minimal-UI" className={classes.root}>
@@ -51,27 +56,27 @@ function DashboardAppView() {
           <Grid item xs={12} md={9}>
             <Grid container spacing={2}>
 
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6}>
                 <QvmInfo
                   icon={<Parts width='32' height='32' fill='#F20505' />}
                   title={t('qvm parts')}
-                  number='15.000' />
+                  number={numOfParts} />
               </Grid>
 
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6}>
                 <QvmInfo
                   icon={<SearchFill width='32' height='32' fill='#F20505' />}
                   title={t('daily searches')}
-                  number='569.000' />
+                  number={partsSearchCount.count} />
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              {/* <Grid item xs={12} md={4}>
                 <QvmInfo
                   icon={<Orders width='32' height='32' fill='#9ABECD' fillArr='#fff' />}
                   title={t('qvm orders')}
                   number='195.000'
                   active='active' />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12}>
                 <SecContainer
@@ -113,27 +118,27 @@ function DashboardAppView() {
           <Grid item xs={12} md={9}>
             <Grid container spacing={2}>
 
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6}>
                 <QvmInfo
                   icon={<Parts width='32' height='32' fill='#F20505' />}
                   title={t('qvm parts')}
-                  number='15.000' />
+                  number={numOfParts} />
               </Grid>
 
-              <Grid item xs={12} sm={6} md={4}>
+              <Grid item xs={12} sm={6}>
                 <QvmInfo
                   icon={<SearchFill width='32' height='32' fill='#F20505' />}
                   title={t('daily searches')}
-                  number='569.000' />
+                  number={partsSearchCount.count} />
               </Grid>
 
-              <Grid item xs={12} md={4}>
+              {/* <Grid item xs={12} md={4}>
                 <QvmInfo
                   icon={<Orders width='32' height='32' fill='#9ABECD' fillArr='#fff' />}
                   title={t('qvm orders')}
                   number='195.000'
                   active='active' />
-              </Grid>
+              </Grid> */}
 
               <Grid item xs={12} md={12} lg={12}>
                 <PartsSearchRate />
@@ -180,7 +185,7 @@ function DashboardAppView() {
               icon={<Plus width='10' height='10' fill='#F20505' />}
               footer={t('see all offers')}>
               <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={4}>
+                <Grid item xs={12} sm={6} md={3}>
                   <OfferContainer />
                 </Grid>
               </Grid>

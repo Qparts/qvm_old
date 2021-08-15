@@ -48,6 +48,10 @@ function qvmSpecialOfferUpload(data) {
   return http.post(productUrl.postQvmSpecialOfferUploadRequest, data, config);
 }
 
+const getDashboardMetrics = () => {
+  return http.get(productUrl.getDashboardMetrics);
+};
+
 export default {
   productSearch,
   productInfoSearch,
@@ -55,5 +59,6 @@ export default {
   getPartReplacements,
   getSpecialOffersLive,
   qvmStockUpload,
-  qvmSpecialOfferUpload
+  qvmSpecialOfferUpload,
+  getDashboardMetrics
 };

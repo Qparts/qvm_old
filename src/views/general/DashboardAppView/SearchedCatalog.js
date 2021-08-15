@@ -1,5 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Scrollbars from 'src/components/Scrollbars';
 import { Link } from 'react-router-dom';
@@ -15,29 +16,6 @@ import { PATH_APP } from 'src/routes/paths';
 import Avatar from '../../../components/Ui/Avatar'
 
 // ----------------------------------------------------------------------
-
-const APPLICATIONS = [
-  {
-    name: 'KMHE341G7HA313614',
-    shortcut: '/static/icons/ic_chrome.svg'
-  },
-  {
-    name: 'Drive',
-    shortcut: '/static/icons/ic_drive.svg'
-  },
-  {
-    name: 'Dropbox',
-    shortcut: '/static/icons/ic_dropbox.svg'
-  },
-  {
-    name: 'Evernote',
-    shortcut: '/static/icons/ic_evernote.svg'
-  },
-  {
-    name: 'Github',
-    shortcut: '/static/icons/ic_github.svg'
-  }
-];
 
 const useStyles = makeStyles((theme) => ({
   root: {},
@@ -71,26 +49,33 @@ const useStyles = makeStyles((theme) => ({
     '@media (max-width: 400px)': {
       fontSize: '0.966rem'
     }
+  },
+  searchTimes: {
+    fontSize: theme.typography.body3.fontSize,
+    marginLeft: theme.spacing(0.5),
+    color: theme.palette.secondary.main,
   }
 }));
 
 // ----------------------------------------------------------------------
 
-function CatalogItem({ app }) {
+function CatalogItem({ catalog }) {
   const classes = useStyles();
   const theme = useTheme();
   const { t } = useTranslation();
-  const { shortcut, name } = app;
+  const { catalogId, count } = catalog;
 
   return (
     <div className={classes.listItem}>
       <Avatar>
-        <img src={shortcut} alt={name} width={24} height={24} />
+        <img src='/static/icons/ic_chrome.svg' alt='CatalogImg' width={24} height={24} />
       </Avatar>
 
       <Box sx={{ flexGrow: 1, minWidth: 160, margin: theme.spacing(0, 0, 0, 2) }}>
-        <Typography variant="caption" sx={{ color: '#7E8D99' }}>{t("Structure No")}</Typography>
-        <Typography variant="body1">{name}</Typography>
+        <Typography variant="body1" sx={{textTransform: 'capitalize'}}>{catalogId}</Typography>
+        <Typography variant="caption" sx={{ color: '#7E8D99' }}>{t("Search times")}:
+          <strong className={classes.searchTimes}>{count}</strong>
+        </Typography>
       </Box>
     </div>
   );
@@ -103,14 +88,15 @@ SearchedCatalog.propTypes = {
 function SearchedCatalog({ className, ...other }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { mostSearchedCatalog } = useSelector((state) => state.dashboard);
 
   return (
     <Card className={clsx(classes.root, classes.catalogSearch, className)} {...other}>
       <Typography variant="h5" className={classes.searchedCataHeader}>{t("Most searched catalog")}</Typography>
       <CardContent className={classes.CardCont}>
         <Scrollbars>
-          {APPLICATIONS.map((app) => (
-            <CatalogItem key={app.name} app={app} />
+          {mostSearchedCatalog.map((cata) => (
+            <CatalogItem key={cata.name} catalog={cata} />
           ))}
         </Scrollbars>
         <Link to={PATH_APP.general.catalog}>

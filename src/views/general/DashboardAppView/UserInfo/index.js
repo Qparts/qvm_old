@@ -41,6 +41,7 @@ function UserInfo({ className, ...other }) {
     const theme = useTheme();
     const { loginObject, currentPlan } = useSelector((state) => state.authJwt);
     const { themeDirection } = useSelector((state) => state.settings);
+    const { numOfStockParts } = useSelector((state) => state.dashboard);
     const { t } = useTranslation();
 
     return (
@@ -70,7 +71,7 @@ function UserInfo({ className, ...other }) {
             </Box>
             {currentPlan.status != 'A' ? <Basic /> : <Premium />}
             <Typography variant="subtitle2" className={classes.companyInfo} sx={{ display: 'block', marginTop: '30px' }}> {t("parts number in your stock")} </Typography>
-            <Typography variant="h2" className={classes.headColor} sx={{ fontWeight: theme.typography.fontWeightRegular }}>15.030</Typography>
+            <Typography variant="h2" className={classes.headColor} sx={{ fontWeight: theme.typography.fontWeightRegular }}> {numOfStockParts} </Typography>
             <Typography variant="body1" sx={{ margin: '10px auto 45px' }}>
                 <UploadStockBtn bg={theme.palette.grey[0]} color={theme.palette.primary.main} />
             </Typography>

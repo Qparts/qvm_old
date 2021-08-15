@@ -47,8 +47,6 @@ function ReplacementsView() {
         }
     }, []);
 
-    console.log(error)
-
     return (
         <Page
             title={t("replacementsTab.title")}

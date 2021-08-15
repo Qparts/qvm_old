@@ -80,7 +80,7 @@ const useStyles = makeStyles((theme) => ({
         marginRight: '10px'
     },
     chartCont: {
-        marginLeft: theme.spacing(2.5),
+        marginRight: theme.spacing(2.5),
         '@media (max-width: 470px)': {
             margin: theme.spacing(0, 0, 1.5, 0)
         },
