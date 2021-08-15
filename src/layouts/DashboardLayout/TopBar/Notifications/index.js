@@ -63,7 +63,7 @@ function Notifications() {
         onClick={() => setOpen(true)}
         color={isOpen ? 'primary' : 'default'}
       >
-        <Badge badgeContent={unseenMessages.length > 0 ? unseenMessages.length : '0'} color="error">
+        <Badge badgeContent={unseenMessages.length > 0 ? unseenMessages.length : null} color="error">
           <Mail width='24' height='24' fill='#7E8D99' fillArr='#F20505' />
         </Badge>
       </MIconButton>
