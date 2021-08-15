@@ -43,7 +43,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function QuotationsReportView(props) {
+function OrdersView(_props) {
     const classes = useStyles();
     const { isLoading } = useSelector((state) => state.quotationsReport);
     const { user, currentSocket } = useSelector((state) => state.authJwt);
@@ -107,4 +107,4 @@ function QuotationsReportView(props) {
     );
 }
 
-export default QuotationsReportView;
+export default OrdersView;

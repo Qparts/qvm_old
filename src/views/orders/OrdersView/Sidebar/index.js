@@ -82,12 +82,12 @@ function Sidebar() {
     setSearchQuery('');
   };
 
+  //search for companies by name to create new conversation.
   const handleChangeSearch = async (event) => {
     try {
       const { value } = event.target;
       setSearchQuery(value);
       if (value) {
-        console.log("value", value)
         const response = await chatService.chatSearch(value);
         setSearchResults(response.data);
       } else {
@@ -98,22 +98,28 @@ function Sidebar() {
     }
   };
 
-  const handleSearchFocus = (event) => {
+  const handleSearchFocus = () => {
     setSearchFocused(true);
   };
 
+  //navigate to conversation chat window.
   const handleSearchSelect = (result) => {
     setSearchFocused(false);
     setSearchQuery('');
     history.push(`/app/chat/${result._id}`);
   };
 
+
+
   const handleSelectContact = async (result) => {
     if (result.id == user.subscriber.companyId)
       return;
 
+    //get conversation from currant conversations
     let selectedConversation = getSelectedConversation(userConversations, result.id);
 
+    //if selected company not exist in the current conversation create new conversation 
+    //with the members of the selected company.
     if (selectedConversation == null) {
 
       let users = await getCompanyUsers(result.id, user);
@@ -124,6 +130,7 @@ function Sidebar() {
 
       selectedConversation = response.data;
 
+      //update conversation list in the online members of the selected company.
       selectedConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
         let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
         if (onlineUserIndex != -1) {
@@ -131,11 +138,13 @@ function Sidebar() {
         }
       })
 
+      //update login user conversation list.
       dispatch(getContacts(user.subscriber.id));
     }
 
     dispatch(setActiveConversation(selectedConversation));
 
+    //navigate to selected conversation's chat window.
     if (handleSearchSelect) {
       handleSearchSelect(selectedConversation);
     }

@@ -31,6 +31,8 @@ function MessageList({ className, ...other }) {
   } = useSelector((state) => state.chat);
 
   const { user } = useSelector((state) => state.authJwt);
+
+  //members of active conversation.
   const currentContact = activeConversation?.members?.filter(x => x.id != user.subscriber.id);
 
 

@@ -63,6 +63,7 @@ function ChatWindow(props) {
 
 
   useEffect(() => {
+    //get messages of the current conversation.
     const getDetails = async () => {
       try {
         if (activeConversation == null) {
@@ -83,7 +84,7 @@ function ChatWindow(props) {
 
 
 
-
+//create new message and emit it to other conversation 's members.
   const handleSendMessage = async (value) => {
     try {
       dispatch(createNewMessage(value, messages));
@@ -105,9 +106,7 @@ function ChatWindow(props) {
 
   return (
     <div className={classes.root}>
-
       <Divider />
-
       <div className={classes.main}>
         <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
 

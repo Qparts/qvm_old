@@ -75,9 +75,9 @@ function MessageItem({
     JSON.parse(message.text) : null);
 
 
+  //get order details (quantity and total price).
   const getOrderDetails = () => {
     const orders = JSON.parse(message.text).orders;
-    console.log("orders", orders);
     let orderQuantity = 0;
     let totalPrice = 0;
     for (let item of orders) {
@@ -87,17 +87,18 @@ function MessageItem({
     return { orderQuantity: orderQuantity, totalPrice: totalPrice }
   }
 
+
   useEffect(() => {
     if (message.contentType == 'order') {
       setUpdatedOrder(JSON.parse(message.text));
-      console.log("message", message);
       const details = getOrderDetails();
       setOrderDetails(details);
     }
   }, [message.text]);
 
 
-  const updateQuantity = (newValue, item, attr) => {
+  //update order item field (quantity or price).
+  const updateOrderField = (newValue, item, attr) => {
     let newOrders = { ...updatedOrder };
     if (!updatedMessageMap.has(item.order.partNumber)) {
       updatedMessageMap.set(item.order.partNumber, {
@@ -129,6 +130,8 @@ function MessageItem({
     })
   }
 
+
+  //create new order update message and send it to online user of current conversation.
   const editOrderMessage = async (value) => {
     //create message
     dispatch(createNewMessage({
@@ -154,8 +157,6 @@ function MessageItem({
 
   const editOrder = async () => {
     try {
-
-      //edit order
       let orderValue = { ...message };
       orderValue.text = JSON.stringify(updatedOrder);
       //send updated order to oline users
@@ -167,10 +168,13 @@ function MessageItem({
         let newEditMessage = "";
         updatedMessageMap.forEach(function (value, key) {
           if (value.quantity) {
-            newEditMessage += `Part ${key} quantity has changed from  ${value.prevQuantity} to ${value.quantity}\n`
+
+            newEditMessage += t("Quantity of part {{partNumber}} has changed from {{from}} to {{to}}",
+              { partNumber: key, from: value.prevQuantity, to: value.quantity }) + ". ";
           }
           if (value.retailPrice) {
-            newEditMessage += `Part ${key} Price has changed from ${value.prevRetailPrice} to  ${value.retailPrice}\n`
+            newEditMessage += t("Price of part {{partNumber}} has changed from {{from}} to {{to}}",
+              { partNumber: key, from: value.prevRetailPrice, to: value.retailPrice }) + ". ";
           }
         })
         editOrderMessage(newEditMessage);
@@ -246,13 +250,13 @@ function MessageItem({
                     name: t("Quantity"),
                     attr: 'quantity',
                     type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                    onchange: updateQuantity
+                    onchange: updateOrderField
                   },
                   {
                     name: t("Average market price"),
                     attr: 'order.retailPrice',
                     type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                    onchange: updateQuantity
+                    onchange: updateOrderField
                   }
                 ]}
 
@@ -301,7 +305,7 @@ function MessageItem({
                       <Button
                         onClick={editOrder}
                       >
-                        {t("Save")}
+                        {t("Edit")}
                       </Button>
                     </Box>
                   </Grid>

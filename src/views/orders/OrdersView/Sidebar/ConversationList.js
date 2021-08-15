@@ -1,12 +1,12 @@
 import clsx from 'clsx';
-import React, { useEffect } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { useHistory } from 'react-router-dom';
 import ConversationItem from './ConversationItem';
 import { makeStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUnseenMessages, setActiveConversation, updateCurrentContact } from 'src/redux/slices/chat';
+import { getUnseenMessages, setActiveConversation } from 'src/redux/slices/chat';
 import chatService from 'src/services/chatService';
 
 // ----------------------------------------------------------------------
@@ -41,9 +41,11 @@ function ConversationList({
 
 
   const handleSelectConversation = async (item) => {
+    //update the status of selected conversation's messages to be S.
     await chatService.markConversationAsSee(item._id, user.subscriber.id);
     dispatch(getUnseenMessages(user.subscriber.id, userConversations));
 
+    //update the unseen message list of online users that belong to the login user company. 
     item.members.filter(x => x.id != user.subscriber.id &&
       x.companyId == user.subscriber.companyId).map((member) => {
         let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
