@@ -42,9 +42,9 @@ function SendPurchaseOrderSection(props) {
     const { t } = useTranslation();
     const { orders, companies } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
-    const { userConversations, messages } = useSelector((state) => state.chat);
+    const { userConversations, messages, onlineUsers } = useSelector((state) => state.chat);
     const [openItemID, setOpenItemID] = useState(0);
-    const { user } = useSelector((state) => state.authJwt);
+    const { user, currentSocket } = useSelector((state) => state.authJwt);
 
 
     const handleClick = (itemID) => {
@@ -59,6 +59,7 @@ function SendPurchaseOrderSection(props) {
             props.setOpenSendPO(false);
     }, [orders])
 
+    //delte item from company order list button.
     const deleteElement = (item) => {
         return (
             <TableAction
@@ -70,9 +71,12 @@ function SendPurchaseOrderSection(props) {
 
 
     const sendOrder = async (order) => {
-        console.log("order", order);
+
+        //get conversation from current user cnversation list.
         let selectedConversation = getSelectedConversation(userConversations, order.companyId);
 
+
+        //if there is no a conversation between login user and company of orders create one.
         if (selectedConversation == null) {
 
             let users = await getCompanyUsers(order.companyId, user);
@@ -95,21 +99,39 @@ function SendPurchaseOrderSection(props) {
 
 
         dispatch(createNewMessage(newMessage, messages));
+
+        //send order to all online users.
+        selectedConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
+            let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
+            if (onlineUserIndex != -1) {
+                currentSocket.current.emit("sendMessage", {
+                    senderId: user.subscriber.id,
+                    receiverId: member.id,
+                    text: JSON.stringify(order),
+                    contentType: 'order',
+                    conversationId: selectedConversation._id
+                });
+            }
+        })
+
         dispatch(updateCompaniesOrders([]));
         dispatch(setActiveConversation(selectedConversation));
         history.push(`/app/chat/${selectedConversation._id}`);
 
     }
 
+    //update order item quantity.
     const updateQuantity = (newQuantity, item) => {
         dispatch(updateOrderItemQuantity({ newQuantity: newQuantity, item: item }))
     }
 
+    //delete company orders from purchase order.
     const deleteCompanyOrders = (companyId) => {
         let newCompanyOrders = [...orders];
         dispatch(updateCompaniesOrders(newCompanyOrders.filter(x => x.companyId != companyId)))
     }
 
+    //delete order item from company order list.
     const deleteOrder = (order) => {
         console.log("orders", orders);
         dispatch(deleteOrderFromCompany(order));

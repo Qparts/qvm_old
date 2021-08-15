@@ -138,6 +138,7 @@ const slice = createSlice({
             state.rowsPerPage = action.payload.rowsPerPage;
         },
 
+        //add order item to company purchase order.
         addOrder(state, action) {
             const newOrder = action.payload;
             let newOrders = state.orders;
