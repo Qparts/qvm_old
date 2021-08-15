@@ -5,7 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { Box, Grid, Typography, Divider } from '@material-ui/core';
 import TextField from 'src/components/Ui/TextField';
 import Button from 'src/components/Ui/Button';
-import { updateOrders } from 'src/redux/slices/partSearch';
+import { addOrder } from 'src/redux/slices/partSearch';
 
 // ----------------------------------------------------------------------
 
@@ -35,7 +35,7 @@ function PurchaseOrderSection(props) {
             quantity: quantity,
             order: selectedPart
         };
-        dispatch(updateOrders([...orders, order]));
+        dispatch(addOrder(order));
         props.closeOrderDailog();
     }
 
@@ -100,7 +100,8 @@ function PurchaseOrderSection(props) {
                     noWrap
                     variant="body2"
                 >
-                    {companies.get(selectedPart.companyId).name}
+                    {themeDirection == 'ltr' ? companies.get(selectedPart.companyId).name
+                        : companies.get(selectedPart.companyId).nameAr}
                 </Typography>
             </Grid>
 

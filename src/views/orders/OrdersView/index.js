@@ -1,5 +1,5 @@
 import Page from 'src/components/Page';
-import React, { useRef } from 'react';
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
 import {
@@ -13,8 +13,11 @@ import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import Sidebar from './Sidebar/index';
 import ChatWindow from './ChatWindow/index';
-import { getContacts, getConversations, updateRecivedMessages } from 'src/redux/slices/chat';
-import { useEffect, useState } from 'react';
+import {
+    setActiveConversation,
+    updateRecivedOrderMessages, setActiveConversationId} from 'src/redux/slices/chat';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 
@@ -40,28 +43,28 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function QuotationsReportView() {
+function QuotationsReportView(props) {
     const classes = useStyles();
     const { isLoading } = useSelector((state) => state.quotationsReport);
     const { user, currentSocket } = useSelector((state) => state.authJwt);
+    const { userConversations, activeConversation , activeConversationId } = useSelector((state) => state.chat);
     const { t } = useTranslation();
     const dispatch = useDispatch();
-
+    const { conversationKey } = useParams();
 
     useEffect(() => {
-        currentSocket?.current.on("getMessage", data => {
-            if (data && data.createdAt == null) {
-                console.log("arrival message", data);
-                data.createdAt = Date.now();
-                dispatch(updateRecivedMessages(data));
-            }
+        currentSocket?.current.on("updatedOrder", order => {
+            dispatch(updateRecivedOrderMessages(order));
         });
 
     }, [user])
 
     useEffect(() => {
-        dispatch(getContacts(user.subscriber.id));
-    }, [dispatch]);
+        return () => {
+            dispatch(setActiveConversationId(null));
+            dispatch(setActiveConversation(null));
+        }
+    }, []);
 
 
     return (
@@ -92,7 +95,7 @@ function QuotationsReportView() {
                     <Container maxWidth="xl">
                         <Card className={classes.card}>
                             <Sidebar />
-                            <ChatWindow />
+                            {userConversations.length && <ChatWindow userConversations={userConversations} />}
                         </Card>
                     </Container>
 

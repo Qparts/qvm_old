@@ -55,6 +55,7 @@ const UploadStockBtn = (props) => {
     return (
         <Dialog
             fullScreen={fullScreen}
+            fullWidth={props.fullWidth}
             open={props.open}
             onClose={props.handleClose}
             aria-labelledby="responsive-dialog-title"

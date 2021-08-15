@@ -6,7 +6,8 @@ import ConversationItem from './ConversationItem';
 import { makeStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveConversation, updateCurrentContact } from 'src/redux/slices/chat';
+import { getUnseenMessages, setActiveConversation, updateCurrentContact } from 'src/redux/slices/chat';
+import chatService from 'src/services/chatService';
 
 // ----------------------------------------------------------------------
 
@@ -35,23 +36,29 @@ function ConversationList({
   const history = useHistory();
   const dispatch = useDispatch();
 
-  const { user } = useSelector((state) => state.authJwt);
-  const { activeConversation } = useSelector((state) => state.chat);
+  const { user, currentSocket } = useSelector((state) => state.authJwt);
+  const { activeConversation, onlineUsers } = useSelector((state) => state.chat);
 
 
-  const handleSelectConversation = (item) => {
-    // const friendId = item.members.find(x => parseInt(x) !== user.subscriber.id);
-    // dispatch(updateCurrentContact(friendId));
-    console.log("item" , item);
+  const handleSelectConversation = async (item) => {
+    await chatService.markConversationAsSee(item._id, user.subscriber.id);
+    dispatch(getUnseenMessages(user.subscriber.id, userConversations));
+
+    item.members.filter(x => x.id != user.subscriber.id &&
+      x.companyId == user.subscriber.companyId).map((member) => {
+        let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
+        if (onlineUserIndex != -1) {
+          currentSocket.current.emit("companyMemberReadMessage", member.id);
+        }
+      })
+
     dispatch(setActiveConversation(item));
-    console.log("activeConversationId" , activeConversationId);
-    console.log("activeConversation" , activeConversation);
     history.push(`/app/chat/${item._id}`);
   };
 
   return (
     <List disablePadding className={clsx(classes.root, className)} {...other}>
-      {userConversations.length > 0 &&
+      {
         userConversations.map((item) => (
           < ConversationItem
             key={item._id}

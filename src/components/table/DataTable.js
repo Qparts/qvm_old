@@ -8,7 +8,8 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper
+    Paper,
+    TextField
 } from '@material-ui/core';
 import clsx from 'clsx';
 import Button from "../button/CustomButton";
@@ -210,7 +211,22 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                     {header.map((headerItem, j) => {
                                                         return (
                                                             <TableCell key={j}>
-                                                                {getCellValue(item, headerItem, maps)}
+                                                                {
+                                                                    headerItem.type != null &&
+                                                                        headerItem.type == 'text' ?
+                                                                        <TextField
+                                                                            onChange={(event) => {
+                                                                                if (event.target.value != "") {
+                                                                                    headerItem.onchange(event.target.value, item , headerItem.attr)
+                                                                                } else
+                                                                                    event.target.value = getCellValue(item, headerItem, maps);
+                                                                            }}
+                                                                            defaultValue={getCellValue(item, headerItem, maps)}
+                                                                            value={getCellValue(item, headerItem, maps)}
+                                                                        /> :
+                                                                        getCellValue(item, headerItem, maps)}
+
+
                                                             </TableCell>
                                                         );
                                                     })}

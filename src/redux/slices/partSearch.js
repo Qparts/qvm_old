@@ -138,10 +138,38 @@ const slice = createSlice({
             state.rowsPerPage = action.payload.rowsPerPage;
         },
 
-        updateOrders(state, action) {
-            state.orders = action.payload;
-        }
+        addOrder(state, action) {
+            const newOrder = action.payload;
+            let newOrders = state.orders;
+            let companyIndex = newOrders.findIndex(x => x.companyId == newOrder.companyId);
+            if (companyIndex != -1) {
+                newOrders[companyIndex].orders.push({ quantity: newOrder.quantity, order: newOrder.order })
+            } else {
+                newOrders.push({ companyId: newOrder.companyId, orders: [{ quantity: newOrder.quantity, order: newOrder.order }] })
+            }
+            state.orders = newOrders;
+        },
 
+        updateOrderItemQuantity(state, action) {
+            const item = action.payload.item;
+            const newQuantity = action.payload.newQuantity;
+            let newOrders = state.orders;
+            const companyId = item.order.companyId;
+            newOrders.find(x => x.companyId == companyId)
+                .orders.find(x => x.order.id == item.order.id).quantity = newQuantity;
+            state.orders = newOrders;
+        },
+
+        updateCompaniesOrders(state, action) {
+            state.orders = action.payload;
+        },
+
+        deleteOrderFromCompany(state, action) {
+            const order = action.payload;
+            let companyIndex = state.orders.findIndex(x => x.companyId == order.companyId);
+            let orderIndex = state.orders[companyIndex].orders.findIndex(x => x.order.id == order.id);
+            state.orders[companyIndex].orders.splice(orderIndex, 1);
+        }
     }
 
 });
@@ -163,7 +191,10 @@ export const {
     setSelectedProduct,
     handleChangePage,
     handleChangeRowsPerPage,
-    updateOrders,
+    addOrder,
+    updateOrderItemQuantity,
+    updateCompaniesOrders,
+    deleteOrderFromCompany,
     cleanup
 } = slice.actions;
 

@@ -17,7 +17,9 @@ import {
   onOpenSidebarConversation,
   onCloseSidebarConversation,
   getContacts,
-  setActiveConversation
+  setActiveConversation,
+  getCompanyUsers,
+  getSelectedConversation
 } from 'src/redux/slices/chat';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box } from '@material-ui/core';
@@ -55,10 +57,11 @@ function Sidebar() {
     conversations,
     isOpenSidebarConversation,
     activeConversationId,
-    userConversations
+    userConversations,
+    onlineUsers
   } = useSelector((state) => state.chat);
 
-  const { user } = useSelector((state) => state.authJwt);
+  const { user, currentSocket } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
     if (isMoblie) {
@@ -85,7 +88,6 @@ function Sidebar() {
       setSearchQuery(value);
       if (value) {
         console.log("value", value)
-        // const response = await chatService.chatSearch(value, user.subscriber.id);
         const response = await chatService.chatSearch(value);
         setSearchResults(response.data);
       } else {
@@ -107,54 +109,39 @@ function Sidebar() {
   };
 
   const handleSelectContact = async (result) => {
-    let selectedConversation = null;
     if (result.id == user.subscriber.companyId)
       return;
-    let { data: companyUsers = [] } = await chatService.getCompanyUsers(result.id);
-    console.log("companyUsers", companyUsers);
 
-
-    let users = [];
-
-    for (let companyUser of companyUsers) {
-      users.push({
-        id: companyUser.id,
-        companyId: companyUser.company.id,
-        // email: user.subscriber.email,
-        // mobile: user.subscriber.mobile,
-        name: companyUser.name,
-        companyName: companyUser.company.name,
-        companyNameAr: companyUser.company.nameAr,
-      })
-    }
+    let selectedConversation = getSelectedConversation(userConversations, result.id);
 
     if (selectedConversation == null) {
-      users.push({
-        id: user.subscriber.id,
-        companyId: user.subscriber.companyId,
-        // email: user.subscriber.email,
-        // mobile: user.subscriber.mobile,
-        name: user.subscriber.name,
-        companyName: user.company.name,
-        companyNameAr: user.company.nameAr,
-      });
+
+      let users = await getCompanyUsers(result.id, user);
 
       const response = await chatService.createUserConversation({
         members: users
       })
+
       selectedConversation = response.data;
+
+      selectedConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
+        let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
+        if (onlineUserIndex != -1) {
+          currentSocket.current.emit("updateContacts", member.id);
+        }
+      })
+
+      dispatch(getContacts(user.subscriber.id));
     }
 
-    dispatch(getContacts(user.subscriber.id));
-
     dispatch(setActiveConversation(selectedConversation));
-
 
     if (handleSearchSelect) {
       handleSearchSelect(selectedConversation);
     }
 
   };
+
 
   const handleToggleConversation = () => {
     if (isOpenSidebarConversation) {

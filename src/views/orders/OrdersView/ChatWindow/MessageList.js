@@ -50,7 +50,7 @@ function MessageList({ className, ...other }) {
       className={classes.scroll}
     >
       <div className={clsx(classes.root, className)} {...other}>
-        {currentContact && pathname != '/app/chat/new' && messages?.map((message) => (
+        { pathname != '/app/chat/new' && messages?.map((message) => (
           <MessageItem
             key={message._id}
             message={message}

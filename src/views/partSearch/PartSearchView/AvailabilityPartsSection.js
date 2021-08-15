@@ -14,6 +14,8 @@ import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
 import { Plus } from "../../../icons/icons";
 import PurchaseOrderSection from './PurchaseOrderSection';
+import CustomButton from 'src/components/Ui/Button';
+import SendPurchaseOrderSection from './SendPurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
@@ -50,8 +52,9 @@ function AvailabilityPartsSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [openAddToPO, setOpenAddToPO] = useState(false);
+    const [openSendPO, setOpenSendPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
-        rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
+        rowsPerPage, error, query, locationFilters, filter, orders } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
 
     const [searchTerm, setSearchTerm] = useState('');
@@ -66,7 +69,6 @@ function AvailabilityPartsSection() {
     }
 
     const addToCompanyCart = (item) => {
-        console.log("cart item", item);
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
         setOpenAddToPO(true);
     }
@@ -86,7 +88,7 @@ function AvailabilityPartsSection() {
         return (
             <TableAction
                 type='partSearch'
-                title={t("Buy now")}
+                title={t("Add To PO")}
                 onClick={() => addToCompanyCart(item)}
                 textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
         )
@@ -124,6 +126,18 @@ function AvailabilityPartsSection() {
                             label={t("Search by part number")}
                             selectBg='selectBg' />
                     </Box>
+
+                    <Box className={classes.availabilityActionsRight}>
+                        <CustomButton
+                            btnBg="btnBg"
+                            mainBorderBtn='mainBorderBtn'
+                            disabled={orders.length == 0}
+                            onClick={() => setOpenSendPO(true)}
+                        >
+                            {t("Send PO")}
+                        </CustomButton>
+                    </Box>
+
                     <Box className={classes.availabilityActionsRight}>
                         <LocationFilterSection />
                     </Box>
@@ -182,6 +196,15 @@ function AvailabilityPartsSection() {
                     <PurchaseOrderSection
                         closeOrderDailog={closeOrderDailog} />
                 }
+            </CustomDialog>
+
+
+            <CustomDialog
+                fullWidth={true}
+                open={openSendPO}
+                handleClose={() => setOpenSendPO(false)}
+                title={t("Send PO")}>
+                <SendPurchaseOrderSection setOpenSendPO={setOpenSendPO} orders={orders}/>
             </CustomDialog>
         </Box >
     );

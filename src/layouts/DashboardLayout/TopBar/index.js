@@ -8,7 +8,7 @@ import Languages from './Languages';
 import { Icon } from '@iconify/react';
 import Notifications from './Notifications';
 import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
-import Orders from './Orders';
+// import Orders from './Orders';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
 import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Box, AppBar, Hidden, Toolbar, IconButton, Badge } from '@material-ui/core';
@@ -118,7 +118,7 @@ function TopBar({ onOpenNav, className }) {
               <Icon icon={roundAddShoppingCart} color='#7E8D99' />
             </Badge>
           </MIconButton>
-          <Orders />
+          {/* <Orders /> */}
           <Notifications />
           <Account />
         </Box>

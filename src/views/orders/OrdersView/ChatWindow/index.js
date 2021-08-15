@@ -6,13 +6,13 @@ import MessageInput from './MessageInput';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams, useLocation } from 'react-router-dom';
 import {
-  addRecipient,
   getConversation,
-  resetActiveConversation,
-  createNewMessage
+  createNewMessage,
+  setActiveConversation
 } from 'src/redux/slices/chat';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Divider } from '@material-ui/core';
+import { setActiveConversationId } from '../../../../redux/slices/chat';
 
 // ----------------------------------------------------------------------
 
@@ -54,17 +54,22 @@ function ChatWindow(props) {
   const {
     activeConversationId,
     messages,
-    activeConversation
+    activeConversation,
+    onlineUsers
   } = useSelector((state) => state.chat);
   const conversation = useSelector((state) => conversationSelector(state));
   const { user, currentSocket } = useSelector((state) => state.authJwt);
-
   const mode = conversationKey ? 'DETAIL' : 'COMPOSE';
 
 
   useEffect(() => {
     const getDetails = async () => {
       try {
+        if (activeConversation == null) {
+          let newActiveConversation = props.userConversations.filter(x => x._id == conversationKey)[0];
+          dispatch(setActiveConversation(newActiveConversation));
+          dispatch(setActiveConversationId(conversationKey));
+        }
         await dispatch(getConversation(conversationKey));
       } catch (error) {
         console.error(error);
@@ -73,32 +78,26 @@ function ChatWindow(props) {
     };
     if (conversationKey) {
       getDetails();
-    } else {
-      if (activeConversationId) {
-        dispatch(resetActiveConversation());
-      }
     }
   }, [conversationKey]);
 
 
-  const handleAddRecipient = (recipient) => {
-    dispatch(addRecipient(recipient));
-  };
+
 
   const handleSendMessage = async (value) => {
     try {
-      console.log("activeConversation", activeConversation);
-      // const receiverId = activeConversation.members.find(x => parseInt(x) !== user.subscriber.id);
-
-      activeConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
-        currentSocket.current.emit("sendMessage", {
-          senderId: user.subscriber.id,
-          receiverId: member.id,
-          text: value.text
-        });
-      })
-
       dispatch(createNewMessage(value, messages));
+      activeConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
+        let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
+        if (onlineUserIndex != -1) {
+          currentSocket.current.emit("sendMessage", {
+            senderId: user.subscriber.id,
+            receiverId: member.id,
+            text: value.text,
+            conversationId: activeConversation._id
+          });
+        }
+      })
     } catch (error) {
       console.error(error);
     }
@@ -111,7 +110,7 @@ function ChatWindow(props) {
 
       <div className={classes.main}>
         <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
-          {/* <MessageList conversation={conversation} /> */}
+
           <MessageList />
 
           <Divider />

@@ -8,6 +8,8 @@ import { createSlice } from '@reduxjs/toolkit';
 import settingService from 'src/services/settingService';
 import paymentService from 'src/services/paymentService';
 import catalogService from 'src/services/catalogService';
+import chatService from 'src/services/chatService';
+import { getContacts } from './chat';
 
 
 // ----------------------------------------------------------------------
@@ -25,6 +27,7 @@ const initialState = {
   planFeatures: [],
   catalogs: [],
   bancks: [],
+  conversations: [],
   validResetToken: false,
   currentSocket: null,
 };
@@ -318,9 +321,11 @@ export function getInitialize() {
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
+        await dispatch(getContacts(loginObject.subscriber.id));
         let currentPlan = getCurrentPlan(plans);
         const { data: catalogs } = await catalogService.getCatalogs();
         const { data: bancks } = await paymentService.getBancks();
+        // const { data: userConversations } = await chatService.getUserConversations(loginObject.subscriber.id);
         dispatch(
           slice.actions.getInitialize({
             isAuthenticated: true,
@@ -332,6 +337,7 @@ export function getInitialize() {
             availablePlans: plans,
             catalogs: catalogs,
             bancks: bancks,
+            // conversations: userConversations,
             premiumPlan: plans.find(e => e.name == 'Premium Plan')
           })
         );
