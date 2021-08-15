@@ -1,8 +1,9 @@
+import React, { useState } from 'react';
+import PropTypes from 'prop-types';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
-import PropTypes from 'prop-types';
-import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 
 // ----------------------------------------------------------------------
 
@@ -14,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     minHeight: '100%',
     overflow: 'hidden',
-    background:'#082C3C',
+    background: '#082C3C',
   },
   main: {
     flexGrow: 1,
@@ -27,9 +28,15 @@ const useStyles = makeStyles((theme) => ({
     paddingRight: theme.spacing(2),
     [theme.breakpoints.up('lg')]: {
       paddingTop: APP_BAR_DESKTOP + 18,
-      margin: theme.spacing(0, 1, 1,0),
+      margin: theme.spacing(0, 1, 1, 0),
       borderBottomLeftRadius: 40,
-    borderBottomRightRadius: 40,
+      borderBottomRightRadius: 40,
+    }
+  },
+  chatPadding: {
+    padding: '64px 0 0 0',
+    [theme.breakpoints.up('lg')]: {
+      padding: '69px 0 0 0'
     }
   }
 }));
@@ -49,7 +56,7 @@ function DashboardLayout({ children }) {
       <TopBar onOpenNav={() => setOpenNav(true)} />
       <NavBar onCloseNav={() => setOpenNav(false)} isOpenNav={openNav} />
 
-      <div className={classes.main}>{children}</div>
+      <div className={clsx(classes.main)}>{children}</div>
     </div>
   );
 }

@@ -21,7 +21,12 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px'
     },
     CarItemsCont: {
-        padding: '16px'
+        padding: '16px',
+        '& img': {
+            [theme.breakpoints.down('md')]: {
+                margin: 'auto'
+            }
+        }
     },
     carItemName: {
         color: theme.palette.secondary.main,
@@ -47,7 +52,7 @@ function GroupItems() {
     return (
         <Grid container spacing={1}>
             {groups.map((groupItem) => (
-                <Grid item xs={12} sm={4} md={3} key={groupItem.id}>
+                <Grid item xs={12} sm={6} md={3} key={groupItem.id}>
                     <Card className={clsx(classes.root, classes.CarItems)}>
                         <CardActionArea
                             onClick={() => {

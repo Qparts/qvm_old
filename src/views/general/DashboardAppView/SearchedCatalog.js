@@ -63,6 +63,14 @@ const useStyles = makeStyles((theme) => ({
     '&:last-child': {
       paddingBottom: '45px'
     }
+  },
+  searchedCataHeader: {
+    color: theme.palette.secondary.main,
+    padding: theme.spacing(1.25, 2.5),
+    borderBottom: '1px solid #ECF1F5',
+    '@media (max-width: 400px)': {
+      fontSize: '0.966rem'
+    }
   }
 }));
 
@@ -98,7 +106,7 @@ function SearchedCatalog({ className, ...other }) {
 
   return (
     <Card className={clsx(classes.root, classes.catalogSearch, className)} {...other}>
-      <Typography variant="h5" sx={{ color: '#14455B', padding: '10px 20px', borderBottom: '1px solid #ECF1F5' }}>{t("Most searched catalog")}</Typography>
+      <Typography variant="h5" className={classes.searchedCataHeader}>{t("Most searched catalog")}</Typography>
       <CardContent className={classes.CardCont}>
         <Scrollbars>
           {APPLICATIONS.map((app) => (

@@ -60,6 +60,7 @@ function UsersItemsSection() {
                 isLazy={false}
                 rowsPerPage={rowsPerPage}
                 hasPagination={users.length > constants.MAX ? true : false}
+                dataTableSetting='dataTableSetting'
             />
         </Box>
     );

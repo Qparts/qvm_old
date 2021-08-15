@@ -10,10 +10,10 @@ function CompanyInfo() {
     return (
         <Box sx={{marginBottom: '30px'}}>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                     <CompanyDetails />
                 </Grid>
-                <Grid item xs={12} md={6}>
+                <Grid item xs={12} sm={6}>
                     <CompanyContact />
                 </Grid>
             </Grid>

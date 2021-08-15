@@ -1,8 +1,10 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import {
     Grid,
     Box,
     Typography,
+    Hidden
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -25,10 +27,16 @@ const useStyles = makeStyles((theme) => ({
     forMoreInfoChild: {
         fontWeight: 400,
         marginLeft: '8px',
-        color: theme.palette.primary.main
+        color: theme.palette.primary.main,
+        '@media (max-width: 410px)': {
+            fontSize: '0.8825rem',
+        },
     },
     forMoreInfoIconCont: {
         justifyContent: 'flex-end',
+        [theme.breakpoints.down('md')]: {
+            justifyContent: 'center'
+        }
     },
     forMoreInfoIcon: {
         padding: '10px 15px',
@@ -65,6 +73,7 @@ const useStyles = makeStyles((theme) => ({
 function SpecialOfferInfoActions(props) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const { loginObject } = useSelector((state) => state.authJwt);
 
     return (
         <Box className={classes.forMoreInfoCont}>
@@ -79,8 +88,8 @@ function SpecialOfferInfoActions(props) {
                 </Grid>
                 <Grid item xs={12} md={5}>
                     <Box className={clsx(classes.forMoreInfo, classes.forMoreInfoFlex)}>
-                        <Info width='24' height='24' />
-                        <Typography variant="subtitle1" className={classes.forMoreInfoChild}> {t("For inquiries, you can contact us at")} 44587965</Typography>
+                        <Hidden smDown><Info width='24' height='24' /></Hidden>
+                        <Typography variant="subtitle1" className={classes.forMoreInfoChild}> {t("For inquiries, you can contact us at")} {loginObject.subscriber.mobile}+</Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={3}>

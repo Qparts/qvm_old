@@ -39,11 +39,11 @@ export const PATH_HOME = {
 export const PATH_APP = {
   root: ROOTS.app,
   general: {
-    root: path(ROOTS.app, '/dashboard'),
+    root: path(ROOTS.app, '/search'),
     dashboard: path(ROOTS.app, '/dashboard'),
     orders: path(ROOTS.app, '/orders'),
-    market: path(ROOTS.app, '/market'),
-    markerService: path(ROOTS.app, '/market/:service'),
+    // market: path(ROOTS.app, '/market'),
+    // markerService: path(ROOTS.app, '/market/:service'),
     partSearch: path(ROOTS.app, '/part-search'),
     replacements: path(ROOTS.app, '/replacements'),
     specialOfferUpload: path(ROOTS.app, '/special-offer-upload'),
@@ -52,9 +52,6 @@ export const PATH_APP = {
     specialOfferDetails: path(ROOTS.app, '/special-offer/:id'),
     quotationsReport: path(ROOTS.app, '/quotations-report'),
     upgradeSubscription: path(ROOTS.app, '/upgrade-subscription'),
-  },
-
-  app: {
     chat: {
       root: path(ROOTS.app, '/chat'),
       new: path(ROOTS.app, '/chat/new'),

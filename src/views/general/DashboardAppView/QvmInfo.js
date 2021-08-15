@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
   root: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.typography.generalPadding,
+    padding: theme.spacing(4, 2.5),
     boxShadow: '0px 4px 8px rgb(20 69 91 / 3%)',
     border: '1px solid #E7F0F7',
   },
@@ -21,10 +21,8 @@ const useStyles = makeStyles((theme) => ({
     lineHeight: '83px',
     borderRadius: 63,
     background: 'rgb(242 5 5 / 10%)',
-    marginTop: '-35px'
   },
   qvmNumbers: {
-    margin: '30px 0 0 0',
     textAlign: 'left'
   },
   fontWeightLight: {

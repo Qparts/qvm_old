@@ -14,6 +14,7 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '10px',
         padding: '13px',
         fontSize: theme.typography.body3.fontSize,
+        textAlign: 'left',
         '&:focus': {
             background: '#F6F8FC',
             borderRadius: '10px',
@@ -40,20 +41,20 @@ const useStyles = makeStyles((theme) => ({
             background: theme.palette.grey[0],
         }
     },
-    dateFilter: {
-        position: 'absolute',
-        right: '0',
-        top: '-47px',
-        zIndex: '10',
-    },
-    datePadding: {
-        padding: '5px 10px'
-    },
+    // dateFilter: {
+    //     position: 'absolute',
+    //     right: '0',
+    //     top: '-47px',
+    //     zIndex: '10',
+    // },
+    // datePadding: {
+    //     padding: '5px 10px'
+    // },
+    // dateFilterWidth: {
+    //     width: 'auto'
+    // },
     spaceToTop: {
         marginTop: '15px'
-    },
-    dateFilterWidth: {
-        width: 'auto'
     },
     dateCont: {
         marginTop: '15px',

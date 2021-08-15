@@ -17,6 +17,9 @@ const useStyles = makeStyles((theme) => ({
         padding: '10px 15px',
         background: theme.palette.grey[0],
         borderBottom: '1px solid #ECF1F5',
+        '& .MuiCardHeader-content': {
+            flex: 'initial'
+        }
     },
     cardBod: {
         padding: '20px',
@@ -32,6 +35,11 @@ const useStyles = makeStyles((theme) => ({
     },
     cardPadd: {
         padding: '20px 15px'
+    },
+    cardMt: {
+        [theme.breakpoints.down('md')]: {
+            marginTop: theme.spacing(1.75)
+        },
     }
 }));
 
@@ -45,7 +53,15 @@ function MainCard(props, { className, ...other }) {
     const classes = useStyles();
 
     return (
-        <Card className={clsx(classes.root, classes[props.addMargin], classes[props.sameHeight], className)} {...other}>
+        <Card className={
+            clsx(
+                classes.root,
+                classes[props.addMargin],
+                classes[props.sameHeight],
+                classes[props.cardMt],
+                className
+            )}
+            {...other}>
             <CardHeader className={classes.cardHead} title={props.title} />
             <CardContent className={clsx(classes.cardBod, classes[props.cardPadd])}>
                 {props.children}

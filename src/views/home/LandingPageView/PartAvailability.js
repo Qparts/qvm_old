@@ -72,6 +72,9 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up('md')]: {
         position: 'relative',
       },
+      '@media (max-width: 442px)': {
+        marginTop: 0
+      },
       '&:before': {
         content: "''",
         position: 'absolute',
@@ -89,6 +92,9 @@ const useStyles = makeStyles((theme) => {
         width: 2,
         height: '100%',
         background: '#164B63',
+        '@media (max-width: 420px)': {
+          height: '150%'
+        },
       },
       [theme.breakpoints.down('md')]: {
         position: 'absolute',
@@ -123,7 +129,10 @@ const useStyles = makeStyles((theme) => {
         right: 'auto',
         left: -8,
         bottom: 'calc(-100% - 14px)'
-      }
+      },
+      '@media (max-width: 420px)': {
+        bottom: 'calc(-50% - 14px)'
+      },
     },
     infoList: {
       display: 'flex',

@@ -11,9 +11,7 @@ import {
   ListItemAvatar
 } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import chatService from 'src/services/chatService';
 import links from 'src/constants/links';
-import { updateCurrentContact } from 'src/redux/slices/chat';
 
 // ----------------------------------------------------------------------
 
@@ -64,7 +62,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 // ----------------------------------------------------------------------
-
 
 ConversationItem.propTypes = {
   isSelected: PropTypes.bool,
@@ -126,12 +123,6 @@ function ConversationItem({
 
         </div>
       </ListItemAvatar>
-
-
-
-
-
-
 
       {isOpenSidebarConversation && friends && (
         <>

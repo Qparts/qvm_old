@@ -21,6 +21,10 @@ const useStyles = makeStyles((theme) => ({
         padding: '8px 20px',
         left: '50%',
         transform: 'translate(-50%, 0)',
+        '@media (max-width: 349px)': {
+            left: '39%',
+            transform: 'translate(-35%, 0)'
+        }
     },
 }));
 
@@ -40,7 +44,7 @@ function PremiumPlanDurationSection() {
             <Grid container spacing={2}>
                 {premiumPlan.planDurations.map((item, index) => {
                     return (
-                        <Grid item xs={12} sm={6} md={4} key={index}>
+                        <Grid item xs={12} md={4} key={index}>
                             <Card upgradeCard='upgradeCard'>
                                 {item.calculationDays > 180 && (
                                     <Typography variant="subtitle1" className={classes.planPremiumLabel}> {t("Most popular")} </Typography>

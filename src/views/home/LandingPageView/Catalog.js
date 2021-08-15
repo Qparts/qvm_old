@@ -33,7 +33,9 @@ const useStyles = makeStyles((theme) => {
       fontSize: pxToRem(22),
       fontWeight: 700,
       color: theme.palette.grey[600],
-
+      [theme.breakpoints.down('sm')]: {
+        fontSize: pxToRem(18)
+      },
     },
     catalougSec: {
       position: 'relative'
@@ -46,14 +48,16 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up('md')]: {
         width: 'calc(60% - 108px)',
       },
-
     },
     articleHeading: {
       fontSize: pxToRem(38),
       color: theme.palette.secondary.dark,
       [theme.breakpoints.down('md')]: {
         fontSize: pxToRem(25),
-      }
+      },
+      [theme.breakpoints.down('sm')]: {
+        fontSize: pxToRem(22)
+      },
     },
     articleDisc: {
       fontSize: pxToRem(17),

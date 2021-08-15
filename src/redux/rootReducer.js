@@ -16,8 +16,6 @@ import branchesReducer from './slices/branches';
 import marketReducer from './slices/market';
 import chatReducer from './slices/chat';
 
-
-
 // ----------------------------------------------------------------------
 
 const rootPersistConfig = {
@@ -49,7 +47,7 @@ const rootReducer = combineReducers({
   specialOfferUpload: specialOfferUploadReducer,
   branches: branchesReducer,
   market : marketReducer,
-  chat : chatReducer
+  chat: chatReducer,
 });
 
 export { rootPersistConfig, rootReducer };

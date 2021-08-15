@@ -16,7 +16,6 @@ import { PATH_APP } from 'src/routes/paths';
 import SpecialOfferInfoGrid from './SpecialOfferInfoGrid';
 import SpecialOfferInfoActions from './SpecialOfferInfoActions';
 import SpecialOfferInfoHead from './SpecialOfferInfoHead';
-import Advertisement from "./../../../components/Ui/Advertise";
 import CardFoot from "../../../components/Ui/CardFoot";
 import BackBtn from "../../../components/Ui/BackBtn";
 import { OrdersArrow, Search } from '../../../icons/icons';
@@ -112,53 +111,43 @@ function SpecialOfferDetails({ specialOfferId }) {
                         handleListView={handleListView}
                         handleGridView={handleGridView} />
                     {listView ?
-                        <Grid container spacing={2}>
-                            <Grid item xs={12} md={9}>
-                                <Datatable
-                                    header={[
-                                        {
-                                            name: t("Part Number"),
-                                            attr: 'partNumber',
-                                        },
-                                        {
-                                            name: t("Brand"),
-                                            attr: 'brandName',
-                                        },
-                                        {
-                                            name: t("Quantity"),
-                                            attr: 'stock.length',
-                                        },
-                                        {
-                                            name: t("Price"),
-                                            attr: 'offers[0].offerPrice',
-                                            type: 'number',
-                                            label: t("SAR")
-                                        }
-                                    ]}
-                                    actions={[
-                                        {
-                                            name: '',
-                                            element: showDetailsElement
-                                        }
-                                    ]}
-                                    datatable={offerProducts}
-                                    error={error}
-                                    onSelectedPage={changePagehandler}
-                                    page={page}
-                                    isLazy={true}
-                                    size={searchSize}
-                                    rowsPerPage={constants.MAX}
-                                    hasPagination={true}
-                                />
-                            </Grid>
-                            <Grid item xs={12} md={3}>
-                                <Advertisement
-                                    url='/static/images/banner-300.jpg'
-                                    width='100%'
-                                    height='250px'
-                                    advertiseMt="advertiseMt" />
-                            </Grid>
-                        </Grid>
+                        <Datatable
+                            header={[
+                                {
+                                    name: t("Part Number"),
+                                    attr: 'partNumber',
+                                },
+                                {
+                                    name: t("Brand"),
+                                    attr: 'brandName',
+                                },
+                                {
+                                    name: t("Quantity"),
+                                    attr: 'stock.length',
+                                },
+                                {
+                                    name: t("Price"),
+                                    attr: 'offers[0].offerPrice',
+                                    type: 'number',
+                                    label: t("SAR")
+                                }
+                            ]}
+                            actions={[
+                                {
+                                    name: '',
+                                    element: showDetailsElement
+                                }
+                            ]}
+                            datatable={offerProducts}
+                            error={error}
+                            onSelectedPage={changePagehandler}
+                            page={page}
+                            isLazy={true}
+                            size={searchSize}
+                            rowsPerPage={constants.MAX}
+                            hasPagination={true}
+                            dataTableGeneral='dataTableGeneral'
+                        />
                         :
                         <SpecialOfferInfoGrid
                             offerProducts={offerProducts}

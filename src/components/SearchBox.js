@@ -50,10 +50,7 @@ export default function SearchTable(props) {
           />
         </FormControl>
         <Box sx={{ mt: 3 }} />
-        <Button
-          type="submit"
-          disabled={props.checkDisabled && query.length < 3}
-        >
+        <Button type="submit">
           {props.title}
         </Button>
       </>
@@ -75,7 +72,6 @@ export default function SearchTable(props) {
           type="submit"
           justIcon
           topBarSearchBtn='topBarSearchBtn'
-          disabled={props.checkDisabled && query.length < 3}
         >
           <Search width='20' height='20' fill='#fff' />
         </Button>

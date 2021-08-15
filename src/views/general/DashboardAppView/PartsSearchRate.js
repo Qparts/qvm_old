@@ -6,8 +6,7 @@ import ReactApexChart from 'react-apexcharts';
 import { ApexChartsOption } from 'src/components/Charts/Apexcharts';
 import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { Card, Box, MenuItem, Typography } from '@material-ui/core';
-import TextField from '../../../components/Ui/TextField';
+import { Card, Box, Typography } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
@@ -26,6 +25,11 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         justifyContent: 'space-between',
         alignItems: 'center'
+    },
+    partSearchRateHead: {
+        '@media (max-width: 400px)': {
+            fontSize: '0.966rem'
+        },
     }
 }));
 
@@ -65,28 +69,7 @@ function PartsSearchRate({ className, ...other }) {
     return (
         <Card className={clsx(classes.root, className)} {...other}>
             <Box className={classes.cardHeaderChart} >
-                <Typography variant="h5"> {t("Search rate for parts in your stock")} </Typography>
-                <TextField
-                    type='select'
-                    id='partsSearched'
-                    name='partsSearched'
-                    value={t("one week")}
-                    datePadding='datePadding'
-                    dateFilterWidth="dateFilterWidth"
-                >
-                    <MenuItem key={t("one week")} value={t("one week")}>
-                        {t("one week")}
-                    </MenuItem>
-                    <MenuItem key={t("one month")} value={t("one month")}>
-                        {t("one month")}
-                    </MenuItem>
-                    <MenuItem key={t("6 months")} value={t("6 months")}>
-                        {t("6 months")}
-                    </MenuItem>
-                    <MenuItem key={t("one year")} value={t("one year")}>
-                        {t("one year")}
-                    </MenuItem>
-                </TextField>
+                <Typography variant="h5" className={classes.partSearchRateHead}> {t("Search rate for parts in your stock")} </Typography>
             </Box>
             <Box sx={{ mt: 3, mx: 3 }} dir="ltr">
                 <ReactApexChart

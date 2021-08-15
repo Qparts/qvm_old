@@ -31,6 +31,17 @@ const useStyles = makeStyles((theme) => ({
     padding: '8px 20px',
     left: '50%',
     transform: 'translate(-50%, 0)',
+    '@media (max-width: 325px)': {
+      left: '46%',
+      transform: 'translate(-46%, 0)'
+    },
+  },
+  planHeadSec: {
+    minHeight: '72px',
+    marginBottom: '10px',
+    [theme.breakpoints.down('md')]: {
+      minHeight: 'auto'
+    },
   },
   planHead: {
     color: theme.palette.secondary.main,
@@ -54,7 +65,27 @@ const useStyles = makeStyles((theme) => ({
     },
     '&:first-of-type': {
       paddingTop: 0
-    }
+    },
+    '@media (max-width: 1070px) and (min-width: 960px)': {
+      '&:first-of-type': {
+        display: 'block',
+        textAlign: 'right',
+        '& span:first-of-type': {
+          display: 'block',
+          textAlign: 'left',
+        }
+      }
+    },
+    '@media (max-width: 365px)': {
+      '&:first-of-type': {
+        display: 'block',
+        textAlign: 'right',
+        '& span:first-of-type': {
+          display: 'block',
+          textAlign: 'left',
+        }
+      }
+    },
   },
   planFeaturesOptionChild: {
     background: '#e5f3f9',
@@ -68,14 +99,25 @@ const useStyles = makeStyles((theme) => ({
     padding: ' 0 10px',
     marginTop: theme.spacing(2),
     fontWeight: theme.typography.fontWeightBold,
+    [theme.breakpoints.down('md')]: {
+      fontSize: theme.typography.subtitle2.fontSize
+    },
   },
   basicPlan: {
     borderRadius: '30px 0 0 30px',
-    borderRight: 0
+    borderRight: 0,
+    [theme.breakpoints.down('md')]: {
+      borderLeft: '1px solid #E4E4E4',
+      borderRadius: 0
+    },
   },
   customPlan: {
     borderRadius: '0 30px 30px 0',
-    borderLeft: 0
+    borderLeft: 0,
+    [theme.breakpoints.down('md')]: {
+      borderLeft: '1px solid #E4E4E4',
+      borderRadius: 0
+    },
   },
   premiumPlan: {
     borderColor: 'rgba(238, 64, 54, 0.6)',
@@ -99,9 +141,6 @@ function PlanCard({ plan, duration }) {
   const { t } = useTranslation();
   const { themeDirection } = useSelector((state) => state.settings);
   const { availablePlans } = useSelector((state) => state.authJwt);
-  const imagePath = plan.name === 'Basic Plan' ? '/static/icons/ic_plan_free.svg' :
-    plan.name === 'Premium Plan' ? '/static/icons/ic_plan_starter.svg' :
-      '/static/icons/ic_plan_premium.svg';
 
   const getSaveValue = () => {
     return Math.round((duration.discountPercentage * (availablePlans[1].price / 360) * duration.calculationDays));
@@ -112,7 +151,7 @@ function PlanCard({ plan, duration }) {
     cardStyle = classes.customPlan;
   else if (plan.name === 'Basic Plan')
     cardStyle = classes.basicPlan;
-  else if(plan.name == 'Premium Plan' && duration && duration.calculationDays > 180)
+  else if (plan.name == 'Premium Plan' && duration && duration.calculationDays > 180)
     cardStyle = classes.premiumPlan;
 
   return (
@@ -122,7 +161,7 @@ function PlanCard({ plan, duration }) {
         <Typography variant="subtitle1" className={classes.planPremiumLabel}> {t("Most popular")} </Typography>
       )}
 
-      <Box sx={{ minHeight: '72px', marginBottom: '10px' }}>
+      <Box className={classes.planHeadSec}>
         <Typography variant='h3' className={classes.planHead}>{themeDirection == 'ltr' ? plan.name : plan.nameAr} </Typography>
 
         <Typography
@@ -185,7 +224,7 @@ function PlanCard({ plan, duration }) {
           {plan.features.map((feature, index) => {
             return (
               <ListItem key={index} className={classes.planFeaturesChild}>
-                <Typography variant="body3">
+                <Typography variant="body3" className={classes.featureName}>
                   {themeDirection == 'ltr' ? feature.name : feature.nameAr}
                 </Typography>
                 <Typography variant="body4" className={feature.value ? classes.planFeaturesOptionChild : null}>

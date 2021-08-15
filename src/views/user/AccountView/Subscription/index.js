@@ -11,7 +11,7 @@ function SubscriptionView() {
     const { t } = useTranslation();
 
     return (
-        <MainCard title={t("Subscription")} cardPadd="cardPadd">
+        <MainCard title={t("Subscription")} cardPadd="cardPadd" cardMt='cardMt'>
             <UpgradeSection />
             <PlanFeaturesSection />
             <SubscriptionHistory />
