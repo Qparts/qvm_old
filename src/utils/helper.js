@@ -189,17 +189,11 @@ const gotoPremium = async (history, enqueueSnackbar, message, url, t) => {
   }
 }
 
-const handleSelectConversation = (item, dispatch, history, url) => {
-  console.log("item" , item);
-  dispatch(setActiveConversation(item));
-  history.push(url);
-};
-
-const handlePartSearch = (dispatch, history, url, constants, search) => {
+const handlePartSearch = (dispatch, history, url, search) => {
   dispatch(resetLocationfilter());
   dispatch(setFilter({ filter: "" }));
   dispatch(handleChangePage({ newPage: 0 }));
-  dispatch(partSearch(search, 0, constants, ""));
+  dispatch(partSearch(search, 0, 0, ""));
   getPartinfo(search, dispatch);
   history.push(url);
 }
@@ -207,6 +201,7 @@ const handlePartSearch = (dispatch, history, url, constants, search) => {
 const getPartinfo = (search, dispatch) => {
   dispatch(getProductInfo(search, ""));
 };
+
 
 const handleLogout = async (logout, dispatch, isMountedRef, history, url, enqueueSnackbar) => {
   try {
@@ -250,7 +245,6 @@ export default {
   reconstructPhone,
   gotoPremium,
   calculateTimeLeft,
-  handleSelectConversation,
   handlePartSearch,
   handleLogout
 };

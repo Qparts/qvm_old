@@ -151,12 +151,12 @@ const invoice = {
 };
 
 const chat = {
-  getUserConversations: (userId) => `http://localhost:7000/conversation/${userId}`,
-  postNewChat: `http://localhost:7000/conversation/`,
-  postNewMessage: `http://localhost:7000/messages/`,
-  getConversationMessages: (conversationKey) => `http://localhost:7000/messages/${conversationKey}`,
-  unseenMessages: `http://localhost:7000/messages/unseen`,
-  putSeenConversationMessages : (conversationId ,sender)=>`http://localhost:7000/messages/seen/${conversationId}/${sender}`
+  getUserConversations: (userId) => `${CHAT_SERVICE}/conversation/${userId}`,
+  postNewChat: `${CHAT_SERVICE}/conversation/`,
+  postNewMessage: `${CHAT_SERVICE}/messages/`,
+  getConversationMessages: (conversationKey) => `${CHAT_SERVICE}/messages/${conversationKey}`,
+  unseenMessages: `${CHAT_SERVICE}/messages/unseen`,
+  putSeenConversationMessages : (conversationId ,sender)=>`${CHAT_SERVICE}/messages/seen/${conversationId}/${sender}`
 }
 
 

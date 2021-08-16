@@ -19,7 +19,7 @@ function JwtProvider(props) {
 
 
   useEffect(() => {
-    socket.current = io(`ws://localhost:8900`, {
+    socket.current = io(`ws://qtest.fareed9.com:8900`, {
       transports: ["websocket", "polling"]
     });
     dispatch(updateCurrentSocket(socket));
