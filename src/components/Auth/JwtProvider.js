@@ -1,8 +1,8 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInitialize, updateCurrentSocket } from 'src/redux/slices/authJwt';
 import { io } from "socket.io-client"
-import { getContacts, getUnseenMessages, updateOnlineUsers, updateRecivedMessages } from 'src/redux/slices/chat';
+import { getContacts, getUnseenMessages, updateOnlineUsers, updateRecivedMessages, updateUnseenMessages } from 'src/redux/slices/chat';
 import chatService from 'src/services/chatService';
 
 // ----------------------------------------------------------------------
@@ -19,7 +19,9 @@ function JwtProvider(props) {
 
 
   useEffect(() => {
-    socket.current = io(`ws://localhost:8900`);
+    socket.current = io(`ws://localhost:8900`, {
+      transports: ["websocket", "polling"]
+    });
     dispatch(updateCurrentSocket(socket));
   }, []);
 
@@ -31,9 +33,9 @@ function JwtProvider(props) {
 
   useEffect(() => {
 
-    const markConversationAsSeen = async () => {
+    const markConversationAsSeen = async (conversationId) => {
       try {
-        await chatService.markConversationAsSee(activeConversation._id, user.subscriber.id);
+        await chatService.markConversationAsSee(conversationId, user.subscriber.id);
       } catch (error) {
         console.error(error);
       }
@@ -46,7 +48,6 @@ function JwtProvider(props) {
         dispatch(updateOnlineUsers(users));
         dispatch(getUnseenMessages(user.subscriber.id, userConversations));
       });
-
 
       //update conversation list in reciever side.
       socket.current.on("contactsUpdated", () => {
@@ -66,10 +67,12 @@ function JwtProvider(props) {
           data.createdAt = Date.now();
           const path = window.location.pathname.split("/");
           if (path[path.length - 1] == data.conversationId) {
+            data.status = 'S';
             dispatch(updateRecivedMessages(data));
-            markConversationAsSeen();
+            markConversationAsSeen(data.conversationId);
           } else {
-            dispatch(getUnseenMessages(user.subscriber.id, userConversations));
+            // dispatch(getUnseenMessages(user.subscriber.id, userConversations));
+            dispatch(updateUnseenMessages(data));
           }
 
         }

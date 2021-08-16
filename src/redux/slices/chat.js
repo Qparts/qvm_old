@@ -73,7 +73,6 @@ const slice = createSlice({
 
     //UPDATE ORDERR IN THE RECIVER SIDE.
     updateRecivedOrderMessages(state, action) {
-      console.log("RecivedOrderMessages", JSON.parse(action.payload.text));
       let updatedOrder = action.payload;
       let newMessages = [...state.messages];
       let orderIndex = newMessages.findIndex(x => x._id == updatedOrder._id);
@@ -85,6 +84,11 @@ const slice = createSlice({
     //UDATE ONLINE USERS.
     updateOnlineUsers(state, action) {
       state.onlineUsers = action.payload;
+    },
+
+    updateUnseenMessages(state, action) {
+      state.unseenMessages = [...state.unseenMessages, action.payload];
+
     },
 
     //UPDATE ACTIVE CONVERSATION ID.
@@ -119,7 +123,7 @@ export const {
   addRecipient,
   onOpenSidebarInfo,
   onCloseSidebarInfo,
-  // resetActiveConversation,
+  updateUnseenMessages,
   setActiveConversationId,
   onOpenSidebarConversation,
   onCloseSidebarConversation,

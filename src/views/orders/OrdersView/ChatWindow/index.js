@@ -8,11 +8,13 @@ import { useHistory, useParams, useLocation } from 'react-router-dom';
 import {
   getConversation,
   createNewMessage,
-  setActiveConversation
+  setActiveConversation,
+  getUnseenMessages
 } from 'src/redux/slices/chat';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Divider } from '@material-ui/core';
 import { setActiveConversationId } from '../../../../redux/slices/chat';
+import chatService from 'src/services/chatService';
 
 // ----------------------------------------------------------------------
 
@@ -71,6 +73,9 @@ function ChatWindow(props) {
           dispatch(setActiveConversation(newActiveConversation));
           dispatch(setActiveConversationId(conversationKey));
         }
+        //update the status of selected conversation's messages to be S.
+        await chatService.markConversationAsSee(conversationKey, user.subscriber.id);
+        dispatch(getUnseenMessages(user.subscriber.id, props.userConversations));
         await dispatch(getConversation(conversationKey));
       } catch (error) {
         console.error(error);
@@ -84,7 +89,7 @@ function ChatWindow(props) {
 
 
 
-//create new message and emit it to other conversation 's members.
+  //create new message and emit it to other conversation 's members.
   const handleSendMessage = async (value) => {
     try {
       dispatch(createNewMessage(value, messages));
