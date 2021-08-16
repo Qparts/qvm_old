@@ -47,7 +47,7 @@ function getTitle(message, friend, t) {
         variant="body2"
         sx={{ color: 'text.secondary' }}
       >
-        &nbsp; {noCase(message.contentType == 'text' ? message.text : t("Order is Pending"))}
+        &nbsp; {noCase(message.contentType == 'order' ? t("Order is Pending") : message.text)}
       </Typography>
     </Typography>
   );
@@ -63,7 +63,7 @@ UnseenMessage.propTypes = {
 const uploadUrl = links.upload;
 
 
-function UnseenMessage({ message, setOpen , className }) {
+function UnseenMessage({ message, setOpen, className }) {
   const classes = useStyles();
   const { userConversations, onlineUsers } = useSelector((state) => state.chat);
   const { t } = useTranslation();

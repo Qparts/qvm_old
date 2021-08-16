@@ -41,10 +41,6 @@ function ConversationList({
 
 
   const handleSelectConversation = async (item) => {
-    //update the status of selected conversation's messages to be S.
-    await chatService.markConversationAsSee(item._id, user.subscriber.id);
-    dispatch(getUnseenMessages(user.subscriber.id, userConversations));
-
     //update the unseen message list of online users that belong to the login user company. 
     item.members.filter(x => x.id != user.subscriber.id &&
       x.companyId == user.subscriber.companyId).map((member) => {
