@@ -55,7 +55,7 @@ const slice = createSlice({
         getProductInfoSuccess(state, action) {
             state.isLoading = false;
             state.productInfoResult = action.payload.productInfoResult;
-            state.error = '';
+            // state.error = '';
         },
         // search location
         searchLocationSuccess(state, action) {

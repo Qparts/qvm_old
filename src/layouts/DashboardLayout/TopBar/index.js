@@ -67,7 +67,7 @@ function TopBar({ onOpenNav, className }) {
     dispatch(resetLocationfilter());
     dispatch(setFilter({ filter: "" }));
     dispatch(handleChangePage({ newPage: 0 }));
-    dispatch(partSearch(search, 0, constants.MAX, ""));
+    dispatch(partSearch(search, 0, 0, ""));
     getPartinfo(search);
     history.push(PATH_APP.general.partSearch);
   }
