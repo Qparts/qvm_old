@@ -16,6 +16,11 @@ const LANGS = [
     icon: '/static/icons/ic_flag_en.svg'
   },
   {
+    value: 'en_US',
+    label: 'English',
+    icon: '/static/icons/ic_flag_en.svg'
+  },
+  {
     value: 'ar',
     label: 'Arabic',
     icon: '/static/icons/ic_flag_ar.svg'
@@ -46,10 +51,8 @@ function Languages() {
   const currentLang = LANGS.find((_lang) => _lang.value === langStorage);
 
   const handleChangeLanguage = (lng) => {
-    if (lng == 'ar')
-      selectDirection('rtl');
-    else
-      selectDirection('ltr');
+    if (lng == 'ar') selectDirection('rtl');
+    else selectDirection('ltr');
     i18n.changeLanguage(lng);
     setOpen(false);
   };
@@ -61,7 +64,10 @@ function Languages() {
         onClick={() => setOpen(true)}
         className={clsx(classes.btnLang, { [classes.isSelected]: isOpen })}
       >
-        <img src={langStorage ? currentLang.icon : null} alt={langStorage ? currentLang.label: null} />
+        <img
+          src={langStorage ? currentLang.icon : null}
+          alt={langStorage ? currentLang.label : null}
+        />
       </MIconButton>
 
       <PopoverMenu

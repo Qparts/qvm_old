@@ -27,7 +27,7 @@ function JwtProvider(props) {
   const socketURL = process.env.REACT_APP_WS_HOST;
 
   useEffect(() => {
-    socket.current = io(`ws://${socketURL}:8900`, {
+    socket.current = io(`${socketURL}:8900`, {
       transports: ['websocket']
     });
     dispatch(updateCurrentSocket(socket));
