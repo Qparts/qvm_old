@@ -13,10 +13,6 @@ function getCompanyUsers(companyId) {
 }
 
 function getUserConversations(userId) {
-  console.log(
-    'chatUrl.getUserConversations(userId)',
-    chatUrl.getUserConversations(userId)
-  );
   return http.get(chatUrl.getUserConversations(userId));
 }
 
