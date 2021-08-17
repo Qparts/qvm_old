@@ -20,7 +20,11 @@ const useStyles = makeStyles((theme) => {
     root: {
       paddingTop: theme.spacing(0),
       paddingBottom: theme.spacing(12)
-
+    },
+    headingWeight: {
+      [theme.breakpoints.down('sm')]: {
+        fontSize: '21px !important',
+      },
     }
   };
 });

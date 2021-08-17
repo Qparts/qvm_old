@@ -42,7 +42,6 @@ function ResetPasswordView() {
   const classes = useStyles();
   const { resetPassword, validateResetToken } = useAuth();
   const isMountedRef = useIsMountedRef();
-  const [sent, setSent] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const location = useLocation();
   const codeParam = new URLSearchParams(location.search).get("code");
@@ -112,9 +111,7 @@ function ResetPasswordView() {
         {validated && <Box sx={{ maxWidth: 480, mx: 'auto' }}>
           {validResetToken ? (
             <>
-
               <ResetPasswordForm formik={formik} />
-
               <Button
                 fullWidth
                 size="large"

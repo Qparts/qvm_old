@@ -133,7 +133,8 @@ const product = {
   getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
   specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
   postQvmStockUpload: `${PRODUCT_SERVICE}/stock-upload`,
-  postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`
+  postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`,
+  getDashboardMetrics: `${PRODUCT_SERVICE}/dashboard-metrics`
 };
 
 const plan = {

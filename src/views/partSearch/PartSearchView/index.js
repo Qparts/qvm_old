@@ -2,7 +2,7 @@ import Page from 'src/components/Page';
 import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector, useDispatch } from 'react-redux';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
@@ -35,7 +35,8 @@ function PartSearchView() {
     const classes = useStyles();
     const { t } = useTranslation();
     const dispatch = useDispatch();
-    const { isLoading, productInfoResult = [], productResult = [] } = useSelector((state) => state.PartSearch);
+    const { isLoading, productInfoResult = [],
+        productResult = [], error } = useSelector((state) => state.PartSearch);
 
     useEffect(() => {
         return () => {
@@ -60,8 +61,10 @@ function PartSearchView() {
                     <LoadingScreen />
 
                 }>
+
                 {
-                    productInfoResult.length === 0 && productResult.length === 0 ?
+                    productInfoResult.length === 0 && productResult.length === 0 &&
+                        isLoading === false && error != "Search limit exceeded!" ?
                         <EmptyContent
                             btnHome
                             title={t("Unable to receive your order")}
@@ -69,7 +72,7 @@ function PartSearchView() {
                         />
                         :
                         <>
-                            <AvailabilityPartsSection />
+                            {productResult.length > 0 || error == "Search limit exceeded!" ? <AvailabilityPartsSection /> : ""}
                             {productInfoResult.length > 0 ?
                                 <>
                                     <Box sx={{ mb: 6 }} />

@@ -49,7 +49,7 @@ function ConfirmView(props) {
             {t("THANK YOU FOR REGISTRATION IN QVM")}
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            {t("Your request have been sent, Your application will be reviewed by our team we will contact with you soon.")}
+            {t("Your request have been sent, Your application will be reviewed by our team we will contact with you soon")}
           </Typography>
         </Box>
       </Container>

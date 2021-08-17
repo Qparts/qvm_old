@@ -34,7 +34,8 @@ const useStyles = makeStyles((theme) => ({
         }
     },
     catalogFilterResult: {
-        display: 'flex'
+        display: 'flex',
+        flexWrap: 'wrap'
     }
 }));
 

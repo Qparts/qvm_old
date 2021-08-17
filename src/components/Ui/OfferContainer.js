@@ -36,7 +36,7 @@ function OfferContainer() {
                 return (
                     <Box
                         key={index}
-                        sx={{ marginTop: '10px', cursor: 'pointer' }}
+                        sx={{ cursor: 'pointer' }}
                         onClick={() => {
                             history.push(`/app/special-offer/${specialOffer.id}`);
                             dispatch(setSelectedOffer({ selectedOffer: specialOffer }));

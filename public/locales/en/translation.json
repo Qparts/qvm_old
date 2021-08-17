@@ -1,6 +1,7 @@
 {
   "home": "Home",
   "catalog": "Catalog",
+  "dashboard": "Dashboard",
   "prices": "Prices",
   "contactUs": "Contact Us",
   "login": "Login",
@@ -369,7 +370,7 @@
   "Verification Code Is Required": "Verification Code Is Required",
   "Verification Code Is Invalid": "Verification Code Is Invalid",
   "THANK YOU FOR REGISTRATION IN QVM": "THANK YOU FOR REGISTRATION IN QVM",
-  "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.": "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.",
+  "Your request have been sent, Your application will be reviewed by our team we will contact with you soon": "Your request have been sent, Your application will be reviewed by our team we will contact with you soon.",
   "Forgot your password?": "Forgot your password?",
   "Please enter the email address associated with your account and We will email you a link to reset your password": "Please enter the email address associated with your account and We will email you a link to reset your password.",
   "Reset Password": "Reset Password",
@@ -588,6 +589,19 @@
   "Subscribe to our newsletter": "Subscribe To Our Newsletter",
   "Enter email": "Enter email",
   "Unable to receive your order": "Unable to receive your order",
+  "messages": "Messages",
+  "messages unread": "You have ({{unReadNum}}) unread messages",
+  "View All": "View All",
+  "To": "To",
+  "Recipients": "Recipients",
+  "Search contacts": "Search contacts...",
+  "Not found": "Not found",
+  "users in group": "Users in group",
+  "No results found for": "No results found for",
+  "tap for more info": "Tap for more info",
+  "Search limit exceeded": "Search limit exceeded!",
+  "You used 5 of the 5 searches available in the free plan Upgrade to the premium package to enjoy unlimited searching": "You used 5 of the 5 searches available in the free plan. Upgrade to the premium package to enjoy unlimited searching.",
+  "Try checking for typos or using complete words": "Try checking for typos or using complete words.",
   "Sharing information about stores and merchants": "Sharing information about stores and merchants:",
   "QVM platform usage rules and conditions": "QVM platform usage rules and conditions:",
   "All obligations of the QVM platform, and all obligations of merchants and users, and all rights contained in the relationship between the merchant, the user and the QVM platform, as these rules are the “Privacy Policy and Confidentiality of Information” stemming from the agreement concluded between the merchant, the user and the QVM platform when establishing the store, and the policy of Privacy and confidentiality of information to ensure the credibility and trust that the QVM platform is keen to provide to merchants": "All obligations of the QVM platform, and all obligations of merchants and users, and all rights contained in the relationship between the merchant, the user and the QVM platform, as these rules are the “Privacy Policy and Confidentiality of Information” stemming from the agreement concluded between the merchant, the user and the QVM platform when establishing the store, and the policy of Privacy and confidentiality of information to ensure the credibility and trust that the QVM platform is keen to provide to merchants.",
@@ -635,6 +649,10 @@
   "Accepted" : "Accepted",
   "Pending" : "Pending",
   "Type a message" : "Type a message",
-  "Orders" :"Orders"
+  "Orders" :"Orders",
+  "Messages" : "Messages",
+  "You have {{count}} unread messages" : "You have {{count}} unread messages",
+  "New" : "New",
+  "Search limit exceeded!" : "You have exceeded your daily search attempts available in the free package. Upgrade your package and enjoy unlimited search."
 
 }

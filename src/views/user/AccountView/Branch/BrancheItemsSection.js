@@ -64,6 +64,7 @@ function BrancheItemsSection() {
                 isLazy={false}
                 rowsPerPage={rowsPerPage}
                 hasPagination={branches.length > constants.MAX ? true : false}
+                dataTableSetting='dataTableSetting'
             />
         </Box>
     );

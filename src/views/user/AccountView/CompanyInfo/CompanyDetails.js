@@ -32,7 +32,21 @@ const useStyles = makeStyles((theme) => ({
         margin: '0 5px'
     },
     companyDetailsChild: {
-        marginLeft: '10px'
+        marginLeft: theme.spacing(1.25),
+        '@media (max-width: 645px) and (min-width: 600px)': {
+            margin: theme.spacing(0.75, 0, 0)
+        },
+        '@media (max-width: 333px)': {
+            margin: theme.spacing(0.75, 0, 0)
+        },
+    },
+    companyInfo: {
+        '@media (max-width: 645px) and (min-width: 600px)': {
+            display: 'block !important',
+        },
+        '@media (max-width: 333px)': {
+            display: 'block !important',
+        },
     },
     partsMb: {
         marginBottom: '7px'
@@ -43,6 +57,9 @@ const useStyles = makeStyles((theme) => ({
     },
     companyDetailsFlexStart: {
         justifyContent: 'flex-start',
+        [theme.breakpoints.down('sm')]: {
+            justifyContent: 'center'
+        },
     },
 }));
 
@@ -71,7 +88,7 @@ function CompanyDetails() {
                         <Typography variant="subtitle1"> 500</Typography>
                     </Box>
                 </Box>
-                <Box className={classes.companyDetailsFlex}>
+                <Box className={clsx(classes.companyInfo, classes.companyDetailsFlex)}>
                     <Box className={classes.companyDetailsFlex}>
                         <Location width='16' height='16' fill='#7E8D99' style={{ margin: themeDirection === 'ltr' ? '0 5px 0 0' : '0 0 0 5px' }} />
                         <Typography variant="subtitle2"> السعودية</Typography>

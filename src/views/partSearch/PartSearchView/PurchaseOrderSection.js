@@ -29,6 +29,7 @@ function PurchaseOrderSection(props) {
     const { themeDirection } = useSelector((state) => state.settings);
     const [quantity, setQuantity] = useState(0);
 
+    //add order item to purchase from specific company.
     const addToOrder = () => {
         const order = {
             companyId: selectedPart.companyId,

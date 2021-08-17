@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
-import Section from './../RegisterView/Section';
+import Section from '../Ui/Section';
+import Header from '../Ui/Header';
 import { useFormik } from 'formik';
 import LoginForm from './LoginForm';
 import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
-import Logo from 'src/components/Logo';
 import useAuth from 'src/hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { PATH_PAGE } from 'src/routes/paths';
@@ -18,13 +18,11 @@ import {
   Link,
   Alert,
   Hidden,
-  Tooltip,
   Container,
   Typography
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import { useSelector, useDispatch } from 'react-redux';
-import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
 import { getInitialize } from 'src/redux/slices/authJwt';
 
@@ -36,21 +34,6 @@ const useStyles = makeStyles((theme) => ({
       display: 'flex'
     }
   },
-  header: {
-    top: 0,
-    zIndex: 9,
-    lineHeight: 0,
-    width: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    position: 'absolute',
-    padding: theme.spacing(3),
-    justifyContent: 'space-between',
-    [theme.breakpoints.up('md')]: {
-      alignItems: 'flex-start',
-      padding: theme.spacing(7, 5, 0, 7)
-    }
-  },
   content: {
     maxWidth: 600,
     margin: 'auto',
@@ -60,10 +43,13 @@ const useStyles = makeStyles((theme) => ({
     justifyContent: 'center',
     padding: theme.spacing(12, 0)
   },
-  heading:{
+  heading: {
     color: theme.palette.secondary.main,
-    lineHeight:1,
+    lineHeight: 1,
     marginRight: '0.5rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.typography.h4.fontSize
+    }
   }
 }));
 
@@ -71,7 +57,7 @@ const useStyles = makeStyles((theme) => ({
 
 function LoginView() {
   const classes = useStyles();
-  const { method, login } = useAuth();
+  const { login } = useAuth();
   const isMountedRef = useIsMountedRef();
   const dispatch = useDispatch();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -137,31 +123,10 @@ function LoginView() {
   return (
     <Page title="Login | Minimal-UI" className={classes.root}>
 
-      <header className={classes.header}>
-        <RouterLink to="/">
-          <Logo />
-        </RouterLink>
-        <Hidden smDown>
-          <Typography
-            variant="body2"
-            sx={{
-              mt: { md: -2 }
-            }}
-          >
-            {t("Don't have account?")} &nbsp;
-            <Link
-              underline="none"
-              variant="subtitle2"
-              component={RouterLink}
-              to={PATH_PAGE.auth.register}
-            >
-              {t("Register now")}
-            </Link>
-
-            <Languages />
-          </Typography>
-        </Hidden>
-      </header>
+      <Header
+        auth={t("Don't have account?")}
+        url={PATH_PAGE.auth.register}
+        title={t("Register now")} />
 
       <Hidden mdDown>
         <Section />
@@ -178,7 +143,7 @@ function LoginView() {
                 {t("Enter your details below")}
               </Typography>
             </Box>
-            
+
           </Box>
 
 
@@ -190,13 +155,13 @@ function LoginView() {
 
           <Hidden smUp>
             <Typography variant="body2" align="center" sx={{ mt: 3 }}>
-              Don’t have an account?&nbsp;
+              {t("Don't have account?")} &nbsp;
               <Link
                 variant="subtitle2"
                 component={RouterLink}
                 to={PATH_PAGE.auth.register}
               >
-                Get started
+                {t("Register now")}
               </Link>
             </Typography>
           </Hidden>

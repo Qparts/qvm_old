@@ -25,6 +25,7 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: '0px 2px 4px rgb(20 69 91 / 2%)',
         borderRadius: '10px',
         marginTop: '14px',
+        textAlign: 'left',
         '&:hover': {
             borderRight: `3px solid ${theme.palette.primary.main}`,
             '& $a span': {
@@ -44,11 +45,19 @@ const useStyles = makeStyles((theme) => ({
     },
     offerDetailsGridQuantityCont: {
         margin: '2px 0 5px',
+        '@media (max-width: 327px)': {
+            display: 'block !important',
+        },
     },
     offerDetailsGridBorder: {
         paddingRight: '10px',
         marginRight: '10px',
         borderRight: '1px solid #CED5D8',
+        '@media (max-width: 327px)': {
+            border: 0,
+            marginRight: 0,
+            paddingRight: 0
+        },
     },
     offerDetailsGridFlex: {
         display: 'flex',
@@ -77,7 +86,7 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
             <Grid container spacing={2}>
                 {state.data.map((offerPro, index) => {
                     return (
-                        <Grid item xs={12} md={3} key={index}>
+                        <Grid item xs={12} sm={6} md={4} key={index}>
                             <Card className={classes.offerDetailsGridCont}>
                                 <CardContent sx={{ padding: '15px' }}>
                                     <Box className={classes.offerDetailsGridChild}>

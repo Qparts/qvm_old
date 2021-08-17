@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getInitialize, updateCurrentSocket } from 'src/redux/slices/authJwt';
 import { io } from 'socket.io-client';
@@ -6,7 +6,8 @@ import {
   getContacts,
   getUnseenMessages,
   updateOnlineUsers,
-  updateRecivedMessages
+  updateRecivedMessages,
+  updateUnseenMessages
 } from 'src/redux/slices/chat';
 import chatService from 'src/services/chatService';
 
@@ -23,10 +24,10 @@ function JwtProvider(props) {
     (state) => state.chat
   );
   const socket = useRef();
-  const socketURL = 'ws://qtest.fareed9.com:8900';
+  const socketURL = process.env.REACT_APP_WS_HOST;
 
   useEffect(() => {
-    socket.current = io(`ws://qtest.fareed9.com:8900`, {
+    socket.current = io(`ws://${socketURL}:8900`, {
       transports: ['websocket']
     });
     dispatch(updateCurrentSocket(socket));
@@ -37,10 +38,10 @@ function JwtProvider(props) {
   }, [dispatch]);
 
   useEffect(() => {
-    const markConversationAsSeen = async () => {
+    const markConversationAsSeen = async (conversationId) => {
       try {
         await chatService.markConversationAsSee(
-          activeConversation._id,
+          conversationId,
           user.subscriber.id
         );
       } catch (error) {
@@ -72,10 +73,12 @@ function JwtProvider(props) {
           data.createdAt = Date.now();
           const path = window.location.pathname.split('/');
           if (path[path.length - 1] == data.conversationId) {
+            data.status = 'S';
             dispatch(updateRecivedMessages(data));
-            markConversationAsSeen();
+            markConversationAsSeen(data.conversationId);
           } else {
-            dispatch(getUnseenMessages(user.subscriber.id, userConversations));
+            // dispatch(getUnseenMessages(user.subscriber.id, userConversations));
+            dispatch(updateUnseenMessages(data));
           }
         }
       });

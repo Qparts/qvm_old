@@ -18,7 +18,6 @@ const useStyles = makeStyles((theme) => ({
   },
   heading: {
     color: theme.palette.secondary.main,
-    lineHeight: 1,
     marginRight: '0.5rem'
   },
   orderedList: {

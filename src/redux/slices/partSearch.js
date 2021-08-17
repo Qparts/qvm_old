@@ -55,7 +55,7 @@ const slice = createSlice({
         getProductInfoSuccess(state, action) {
             state.isLoading = false;
             state.productInfoResult = action.payload.productInfoResult;
-            state.error = '';
+            // state.error = '';
         },
         // search location
         searchLocationSuccess(state, action) {
@@ -138,6 +138,7 @@ const slice = createSlice({
             state.rowsPerPage = action.payload.rowsPerPage;
         },
 
+        //add order item to company purchase order.
         addOrder(state, action) {
             const newOrder = action.payload;
             let newOrders = state.orders;

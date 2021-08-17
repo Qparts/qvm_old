@@ -1,16 +1,16 @@
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import React, { useState } from 'react';
+// import { Icon } from '@iconify/react';
+import React from 'react';
 import { Form, FormikProvider } from 'formik';
-import eyeFill from '@iconify-icons/eva/eye-fill';
-import eyeOffFill from '@iconify-icons/eva/eye-off-fill';
+// import eyeFill from '@iconify-icons/eva/eye-fill';
+// import eyeOffFill from '@iconify-icons/eva/eye-off-fill';
 import { emailError, passwordError } from 'src/utils/helpError';
 import { useSelector } from 'react-redux';
 import {
   Box,
   Grid,
-  IconButton,
-  InputAdornment,
+  // IconButton,
+  // InputAdornment,
   MenuItem
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -24,7 +24,7 @@ AddUserForm.propTypes = {
 };
 
 function AddUserForm({ formik, selectedBranch }) {
-  const [showPassword, setShowPassword] = useState(false);
+  // const [showPassword, setShowPassword] = useState(false);
   const { errors, touched, handleSubmit, isSubmitting, getFieldProps } = formik;
   const { t } = useTranslation();
 

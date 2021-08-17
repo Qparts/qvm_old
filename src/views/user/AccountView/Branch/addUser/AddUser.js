@@ -1,10 +1,7 @@
 import React, { useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import { Grid } from '@material-ui/core';
-import { useSnackbar } from 'notistack';
 import { addUser } from 'src/redux/slices/branches';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
@@ -18,10 +15,7 @@ function AddUser(props) {
     const { t } = useTranslation();
     const isMountedRef = useIsMountedRef();
     const [loaded, setLoaded] = useState(false);
-    const { countries } = useSelector(
-        (state) => state.authJwt
-    );
-
+    const { countries } = useSelector((state) => state.authJwt);
 
     const userSchema = Yup.object().shape({
         name: Yup.string().required(t("Name Is Required")),
@@ -61,14 +55,10 @@ function AddUser(props) {
     });
 
     return (
-
-        <Grid container >
-            <AddUserForm formik={formik} closePopup={props.setAddUserIsOpen}
-                selectedBranch={props.selectedBranch}
-                setSelectedBranch={props.setSelectedBranch}
-            />
-        </Grid>
-
+        <AddUserForm formik={formik} closePopup={props.setAddUserIsOpen}
+            selectedBranch={props.selectedBranch}
+            setSelectedBranch={props.setSelectedBranch}
+        />
     );
 }
 

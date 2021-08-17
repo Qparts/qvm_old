@@ -35,7 +35,7 @@ export default function CatalogHead() {
     return (
         <div className={classes.catalogHead}>
             <Grid container spacing={2}>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sm={6}>
                     <TextField
                         type='select'
                         label={t("catalog")}
@@ -55,7 +55,7 @@ export default function CatalogHead() {
                         ))}
                     </TextField>
                 </Grid>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={5} sm={6}>
                     <TextField
                         type='select'
                         label={t("Car Model")}
@@ -76,7 +76,7 @@ export default function CatalogHead() {
                     </TextField>
                 </Grid>
                 <Grid item xs={12} md={2}>
-                    <Box sx={{ marginTop: '18px' }}>
+                    <Box sx={{ mt: { xs: 0, md: 2.25 } }}>
                         <Button
                             disabled={selectedCatalog == null || selectedModel == null}
                             onClick={getCars}>

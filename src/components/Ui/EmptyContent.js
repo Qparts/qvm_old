@@ -67,7 +67,7 @@ function EmptyContent({ title, description, img, url, btnTitle, btnHome, classNa
       )}
 
       {btnHome && (
-        <Button btnWidth="btnWidth" component={RouterLink} to={PATH_APP.general.dashboard}>
+        <Button btnWidth="btnWidth" component={RouterLink} to={PATH_APP.general.root}>
           {<Icon icon={homeFill} className={classes.btnHomeIcon} />}
           {t("Back to home")}
         </Button>
