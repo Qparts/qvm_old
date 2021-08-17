@@ -34,7 +34,7 @@ const subscriber = {
 
 const upload = {
   postCompanyLogo: `${UPLOAD_SERVICE}/logo`,
-  postBankReceipt: `http://localhost:3000/upload/receipt`,
+  postBankReceipt: `${UPLOAD_SERVICE}/receipt`,
   getCompanyLogo: (fileName) => `${UPLOAD_SERVICE}/logo/${fileName}`
 };
 
@@ -108,21 +108,17 @@ const catalog = {
   getCatalogs: `${CATALOG_SERVICE}/catalogs`,
   getModels: (catalogid) => `${CATALOG_SERVICE}/models?catalogid=${catalogid}`,
   getCars: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${
-      params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
     } `,
   getCarByVIN: (vin) => `${CATALOG_SERVICE}/cars/vin?query=${vin}`,
   getFilters: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${
-      params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
     } `,
   getGroups: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${
-      groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `,
   getPart: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${
-      groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `
 };
 
@@ -152,14 +148,14 @@ const invoice = {
 
 const chat = {
   getUserConversations: (userId) =>
-    `http://qtest.fareed9.com:7000/conversation/${userId}`,
-  postNewChat: `http://qtest.fareed9.com:7000/conversation/`,
-  postNewMessage: `http://qtest.fareed9.com:7000/messages/`,
+    `${CHAT_SERVICE}/conversation/${userId}`,
+  postNewChat: `${CHAT_SERVICE}/conversation/`,
+  postNewMessage: `${CHAT_SERVICE}/messages/`,
   getConversationMessages: (conversationKey) =>
-    `http://qtest.fareed9.com:7000/messages/${conversationKey}`,
-  unseenMessages: `http://qtest.fareed9.com:7000/messages/unseen`,
+    `${CHAT_SERVICE}/messages/${conversationKey}`,
+  unseenMessages: `${CHAT_SERVICE}/messages/unseen`,
   putSeenConversationMessages: (conversationId, sender) =>
-    `http://qtest.fareed9.com:7000/messages/seen/${conversationId}/${sender}`
+    `${CHAT_SERVICE}/messages/seen/${conversationId}/${sender}`
 };
 
 export default {
