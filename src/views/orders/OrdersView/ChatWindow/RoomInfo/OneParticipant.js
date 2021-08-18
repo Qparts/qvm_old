@@ -88,7 +88,7 @@ function OneParticipant({
         }}
       >
         <Avatar
-          alt={participants[0]?.comapnyName}
+          alt={participants[0]?.companyName}
           src={uploadUrl.getCompanyLogo(`logo_${participants[0]?.companyId}.png`)}
           sx={{ width: 96, height: 96 }}
         />
@@ -128,20 +128,7 @@ function OneParticipant({
                         {participant.name}
                       </Typography>
                     </div>
-                    {/* <div className={classes.item}>
-                      <Icon icon={phoneFill} className={classes.itemIcon} />
-                      <Typography variant="body4" className={classes.itemText}>
-                        {participant.mobile}
-                      </Typography>
-                    </div>
-                    <div className={classes.item}>
-                      <Icon icon={emailFill} className={classes.itemIcon} />
-                      <Typography variant="body4" className={classes.itemText}>
-                        {participant.email}
-                      </Typography>
-                    </div> */}
                     {index != participants.length - 1 && <Divider />}
-
                   </>
                 ))
               }

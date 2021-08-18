@@ -90,7 +90,7 @@ function MessageItem({
 
   useEffect(() => {
     if (message.contentType == 'order') {
-      setUpdatedOrder(JSON.parse(message.text));
+      // setUpdatedOrder(JSON.parse(message.text));
       const details = getOrderDetails();
       setOrderDetails(details);
     }
@@ -227,118 +227,121 @@ function MessageItem({
               addSuffix: true
             })}
           </Typography>
-          {message.contentType == 'text' || message.contentType == null ?
+          {message.contentType != 'order' ?
             <div className={clsx(classes.content, isMe && 'styleMe')}>
               <Typography variant="body2">{message.text}</Typography>
             </div>
             :
             <div
-              // className={isMe && 'styleMe'}
               style={{ width: 500 }}
             >
-              <Datatable
-                header={[
-                  {
-                    name: t("Part Number"),
-                    attr: 'order.partNumber',
-                  },
-                  {
-                    name: t("Brand"),
-                    attr: 'order.brandName',
-                  },
-                  {
-                    name: t("Quantity"),
-                    attr: 'quantity',
-                    type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                    onchange: updateOrderField
-                  },
-                  {
-                    name: t("Average market price"),
-                    attr: 'order.retailPrice',
-                    type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                    onchange: updateOrderField
-                  }
-                ]}
+              {updatedOrder && <>
+                <Datatable
+                  header={[
+                    {
+                      name: t("Part Number"),
+                      attr: 'order.partNumber',
+                    },
+                    {
+                      name: t("Brand"),
+                      attr: 'order.brandName',
+                    },
+                    {
+                      name: t("Quantity"),
+                      attr: 'quantity',
+                      type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
+                      onchange: updateOrderField
+                    },
+                    {
+                      name: t("Average market price"),
+                      attr: 'order.retailPrice',
+                      type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
+                      onchange: updateOrderField
+                    }
+                  ]}
 
-                datatable={updatedOrder.orders}
-              />
+                  datatable={updatedOrder?.orders}
+                />
 
-              <Box sx={{ mb: 3 }} />
+                <Box sx={{ mb: 3 }} />
 
-              <Grid container  >
-                <Grid item xs={!isMe ? 3 : 4} >
-                  <Typography
-                    variant="body2"
-                    sx={{ color: 'text.secondary' }}
-                  >
-                    {t("Total Parts")}{' : '}
-                    {orderDetails?.orderQuantity}
-                  </Typography>
-                </Grid>
-
-
-                <Grid item xs={4} >
-                  <Typography
-                    variant="body2"
-                    sx={{ color: 'text.secondary' }}
-                  >
-                    {t("Total Price")}{' : '}
-                    {helper.ccyFormat(orderDetails?.totalPrice)}
-                  </Typography>
-                </Grid>
-
-                <Grid item xs={!isMe ? 3 : 4} >
-                  <Typography
-                    variant="body2"
-                    sx={{ color: 'text.secondary' }}
-                  >
-                    {t("Status")}{' : '}
-                    {message.status === 'I' || message.status === 'S' ? t("Pending") : message.status == 'A' ?
-                      t("Accepted") : t("Rejected")}
-                  </Typography>
-                </Grid>
-
-                {!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders) &&
-                  !isMe &&
-                  <Grid item xs={2} >
-                    <Box sx={{ mb: 3 }} >
-                      <Button
-                        onClick={editOrder}
-                      >
-                        {t("Edit")}
-                      </Button>
-                    </Box>
+                <Grid container  >
+                  <Grid item xs={!isMe ? 3 : 4} >
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'text.secondary' }}
+                    >
+                      {t("Total Parts")}{' : '}
+                      {orderDetails?.orderQuantity}
+                    </Typography>
                   </Grid>
+
+
+                  <Grid item xs={4} >
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'text.secondary' }}
+                    >
+                      {t("Total Price")}{' : '}
+                      {helper.ccyFormat(orderDetails?.totalPrice)}
+                    </Typography>
+                  </Grid>
+
+                  <Grid item xs={!isMe ? 3 : 4} >
+                    <Typography
+                      variant="body2"
+                      sx={{ color: 'text.secondary' }}
+                    >
+                      {t("Status")}{' : '}
+                      {message.status === 'I' || message.status === 'S' ? t("Pending") : message.status == 'A' ?
+                        t("Accepted") : t("Rejected")}
+                    </Typography>
+                  </Grid>
+
+                  {!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders) &&
+                    !isMe &&
+                    <Grid item xs={2} >
+                      <Box sx={{ mb: 3 }} >
+                        <Button
+                          onClick={editOrder}
+                        >
+                          {t("Edit")}
+                        </Button>
+                      </Box>
+                    </Grid>
+                  }
+
+                </Grid>
+
+                <Box sx={{ mb: 3 }} />
+
+
+                {!isMe && (message.status === 'I' || message.status === 'S') &&
+                  <Grid container spacing={2} >
+                    <Grid item xs={6} />
+
+                    <Grid item xs={3} >
+                      <Button
+                        onClick={() => orderOperation("A")}
+                      >
+                        {t("Accept")}
+                      </Button>
+                    </Grid>
+
+                    <Grid item xs={3} >
+                      <CustomButton
+                        btnBg="btnBg"
+                        mainBorderBtn='mainBorderBtn'
+                        onClick={() => orderOperation("R")}
+                      >
+                        {t("Reject")}
+                      </CustomButton>
+                    </Grid>
+                  </Grid>
+
                 }
 
-              </Grid>
-
-              <Box sx={{ mb: 3 }} />
-
-
-              {!isMe && (message.status === 'I' || message.status === 'S') &&
-                <Grid container spacing={2} >
-                  <Grid item xs={6} />
-
-                  <Grid item xs={3} >
-                    <Button
-                      onClick={() => orderOperation("A")}
-                    >
-                      {t("Accept")}
-                    </Button>
-                  </Grid>
-
-                  <Grid item xs={3} >
-                    <CustomButton
-                      btnBg="btnBg"
-                      mainBorderBtn='mainBorderBtn'
-                      onClick={() => orderOperation("R")}
-                    >
-                      {t("Reject")}
-                    </CustomButton>
-                  </Grid>
-                </Grid>
-
+              </>
               }
 
             </div>
