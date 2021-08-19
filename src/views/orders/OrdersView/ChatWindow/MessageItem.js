@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceToNowStrict } from 'date-fns';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Avatar, Box, Typography, Grid } from '@material-ui/core';
+import { Avatar, Box, Typography } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import links from 'src/constants/links';
 import Datatable from 'src/components/table/DataTable';
@@ -157,7 +157,7 @@ function MessageItem({
 
   useEffect(() => {
     if (message.contentType == 'order') {
-      setUpdatedOrder(JSON.parse(message.text));
+      // setUpdatedOrder(JSON.parse(message.text));
       const details = getOrderDetails();
       setOrderDetails(details);
     }
@@ -294,7 +294,7 @@ function MessageItem({
               addSuffix: true
             })}
           </Typography>
-          {message.contentType == 'text' || message.contentType == null ?
+          {message.contentType != 'order' ?
             <div className={clsx(classes.content, isMe && 'styleMe')}>
               <Typography variant="body2">{message.text}</Typography>
             </div>

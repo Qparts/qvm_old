@@ -1,9 +1,8 @@
-import links from "src/constants/links";
-import http from "./httpService";
+import links from 'src/constants/links';
+import http from './httpService';
 
 const subscriberUrl = links.subscriber;
 const chatUrl = links.chat;
-
 
 function chatSearch(query) {
   return http.get(subscriberUrl.getCompaniesByName(query));
@@ -21,7 +20,6 @@ function createUserConversation(conversation) {
   return http.post(chatUrl.postNewChat, conversation);
 }
 
-
 function getConversationMessage(conversationKey) {
   return http.get(chatUrl.getConversationMessages(conversationKey));
 }
@@ -29,7 +27,6 @@ function getConversationMessage(conversationKey) {
 function createMessage(message) {
   return http.post(chatUrl.postNewMessage, message);
 }
-
 
 function updateMessage(message) {
   return http.put(chatUrl.postNewMessage, message);
@@ -39,8 +36,8 @@ function getUnseenMessages(conversations) {
   return http.post(chatUrl.unseenMessages, conversations);
 }
 
-function markConversationAsSee(conversationId , sender){
-  return http.put(chatUrl.putSeenConversationMessages(conversationId , sender));
+function markConversationAsSee(conversationId, sender) {
+  return http.put(chatUrl.putSeenConversationMessages(conversationId, sender));
 }
 
 export default {
@@ -52,5 +49,5 @@ export default {
   getCompanyUsers,
   updateMessage,
   getUnseenMessages,
-  markConversationAsSee,
+  markConversationAsSee
 };

@@ -88,7 +88,10 @@ const slice = createSlice({
 
     updateUnseenMessages(state, action) {
       state.unseenMessages = [...state.unseenMessages, action.payload];
+    },
 
+    updateMessages(state, action) {
+      state.messages = action.payload;
     },
 
     //UPDATE ACTIVE CONVERSATION ID.
@@ -131,6 +134,7 @@ export const {
   updateRecivedMessages,
   updateRecivedOrderMessages,
   updateOnlineUsers,
+  updateMessages
 
 } = slice.actions;
 

@@ -6,7 +6,7 @@ import ConversationItem from './ConversationItem';
 import { makeStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { setActiveConversation } from 'src/redux/slices/chat';
+import { setActiveConversation, updateMessages } from 'src/redux/slices/chat';
 
 // ----------------------------------------------------------------------
 
@@ -41,6 +41,7 @@ function ConversationList({
 
   const handleSelectConversation = async (item) => {
     //update the unseen message list of online users that belong to the login user company. 
+    dispatch(updateMessages([]));
     item.members.filter(x => x.id != user.subscriber.id &&
       x.companyId == user.subscriber.companyId).map((member) => {
         let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
