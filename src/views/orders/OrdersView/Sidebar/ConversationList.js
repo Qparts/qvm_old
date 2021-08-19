@@ -6,8 +6,7 @@ import ConversationItem from './ConversationItem';
 import { makeStyles } from '@material-ui/core/styles';
 import { List } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
-import { getUnseenMessages, setActiveConversation } from 'src/redux/slices/chat';
-import chatService from 'src/services/chatService';
+import { setActiveConversation } from 'src/redux/slices/chat';
 
 // ----------------------------------------------------------------------
 

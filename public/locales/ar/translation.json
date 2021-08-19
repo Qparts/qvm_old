@@ -686,8 +686,8 @@
   "Price of part {{partNumber}} has changed from {{from}} to {{to}}": "تم تغيير سعر القطعه {{partNumber}} من {{from}} إلى {{to}}",
   "Total Parts" : "إجمالي القطع",
   "Status":"الوضع",
-  "Reject" : "رفض",
-  "Accept" : "قبول",
+  "Reject" : "رفض الطلب",
+  "Accept" : "قبول الطلب",
   "Rejected" : "مرفوض",
   "Accepted" : "مقبول",
   "Pending" : "معلق",
@@ -695,6 +695,10 @@
   "Messages" : "الرسائل",
   "You have {{count}} unread messages" : "لديك {{count}} رسائل غير مقروءة",
   "New" : "جديده",
+  "online": "متاح",
+  "away": "غير متاح",
+  "Order has been accepted": "تم قبول الطلب",
+  "Order has been rejected": "تم رفض الطلب",
   "Search limit exceeded!":"لقد إستنفذت محاولات البحث اليومية المتاحه في الباقه المجانيه, قم بترقيه باقتك و تمتع بالبحث اللامحدود عن القطع التي تريد"
 
 }

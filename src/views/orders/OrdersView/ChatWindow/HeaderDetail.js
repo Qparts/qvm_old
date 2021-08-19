@@ -1,34 +1,71 @@
 import clsx from 'clsx';
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Icon } from '@iconify/react';
-import { capitalCase } from 'change-case';
-import { fToNow } from 'src/utils/formatTime';
-import videoFill from '@iconify-icons/eva/video-fill';
-import phoneFill from '@iconify-icons/eva/phone-fill';
-import BadgeStatus from 'src/components/BadgeStatus';
-import moreVerticalFill from '@iconify-icons/eva/more-vertical-fill';
-import arrowIosForwardFill from '@iconify-icons/eva/arrow-ios-forward-fill';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Link, Avatar, Typography, AvatarGroup } from '@material-ui/core';
-import { MIconButton } from 'src/theme';
+import {
+  Box,
+  Avatar,
+  Typography,
+  Popover,
+  List,
+  ListItem,
+  Divider
+} from '@material-ui/core';
+import links from 'src/constants/links';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
   root: {
+    backgroundColor: '#ebf2ff',
     flexShrink: 0,
-    minHeight: 92,
+    minHeight: 64,
+    padding: theme.spacing(1.25, 3)
+  },
+  isGroupRoot: { padding: theme.spacing(0.5, 3) },
+  contentChatHead: {
+    textAlign: 'left',
+    marginLeft: theme.spacing(2)
+  },
+  usersNamesCont: {
+    [theme.breakpoints.down('md')]: {
+      cursor: 'pointer'
+    }
+  },
+  usersName: {
     display: 'flex',
     alignItems: 'center',
-    padding: theme.spacing(0, 3)
+    [theme.breakpoints.down('md')]: {
+      display: '-webkit-box',
+      WebkitLineClamp: 1,
+      WebkitBoxOrient: 'vertical',
+      overflow: 'hidden',
+      textOverflow: 'ellipsis',
+      textAlign: 'left'
+    }
+  },
+  groupNames: {
+    marginLeft: theme.spacing(0.625)
+  },
+  companyNameM: {
+    marginLeft: theme.spacing(2)
+  },
+  listItem: {
+    padding: theme.spacing(0.5, 2.5)
   }
 }));
 
 // ----------------------------------------------------------------------
 
 function OneAvatar({ participants }) {
+  const classes = useStyles();
+  const { t } = useTranslation();
   const participant = [...participants][0];
+  const { onlineUsers = [] } = useSelector((state) => state.chat);
+  const uploadUrl = links.upload;
+
 
   if (participant === undefined) {
     return null;
@@ -37,18 +74,12 @@ function OneAvatar({ participants }) {
   return (
     <Box sx={{ display: 'flex', alignItems: 'center' }}>
       <Box sx={{ position: 'relative' }}>
-        <Avatar src={participant.avatar} alt={participant.name} />
-        <BadgeStatus
-          status={participant.status}
-          sx={{ position: 'absolute', right: 2, bottom: 2 }}
-        />
+        <Avatar alt={participant?.companyName} src={uploadUrl.getCompanyLogo(`logo_${participant?.companyId}.png`)} />
       </Box>
-      <Box sx={{ ml: 2 }}>
-        <Typography variant="subtitle2">{participant.name}</Typography>
+      <Box className={classes.contentChatHead}>
+        <Typography variant="subtitle2">{participant.companyName}</Typography>
         <Typography variant="body2" sx={{ color: 'text.secondary' }}>
-          {participant.status !== 'offline'
-            ? capitalCase(participant.status)
-            : fToNow(participant.lastActivity)}
+          {onlineUsers.findIndex(x => x.userId == participant?.id) > -1 ? t("online") : t("away")}
         </Typography>
       </Box>
     </Box>
@@ -56,35 +87,64 @@ function OneAvatar({ participants }) {
 }
 
 function GroupAvatar({ participants }) {
+  const classes = useStyles();
+  const { t } = useTranslation();
+  const { themeDirection } = useSelector((state) => state.settings);
+  const uploadUrl = links.upload;
+  const { messages } = useSelector((state) => state.chat);
+  const message = messages?.map(message => { return message.sender });
+  const participant = participants.filter(x => x.id == parseInt(message))[0];
+  const [open, setOpen] = useState(null);
+
+  if (participant === undefined) {
+    return null;
+  }
+
+  const handleOpen = (event) => {
+    setOpen(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setOpen(null);
+  };
+
   return (
     <div>
-      <AvatarGroup
-        max={3}
-        sx={{
-          mb: 0.5,
-          '& .MuiAvatar-root': { width: 32, height: 32 }
-        }}
-      >
-        {participants.map((participant) => (
-          <Avatar
-            key={participant.id}
-            alt={participant.name}
-            src={participant.avatar}
-          />
-        ))}
-      </AvatarGroup>
-      <Link
-        variant="body2"
-        underline="none"
-        component="button"
-        color="text.secondary"
-        onClick={() => {}}
-      >
+      <Box onClick={handleOpen} sx={{ cursor: 'pointer' }}>
         <Box sx={{ display: 'flex', alignItems: 'center' }}>
-          {participants.length} persons
-          <Icon icon={arrowIosForwardFill} />
+          <Avatar
+            alt={participant.name}
+            src={uploadUrl.getCompanyLogo(`logo_${participant.companyId}.png`)}
+            sx={{ width: 27, height: 27 }}
+          />
+          <Typography variant="subtitle2" className={classes.companyNameM}>{participant.companyName}</Typography>
         </Box>
-      </Link>
+        <Box className={classes.usersName}>
+          {participants.map((participant) => (
+            <Typography variant="subtitle2" className={classes.groupNames} key={participant.id}>
+              {participant.companyName},
+            </Typography>
+          ))}
+        </Box>
+      </Box>
+      <Popover
+        open={Boolean(open)}
+        anchorEl={open}
+        onClose={handleClose}
+        anchorOrigin={{ vertical: 'top', horizontal: themeDirection === 'rtl' ? 'right' : 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: themeDirection === 'rtl' ? 'right' : 'left' }}
+        classes={{ paper: classes.popover }}
+      >
+        <Typography noWrap variant="subtitle1" sx={{ padding: (theme) => theme.spacing(1, 2) }}> {t("users in group")} </Typography>
+        <Divider />
+        <List>
+          {participants.map((part, index) => {
+            return <ListItem key={index} disableGutters className={classes.listItem}>
+              {part.companyName}
+            </ListItem>
+          })}
+        </List>
+      </Popover>
     </div>
   );
 }
@@ -99,7 +159,7 @@ function HeaderDetail({ participants, className, ...other }) {
   const isGroup = participants?.length > 1;
 
   return (
-    <div className={clsx(classes.root, className)} {...other}>
+    <div className={clsx(classes.root, isGroup ? classes.isGroupRoot : null, className)} {...other}>
       {isGroup ? (
         <GroupAvatar participants={participants} />
       ) : (
@@ -107,15 +167,6 @@ function HeaderDetail({ participants, className, ...other }) {
       )}
 
       <Box sx={{ flexGrow: 1 }} />
-      <MIconButton>
-        <Icon icon={phoneFill} width={20} height={20} />
-      </MIconButton>
-      <MIconButton>
-        <Icon icon={videoFill} width={20} height={20} />
-      </MIconButton>
-      <MIconButton>
-        <Icon icon={moreVerticalFill} width={20} height={20} />
-      </MIconButton>
     </div>
   );
 }

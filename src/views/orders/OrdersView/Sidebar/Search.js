@@ -3,6 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import searchFill from '@iconify-icons/eva/search-fill';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
@@ -15,7 +16,11 @@ import {
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-  root: { marginTop: theme.spacing(2) },
+  root: {
+    background: 'rgb(246 248 252 / 70%)',
+    padding: theme.spacing(1, 2),
+    borderBottom: '1px solid #ECF0F8',
+  },
   search: {
     transition: theme.transitions.create('box-shadow', {
       easing: theme.transitions.easing.easeInOut,
@@ -41,16 +46,17 @@ Search.propTypes = {
 
 function Search({ query, onChange, onFocus, onClickAway, className }) {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <ClickAwayListener onClickAway={onClickAway}>
       <div className={clsx(classes.root, className)}>
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small" sx={{backgroundColor: (theme) => theme.palette.grey[0]}}>
           <OutlinedInput
             value={query}
             onFocus={onFocus}
             onChange={onChange}
-            placeholder="Search contacts..."
+            placeholder={t("Search contacts")}
             startAdornment={
               <InputAdornment position="start">
                 <Box

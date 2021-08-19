@@ -72,6 +72,14 @@ const useStyles = makeStyles((theme) => ({
             color: theme.palette.grey[0]
         }
     },
+    chatBtn: {
+        background: '#F6F8FC !important',
+        color: '#7F929C',
+        marginLeft: theme.spacing(2)
+    },
+    chatBtnPadd: {
+        padding: theme.spacing(0.75, 1.75, 0.75, 0.625)
+    },
     widthAuto: {
         minWidth: 'auto'
     },
@@ -80,7 +88,8 @@ const useStyles = makeStyles((theme) => ({
         '@media (max-width: 449px)': {
             marginBottom: theme.spacing(2)
         }
-    }
+    },
+    btnPadd: { padding: theme.spacing(0.625, 2) }
 }));
 
 // ----------------------------------------------------------------------
@@ -111,7 +120,10 @@ export default function CustomButton(props) {
                 classes[props.mainBorderBtn],
                 classes[props.whiteBtn],
                 classes[props.widthAuto],
-                classes[props.btnM]
+                classes[props.btnM],
+                classes[props.chatBtn],
+                classes[props.chatBtnPadd],
+                classes[props.btnPadd],
             )}
             type={props.type}
         >

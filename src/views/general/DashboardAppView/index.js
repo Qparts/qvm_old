@@ -84,11 +84,7 @@ function DashboardAppView() {
                   path={PATH_APP.general.specialOffer}
                   icon={<Plus width='10' height='10' fill='#F20505' />}
                   footer={t('see all offers')}>
-                  <Grid container spacing={2}>
-                    <Grid item xs={12} sm={6} md={4}>
-                      <OfferContainer />
-                    </Grid>
-                  </Grid>
+                  <OfferContainer md={4} />
                 </SecContainer>
               </Grid>
 
@@ -184,11 +180,7 @@ function DashboardAppView() {
               path={PATH_APP.general.specialOffer}
               icon={<Plus width='10' height='10' fill='#F20505' />}
               footer={t('see all offers')}>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={3}>
-                  <OfferContainer />
-                </Grid>
-              </Grid>
+              <OfferContainer md={3} />
             </SecContainer>
           </Grid>
 

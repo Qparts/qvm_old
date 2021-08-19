@@ -9,7 +9,6 @@ import {
     TableHead,
     TableRow,
     Paper,
-    TextField
 } from '@material-ui/core';
 import clsx from 'clsx';
 import Button from "../button/CustomButton";
@@ -21,6 +20,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Pagination from '../Ui/Pagination';
+import TextField from '../Ui/TextField';
 
 // ----------------------------------------------------------------------
 
@@ -33,6 +33,17 @@ const useStyles = makeStyles((theme) => ({
         borderSpacing: '0 10px',
         '@media (max-width: 369px)': {
             minWidth: '298px',
+        },
+    },
+    dataTableChat: {
+        backgroundColor: '#E7F0F7',
+        '& thead th': { color: '#707E8A' },
+        '& tbody td': {
+            paddingTop: theme.spacing(1),
+            paddingBottom: theme.spacing(1)
+        },
+        '@media (max-width: 736px)': {
+            minWidth: '600px',
         },
     },
     dataTableGeneral: {
@@ -171,7 +182,8 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     actions = [], error, onSelectedPage, onRowSelect,
     maps, size = datatable.length, isLazy = true, hasPagination = false,
     onRowsPerPageChange, hasChild = false, childData, childHeader,
-    showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata, dataTableSetting, dataTableGeneral }) {
+    showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata, dataTableSetting,
+    dataTableGeneral, dataTableChat }) {
 
     const classes = useStyles();
 
@@ -195,7 +207,8 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                 classes[dataTablePad],
                                 classes[dataTableCata],
                                 classes[dataTableSetting],
-                                classes[dataTableGeneral]
+                                classes[dataTableGeneral],
+                                classes[dataTableChat]
                             )}
                             aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>
@@ -240,9 +253,12 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                                     headerItem.type != null &&
                                                                         headerItem.type == 'text' ?
                                                                         <TextField
+                                                                            type='input'
+                                                                            inputStylChat='inputStylChat'
+                                                                            inputContChat='inputContChat'
                                                                             onChange={(event) => {
                                                                                 if (event.target.value != "") {
-                                                                                    headerItem.onchange(event.target.value, item , headerItem.attr)
+                                                                                    headerItem.onchange(event.target.value, item, headerItem.attr)
                                                                                 } else
                                                                                     event.target.value = getCellValue(item, headerItem, maps);
                                                                             }}
@@ -250,8 +266,6 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                                             value={getCellValue(item, headerItem, maps)}
                                                                         /> :
                                                                         getCellValue(item, headerItem, maps)}
-
-
                                                             </TableCell>
                                                         );
                                                     })}

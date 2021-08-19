@@ -10,7 +10,7 @@ import {
   ListItemText,
   ListItemAvatar
 } from '@material-ui/core';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import links from 'src/constants/links';
 
 // ----------------------------------------------------------------------
@@ -20,11 +20,19 @@ const AVATAR_SIZE_GROUP = 32;
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    padding: theme.spacing(1.5, 3),
-    transition: theme.transitions.create('all')
+    padding: theme.spacing(1.5, 2),
+    transition: theme.transitions.create('all'),
+    borderBottom: '1px solid #ECF0F8',
+    '&:last-of-type': { borderBottom: 0 },
+    '&:hover': {
+      backgroundColor: 'rgb(235 242 255 / 45%)'
+    }
   },
   listItemSelected: {
-    backgroundColor: theme.palette.action.selected
+    backgroundColor: 'rgb(235 242 255 / 60%)',
+    '&:hover': {
+      backgroundColor: 'rgb(235 242 255 / 60%)'
+    }
   },
   avatar: {
     position: 'relative',
@@ -86,7 +94,6 @@ function ConversationItem({
   const { onlineUsers = [] } = useSelector((state) => state.chat);
   const [friends, setFriends] = useState(conversation?.members?.filter(x => x.id != user.subscriber.id
     && x.companyId != user.company.companyId));
-  const dispatch = useDispatch();
 
 
   useEffect(() => {
@@ -130,13 +137,14 @@ function ConversationItem({
             primary={friends[0]?.companyName}
             primaryTypographyProps={{
               noWrap: true,
-              variant: 'subtitle2'
+              variant: 'subtitle2',
+              color: (theme) => theme.palette.secondary.main
             }}
             secondary={friends.map((friend) => friend.name).join(" , ")}
             secondaryTypographyProps={{
               noWrap: true,
               variant: 'body2',
-              color: 'textSecondary'
+              color: (theme) => theme.palette.secondary.light
             }}
           />
 

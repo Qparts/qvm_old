@@ -1,11 +1,11 @@
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import MessageItem from './MessageItem';
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Scrollbars from 'src/components/Scrollbars';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import { useHistory, useParams, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 // ----------------------------------------------------------------------
 

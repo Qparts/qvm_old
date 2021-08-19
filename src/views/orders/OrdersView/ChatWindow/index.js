@@ -1,5 +1,5 @@
-import RoomInfo from './RoomInfo';
 import MessageList from './MessageList';
+import HeaderDetail from './HeaderDetail';
 import React, { useEffect } from 'react';
 import { PATH_APP } from 'src/routes/paths';
 import MessageInput from './MessageInput';
@@ -61,6 +61,7 @@ function ChatWindow(props) {
   } = useSelector((state) => state.chat);
   const conversation = useSelector((state) => conversationSelector(state));
   const { user, currentSocket } = useSelector((state) => state.authJwt);
+  const currentContact = activeConversation?.members?.filter(x => x.id != user.subscriber.id);
   const mode = conversationKey ? 'DETAIL' : 'COMPOSE';
 
 
@@ -111,26 +112,17 @@ function ChatWindow(props) {
 
   return (
     <div className={classes.root}>
-      <Divider />
+      {mode === 'DETAIL' ? <HeaderDetail participants={currentContact} /> : null}
       <div className={classes.main}>
         <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
-
           <MessageList />
-
           <Divider />
-
           <MessageInput
             conversationId={activeConversationId}
             onSend={handleSendMessage}
             disabled={pathname === '/app/chat/new'}
           />
         </Box>
-
-        {mode === 'DETAIL' && (
-          <RoomInfo
-            conversation={conversation}
-          />
-        )}
       </div>
     </div>
   );
