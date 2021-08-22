@@ -100,6 +100,7 @@ function ChatWindow(props) {
             senderId: user.subscriber.id,
             receiverId: member.id,
             text: value.text,
+            companyId: user.company.companyId,
             conversationId: activeConversation._id
           });
         }

@@ -693,6 +693,8 @@
   "Orders" :"الطلبات",
   "Messages" : "الرسائل",
   "You have {{count}} unread messages" : "لديك {{count}} رسائل غير مقروءة",
+  "You have {{count}} Pending Orders" : "لديك {{count}} طلبات معلقه",
+  "And" :" و ",
   "New" : "جديده",
   "Search limit exceeded!":"لقد إستنفذت محاولات البحث اليومية المتاحه في الباقه المجانيه, قم بترقيه باقتك و تمتع بالبحث اللامحدود عن القطع التي تريد"
 
