@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    CircularProgress,
-    TextField,
-    Box,
-    Autocomplete
-} from '@material-ui/core';
+import { CircularProgress, TextField, Box, Autocomplete } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { Search } from '@material-ui/icons';
 import ClearIcon from '@material-ui/icons/Clear';
@@ -22,7 +17,8 @@ import FilterResult from '../../../components/Ui/FilterResult';
 const useStyles = makeStyles((theme) => ({
     root: {},
     locationFilterResult: {
-        display: 'flex'
+        display: 'flex',
+        flexWrap: 'wrap'
     },
     locationFilter: {
         minWidth: '300px',

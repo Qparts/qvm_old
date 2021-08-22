@@ -31,6 +31,20 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 1
     }
   },
+  userMessage: {
+    display: '-webkit-box',
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '150px',
+    fontWeight: 600
+  },
+  messageCont: {
+    display: 'flex',
+    alignItems: 'start',
+    justifyContent: 'space-between',
+  },
   isUnRead: {
     backgroundColor: theme.palette.action.selected
   }
@@ -38,18 +52,20 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function getTitle(message, friend, t) {
+function getTitle(message, friend, t, userMessage) {
   const title = (
-    <Typography variant="subtitle2">
-      {friend.companyName}
+    <>
+      <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+        {friend.companyName}
+      </Typography>
       <Typography
         component="span"
         variant="body2"
         sx={{ color: 'text.secondary' }}
-      >
-        &nbsp; {noCase(message.contentType == 'order' ? t("Order is Pending") : message.text)}
+        className={userMessage}>
+        {noCase(message.contentType == 'order' ? t("Order is Pending") : message.text)}
       </Typography>
-    </Typography>
+    </>
   );
 
   return title;
@@ -62,7 +78,6 @@ UnseenMessage.propTypes = {
 
 const uploadUrl = links.upload;
 
-
 function UnseenMessage({ message, setOpen, className }) {
   const classes = useStyles();
   const { userConversations, onlineUsers } = useSelector((state) => state.chat);
@@ -74,7 +89,9 @@ function UnseenMessage({ message, setOpen, className }) {
     filter(x => x.id == parseInt(message.sender))[0];
   const avatar = <Avatar alt={friend.companyName}
     src={uploadUrl.getCompanyLogo(`logo_${friend.companyId}.png`)} />;
-  const title = getTitle(message, friend, t);
+  const title = getTitle(message, friend, t, classes.userMessage);
+
+  // console.log(title)
 
 
   const viewUnSeenConversation = async () => {
@@ -121,6 +138,7 @@ function UnseenMessage({ message, setOpen, className }) {
       </ListItemAvatar>
       <ListItemText
         primary={title}
+        className={classes.messageCont}
         secondary={
           <Typography
             variant="caption"

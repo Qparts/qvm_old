@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { Box } from '@material-ui/core';
@@ -12,26 +12,33 @@ import TableAction from '../../../components/Ui/TableAction';
 import TextField from 'src/components/Ui/TextField';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
-import { Plus } from "../../../icons/icons";
+import CustomButton from '../../../components/Ui/Button';
+import { Plus, OrdersArrow } from "../../../icons/icons";
 import PurchaseOrderSection from './PurchaseOrderSection';
-import CustomButton from 'src/components/Ui/Button';
 import SendPurchaseOrderSection from './SendPurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
+    availabilityCont: {
+        position: 'relative',
+        '& .MuiTypography-h5': {
+            height: '60px',
+            lineHeight: '37px',
         }
+    },
+    sendPo: {
+        position: 'absolute',
+        right: theme.spacing(2),
+        top: theme.spacing(1.25),
+        '& button': {
+            '@media (max-width: 320px) and (min-width: 300px)': {
+                padding: theme.spacing(0.875, 1.25),
+            },
+            '& svg': {
+                marginRight: theme.spacing(1)
+            }
+        },
     },
     availabilityActionsCont: {
         display: 'flex',
@@ -39,9 +46,21 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         borderBottom: '1px solid #E5EBF0',
         paddingBottom: '10px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            display: 'block',
+            width: '100%',
+            minWidth: '100%',
+        },
     },
     availabilityActionsLeft: {
         width: '300px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            width: '100%',
+            minWidth: '100%',
+            marginBottom: theme.spacing(2)
+        },
     }
 }));
 
@@ -49,6 +68,7 @@ const useStyles = makeStyles((theme) => ({
 
 function AvailabilityPartsSection() {
     const classes = useStyles();
+    const theme = useTheme();
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [openAddToPO, setOpenAddToPO] = useState(false);
@@ -90,7 +110,7 @@ function AvailabilityPartsSection() {
                 type='partSearch'
                 title={t("Add To PO")}
                 onClick={() => addToCompanyCart(item)}
-                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
+                textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />} />
         )
     }
 
@@ -111,9 +131,20 @@ function AvailabilityPartsSection() {
     }, [searchTerm]);
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box className={orders.length > 0 ? classes.availabilityCont : null}>
+            {orders.length > 0 ?
+                <Box className={classes.sendPo}>
+                    <CustomButton
+                        btnWidth='btnWidth'
+                        onClick={() => setOpenSendPO(true)}
+                    >
+                        <OrdersArrow width='17' height='17' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
+                        {t("Send PO")}
+                    </CustomButton>
+                </Box> : null}
             <SecContainer
-                header={t('Search Results')}>
+                header={t('Search Results')}
+                secContainerMt='secContainerMt'>
                 <Box className={classes.availabilityActionsCont}>
                     <Box className={classes.availabilityActionsLeft}>
                         <TextField
@@ -127,18 +158,7 @@ function AvailabilityPartsSection() {
                             selectBg='selectBg' />
                     </Box>
 
-                    <Box className={classes.availabilityActionsRight}>
-                        <CustomButton
-                            btnBg="btnBg"
-                            mainBorderBtn='mainBorderBtn'
-                            disabled={orders.length == 0}
-                            onClick={() => setOpenSendPO(true)}
-                        >
-                            {t("Send PO")}
-                        </CustomButton>
-                    </Box>
-
-                    <Box className={classes.availabilityActionsRight}>
+                    <Box>
                         <LocationFilterSection />
                     </Box>
                 </Box>
@@ -165,7 +185,7 @@ function AvailabilityPartsSection() {
                         }
                     ]}
 
-                    actions={[{ element: showDetailsElement }, { element: addToCart }]}
+                    actions={[{ element: addToCart }, { element: showDetailsElement }]}
                     datatable={productResult}
                     error={error}
                     onSelectedPage={changePagehandler}
@@ -175,7 +195,7 @@ function AvailabilityPartsSection() {
                     size={searchSize}
                     rowsPerPage={rowsPerPage}
                     hasPagination={true}
-
+                    dataTablePartSearch='dataTablePartSearch'
                 />
 
             </SecContainer>
@@ -187,18 +207,16 @@ function AvailabilityPartsSection() {
                 <PartDetails />
             </CustomDialog>
 
-
             <CustomDialog
                 open={openAddToPO}
                 handleClose={closeOrderDailog}
-                title={t("Add to Purchase Order")}>
-
+                title={t("Add to Purchase Order")}
+                dialogWidth='dialogWidth'>
                 {selectedPart != null &&
                     <PurchaseOrderSection
                         closeOrderDailog={closeOrderDailog} />
                 }
             </CustomDialog>
-
 
             <CustomDialog
                 fullWidth={true}

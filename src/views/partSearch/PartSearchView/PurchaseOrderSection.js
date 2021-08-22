@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Grid, Typography, Divider } from '@material-ui/core';
+import { Box, List, ListItem, Typography } from '@material-ui/core';
 import TextField from 'src/components/Ui/TextField';
 import Button from 'src/components/Ui/Button';
 import { addOrder } from 'src/redux/slices/partSearch';
@@ -10,12 +10,18 @@ import { addOrder } from 'src/redux/slices/partSearch';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {},
-    locationFilterResult: {
-        display: 'flex'
+    partInfo: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: '10px',
+        '&:first-of-type': {
+            paddingTop: 0,
+        },
     },
-    locationFilter: {
-        minWidth: '300px'
+    partValue: {
+        color: theme.palette.secondary.main,
+        fontWeight: theme.typography.fontWeightMedium
     }
 }));
 
@@ -42,92 +48,47 @@ function PurchaseOrderSection(props) {
 
 
     return (
-        <Grid container >
+        <>
+            <List sx={{p: 0}}>
+                <ListItem className={classes.partInfo}>
+                    <Typography variant="body2">{t("Part Number")}</Typography>
+                    <Typography variant="body3" className={classes.partValue}>
+                        {selectedPart.partNumber}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.partInfo}>
+                    <Typography variant="body2">{t("Brand")}</Typography>
+                    <Typography variant="body3" className={classes.partValue}>
+                        {selectedPart.brandName}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.partInfo}>
+                    <Typography variant="body2">{t("Vendor")}</Typography>
+                    <Typography variant="body3" className={classes.partValue}>
+                        {themeDirection == 'ltr' ? companies.get(selectedPart.companyId).name
+                            : companies.get(selectedPart.companyId).nameAr}
+                    </Typography>
+                </ListItem>
+                <ListItem className={classes.partInfo}>
+                    <Typography variant="body2">{t("Quantity")}</Typography>
+                    <Typography variant="body3" className={classes.partValue}>
+                        <TextField
+                            name='quantity'
+                            type='input'
+                            // label={t('Quantity')}
+                            onChange={event => setQuantity(event.target.value)} />
+                    </Typography>
+                </ListItem>
+            </List>
 
-            <Grid item xs={3} >
-                <Typography
-                    noWrap
-                    variant="body2"
-
-                >
-                    {t("Part Number")}
-                </Typography>
-            </Grid>
-
-            <Grid item xs={9} >
-                <Typography
-                    noWrap
-                    variant="body2"
-
-                >
-                    {selectedPart.partNumber}
-                </Typography>
-            </Grid>
-
-            <Box sx={{ mb: 5 }} />
-
-
-            <Grid item xs={3} >
-                <Typography
-                    noWrap
-                    variant="body2"
-                >
-                    {t("Brand")}
-                </Typography>
-            </Grid>
-
-            <Grid item xs={9} >
-                <Typography
-                    noWrap
-                    variant="body2"
-                >
-                    {selectedPart.brandName}
-                </Typography>
-            </Grid>
-
-            <Box sx={{ mb: 5 }} />
-
-            <Grid item xs={3} >
-                <Typography
-                    noWrap
-                    variant="body2"
-                >
-                    {t("Vendor")}
-                </Typography>
-            </Grid>
-
-            <Grid item xs={9} >
-                <Typography
-                    noWrap
-                    variant="body2"
-                >
-                    {themeDirection == 'ltr' ? companies.get(selectedPart.companyId).name
-                        : companies.get(selectedPart.companyId).nameAr}
-                </Typography>
-            </Grid>
-
-            <Box sx={{ mb: 5 }} />
-
-            <Grid item xs={3} >
-                <Typography variant="body2" > {t("Quantity")} </Typography>
-            </Grid>
-            <Grid item xs={9} >
-                <TextField
-                    name='quantity'
-                    type='input'
-                    // label={t('Quantity')}
-                    onChange={event => setQuantity(event.target.value)} />
-            </Grid>
-
-            <Box sx={{ mb: 9 }} />
+            <Box sx={{ mb: 1.25 }} />
             <Button
                 type='submit'
-                // btnWidth="btnWidth"
                 onClick={addToOrder}
             >
                 {t("Add to Purchase Order")}
             </Button>
-        </Grid>
+        </>
     );
 }
 
