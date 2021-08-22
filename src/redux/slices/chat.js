@@ -221,13 +221,16 @@ export const getCompanyUsers = async (companyId, user) => {
       })
     }
 
-    users.push({
-      id: user.subscriber.id,
-      companyId: user.subscriber.companyId,
-      name: user.subscriber.name,
-      companyName: user.company.name,
-      companyNameAr: user.company.nameAr,
-    });
+    for (let subscriber of user.company.subscribers) {
+      users.push({
+        id: subscriber.id,
+        companyId: subscriber.companyId,
+        name: subscriber.name,
+        companyName: user.company.name,
+        companyNameAr: user.company.nameAr,
+      });
+    }
+
 
     return users;
   } catch (error) {

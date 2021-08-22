@@ -79,6 +79,7 @@ function MessageInput({
         text: message,
         contentType: 'text',
         sender: user.subscriber.id,
+        companyId: user.company.companyId
       });
     }
     setMessage('');

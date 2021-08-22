@@ -22,7 +22,7 @@ import {
   ListSubheader
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
-import { Chart, Info, Mail, Orders, OrdersArrow, Parts } from '../../../../icons/icons';
+import { Mail } from '../../../../icons/icons';
 import UnseenMessage from './UnseenMessage';
 
 // ----------------------------------------------------------------------
@@ -45,13 +45,29 @@ function Notifications() {
   const [isOpen, setOpen] = useState(false);
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { notifications } = useSelector((state) => state.notifications);
   const { unseenMessages } = useSelector((state) => state.chat);
-  const totalUnRead = notifications.filter((item) => item.isUnRead === true)
-    .length;
+  const [companyUnseenMessages, setCompanyUnseenMessages] = useState(new Map())
+
   useEffect(() => {
     dispatch(getNotifications());
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("unseenMessages", unseenMessages);
+    const map = new Map();
+    for (let message of unseenMessages) {
+      if (!map.has(message.companyId)) {
+        map.set(message.companyId, [message]);
+      } else
+        map.get(message.companyId).push(message);
+    }
+
+    setCompanyUnseenMessages(map);
+    // Array.from(map.values()).map(key => {
+    //   console.log(key);
+    // });
+
+  }, [unseenMessages]);
 
   const handleMarkAllAsRead = () => {
     dispatch(markAllAsRead());
@@ -111,13 +127,16 @@ function Notifications() {
                     </ListSubheader>
                   }
                 >
-                  {unseenMessages.map((message) => (
-                    <UnseenMessage
-                      key={message._id}
-                      message={message}
-                      setOpen={setOpen}
-                    />
-                  ))}
+
+                  {
+                    Array.from(companyUnseenMessages.values()).map((messages, index) => (
+                      <UnseenMessage
+                        key={index}
+                        messages={messages}
+                        setOpen={setOpen}
+                      />
+                    ))
+                  }
                 </List>
               </Scrollbars>
             </Box>
