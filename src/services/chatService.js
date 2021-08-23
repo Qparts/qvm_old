@@ -12,8 +12,8 @@ function getCompanyUsers(companyId) {
   return http.get(subscriberUrl.getUsersByCompanyId(companyId));
 }
 
-function getUserConversations(userId) {
-  return http.get(chatUrl.getUserConversations(userId));
+function getUserConversations() {
+  return http.get(chatUrl.getUserConversations);
 }
 
 function createUserConversation(conversation) {

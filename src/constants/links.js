@@ -151,7 +151,7 @@ const invoice = {
 };
 
 const chat = {
-  getUserConversations: (userId) => `${CHAT_SERVICE}/conversation/${userId}`,
+  getUserConversations: `${CHAT_SERVICE}/conversation/user-conversations`,
   postNewChat: `${CHAT_SERVICE}/conversation/`,
   postNewMessage: `${CHAT_SERVICE}/messages/`,
   getConversationMessages: (conversationKey) =>

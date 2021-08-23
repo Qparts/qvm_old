@@ -13,7 +13,7 @@ const initialState = {
   userConversations: [],
   unseenMessages: [],
   messages: [],
-  onlineUsers: [],
+  onlineUsers: []
 };
 
 const slice = createSlice({
@@ -52,7 +52,6 @@ const slice = createSlice({
       }
     },
 
-
     //SET ACTIVE CONVERSATION AND ACTIVE CONVERSATION KEY
     setActiveConversation(state, action) {
       const conversation = action.payload;
@@ -75,10 +74,9 @@ const slice = createSlice({
     updateRecivedOrderMessages(state, action) {
       let updatedOrder = action.payload;
       let newMessages = [...state.messages];
-      let orderIndex = newMessages.findIndex(x => x._id == updatedOrder._id);
+      let orderIndex = newMessages.findIndex((x) => x._id == updatedOrder._id);
       newMessages[orderIndex] = updatedOrder;
       state.messages = newMessages;
-
     },
 
     //UDATE ONLINE USERS.
@@ -135,7 +133,6 @@ export const {
   updateRecivedOrderMessages,
   updateOnlineUsers,
   updateMessages
-
 } = slice.actions;
 
 // ----------------------------------------------------------------------
@@ -145,7 +142,9 @@ export function getContacts(userId) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const { data: userConversations } = await chatService.getUserConversations(userId);
+      const {
+        data: userConversations
+      } = await chatService.getUserConversations();
       dispatch(slice.actions.getUserConversationsSuccess(userConversations));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -161,14 +160,16 @@ export function getUnseenMessages(sender, userConversations) {
       var conversations = userConversations.map((item) => {
         return item._id;
       });
-      const { data: unseenMessages } = await chatService.getUnseenMessages({ sender: sender, conversations: conversations });
+      const { data: unseenMessages } = await chatService.getUnseenMessages({
+        sender: sender,
+        conversations: conversations
+      });
       dispatch(slice.actions.getUnseenMessagesSuccess(unseenMessages));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
-
 
 // ----------------------------------------------------------------------
 
@@ -177,9 +178,14 @@ export function getConversation(conversationKey) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
-      const response = await chatService.getConversationMessage(conversationKey);
+      const response = await chatService.getConversationMessage(
+        conversationKey
+      );
       dispatch(
-        slice.actions.getConversationSuccess({ messages: response.data, conversationKey })
+        slice.actions.getConversationSuccess({
+          messages: response.data,
+          conversationKey
+        })
       );
     } catch (error) {
       dispatch(slice.actions.hasError(error));
@@ -196,20 +202,19 @@ export function createNewMessage(value, messages) {
     try {
       const response = await chatService.createMessage(value);
       const newMessages = [...messages, response.data];
-      dispatch(
-        slice.actions.createMessageSuccess(newMessages)
-      );
+      dispatch(slice.actions.createMessageSuccess(newMessages));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
 }
 
-
 //GET CONVERSATION MEMBERS BY ADDING LOGIN USER TO COMPANY SUBSCRIBERS.
 export const getCompanyUsers = async (companyId, user) => {
   try {
-    let { data: companyUsers = [] } = await chatService.getCompanyUsers(companyId);
+    let { data: companyUsers = [] } = await chatService.getCompanyUsers(
+      companyId
+    );
     let users = [];
     for (let companyUser of companyUsers) {
       users.push({
@@ -217,8 +222,8 @@ export const getCompanyUsers = async (companyId, user) => {
         companyId: companyUser.company.id,
         name: companyUser.name,
         companyName: companyUser.company.name,
-        companyNameAr: companyUser.company.nameAr,
-      })
+        companyNameAr: companyUser.company.nameAr
+      });
     }
 
     for (let subscriber of user.company.subscribers) {
@@ -227,24 +232,21 @@ export const getCompanyUsers = async (companyId, user) => {
         companyId: subscriber.companyId,
         name: subscriber.name,
         companyName: user.company.name,
-        companyNameAr: user.company.nameAr,
+        companyNameAr: user.company.nameAr
       });
     }
 
-
     return users;
   } catch (error) {
-    console.log("error", error);
+    console.log('error', error);
   }
-
-}
-
+};
 
 //CHECK IF THE SELECTED CONVERSATION ALREAY EXIST IN THE CURRENT CONVERSATION OF THR LOGIN USER.
 export const getSelectedConversation = (userConversations, companyId) => {
   for (let conversation of userConversations) {
-    if (conversation.members.findIndex(x => x.companyId == companyId) != -1) {
+    if (conversation.members.findIndex((x) => x.companyId == companyId) != -1) {
       return conversation;
     }
   }
-}
+};
