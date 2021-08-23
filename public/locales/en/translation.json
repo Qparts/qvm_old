@@ -653,11 +653,13 @@
   "Orders" :"Orders",
   "Messages" : "Messages",
   "You have {{count}} unread messages" : "You have {{count}} unread messages",
+  "You have {{count}} Pending Orders" : "You have {{count}} Pending Orders",
   "New" : "New",
   "online": "online",
   "away": "away",
   "Order has been accepted": "Order has been accepted",
   "Order has been rejected": "Order has been rejected",
+  "And" :" And ",
   "Search limit exceeded!" : "You have exceeded your daily search attempts available in the free package. Upgrade your package and enjoy unlimited search."
 
 }

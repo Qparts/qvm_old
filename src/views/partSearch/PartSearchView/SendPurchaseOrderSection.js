@@ -77,6 +77,7 @@ function SendPurchaseOrderSection(props) {
             text: JSON.stringify(order),
             contentType: 'order',
             sender: user.subscriber.id,
+            companyId: user.company.companyId
         };
 
 
@@ -91,7 +92,8 @@ function SendPurchaseOrderSection(props) {
                     receiverId: member.id,
                     text: JSON.stringify(order),
                     contentType: 'order',
-                    conversationId: selectedConversation._id
+                    conversationId: selectedConversation._id,
+                    companyId: user.company.companyId
                 });
             }
         })

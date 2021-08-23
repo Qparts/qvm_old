@@ -2,7 +2,7 @@ import Scrollbars from 'src/components/Scrollbars';
 import PopoverMenu from 'src/components/PopoverMenu';
 import { Link as RouterLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import {
   Box,
@@ -24,6 +24,24 @@ function Notifications() {
   const [isOpen, setOpen] = useState(false);
   const { t } = useTranslation();
   const { unseenMessages } = useSelector((state) => state.chat);
+  const [companyUnseenMessages, setCompanyUnseenMessages] = useState(new Map())
+
+  useEffect(() => {
+    console.log("unseenMessages", unseenMessages);
+    const map = new Map();
+    for (let message of unseenMessages) {
+      if (!map.has(message.companyId)) {
+        map.set(message.companyId, [message]);
+      } else
+        map.get(message.companyId).push(message);
+    }
+
+    setCompanyUnseenMessages(map);
+    // Array.from(map.values()).map(key => {
+    //   console.log(key);
+    // });
+
+  }, [unseenMessages]);
 
   return (
     <>
@@ -59,13 +77,15 @@ function Notifications() {
             <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
               <Scrollbars>
                 <List disablePadding>
-                  {unseenMessages.map((message) => (
-                    <UnseenMessage
-                      key={message._id}
-                      message={message}
-                      setOpen={setOpen}
-                    />
-                  ))}
+                  {
+                    Array.from(companyUnseenMessages.values()).map((messages, index) => (
+                      <UnseenMessage
+                        key={index}
+                        messages={messages}
+                        setOpen={setOpen}
+                      />
+                    ))
+                  }
                 </List>
               </Scrollbars>
             </Box>

@@ -694,6 +694,8 @@
   "Orders" :"الطلبات",
   "Messages" : "الرسائل",
   "You have {{count}} unread messages" : "لديك {{count}} رسائل غير مقروءة",
+  "You have {{count}} Pending Orders" : "لديك {{count}} طلبات معلقه",
+  "And" :" و ",
   "New" : "جديده",
   "online": "متاح",
   "away": "غير متاح",

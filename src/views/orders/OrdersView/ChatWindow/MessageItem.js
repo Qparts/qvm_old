@@ -137,7 +137,8 @@ function MessageItem({
   const { activeConversation, messages, onlineUsers } = useSelector((state) => state.chat);
   const isMe = parseInt(message.sender) === user.subscriber.id;
   const { t } = useTranslation();
-  const friend = currentContact.filter(x => x.id == parseInt(message.sender))[0];
+  // const friend = currentContact.filter(x => x.id == parseInt(message.sender))[0];
+  const friend = activeConversation?.members?.filter(x => x.id != user.subscriber.id).filter(m => m.id == parseInt(message.sender))[0];
   const [orderDetails, setOrderDetails] = useState(null);
   const [updatedOrder, setUpdatedOrder] = useState(message.contentType == 'order' ?
     JSON.parse(message.text) : null);
@@ -206,6 +207,7 @@ function MessageItem({
       text: value,
       contentType: 'text',
       sender: user.subscriber.id,
+      companyId: user.company.companyId
     }, messages));
 
     //send the message to online users
@@ -216,6 +218,7 @@ function MessageItem({
           senderId: user.subscriber.id,
           receiverId: member.id,
           text: value,
+          companyId: user.company.companyId,
           conversationId: activeConversation._id
         });
       }
