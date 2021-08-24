@@ -79,7 +79,7 @@ function ChatWindow(props) {
         await dispatch(getConversation(conversationKey));
       } catch (error) {
         console.error(error);
-        history.push(PATH_APP.app.chat.new);
+        history.push(PATH_APP.general.chat.new);
       }
     };
     if (conversationKey) {
