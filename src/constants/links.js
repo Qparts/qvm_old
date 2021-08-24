@@ -1,15 +1,15 @@
-const BASE_URL = process.env.REACT_APP_BASE_URL; //test serveer
-const SUBSCRIBER_SERVICE = `${BASE_URL}/subscriber`;
-const CUSTOMER_SERVICE = `${BASE_URL}/customer`;
-const STOCK_SERVICE = `${BASE_URL}/stock`;
-const LOCATION_SERVICE = `${BASE_URL}/location`;
+const API_URL = process.env.REACT_APP_API_URL;
+const SUBSCRIBER_SERVICE = `${API_URL}/subscriber`;
+const CUSTOMER_SERVICE = `${API_URL}/customer`;
+const STOCK_SERVICE = `${API_URL}/stock`;
+const LOCATION_SERVICE = `${API_URL}/location`;
 
-const UPLOAD_SERVICE = `${BASE_URL}/upload`;
-const CATALOG_SERVICE = `${BASE_URL}/catalog`;
-const PRODUCT_SERVICE = `${BASE_URL}/product`;
-const PLAN_SERVICE = `${BASE_URL}/plan`;
-const INVOICE_SERVICE = `${BASE_URL}/invoice`;
-const CHAT_SERVICE = `${BASE_URL}/chat`;
+const UPLOAD_SERVICE = `${API_URL}/upload`;
+const CATALOG_SERVICE = `${API_URL}/catalog`;
+const PRODUCT_SERVICE = `${API_URL}/product`;
+const PLAN_SERVICE = `${API_URL}/plan`;
+const INVOICE_SERVICE = `${API_URL}/invoice`;
+const CHAT_SERVICE = `${API_URL}/chat`;
 
 const subscriber = {
   postLogin: `${SUBSCRIBER_SERVICE}/login`,
@@ -108,17 +108,21 @@ const catalog = {
   getCatalogs: `${CATALOG_SERVICE}/catalogs`,
   getModels: (catalogid) => `${CATALOG_SERVICE}/models?catalogid=${catalogid}`,
   getCars: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${
+      params != null ? 'params=' + params : ''
     } `,
   getCarByVIN: (vin) => `${CATALOG_SERVICE}/cars/vin?query=${vin}`,
   getFilters: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${
+      params != null ? 'params=' + params : ''
     } `,
   getGroups: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${
+      groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `,
   getPart: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${
+      groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `
 };
 
@@ -147,8 +151,7 @@ const invoice = {
 };
 
 const chat = {
-  getUserConversations: (userId) =>
-    `${CHAT_SERVICE}/conversation/${userId}`,
+  getUserConversations: `${CHAT_SERVICE}/conversation/user-conversations`,
   postNewChat: `${CHAT_SERVICE}/conversation/`,
   postNewMessage: `${CHAT_SERVICE}/messages/`,
   getConversationMessages: (conversationKey) =>
