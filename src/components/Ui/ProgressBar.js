@@ -7,7 +7,10 @@ import { Box, Typography } from '@material-ui/core';
 const useStyles = makeStyles((theme) => ({
     timeLeft: {
         display: 'flex',
-        color: '#526C78'
+        color: '#526C78',
+        '@media (max-width: 1004px) and (min-width: 960px)': {
+            fontSize: theme.direction === 'ltr' ? '0.69rem' :  theme.typography.caption.fontSize
+        },
     },
     timeLeftPercent: {
         margin: '-2px 0 0 10px',

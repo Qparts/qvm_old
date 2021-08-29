@@ -76,6 +76,22 @@ const useStyles = makeStyles((theme) => ({
         }
       }
     },
+    '@media (max-width: 1000px) and (min-width: 960px)': {
+      display: theme.direction === 'ltr' ? 'block' : 'flex',
+      textAlign: 'right',
+      '& span:first-of-type': {
+        display: theme.direction === 'ltr' ? 'block' : 'flex',
+        textAlign: 'left',
+      }
+    },
+    '@media (max-width: 432px)': {
+      display: theme.direction === 'ltr' ? 'block' : 'flex',
+      textAlign: 'right',
+      '& span:first-of-type': {
+        display: theme.direction === 'ltr' ? 'block' : 'flex',
+        textAlign: 'left',
+      }
+    },
     '@media (max-width: 365px)': {
       '&:first-of-type': {
         display: 'block',
@@ -107,7 +123,7 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: '30px 0 0 30px',
     borderRight: 0,
     [theme.breakpoints.down('md')]: {
-      borderLeft: '1px solid #E4E4E4',
+      borderRight: '1px solid #E4E4E4',
       borderRadius: 0
     },
   },

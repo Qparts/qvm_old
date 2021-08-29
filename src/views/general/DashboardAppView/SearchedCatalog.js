@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     color: theme.palette.secondary.main,
     padding: theme.spacing(1.25, 2.5),
     borderBottom: '1px solid #ECF1F5',
+    '@media (max-width: 1043px) and (min-width: 960px)': {
+      fontSize: theme.direction === 'ltr' ? '1.073rem' : '1.2rem'
+    },
     '@media (max-width: 400px)': {
       fontSize: '0.966rem'
     }
@@ -72,7 +75,7 @@ function CatalogItem({ catalog }) {
       </Avatar>
 
       <Box sx={{ flexGrow: 1, minWidth: 160, margin: theme.spacing(0, 0, 0, 2) }}>
-        <Typography variant="body1" sx={{textTransform: 'capitalize'}}>{catalogId}</Typography>
+        <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>{catalogId}</Typography>
         <Typography variant="caption" sx={{ color: '#7E8D99' }}>{t("Search times")}:
           <strong className={classes.searchTimes}>{count}</strong>
         </Typography>

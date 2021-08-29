@@ -43,6 +43,17 @@ const useStyles = makeStyles((theme) => ({
     position: 'relative',
     paddingTop: theme.spacing(15),
     paddingBottom: theme.spacing(15),
+    '& h1': {
+      '@media (max-width: 677px) and (min-width: 600px)': {
+        fontSize: theme.direction === 'ltr' ? '2.46rem' : '3rem'
+      },
+      '@media (max-width: 475px) and (min-width: 375px)': {
+        fontSize: theme.direction === 'ltr' ? '2.3rem' : '3rem'
+      },
+      '@media (max-width: 374px) and (min-width: 300px)': {
+        fontSize: theme.direction === 'ltr' ? '1.8rem' : '3rem'
+      },
+    }
   },
   heroOverlay: {
     zIndex: 9,

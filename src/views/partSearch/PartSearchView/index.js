@@ -12,6 +12,7 @@ import ProductInfoSection from './ProductInfoSection';
 import { cleanup } from 'src/redux/slices/partSearch';
 import { PATH_APP } from 'src/routes/paths';
 import EmptyContent from "../../../components/Ui/EmptyContent";
+import SearchBar from "../../../components/Ui/SearchBar";
 
 // ----------------------------------------------------------------------
 
@@ -81,35 +82,16 @@ function PartSearchView() {
                         />
                         :
                         <>
-                            {productResult.length > 0 ? <AvailabilityPartsSection /> : ""}
+                            {productResult.length > 0 && <SearchBar searchPartStyl='searchPartStyl' />}
+                            {productResult.length > 0 ? <AvailabilityPartsSection /> : null}
                             {productInfoResult.length > 0 ?
                                 <>
                                     <Box sx={{ mb: 6 }} />
                                     <ProductInfoSection />
-                                </> : ""
+                                </> : null
                             }
                         </>
                 }
-{/* 
-                {
-                    productInfoResult.length === 0 && productResult.length === 0 &&
-                        isLoading === false ?
-                        <EmptyContent
-                            btnHome
-                            title={t("Unable to receive your order")}
-                            description={t("look like there are no results for the item you were looking for")}
-                        />
-                        :
-                        <>
-                            {productResult.length > 0 || error == "Search limit exceeded!" ? <AvailabilityPartsSection /> : ""}
-                            {productInfoResult.length > 0 ?
-                                <>
-                                    <Box sx={{ mb: 6 }} />
-                                    <ProductInfoSection />
-                                </> : ""
-                            }
-                        </>
-                } */}
             </LoadingOverlay>
 
         </Page>

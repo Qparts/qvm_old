@@ -42,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     fontSize: theme.typography.body1.fontSize,
     borderColor: "#88A2AE",
     color: '#637381',
+    '@media (max-width: 610px) and (min-width: 600px)': { fontSize: '0.95rem' },
     [theme.breakpoints.down('sm')]: {
       width: '100%',
       borderRadius: 0,
@@ -86,10 +87,10 @@ function PricesView() {
           <Box sx={{ pb: 4 }}>
             <Box sx={{ mx: 'auto', textAlign: 'center' }}>
               <Typography variant="h4" gutterBottom className={classes.heading}>
-                {t('price page title')}
+                {t('Try our free package now, and upgrade to the premium plan to grow your business')}
               </Typography>
               <Typography sx={{ color: 'text.secondary' }}>
-                {t('price page caption')}
+                {t('You can access huge numbers of auto spare parts and deal with great number of vendors')}
               </Typography>
             </Box>
             <ToggleButtonGroup value={premiumPlan} exclusive className={classes.toggleBtnGroup}>

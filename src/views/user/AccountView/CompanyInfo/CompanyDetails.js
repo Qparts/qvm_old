@@ -68,9 +68,9 @@ const useStyles = makeStyles((theme) => ({
 function CompanyDetails() {
     const classes = useStyles();
     const { t } = useTranslation();
-
     const { user } = useSelector((state) => state.authJwt);
     const { themeDirection } = useSelector((state) => state.settings);
+    const { numOfStockParts } = useSelector((state) => state.dashboard);
 
     return (
         <Box className={clsx(classes.companyDetailsFlex, classes.companyDetailsFlexStart)}>
@@ -85,7 +85,7 @@ function CompanyDetails() {
                     <Parts width='18' height='18' fill='#7E8D99' />
                     <Box className={classes.companyDetailsFlex}>
                         <Typography variant="caption" className={classes.CompanyDetailsCaption}> {t("parts number in your stock")}</Typography>
-                        <Typography variant="subtitle1"> 500</Typography>
+                        <Typography variant="subtitle1"> {numOfStockParts} </Typography>
                     </Box>
                 </Box>
                 <Box className={clsx(classes.companyInfo, classes.companyDetailsFlex)}>

@@ -35,9 +35,16 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '298px',
         },
     },
+    dataTableBankTrans: { minWidth: '505px' },
+    dataTableReplacementItem: { minWidth: '340px' },
     dataTableGeneral: {
         '@media (max-width: 655px)': {
             minWidth: '582px',
+        },
+    },
+    dataTableGeneralDashboard: {
+        '@media (max-width: 405px)': {
+            minWidth: '334px',
         },
     },
     dataTableChat: {
@@ -53,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     },
     dataTablePartSearch: {
         '@media (max-width: 812px)': {
-            minWidth: '741px',
+            minWidth: '777px',
         },
     },
     dataTableCata: {
@@ -62,6 +69,9 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     dataTableSetting: {
+        '@media (max-width: 970px) and (min-width: 960px)': {
+            minWidth: '659px',
+        },
         '@media (max-width: 740px)': {
             minWidth: '666px',
         },
@@ -188,7 +198,8 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     maps, size = datatable.length, isLazy = true, hasPagination = false,
     onRowsPerPageChange, hasChild = false, childData, childHeader,
     showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata, dataTableSetting,
-    dataTableGeneral, dataTableChat, dataTablePartSearch }) {
+    dataTableGeneral, dataTableChat, dataTablePartSearch, dataTableBankTrans, dataTableReplacementItem,
+    dataTableGeneralDashboard }) {
 
     const classes = useStyles();
 
@@ -214,7 +225,10 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                 classes[dataTableSetting],
                                 classes[dataTableGeneral],
                                 classes[dataTableChat],
-                                classes[dataTablePartSearch]
+                                classes[dataTablePartSearch],
+                                classes[dataTableBankTrans],
+                                classes[dataTableReplacementItem],
+                                classes[dataTableGeneralDashboard]
                             )}
                             aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>

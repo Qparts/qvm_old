@@ -27,7 +27,6 @@ function Notifications() {
   const [companyUnseenMessages, setCompanyUnseenMessages] = useState(new Map())
 
   useEffect(() => {
-    console.log("unseenMessages", unseenMessages);
     const map = new Map();
     for (let message of unseenMessages) {
       if (!map.has(message.companyId)) {

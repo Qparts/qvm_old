@@ -101,7 +101,8 @@ function MostSearchedParts({ className, ...other }) {
                 actions={[{ element: showMoreActions }]}
                 datatable={INVOICES}
                 isLazy={true}
-                hasPagination={false} />
+                hasPagination={false}
+                dataTableGeneralDashboard='dataTableGeneralDashboard' />
         </Card>
     );
 }

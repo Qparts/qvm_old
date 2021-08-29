@@ -2,11 +2,15 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import MyAvatar from 'src/components/MyAvatar';
 import BadgeStatus from 'src/components/BadgeStatus';
 import roundPowerSettingsNew from '@iconify-icons/ic/round-power-settings-new';
 import { useTranslation } from 'react-i18next';
+import useAuth from 'src/hooks/useAuth';
+import { useSnackbar } from 'notistack';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
@@ -20,6 +24,7 @@ import {
   ListItemIcon,
   ListItemText
 } from '@material-ui/core';
+import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
@@ -39,6 +44,11 @@ Account.propTypes = {
 function Account({ className }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const history = useHistory();
+  const dispatch = useDispatch();
+  const { logout } = useAuth();
+  const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar } = useSnackbar();
   const { user } = useSelector((state) => state.authJwt);
   const { themeDirection } = useSelector((state) => state.settings);
   const [open, setOpen] = useState(null);
@@ -92,8 +102,8 @@ function Account({ className }) {
             </Typography>
           </Box>
 
-          <Tooltip title="Log out">
-            <IconButton>
+          <Tooltip title={t('Logout')}>
+            <IconButton onClick={() => helper.handleLogout(logout, dispatch, isMountedRef, history, '/', enqueueSnackbar)}>
               <Icon icon={roundPowerSettingsNew} width={24} height={24} />
             </IconButton>
           </Tooltip>

@@ -28,6 +28,9 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: 400,
         marginLeft: '8px',
         color: theme.palette.primary.main,
+        '@media (max-width: 1096px) and (min-width: 960px)': {
+            fontSize: theme.direction === 'ltr' ? '0.9rem' :  '1rem'
+        },
         '@media (max-width: 410px)': {
             fontSize: '0.8825rem',
         },
