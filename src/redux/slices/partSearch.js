@@ -23,7 +23,8 @@ const initialState = {
     rowsPerPage: 5,
     query: "",
     locationQuery: "",
-    orders: []
+    orders: localStorage.getItem("companiesOrders") ?
+        JSON.parse(localStorage.getItem("companiesOrders")) : []
 };
 
 
@@ -105,6 +106,7 @@ const slice = createSlice({
         },
 
         cleanup(state) {
+            // localStorage.setItem("companiesOrders", JSON.stringify(state.orders));
             state.isLoading = false;
             state.error = '';
             state.productResult = [];
@@ -149,6 +151,7 @@ const slice = createSlice({
                 newOrders.push({ companyId: newOrder.companyId, orders: [{ quantity: newOrder.quantity, order: newOrder.order }] })
             }
             state.orders = newOrders;
+            localStorage.setItem("companiesOrders", JSON.stringify(newOrders));
         },
 
         updateOrderItemQuantity(state, action) {
@@ -159,10 +162,13 @@ const slice = createSlice({
             newOrders.find(x => x.companyId == companyId)
                 .orders.find(x => x.order.id == item.order.id).quantity = newQuantity;
             state.orders = newOrders;
+            localStorage.setItem("companiesOrders", JSON.stringify(newOrders));
         },
 
         updateCompaniesOrders(state, action) {
-            state.orders = action.payload;
+            let newOrders = action.payload;
+            state.orders = newOrders;
+            localStorage.setItem("companiesOrders", JSON.stringify(newOrders));
         },
 
         deleteOrderFromCompany(state, action) {
@@ -170,6 +176,7 @@ const slice = createSlice({
             let companyIndex = state.orders.findIndex(x => x.companyId == order.companyId);
             let orderIndex = state.orders[companyIndex].orders.findIndex(x => x.order.id == order.id);
             state.orders[companyIndex].orders.splice(orderIndex, 1);
+            localStorage.setItem("companiesOrders", JSON.stringify(state.orders));
         }
     }
 
