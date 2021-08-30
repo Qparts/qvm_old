@@ -174,12 +174,13 @@ export function getUnseenMessages(sender, userConversations) {
 // ----------------------------------------------------------------------
 
 //GET MESSAGES OF SPECIFIC CONVERSATION.
-export function getConversation(conversationKey) {
+export function getConversation(conversationKey , page) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
       const response = await chatService.getConversationMessage(
-        conversationKey
+        conversationKey,
+        page
       );
       dispatch(
         slice.actions.getConversationSuccess({

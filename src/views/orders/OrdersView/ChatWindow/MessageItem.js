@@ -185,7 +185,7 @@ function MessageItem({
         updatedMessageMap = new Map();
       }
 
-      await dispatch(getConversation(activeConversation._id));
+      await dispatch(getConversation(activeConversation._id , 1));
 
 
     } catch (error) {
@@ -203,7 +203,7 @@ function MessageItem({
       await chatService.updateMessage(orderValue);
       const orderStatus = status == "A" ? "Order has been accepted" : "Order has been rejected";
       editOrderMessage(orderStatus);
-      await dispatch(getConversation(orderValue.conversationId));
+      await dispatch(getConversation(orderValue.conversationId , 1));
     } catch (error) {
       console.log("error", error);
     }

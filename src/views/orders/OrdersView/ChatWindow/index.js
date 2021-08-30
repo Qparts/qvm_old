@@ -76,7 +76,7 @@ function ChatWindow(props) {
         //update the status of selected conversation's messages to be S.
         await chatService.markConversationAsSee(conversationKey, user.subscriber.id);
         dispatch(getUnseenMessages(user.subscriber.id, props.userConversations));
-        await dispatch(getConversation(conversationKey));
+        await dispatch(getConversation(conversationKey , 1));
       } catch (error) {
         console.error(error);
         history.push(PATH_APP.general.chat.new);
