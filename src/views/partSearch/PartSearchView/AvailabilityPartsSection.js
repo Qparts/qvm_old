@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Grid, Typography, Divider } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
@@ -12,32 +12,33 @@ import TableAction from '../../../components/Ui/TableAction';
 import TextField from 'src/components/Ui/TextField';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
-import { Plus } from "../../../icons/icons";
+import CustomButton from '../../../components/Ui/Button';
+import { Plus, OrdersArrow } from "../../../icons/icons";
 import PurchaseOrderSection from './PurchaseOrderSection';
-import CustomButton from 'src/components/Ui/Button';
 import SendPurchaseOrderSection from './SendPurchaseOrderSection';
-import Button from 'src/components/Ui/Button';
-import helper from 'src/utils/helper';
-import { useSnackbar } from 'notistack';
-import { PATH_APP } from 'src/routes/paths';
-import { useHistory } from "react-router";
-
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    root: {
-        boxShadow: 'none',
-        textAlign: 'center',
-        [theme.breakpoints.up('md')]: {
-            display: 'flex',
-            textAlign: 'left',
-            alignItems: 'center',
-            justifyContent: 'space-between'
-        },
-        [theme.breakpoints.up('xl')]: {
-            height: 320
+    availabilityCont: {
+        position: 'relative',
+        '& .MuiTypography-h5': {
+            height: '60px',
+            lineHeight: '37px',
         }
+    },
+    sendPo: {
+        position: 'absolute',
+        right: theme.spacing(2),
+        top: theme.spacing(1.25),
+        '& button': {
+            '@media (max-width: 320px) and (min-width: 300px)': {
+                padding: theme.spacing(0.875, 1.25),
+            },
+            '& svg': {
+                marginRight: theme.spacing(1)
+            }
+        },
     },
     availabilityActionsCont: {
         display: 'flex',
@@ -45,9 +46,21 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         borderBottom: '1px solid #E5EBF0',
         paddingBottom: '10px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            display: 'block',
+            width: '100%',
+            minWidth: '100%',
+        },
     },
     availabilityActionsLeft: {
         width: '300px',
+        minWidth: '300px',
+        '@media (max-width: 700px) and (min-width: 300px)': {
+            width: '100%',
+            minWidth: '100%',
+            marginBottom: theme.spacing(2)
+        },
     }
 }));
 
@@ -55,10 +68,9 @@ const useStyles = makeStyles((theme) => ({
 
 function AvailabilityPartsSection() {
     const classes = useStyles();
+    const theme = useTheme();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { enqueueSnackbar } = useSnackbar();
-    const history = useHistory();
     const [openAddToPO, setOpenAddToPO] = useState(false);
     const [openSendPO, setOpenSendPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
@@ -98,7 +110,7 @@ function AvailabilityPartsSection() {
                 type='partSearch'
                 title={t("Add To PO")}
                 onClick={() => addToCompanyCart(item)}
-                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
+                textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />} />
         )
     }
 
@@ -119,96 +131,72 @@ function AvailabilityPartsSection() {
     }, [searchTerm]);
 
     return (
-        <Box sx={{ width: '100%' }}>
+        <Box className={orders.length > 0 ? classes.availabilityCont : null}>
+            {orders.length > 0 ?
+                <Box className={classes.sendPo}>
+                    <CustomButton
+                        btnWidth='btnWidth'
+                        onClick={() => setOpenSendPO(true)}
+                    >
+                        <OrdersArrow width='17' height='17' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
+                        {t("Send PO")}
+                    </CustomButton>
+                </Box> : null}
             <SecContainer
-                header={t('Search Results')}>
-                {error == '' ?
-                    <>
-                        <Box className={classes.availabilityActionsCont}>
-                            <Box className={classes.availabilityActionsLeft}>
-                                <TextField
-                                    type='input'
-                                    value={filter}
-                                    onChange={(e) => {
-                                        dispatch(setFilter({ filter: e.target.value }));
-                                        setSearchTerm(e.target.value);
-                                    }}
-                                    label={t("Search by part number")}
-                                    selectBg='selectBg' />
-                            </Box>
+                header={t('Search Results')}
+                secContainerMt='secContainerMt'>
+                <Box className={classes.availabilityActionsCont}>
+                    <Box className={classes.availabilityActionsLeft}>
+                        <TextField
+                            type='input'
+                            value={filter}
+                            onChange={(e) => {
+                                dispatch(setFilter({ filter: e.target.value }));
+                                setSearchTerm(e.target.value);
+                            }}
+                            label={t("Search by part number")}
+                            selectBg='selectBg' />
+                    </Box>
 
-                            <Box className={classes.availabilityActionsRight}>
-                                <CustomButton
-                                    btnBg="btnBg"
-                                    mainBorderBtn='mainBorderBtn'
-                                    disabled={orders.length == 0}
-                                    onClick={() => setOpenSendPO(true)}
-                                >
-                                    {t("Send PO")}
-                                </CustomButton>
-                            </Box>
+                    <Box>
+                        <LocationFilterSection />
+                    </Box>
+                </Box>
+                <Datatable
+                    header={[
+                        {
+                            name: t("Part Number"),
+                            attr: 'partNumber',
+                        },
+                        {
+                            name: t("Brand"),
+                            attr: 'brandName',
+                        },
+                        {
+                            name: t("Company Name"),
+                            isMapped: true,
+                            mapIndex: 0,
+                            mappedAttribute: themeDirection == 'ltr' ? 'name' : 'nameAr',
+                            attr: 'companyId'
+                        },
+                        {
+                            name: t("Average market price"),
+                            attr: 'retailPrice'
+                        }
+                    ]}
 
-                            <Box className={classes.availabilityActionsRight}>
-                                <LocationFilterSection />
-                            </Box>
-                        </Box>
-                        <Datatable
-                            header={[
-                                {
-                                    name: t("Part Number"),
-                                    attr: 'partNumber',
-                                },
-                                {
-                                    name: t("Brand"),
-                                    attr: 'brandName',
-                                },
-                                {
-                                    name: t("Company Name"),
-                                    isMapped: true,
-                                    mapIndex: 0,
-                                    mappedAttribute: themeDirection == 'ltr' ? 'name' : 'nameAr',
-                                    attr: 'companyId'
-                                },
-                                {
-                                    name: t("Average market price"),
-                                    attr: 'retailPrice'
-                                }
-                            ]}
-
-                            actions={[{ element: showDetailsElement }, { element: addToCart }]}
-                            datatable={productResult}
-                            error={error}
-                            onSelectedPage={changePagehandler}
-                            page={page}
-                            isLazy={true}
-                            maps={[companies]}
-                            size={searchSize}
-                            rowsPerPage={rowsPerPage}
-                            hasPagination={true}
-
-                        />
-
-                    </>
-                    :
-                    <>
-
-                        <Typography variant="body3">{t("Search limit exceeded!")}</Typography>
-                        <Box sx={{ mb: 3 }} />
-
-                        <Box className={classes.availabilityActionsRight}>
-                            <Button
-                                upgradeBtn="upgradeBtn"
-                                btnWidth="btnWidth"
-                                weightLight="weightLight"
-                                onClick={() => { helper.gotoPremium(history, enqueueSnackbar, t('There is a pending subscription'), PATH_APP.general.upgradeSubscription, t) }}
-                            >
-                                {t("Upgrade to Premium")}
-                            </Button>
-                        </Box>
-
-                    </>
-
-                }
+                    actions={[{ element: addToCart }, { element: showDetailsElement }]}
+                    datatable={productResult}
+                    error={error}
+                    onSelectedPage={changePagehandler}
+                    page={page}
+                    isLazy={true}
+                    maps={[companies]}
+                    size={searchSize}
+                    rowsPerPage={rowsPerPage}
+                    hasPagination={true}
+                    dataTablePartSearch='dataTablePartSearch'
+                />
 
             </SecContainer>
 
@@ -219,18 +207,16 @@ function AvailabilityPartsSection() {
                 <PartDetails />
             </CustomDialog>
 
-
             <CustomDialog
                 open={openAddToPO}
                 handleClose={closeOrderDailog}
-                title={t("Add to Purchase Order")}>
-
+                title={t("Add to Purchase Order")}
+                dialogWidth='dialogWidth'>
                 {selectedPart != null &&
                     <PurchaseOrderSection
                         closeOrderDailog={closeOrderDailog} />
                 }
             </CustomDialog>
-
 
             <CustomDialog
                 fullWidth={true}

@@ -1,22 +1,12 @@
 import clsx from 'clsx';
-import faker from 'faker';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import React, { useRef, useState } from 'react';
-import micFill from '@iconify-icons/eva/mic-fill';
+import React, { useState } from 'react';
 import roundSend from '@iconify-icons/ic/round-send';
 import EmojiPicker from 'src/components/EmojiPicker';
-import attach2Fill from '@iconify-icons/eva/attach-2-fill';
-import roundAddPhotoAlternate from '@iconify-icons/ic/round-add-photo-alternate';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
-import {
-  Box,
-  Input,
-  Divider,
-  IconButton,
-  InputAdornment
-} from '@material-ui/core';
+import { Input, Divider, IconButton, InputAdornment } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
@@ -29,7 +19,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: 'center',
     paddingLeft: theme.spacing(2)
   },
-  input: { height: '100%' }
+  input: { height: '100%' },
+  sendIcon: {
+    transform: theme.direction === 'rtl' ? 'rotate(180deg) !important' : 'rotate(0deg)'
+  }
 }));
 
 // ----------------------------------------------------------------------
@@ -49,15 +42,9 @@ function MessageInput({
   ...other
 }) {
   const classes = useStyles();
-  const fileInputRef = useRef(null);
   const [message, setMessage] = useState('');
   const { user } = useSelector((state) => state.authJwt);
   const { t } = useTranslation();
-
-
-  const handleAttach = () => {
-    fileInputRef.current.click();
-  };
 
   const handleChangeMessage = (event) => {
     setMessage(event.target.value);
@@ -105,19 +92,6 @@ function MessageInput({
             />
           </InputAdornment>
         }
-        endAdornment={
-          <Box sx={{ flexShrink: 0, mr: 1.5, '& > *': { mx: 0.5 } }}>
-            <IconButton disabled={disabled} size="small" onClick={handleAttach}>
-              <Icon icon={roundAddPhotoAlternate} width={24} height={24} />
-            </IconButton>
-            <IconButton disabled={disabled} size="small" onClick={handleAttach}>
-              <Icon icon={attach2Fill} width={24} height={24} />
-            </IconButton>
-            <IconButton disabled={disabled} size="small">
-              <Icon icon={micFill} width={24} height={24} />
-            </IconButton>
-          </Box>
-        }
       />
 
       <Divider orientation="vertical" flexItem />
@@ -128,10 +102,8 @@ function MessageInput({
         onClick={handleSend}
         sx={{ mx: 1 }}
       >
-        <Icon icon={roundSend} width={24} height={24} />
+        <Icon icon={roundSend} width={24} height={24} className={classes.sendIcon} />
       </IconButton>
-
-      <input type="file" ref={fileInputRef} style={{ display: 'none' }} />
     </div>
   );
 }

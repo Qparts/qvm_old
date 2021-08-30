@@ -4,7 +4,6 @@ import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import constants from 'src/utils/constants';
 import { PATH_APP } from 'src/routes/paths';
 import helper from 'src/utils/helper';
 import SearchBox from '../../../components/SearchBox';
@@ -35,7 +34,7 @@ function GeneralSearchSection() {
     const history = useHistory();
 
     const handleGeneralSearch = (search) => {
-        helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, constants.MAX, search)
+        helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, search)
     }
 
     return (

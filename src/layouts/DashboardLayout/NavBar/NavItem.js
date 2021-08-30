@@ -39,6 +39,9 @@ const useStyles = makeStyles((theme) => ({
     '& .MuiListItemText-root': {
       flex: 'initial',
       paddingLeft: theme.spacing(1.25),
+      [theme.breakpoints.up('md')]: {
+        fontSize: theme.direction === 'ltr' ? theme.typography.caption.fontSize :  theme.typography.body2.fontSize
+      }
     },
     '&:hover': {
       color: theme.palette.grey[0],
@@ -146,7 +149,7 @@ function NavItem({
     setShow((show) => !show);
   };
 
-  const logoutFun = () => {
+  const navActionFun = () => {
     if (logoutAttr) {
       helper.handleLogout(logout, dispatch, isMountedRef, history, PATH_PAGE.auth.login, enqueueSnackbar);
     } else if(notifi === true) {
@@ -191,7 +194,7 @@ function NavItem({
       button
       to={href}
       exact={open}
-      onClick={logoutFun}
+      onClick={navActionFun}
       disableGutters
       component={RouterLink}
       activeClassName={

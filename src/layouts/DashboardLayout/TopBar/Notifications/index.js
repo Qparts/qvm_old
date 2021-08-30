@@ -1,56 +1,30 @@
-import { Icon } from '@iconify/react';
 import Scrollbars from 'src/components/Scrollbars';
 import PopoverMenu from 'src/components/PopoverMenu';
 import { Link as RouterLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import React, { useRef, useState, useEffect } from 'react';
-import doneAllFill from '@iconify-icons/eva/done-all-fill';
 import { useTranslation } from 'react-i18next';
-import {
-  markAllAsRead,
-  getNotifications
-} from 'src/redux/slices/notifications';
-import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
   List,
   Badge,
   Button,
-  Tooltip,
   Divider,
   Typography,
-  ListSubheader
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
+import { PATH_APP } from 'src/routes/paths';
 import { Mail } from '../../../../icons/icons';
 import UnseenMessage from './UnseenMessage';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme) => ({
-  root: {},
-  listSubheader: {
-    ...theme.typography.overline,
-    lineHeight: 'unset',
-    textTransform: 'uppercase',
-    padding: theme.spacing(1, 2.5)
-  }
-}));
-
-// ----------------------------------------------------------------------
-
 function Notifications() {
-  const classes = useStyles();
   const anchorRef = useRef(null);
   const [isOpen, setOpen] = useState(false);
-  const dispatch = useDispatch();
   const { t } = useTranslation();
   const { unseenMessages } = useSelector((state) => state.chat);
   const [companyUnseenMessages, setCompanyUnseenMessages] = useState(new Map())
-
-  useEffect(() => {
-    dispatch(getNotifications());
-  }, [dispatch]);
 
   useEffect(() => {
     console.log("unseenMessages", unseenMessages);
@@ -68,10 +42,6 @@ function Notifications() {
     // });
 
   }, [unseenMessages]);
-
-  const handleMarkAllAsRead = () => {
-    dispatch(markAllAsRead());
-  };
 
   return (
     <>
@@ -99,35 +69,14 @@ function Notifications() {
                 { count: unseenMessages.length })}
             </Typography>
           </Box>
-
-          {unseenMessages.length > 0 && (
-            <Tooltip title=" Mark all as read">
-              <MIconButton color="primary" onClick={handleMarkAllAsRead}>
-                <Icon icon={doneAllFill} width={20} height={20} />
-              </MIconButton>
-            </Tooltip>
-          )}
         </Box>
 
         {unseenMessages.length > 0 &&
           <>
             <Divider />
-
             <Box sx={{ height: { xs: 340, sm: 'auto' } }}>
               <Scrollbars>
-                <List
-                  disablePadding
-                  subheader={
-                    <ListSubheader
-                      disableSticky
-                      disableGutters
-                      className={classes.listSubheader}
-                    >
-                      {t("New")}
-                    </ListSubheader>
-                  }
-                >
-
+                <List disablePadding>
                   {
                     Array.from(companyUnseenMessages.values()).map((messages, index) => (
                       <UnseenMessage
@@ -144,12 +93,16 @@ function Notifications() {
             <Divider />
 
             <Box sx={{ p: 1 }}>
-              <Button fullWidth disableRipple component={RouterLink} to="#">
+              <Button
+                fullWidth
+                disableRipple
+                component={RouterLink}
+                to={PATH_APP.general.chat.root}
+                onClick={() => setOpen(false)}>
                 {t("View All")}
               </Button>
             </Box>
           </>}
-
       </PopoverMenu>
     </>
   );

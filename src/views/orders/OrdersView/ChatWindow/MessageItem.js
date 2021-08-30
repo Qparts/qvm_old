@@ -2,18 +2,18 @@ import clsx from 'clsx';
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { formatDistanceToNowStrict } from 'date-fns';
-import { makeStyles } from '@material-ui/core/styles';
-import { Avatar, Box, Typography, Grid } from '@material-ui/core';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
+import { Avatar, Box, Typography } from '@material-ui/core';
 import { useSelector, useDispatch } from 'react-redux';
 import links from 'src/constants/links';
 import Datatable from 'src/components/table/DataTable';
 import { useTranslation } from 'react-i18next';
 import _ from 'lodash'
 import Button from "src/components/Ui/Button";
-import CustomButton from 'src/components/Ui/Button';
 import chatService from 'src/services/chatService';
 import { createNewMessage, getConversation } from 'src/redux/slices/chat';
 import helper from 'src/utils/helper';
+import { Parts, Price, Correct, Times, Edit } from 'src/icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -31,17 +31,84 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1.5),
     marginTop: theme.spacing(0.5),
     borderRadius: theme.shape.borderRadius,
-    backgroundColor: theme.palette.background.neutral,
+    backgroundColor: '#EEF5F9',
+    textAlign: 'left',
     '&.styleMe': {
       color: theme.palette.grey[800],
-      backgroundColor: theme.palette.primary.lighter
+      backgroundColor: '#FFEDED'
     }
+  },
+  tableWid: {
+    width: 600,
+    '& .MuiTableContainer-root': {
+      borderRadius: '10px 10px 0 0'
+    },
+    '@media (max-width: 992px) and (min-width: 960px)': {
+      width: '565px',
+    },
+    '@media (max-width: 768px) and (min-width: 737px)': {
+      width: '565px',
+    },
+    '@media (max-width: 736px)': {
+      width: 'auto',
+    },
+    '@media (max-width: 600px) and (min-width: 436px)': {
+      width: '278px',
+    },
+    '@media (max-width: 435px) and (min-width: 314px)': {
+      width: '170px',
+    },
   },
   info: {
     display: 'flex',
     marginBottom: theme.spacing(0.75),
     color: theme.palette.text.secondary,
     '&.styleMe': { justifyContent: 'flex-end' }
+  },
+  orderInfo: {
+    backgroundColor: '#E7F0F7',
+    display: 'flex',
+    marginTop: theme.spacing(0.5),
+    padding: theme.spacing(1.25, 1.75),
+    borderRadius: '0 0 10px 10px',
+    '@media (max-width: 600px) and (min-width: 314px)': {
+      display: 'block'
+    },
+  },
+  orderInfoChild: {
+    display: 'flex',
+    marginRight: theme.spacing(1.5),
+    '@media (max-width: 600px) and (min-width: 314px)': {
+      margin: theme.spacing(0, 0, 1, 0),
+      '&:last-of-type': { margin: 0 }
+    },
+  },
+  orderInfoTitle: {
+    '@media (max-width: 435px) and (min-width: 314px)': {
+      fontSize: '0.75rem'
+    },
+  },
+  orderInfoChildMr: {
+    marginRight: theme.spacing(0.625),
+    color: '#526C78',
+  },
+  orderInfoValue: {
+    color: theme.palette.secondary.main,
+    '@media (max-width: 435px) and (min-width: 314px)': {
+      fontSize: '0.9625rem'
+    },
+  },
+  dispalyFlxChat: {
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
+  orderActions: {
+    textAlign: 'left',
+    '& button:last-of-type': {
+      '@media (max-width: 435px) and (min-width: 314px)': {
+        margin: theme.spacing(1.25, 0, 0)
+      },
+    }
   }
 }));
 
@@ -64,6 +131,7 @@ function MessageItem({
 }) {
 
   const classes = useStyles();
+  const theme = useTheme();
   const dispatch = useDispatch();
   const { user, currentSocket } = useSelector((state) => state.authJwt);
   const { activeConversation, messages, onlineUsers } = useSelector((state) => state.chat);
@@ -74,8 +142,6 @@ function MessageItem({
   const [orderDetails, setOrderDetails] = useState(null);
   const [updatedOrder, setUpdatedOrder] = useState(message.contentType == 'order' ?
     JSON.parse(message.text) : null);
-
-  console.log("friend", friend)
 
   //get order details (quantity and total price).
   const getOrderDetails = () => {
@@ -201,7 +267,7 @@ function MessageItem({
       orderValue.status = status;
       emitUpdateMessage(orderValue);
       await chatService.updateMessage(orderValue);
-      const orderStatus = status == "A" ? "Order has been accepted" : "Order has been rejected";
+      const orderStatus = status == "A" ? t("Order has been accepted") : t("Order has been rejected");
       editOrderMessage(orderStatus);
       await dispatch(getConversation(orderValue.conversationId , 1));
     } catch (error) {
@@ -236,118 +302,97 @@ function MessageItem({
               <Typography variant="body2">{message.text}</Typography>
             </div>
             :
-            <div
-              style={{ width: 500 }}
-            >
-              {updatedOrder && <>
-                <Datatable
-                  header={[
-                    {
-                      name: t("Part Number"),
-                      attr: 'order.partNumber',
-                    },
-                    {
-                      name: t("Brand"),
-                      attr: 'order.brandName',
-                    },
-                    {
-                      name: t("Quantity"),
-                      attr: 'quantity',
-                      type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                      onchange: updateOrderField
-                    },
-                    {
-                      name: t("Average market price"),
-                      attr: 'order.retailPrice',
-                      type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                      onchange: updateOrderField
-                    }
-                  ]}
+            <div className={classes.tableWid}>
+              <Datatable
+                header={[
+                  {
+                    name: t("Part Number"),
+                    attr: 'order.partNumber',
+                  },
+                  {
+                    name: t("Brand"),
+                    attr: 'order.brandName',
+                  },
+                  {
+                    name: t("Quantity"),
+                    attr: 'quantity',
+                    type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
+                    onchange: updateOrderField
+                  },
+                  {
+                    name: t("Average market price"),
+                    attr: 'order.retailPrice',
+                    type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
+                    onchange: updateOrderField
+                  }
+                ]}
 
-                  datatable={updatedOrder?.orders}
-                />
+                datatable={updatedOrder.orders}
+                dataTablePad='dataTablePad'
+                dataTableChat='dataTableChat'
+              />
 
-                <Box sx={{ mb: 3 }} />
-
-                <Grid container  >
-                  <Grid item xs={!isMe ? 3 : 4} >
-                    <Typography
-                      variant="body2"
-                      sx={{ color: 'text.secondary' }}
-                    >
-                      {t("Total Parts")}{' : '}
-                      {orderDetails?.orderQuantity}
-                    </Typography>
-                  </Grid>
-
-
-                  <Grid item xs={4} >
-                    <Typography
-                      variant="body2"
-                      sx={{ color: 'text.secondary' }}
-                    >
-                      {t("Total Price")}{' : '}
-                      {helper.ccyFormat(orderDetails?.totalPrice)}
-                    </Typography>
-                  </Grid>
-
-                  <Grid item xs={!isMe ? 3 : 4} >
-                    <Typography
-                      variant="body2"
-                      sx={{ color: 'text.secondary' }}
-                    >
-                      {t("Status")}{' : '}
-                      {message.status === 'I' || message.status === 'S' ? t("Pending") : message.status == 'A' ?
-                        t("Accepted") : t("Rejected")}
-                    </Typography>
-                  </Grid>
-
+              <Box className={clsx(classes.dispalyFlxChat, classes.orderInfo)}>
+                <Box className={clsx(classes.dispalyFlxChat, classes.orderInfoChild)}>
+                  <Parts width='17' height='18' fill={theme.palette.primary.main} />
+                  <Typography variant="body2" className={classes.orderInfoTitle} sx={{ margin: '0 5px', color: '#526C78' }}>{t("Total Parts")}</Typography>
+                  <Typography variant="subtitle1" className={classes.orderInfoValue}>
+                    {orderDetails?.orderQuantity}
+                  </Typography>
+                </Box>
+                <Box className={clsx(classes.dispalyFlxChat, classes.orderInfoChild)}>
+                  <Price width='21' height='21' fill={theme.palette.primary.main} />
+                  <Typography variant="body2" className={clsx(classes.orderInfoChildMr, classes.orderInfoTitle)}>{t("Total Price")}</Typography>
+                  <Typography variant="subtitle1" className={classes.orderInfoValue}>
+                    {helper.ccyFormat(orderDetails?.totalPrice)}
+                  </Typography>
+                </Box>
+                <Box className={clsx(classes.dispalyFlxChat, classes.orderInfoChild)}>
+                  <Typography variant="body2" className={clsx(classes.orderInfoChildMr, classes.orderInfoTitle)}>{t("Status")}</Typography>
+                  <Typography variant="subtitle1" className={classes.orderInfoValue}>
+                    {message.status === 'I' || message.status === 'S' ? t("Pending") : message.status == 'A' ?
+                      t("Accepted") : t("Rejected")}
+                  </Typography>
+                </Box>
+                <Box className={clsx(classes.dispalyFlxChat, classes.orderInfoChild)}>
                   {!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders) &&
                     !isMe &&
-                    <Grid item xs={2} >
-                      <Box sx={{ mb: 3 }} >
-                        <Button
-                          onClick={editOrder}
-                        >
-                          {t("Edit")}
-                        </Button>
-                      </Box>
-                    </Grid>
+                    <Button
+                      btnWidth='btnWidth'
+                      btnPadd='btnPadd'
+                      onClick={editOrder}
+                    >
+                      <Edit width='17' height='17' className={classes.orderInfoChildMr} fill={theme.palette.grey[0]} />
+                      {t("Edit")}
+                    </Button>
                   }
+                </Box>
+              </Box>
 
-                </Grid>
+              <Box sx={{ mb: 3 }} />
 
-                <Box sx={{ mb: 3 }} />
+              {!isMe && (message.status === 'I' || message.status === 'S') &&
+                <Box className={classes.orderActions}>
+                  <Button
+                    chatBtnPadd='chatBtnPadd'
+                    btnWidth='btnWidth'
+                    onClick={() => orderOperation("A")}
+                  >
+                    <Correct width='27' height='27' className={classes.orderInfoChildMr} fill={theme.palette.grey[0]} />
+                    {t("Accept")}
+                  </Button>
 
-
-                {!isMe && (message.status === 'I' || message.status === 'S') &&
-                  <Grid container spacing={2} >
-                    <Grid item xs={6} />
-
-                    <Grid item xs={3} >
-                      <Button
-                        onClick={() => orderOperation("A")}
-                      >
-                        {t("Accept")}
-                      </Button>
-                    </Grid>
-
-                    <Grid item xs={3} >
-                      <CustomButton
-                        btnBg="btnBg"
-                        mainBorderBtn='mainBorderBtn'
-                        onClick={() => orderOperation("R")}
-                      >
-                        {t("Reject")}
-                      </CustomButton>
-                    </Grid>
-                  </Grid>
-
-                }
-
-              </>
+                  <Button
+                    chatBtn='chatBtn'
+                    chatBtnPadd='chatBtnPadd'
+                    btnWidth='btnWidth'
+                    onClick={() => orderOperation("R")}
+                  >
+                    <Times width='27' height='27' className={classes.orderInfoChildMr} fill='#7F929C' />
+                    {t("Reject")}
+                  </Button>
+                </Box>
               }
-
             </div>
           }
         </Box>

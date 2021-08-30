@@ -95,11 +95,7 @@ function SpecialOfferItemsSection() {
                     </Grid>
                 </Grid>
                 : null}
-            <Grid container spacing={2}>
-                <Grid item xs={12} sm={6} md={3}>
-                    <OfferContainer />
-                </Grid>
-            </Grid>
+            <OfferContainer md={3} />
         </SecContainerOffer>
     );
 }

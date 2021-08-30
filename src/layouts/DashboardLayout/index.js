@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -50,13 +52,16 @@ DashboardLayout.propTypes = {
 function DashboardLayout({ children }) {
   const classes = useStyles();
   const [openNav, setOpenNav] = useState(false);
+  const { pathname } = useLocation();
+
+  const isChat = pathname.includes('chat');
 
   return (
     <div className={classes.root}>
       <TopBar onOpenNav={() => setOpenNav(true)} />
       <NavBar onCloseNav={() => setOpenNav(false)} isOpenNav={openNav} />
 
-      <div className={clsx(classes.main)}>{children}</div>
+      <div className={clsx(classes.main, isChat ? classes.chatPadding : null)}>{children}</div>
     </div>
   );
 }

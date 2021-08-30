@@ -47,8 +47,6 @@ function ReplacementsView() {
         }
     }, []);
 
-    console.log(error)
-
     return (
         <Page
             title={t("replacementsTab.title")}
@@ -91,14 +89,6 @@ function ReplacementsView() {
                             </Grid>
                         </SecContainer> : null
                 }
-                {/* {
-                    error != null && error == 'Search limit exceeded!' &&
-                    <EmptyContent
-                        btnHome
-                        title={t("Search limit exceeded")}
-                        description={t("It is clear that the search attempts have been carried out")}
-                    />
-                } */}
             </LoadingOverlay>
         </Page>
     );

@@ -42,9 +42,18 @@ const useStyles = makeStyles((theme) => ({
     companyName: {
         color: '#526C78',
     },
+    offerTimeLeft: {
+        display: 'flex',
+        '@media (max-width: 988px) and (min-width: 960px)': {
+            alignItems: theme.direction === 'ltr' ? 'center' :  'normal'
+        },
+    },
     endOfDATE: {
         color: '#526C78',
-        margin: '0 7px'
+        margin: '0 7px',
+        '@media (max-width: 988px) and (min-width: 960px)': {
+            fontSize: theme.direction === 'ltr' ? '0.726rem' :  theme.typography.body4.fontSize
+        },
     },
     partsNum: {
         margin: '15px 0',
@@ -113,7 +122,7 @@ const Offer = (props, { className, ...other }) => {
                 className={classes.offerHeader}>
                 {props.offer}
             </Typography>
-            <Box sx={{ display: 'flex' }}>
+            <Box className={classes.offerTimeLeft}>
                 <Calender width='20' height='20' fill='#526C78' />
                 <Typography variant="body4" className={classes.endOfDATE}> {t('end of offer')}</Typography>
                 <Typography variant="subtitle2"> {props.date} </Typography>

@@ -7,9 +7,7 @@ import { useHistory } from 'react-router-dom';
 import ConversationList from './ConversationList';
 import React, { useState, useEffect } from 'react';
 import Scrollbars from 'src/components/Scrollbars';
-import editFill from '@iconify-icons/eva/edit-fill';
 import useBreakpoints from 'src/hooks/useBreakpoints';
-import { Link as RouterLink } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import arrowIosBackFill from '@iconify-icons/eva/arrow-ios-back-fill';
 import arrowIosForwardFill from '@iconify-icons/eva/arrow-ios-forward-fill';
@@ -37,7 +35,27 @@ const useStyles = makeStyles((theme) => ({
     transition: theme.transitions.create('width'),
     borderRight: `1px solid ${theme.palette.divider}`
   },
-  collapse: { width: 96 },
+  userData: {
+    minHeight: '64px',
+    display: 'flex',
+    alignItems: 'center',
+    backgroundColor: '#ebf2ff',
+    padding: theme.spacing(1, 2)
+  },
+  collapse: {
+    width: 96,
+    [theme.breakpoints.down('md')]: {
+      width: 86,
+    }
+  },
+  collapseMdDown: {
+    position: 'absolute',
+    left: 0,
+    top: 0,
+    zIndex: 100,
+    background: theme.palette.grey[0],
+    height: '100%',
+  },
   hide: { display: 'none' }
 }));
 
@@ -161,12 +179,12 @@ function Sidebar() {
 
   return (
     <div
-      className={clsx(classes.root, {
-        [classes.collapse]: !isOpenSidebarConversation
-      })}
+      className={clsx(classes.root, { [classes.collapse]: !isOpenSidebarConversation },
+        (isOpenSidebarConversation && window.innerWidth < 960) ? classes.collapseMdDown : null
+      )}
     >
-      <Box sx={{ py: 2, px: 3 }}>
-        <Box sx={{ display: 'flex', alignItems: 'center' }}>
+      <Box>
+        <Box className={classes.userData}>
           {isOpenSidebarConversation && (
             <>
               <Account />
@@ -185,12 +203,6 @@ function Sidebar() {
               }
             />
           </MIconButton>
-
-          {isOpenSidebarConversation && (
-            <MIconButton to="/app/chat/new" component={RouterLink}>
-              <Icon icon={editFill} width={20} height={20} />
-            </MIconButton>
-          )}
         </Box>
 
         {isOpenSidebarConversation && (

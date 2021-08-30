@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import faker from 'faker';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { More } from '../../../icons/icons';
@@ -9,33 +9,6 @@ import { Card } from '@material-ui/core';
 import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
-
-const INVOICES = [
-  {
-    id: faker.random.uuid(),
-    partNum: '011R0221',
-    price: faker.finance.amount(),
-    quantity: 20
-  },
-  {
-    id: faker.random.uuid(),
-    partNum: 'FL3Z9925622AA',
-    price: faker.finance.amount(),
-    quantity: 80
-  },
-  {
-    id: faker.random.uuid(),
-    partNum: 'AFLS123RM',
-    price: faker.finance.amount(),
-    quantity: 289
-  },
-  {
-    id: faker.random.uuid(),
-    partNum: 'FL1A',
-    price: faker.finance.amount(),
-    quantity: 1
-  },
-];
 
 const useStyles = makeStyles(() => ({
   root: {},
@@ -57,6 +30,7 @@ SearchedParts.propTypes = {
 function SearchedParts({ className, ...other }) {
   const classes = useStyles();
   const { t } = useTranslation();
+  const { mostSearchedProducts } = useSelector((state) => state.dashboard);
 
   const showMoreActions = (item) => {
     return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
@@ -69,20 +43,16 @@ function SearchedParts({ className, ...other }) {
         header={[
           {
             name: t("Part Number"),
-            attr: 'partNum',
+            attr: 'keywords',
           },
           {
-            name: t('Lowest price'),
-            attr: 'price',
+            name: t('Search times'),
+            attr: 'count',
           },
-          {
-            name: t("quantity"),
-            attr: 'quantity'
-          }
         ]}
 
         actions={[{ element: showMoreActions }]}
-        datatable={INVOICES}
+        datatable={mostSearchedProducts}
         isLazy={true}
         hasPagination={false} />
     </Card>

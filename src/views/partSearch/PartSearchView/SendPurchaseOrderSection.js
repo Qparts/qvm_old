@@ -1,8 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { useTranslation } from 'react-i18next';
-import { Grid } from '@material-ui/core';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -20,26 +17,11 @@ import { Delete } from "../../../icons/icons";
 import TableAction from 'src/components/Ui/TableAction';
 import PurchasedCompanyOrdersSection from './PurchasedCompanyOrdersSection';
 
-
-// ----------------------------------------------------------------------
-
-const useStyles = makeStyles((theme) => ({
-    root: {},
-    locationFilterResult: {
-        display: 'flex'
-    },
-    locationFilter: {
-        minWidth: '300px'
-    }
-}));
-
 // ----------------------------------------------------------------------
 
 function SendPurchaseOrderSection(props) {
-    const classes = useStyles();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { t } = useTranslation();
     const { orders, companies } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
     const { userConversations, messages, onlineUsers } = useSelector((state) => state.chat);
@@ -65,7 +47,7 @@ function SendPurchaseOrderSection(props) {
             <TableAction
                 type='partSearch'
                 onClick={() => deleteOrder(JSON.parse(item).order)}
-                textIcon={<Delete width='14' height='14' />} />
+                textIcon={<Delete width='14' height='14' fill='#CED5D8' />} />
         )
     }
 
@@ -140,39 +122,35 @@ function SendPurchaseOrderSection(props) {
     }
 
     return (
-        <Grid  >
-            <Grid item xs={12} >
-                {
-                    orders.map((orderItem, index) => (
-                        <div key={index}>
-                            <ListItem button onClick={() => {
-                                handleClick(orderItem.companyId)
-                            }} >
-                                <ListItemIcon />
-                                <ListItemText primary={themeDirection == 'ltr' ?
-                                    companies.get(orderItem.companyId).name :
-                                    companies.get(orderItem.companyId).nameAr} />
-                                {openItemID === orderItem.companyId ? <ExpandLess /> : <ExpandMore />}
-                            </ListItem>
+        <>
+            {
+                orders.map((orderItem, index) => (
+                    <div key={index}>
+                        <ListItem button onClick={() => {
+                            handleClick(orderItem.companyId)
+                        }} >
+                            <ListItemIcon />
+                            <ListItemText primary={themeDirection == 'ltr' ?
+                                companies.get(orderItem.companyId).name :
+                                companies.get(orderItem.companyId).nameAr} />
+                            {openItemID === orderItem.companyId ? <ExpandLess /> : <ExpandMore />}
+                        </ListItem>
 
-                            <Collapse in={openItemID === orderItem.companyId} timeout="auto" unmountOnExit>
+                        <Collapse in={openItemID === orderItem.companyId} timeout="auto" unmountOnExit>
 
-                                <PurchasedCompanyOrdersSection
-                                    orderItem={orderItem}
-                                    updateQuantity={updateQuantity}
-                                    deleteElement={deleteElement}
-                                    deleteCompanyOrders={deleteCompanyOrders}
-                                    sendOrder={sendOrder}
-                                />
+                            <PurchasedCompanyOrdersSection
+                                orderItem={orderItem}
+                                updateQuantity={updateQuantity}
+                                deleteElement={deleteElement}
+                                deleteCompanyOrders={deleteCompanyOrders}
+                                sendOrder={sendOrder}
+                            />
 
-                            </Collapse>
-                        </div >
-
-                    ))
-                }
-            </Grid>
-        </Grid >
-
+                        </Collapse>
+                    </div >
+                ))
+            }
+        </>
     );
 }
 

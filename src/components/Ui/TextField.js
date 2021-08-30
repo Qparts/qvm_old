@@ -12,7 +12,7 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.secondary.darker + '!important',
         border: '1px solid #EEF1F5',
         borderRadius: '10px',
-        padding: '13px',
+        padding: theme.spacing(1.625),
         fontSize: theme.typography.body3.fontSize,
         textAlign: 'left',
         '&:focus': {
@@ -89,6 +89,12 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: '20px 0px 0px 20px',
         },
     },
+    inputStylChat: {
+        padding: theme.spacing(1, 1.625)
+    },
+    inputContChat: {
+        width: '90px'
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -125,8 +131,9 @@ export default function CustomTextField(props) {
     } else if (props.type === 'input') {
         textFieldType = (
             <TextField
-                className={clsx(classes.inputCont, classes[props.spaceToTop], classes[props.inputContTopBarSearch])}
+                className={clsx(classes.inputCont, classes[props.spaceToTop], classes[props.inputContTopBarSearch], classes[props.inputContChat])}
                 value={props.value}
+                defaultValue={props.defaultValue}
                 type={props.inputType}
                 label={props.label}
                 id={props.id}
@@ -135,7 +142,12 @@ export default function CustomTextField(props) {
                 error={Boolean(props.touched && props.errors)}
                 helperText={props.touched && props.errors}
                 inputProps={{
-                    className: clsx(classes.inputStyl, classes[props.selectBg], classes[props.inputTopBarSearch]),
+                    className: clsx(
+                        classes.inputStyl,
+                        classes[props.selectBg],
+                        classes[props.inputTopBarSearch],
+                        classes[props.inputStylChat]
+                    ),
                     onChange: props.onChange,
                     name: props.name,
                 }} />

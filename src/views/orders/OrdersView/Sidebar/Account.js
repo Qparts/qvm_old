@@ -2,18 +2,15 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import useAuth from 'src/hooks/useAuth';
-import { capitalCase } from 'change-case';
+import { useSelector } from 'react-redux';
 import MyAvatar from 'src/components/MyAvatar';
 import BadgeStatus from 'src/components/BadgeStatus';
-import settings2Fill from '@iconify-icons/eva/settings-2-fill';
-import roundAccountBox from '@iconify-icons/ic/round-account-box';
 import roundPowerSettingsNew from '@iconify-icons/ic/round-power-settings-new';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
   List,
-  Select,
   Divider,
   Popover,
   Tooltip,
@@ -26,22 +23,11 @@ import {
 
 // ----------------------------------------------------------------------
 
-const STATUS = ['online', 'invisible', 'away'];
-
 const useStyles = makeStyles((theme) => ({
   root: {},
   listItem: {
     padding: theme.spacing(1, 2.5)
   },
-  select: {
-    '& svg': { display: `none` },
-    '& fieldset': { border: `none !important` },
-    '& select': {
-      padding: 0,
-      ...theme.typography.body2,
-      '&:focus': { backgroundColor: 'transparent' }
-    }
-  }
 }));
 
 // ----------------------------------------------------------------------
@@ -52,7 +38,9 @@ Account.propTypes = {
 
 function Account({ className }) {
   const classes = useStyles();
-  const { user } = useAuth();
+  const { t } = useTranslation();
+  const { user } = useSelector((state) => state.authJwt);
+  const { themeDirection } = useSelector((state) => state.settings);
   const [open, setOpen] = useState(null);
   const [status, setStatus] = useState('online');
 
@@ -62,10 +50,6 @@ function Account({ className }) {
 
   const handleClose = () => {
     setOpen(null);
-  };
-
-  const handleChangeStatus = (event) => {
-    setStatus(event.target.value);
   };
 
   return (
@@ -85,9 +69,8 @@ function Account({ className }) {
         open={Boolean(open)}
         anchorEl={open}
         onClose={handleClose}
-        anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-        transformOrigin={{ vertical: 'top', horizontal: 'left' }}
-        classes={{ paper: classes.popover }}
+        anchorOrigin={{ vertical: 'top', horizontal: themeDirection === 'rtl' ? 'right' : 'left' }}
+        transformOrigin={{ vertical: 'top', horizontal: themeDirection === 'rtl' ? 'right' : 'left' }}
       >
         <Box
           sx={{
@@ -102,10 +85,10 @@ function Account({ className }) {
 
           <Box sx={{ ml: 2, mr: 3 }}>
             <Typography noWrap variant="subtitle1">
-              {user.displayName}
+              {themeDirection === 'ltr' ? user.company.name : user.company.nameAr}
             </Typography>
             <Typography noWrap variant="body2" sx={{ color: 'text.secondary' }}>
-              {user.email}
+              {user.subscriber.email}
             </Typography>
           </Box>
 
@@ -133,47 +116,7 @@ function Account({ className }) {
                 <BadgeStatus status={status} />
               </Box>
             </ListItemIcon>
-            <ListItemText>
-              <Select
-                native
-                fullWidth
-                disableUnderline
-                size="small"
-                value={status}
-                onChange={handleChangeStatus}
-                className={classes.select}
-              >
-                {STATUS.map((option) => (
-                  <option key={option} value={option}>
-                    {capitalCase(option)}
-                  </option>
-                ))}
-              </Select>
-            </ListItemText>
-          </ListItem>
-
-          <ListItem button disableGutters className={classes.listItem}>
-            <ListItemIcon>
-              <Icon icon={roundAccountBox} width={24} height={24} />
-            </ListItemIcon>
-            <ListItemText
-              primary="Profile"
-              primaryTypographyProps={{
-                variant: 'body2'
-              }}
-            />
-          </ListItem>
-
-          <ListItem button disableGutters className={classes.listItem}>
-            <ListItemIcon>
-              <Icon icon={settings2Fill} width={24} height={24} />
-            </ListItemIcon>
-            <ListItemText
-              primary="Settings"
-              primaryTypographyProps={{
-                variant: 'body2'
-              }}
-            />
+            <ListItemText>{t(status)}</ListItemText>
           </ListItem>
         </List>
       </Popover>

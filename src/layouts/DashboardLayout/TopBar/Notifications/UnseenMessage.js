@@ -30,6 +30,20 @@ const useStyles = makeStyles((theme) => ({
       marginBottom: 1
     }
   },
+  userMessage: {
+    display: '-webkit-box',
+    WebkitLineClamp: 1,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis',
+    width: '150px',
+    fontWeight: 600
+  },
+  messageCont: {
+    display: 'flex',
+    alignItems: 'start',
+    justifyContent: 'space-between',
+  },
   isUnRead: {
     backgroundColor: theme.palette.action.selected
   }
@@ -37,23 +51,25 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function getTitle(messages, friend, t) {
+function getTitle(messages, friend, t, userMessage) {
   const numberOfOrders = messages.filter(x => x.contentType == 'order').length;
   const numberOfText = messages.filter(x => x.contentType != 'order').length;
   const title = (
-    <Typography variant="subtitle2">
-      {friend.companyName}
+    <>
+      <Typography variant="subtitle2" sx={{ fontWeight: 600 }}>
+        {friend.companyName}
+      </Typography>
       <Typography
         component="span"
         variant="body2"
         sx={{ color: 'text.secondary' }}
+        className={userMessage}
       >
-        &nbsp;
         {(numberOfOrders > 0 ? t("You have {{count}} Pending Orders", { count: numberOfOrders }) : "")}
         {numberOfOrders > 0 && numberOfText > 0 ? t("And") : ""}
         {(numberOfText > 0 ? t("You have {{count}} unread messages", { count: numberOfText }) : "")}
       </Typography>
-    </Typography>
+    </>
   );
 
   return title;
@@ -79,7 +95,7 @@ function UnseenMessage({ setOpen, className, messages }) {
   const avatar = <Avatar alt={friend.companyName}
     src={uploadUrl.getCompanyLogo(`logo_${friend.companyId}.png`)} />;
   const message = messages.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
-  const title = getTitle(messages, friend, t);
+  const title = getTitle(messages, friend, t, classes.userMessage);
 
 
 
@@ -129,6 +145,7 @@ function UnseenMessage({ setOpen, className, messages }) {
       </ListItemAvatar>
       <ListItemText
         primary={title}
+        className={classes.messageCont}
         secondary={
           <Typography
             variant="caption"

@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
@@ -52,8 +53,9 @@ function Basic() {
     const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation();
+    const { partsSearchCount } = useSelector((state) => state.dashboard);
 
-    const chartData = [1, 9];
+    const chartData = [10 - partsSearchCount.count, partsSearchCount.count];
     const chartOptions = merge(ApexChartsOption(), {
         colors: [
             theme.palette.grey[0],
@@ -135,7 +137,7 @@ function Basic() {
                     className={classes.chart}
                 />
             </div>
-            <Typography variant="body3" className={classes.companyInfo}>4 {t("attempts out of")} 10 </Typography>
+            <Typography variant="body3" className={classes.companyInfo}> {partsSearchCount.count} {t("attempts out of")} 10 </Typography>
         </>
     );
 }
