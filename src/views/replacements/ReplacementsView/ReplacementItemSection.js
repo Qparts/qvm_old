@@ -20,10 +20,10 @@ const useStyles = makeStyles((theme) => ({
         padding: '15px',
         position: 'relative',
         minHeight: '381px',
-        '@media (max-width: 1100px) and (min-width: 960px)': {
+        '@media (max-width: 1120px) and (min-width: 960px)': {
             minHeight: '409px',
         },
-        '@media (max-width: 750px) and (min-width: 600px)': {
+        '@media (max-width: 765px) and (min-width: 600px)': {
             minHeight: '409px',
         },
         '@media (max-width: 599px) and (min-width: 300px)': {
@@ -33,13 +33,13 @@ const useStyles = makeStyles((theme) => ({
     replacementsFlex: {
         display: 'flex',
         alignItems: 'center',
-        '@media (max-width: 1100px) and (min-width: 960px)': {
+        '@media (max-width: 1120px) and (min-width: 960px)': {
             display: 'block',
         },
-        '@media (max-width: 750px) and (min-width: 600px)': {
+        '@media (max-width: 765px) and (min-width: 600px)': {
             display: 'block',
         },
-        '@media (max-width: 405px) and (min-width: 300px)': {
+        '@media (max-width: 415px) and (min-width: 300px)': {
             display: 'block',
         },
     },
@@ -52,7 +52,19 @@ const useStyles = makeStyles((theme) => ({
     },
     replacementsValues: {
         color: theme.palette.secondary.main,
-        marginLeft: theme.spacing(1)
+        marginLeft: theme.spacing(1),
+        '@media (max-width: 1345px) and (min-width: 1280px)': {
+            fontSize: theme.direction === 'ltr' ? '0.8rem' : theme.typography.body3.fontSize
+        },
+        '@media (max-width: 1210px) and (min-width: 1121px)': {
+            fontSize: theme.direction === 'ltr' ? '0.8rem' : theme.typography.body3.fontSize
+        },
+        '@media (max-width: 825px) and (min-width: 766px)': {
+            fontSize: theme.direction === 'ltr' ? '0.8rem' : theme.typography.body3.fontSize
+        },
+        '@media (max-width: 445px) and (min-width: 416px)': {
+            fontSize: theme.direction === 'ltr' ? '0.8rem' : theme.typography.body3.fontSize
+        },
     },
     slider: {
         border: '1px solid #a8a8a8',
@@ -152,6 +164,7 @@ function ReplacementItemSection({ replacementItem }) {
                         rowsPerPage={rowsPerPage}
                         hasPagination={true}
                         dataTablePad='dataTablePad'
+                        dataTableReplacementItem='dataTableReplacementItem'
                     />
                 </Accordion>
             </Card>

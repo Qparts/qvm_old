@@ -34,26 +34,18 @@ const useStyles = makeStyles((theme) => ({
       cursor: 'pointer'
     }
   },
-  usersName: {
-    display: 'flex',
-    alignItems: 'center',
-    [theme.breakpoints.down('md')]: {
-      display: '-webkit-box',
-      WebkitLineClamp: 1,
-      WebkitBoxOrient: 'vertical',
-      overflow: 'hidden',
-      textOverflow: 'ellipsis',
-      textAlign: 'left'
-    }
-  },
   groupNames: {
-    marginLeft: theme.spacing(0.625)
+    marginLeft: theme.spacing(5.375),
+    textAlign: 'left'
   },
   companyNameM: {
     marginLeft: theme.spacing(2)
   },
   listItem: {
-    padding: theme.spacing(0.5, 2.5)
+    padding: theme.spacing(0.75, 2.5),
+    borderBottom: '1px solid #ECF0F8',
+    '&:first-of-type': { paddingTop: 0 },
+    '&:last-of-type': { borderBottom: 0, paddingBottom: 0 }
   }
 }));
 
@@ -119,13 +111,9 @@ function GroupAvatar({ participants }) {
           />
           <Typography variant="subtitle2" className={classes.companyNameM}>{participant.companyName}</Typography>
         </Box>
-        <Box className={classes.usersName}>
-          {participants.map((participant) => (
-            <Typography variant="subtitle2" className={classes.groupNames} key={participant.id}>
-              {participant.companyName},
-            </Typography>
-          ))}
-        </Box>
+        <Typography variant="subtitle2" className={classes.groupNames}>
+          ({participants.length}) {t("persons")}
+        </Typography>
       </Box>
       <Popover
         open={Boolean(open)}
@@ -140,7 +128,7 @@ function GroupAvatar({ participants }) {
         <List>
           {participants.map((part, index) => {
             return <ListItem key={index} disableGutters className={classes.listItem}>
-              {part.companyName}
+              {part.name}
             </ListItem>
           })}
         </List>
@@ -163,8 +151,8 @@ function HeaderDetail({ participants, className, ...other }) {
       {isGroup ? (
         <GroupAvatar participants={participants} />
       ) : (
-        <OneAvatar participants={participants} />
-      )}
+          <OneAvatar participants={participants} />
+        )}
 
       <Box sx={{ flexGrow: 1 }} />
     </div>

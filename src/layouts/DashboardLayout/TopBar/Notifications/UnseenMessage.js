@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'start',
     justifyContent: 'space-between',
+    '@media (max-width: 400px)': {
+      display: 'block'
+    }
   },
   isUnRead: {
     backgroundColor: theme.palette.action.selected

@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import BadgeStatus from 'src/components/BadgeStatus';
 import { makeStyles } from '@material-ui/core/styles';
@@ -92,16 +92,14 @@ function ConversationItem({
   const classes = useStyles();
   const { user } = useSelector((state) => state.authJwt);
   const { onlineUsers = [] } = useSelector((state) => state.chat);
+  const { unseenMessages } = useSelector((state) => state.chat);
   const [friends, setFriends] = useState(conversation?.members?.filter(x => x.id != user.subscriber.id
     && x.companyId != user.company.companyId));
 
-
-  useEffect(() => {
-    console.log("friends", friends);
-  }, [])
+  const unseenMessagesCompanyId = unseenMessages.map(message => { return message.companyId });
+  const unRead = unseenMessagesCompanyId.filter(mess => mess === friends[0]?.companyId).length > 0;
 
   const isGroup = friends.length > 1;
-
 
   return (
     <ListItem
@@ -137,14 +135,16 @@ function ConversationItem({
             primary={friends[0]?.companyName}
             primaryTypographyProps={{
               noWrap: true,
-              variant: 'subtitle2',
-              color: (theme) => theme.palette.secondary.main
+              variant: unRead ? 'body3' : 'subtitle2',
+              color: (theme) => theme.palette.secondary.main,
+              fontWeight: unRead ? 600 : 500
             }}
             secondary={friends.map((friend) => friend.name).join(" , ")}
             secondaryTypographyProps={{
               noWrap: true,
               variant: 'body2',
-              color: (theme) => theme.palette.secondary.light
+              color: (theme) => theme.palette.secondary.light,
+              fontWeight: unRead ? 600 : 500
             }}
           />
 

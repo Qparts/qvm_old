@@ -33,7 +33,7 @@ function PurchaseOrderSection(props) {
     const { t } = useTranslation();
     const { selectedPart, companies, orders } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
-    const [quantity, setQuantity] = useState(0);
+    const [quantity, setQuantity] = useState('1');
 
     //add order item to purchase from specific company.
     const addToOrder = () => {
@@ -49,7 +49,7 @@ function PurchaseOrderSection(props) {
 
     return (
         <>
-            <List sx={{p: 0}}>
+            <List sx={{ p: 0 }}>
                 <ListItem className={classes.partInfo}>
                     <Typography variant="body2">{t("Part Number")}</Typography>
                     <Typography variant="body3" className={classes.partValue}>
@@ -75,6 +75,7 @@ function PurchaseOrderSection(props) {
                         <TextField
                             name='quantity'
                             type='input'
+                            value={quantity}
                             // label={t('Quantity')}
                             onChange={event => setQuantity(event.target.value)} />
                     </Typography>
@@ -85,6 +86,7 @@ function PurchaseOrderSection(props) {
             <Button
                 type='submit'
                 onClick={addToOrder}
+                disabled={quantity <= 0 || quantity === ' '}
             >
                 {t("Add to Purchase Order")}
             </Button>

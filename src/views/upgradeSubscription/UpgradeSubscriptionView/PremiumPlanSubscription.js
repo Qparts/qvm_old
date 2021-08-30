@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
 import {
     Box,
@@ -21,8 +22,16 @@ import StockFileBtn from '../../../components/Ui/StockFileBtn';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    spaceBetweenElements: {
-        marginBottom: theme.spacing(2)
+    spaceBetweenElements: { marginBottom: theme.spacing(2) },
+    activeBtn: {
+        '& .css-1p5bxmy-MuiButtonBase-root-MuiButton-root': {
+            padding: '9px',
+            fontSize: '0.79rem',
+            marginTop: theme.spacing(1),
+            [theme.breakpoints.down('sm')]: {
+                marginTop: 0
+            },
+        }
     },
     PromotionDiscountSuccess: {
         backgroundColor: '#dff0d8',
@@ -186,7 +195,7 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                     </List>
 
                     {promotion == null ?
-                        <Box className={classes.spaceBetweenElements}>
+                        <Box className={clsx(classes.spaceBetweenElements, classes.activeBtn)}>
                             <Grid container spacing={2}>
                                 <Grid item xs={12} sm={8}>
                                     <TextField
@@ -261,6 +270,7 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                                     isLazy={false}
                                     hasPagination={false}
                                     dataTablePad='dataTablePad'
+                                    dataTableBankTrans='dataTableBankTrans'
                                 />
                             </Box>
                             <Box className={classes.spaceBetweenElements}>

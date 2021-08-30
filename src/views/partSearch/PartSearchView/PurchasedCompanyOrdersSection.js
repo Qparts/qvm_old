@@ -33,6 +33,8 @@ function PurchasedCompanyOrdersSection(props) {
         }
     }, [orderItem, orderItem.orders])
 
+    const orderItemQuantity = orderItem.orders.map(order => { return order.quantity });
+    const orderItemQuantityVal = orderItemQuantity.every(v => v > 0)
 
     return (
         <Box className={classes.orderDataCont} >
@@ -66,7 +68,7 @@ function PurchasedCompanyOrdersSection(props) {
                     />
 
                     <Box className={classes.orderDataActions}>
-                        <Button onClick={() => sendOrder(orderItem)}>
+                        <Button onClick={() => sendOrder(orderItem)} disabled={orderItemQuantityVal === false}>
                             {t("Send")}
                         </Button>
                         <Button

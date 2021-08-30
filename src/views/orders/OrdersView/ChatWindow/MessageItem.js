@@ -84,6 +84,9 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   orderInfoTitle: {
+    '@media (max-width: 633px) and (min-width: 600px)': {
+      fontSize: '0.75rem'
+    },
     '@media (max-width: 435px) and (min-width: 314px)': {
       fontSize: '0.75rem'
     },
@@ -95,7 +98,7 @@ const useStyles = makeStyles((theme) => ({
   orderInfoValue: {
     color: theme.palette.secondary.main,
     '@media (max-width: 435px) and (min-width: 314px)': {
-      fontSize: '0.9625rem'
+      fontSize: '0.85rem'
     },
   },
   dispalyFlxChat: {
@@ -109,10 +112,39 @@ const useStyles = makeStyles((theme) => ({
         margin: theme.spacing(1.25, 0, 0)
       },
     }
+  },
+  editBtnMd: {
+    justifyContent: 'flex-end',
+    marginTop: theme.spacing(1)
   }
 }));
 
 // ----------------------------------------------------------------------
+
+function EditBtn({ updatedOrder, isMe, editOrder }) {
+  const classes = useStyles();
+  const theme = useTheme();
+  const { t } = useTranslation();
+
+  return (
+    <Box className={clsx(
+      classes.dispalyFlxChat,
+      classes.orderInfoChild,
+      window.innerWidth < 725 && window.innerWidth > 600 ? classes.editBtnMd : null
+    )}>
+      {updatedOrder && isMe &&
+        <Button
+          btnWidth='btnWidth'
+          btnPadd='btnPadd'
+          onClick={editOrder}
+        >
+          <Edit width='17' height='17' className={classes.orderInfoChildMr} fill={theme.palette.grey[0]} />
+          {t("Edit")}
+        </Button>
+      }
+    </Box>
+  );
+}
 
 MessageItem.propTypes = {
   message: PropTypes.object.isRequired,
@@ -142,6 +174,7 @@ function MessageItem({
   const [orderDetails, setOrderDetails] = useState(null);
   const [updatedOrder, setUpdatedOrder] = useState(message.contentType == 'order' ?
     JSON.parse(message.text) : null);
+
 
   //get order details (quantity and total price).
   const getOrderDetails = () => {
@@ -354,20 +387,20 @@ function MessageItem({
                       t("Accepted") : t("Rejected")}
                   </Typography>
                 </Box>
-                <Box className={clsx(classes.dispalyFlxChat, classes.orderInfoChild)}>
-                  {!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders) &&
-                    !isMe &&
-                    <Button
-                      btnWidth='btnWidth'
-                      btnPadd='btnPadd'
-                      onClick={editOrder}
-                    >
-                      <Edit width='17' height='17' className={classes.orderInfoChildMr} fill={theme.palette.grey[0]} />
-                      {t("Edit")}
-                    </Button>
-                  }
-                </Box>
+                {window.innerWidth < 725 && window.innerWidth > 600 ? null
+                  :
+                  <EditBtn
+                    updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders)}
+                    isMe={!isMe}
+                    editOrder={editOrder}
+                  />}
               </Box>
+              {window.innerWidth < 725 && window.innerWidth > 600 &&
+                <EditBtn
+                  updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders)}
+                  isMe={!isMe}
+                  editOrder={editOrder}
+                />}
 
               <Box sx={{ mb: 3 }} />
 

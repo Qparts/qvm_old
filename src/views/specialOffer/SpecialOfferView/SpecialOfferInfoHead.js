@@ -19,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
         background: theme.palette.grey[0],
         padding: '0 15px',
         borderBottom: '1px solid #E5EBF0',
-        '@media (max-width: 870px)': {
+        '@media (max-width: 975px)': {
             display: 'block !important',
         },
     },
@@ -27,13 +27,13 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.secondary.darker,
         margin: theme.spacing(1, 0, 0.5),
         lineHeight: 1,
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             marginBottom: theme.spacing(1),
         },
     },
     offerTime: {
         display: 'flex',
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             display: 'block',
         },
     },
@@ -43,10 +43,10 @@ const useStyles = makeStyles((theme) => ({
         borderRight: '1px solid #EEF1F5',
         borderLeft: '1px solid #EEF1F5',
         lineHeight: 1,
-        '@media (max-width: 870px)': {
+        '@media (max-width: 975px)': {
             borderLeft: 0
         },
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             borderRight: 0,
             borderBottom: '1px solid #EEF1F5',
             padding: theme.spacing(1.75, 0)
@@ -60,7 +60,7 @@ const useStyles = makeStyles((theme) => ({
     offerDetailsFlex: {
         display: 'flex',
         alignItems: 'center',
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             justifyContent: 'center'
         },
     },
@@ -69,10 +69,10 @@ const useStyles = makeStyles((theme) => ({
     },
     secPadding: {
         padding: '20px 0',
-        '@media (max-width: 870px)': {
+        '@media (max-width: 975px)': {
             justifyContent: 'center'
         },
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             display: 'block !important'
         },
     },
@@ -81,7 +81,7 @@ const useStyles = makeStyles((theme) => ({
     },
     chartCont: {
         marginRight: theme.spacing(2.5),
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             margin: theme.spacing(0, 0, 1.5, 0)
         },
     },
@@ -90,22 +90,22 @@ const useStyles = makeStyles((theme) => ({
     },
     textRight: {
         textAlign: 'left',
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             textAlign: 'center'
         },
     },
     placeOrder: {
-        '@media (max-width: 870px)': {
+        '@media (max-width: 975px)': {
             justifyContent: 'center',
             borderTop: '1px solid #EEF1F5'
         },
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             display: 'block'
         },
     },
     btnOrder: {
         marginLeft: '20px',
-        '@media (max-width: 470px)': {
+        '@media (max-width: 517px)': {
             margin: theme.spacing(1.75, 0)
         },
     }
