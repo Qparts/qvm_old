@@ -360,7 +360,7 @@ function MessageItem({
                   }
                 ]}
 
-                datatable={updatedOrder.orders}
+                datatable={updatedOrder?.orders}
                 dataTablePad='dataTablePad'
                 dataTableChat='dataTableChat'
               />
@@ -390,14 +390,14 @@ function MessageItem({
                 {window.innerWidth < 725 && window.innerWidth > 600 ? null
                   :
                   <EditBtn
-                    updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders)}
+                    updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder?.orders)}
                     isMe={!isMe}
                     editOrder={editOrder}
                   />}
               </Box>
               {window.innerWidth < 725 && window.innerWidth > 600 &&
                 <EditBtn
-                  updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders)}
+                  updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder?.orders)}
                   isMe={!isMe}
                   editOrder={editOrder}
                 />}
