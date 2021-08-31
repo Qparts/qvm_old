@@ -702,5 +702,7 @@
   "Order has been accepted": "تم قبول الطلب",
   "Order has been rejected": "تم رفض الطلب",
   "Search limit exceeded!":"لقد إستنفذت محاولات البحث اليومية المتاحه في الباقه المجانيه, قم بترقيه باقتك و تمتع بالبحث اللامحدود عن القطع التي تريد",
-  "persons": "شخص"
+  "persons": "شخص",
+  "There are no additional messages":"لا يوجد رسائل اضافيه"
+
 }
