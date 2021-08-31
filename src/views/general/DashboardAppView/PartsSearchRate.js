@@ -1,6 +1,7 @@
 import { merge } from 'lodash';
 import clsx from 'clsx';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import ReactApexChart from 'react-apexcharts';
 import { ApexChartsOption } from 'src/components/Charts/Apexcharts';
@@ -42,27 +43,17 @@ PartsSearchRate.propTypes = {
 function PartsSearchRate({ className, ...other }) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const { monthlySearchCountOnStock } = useSelector((state) => state.dashboard);
+    const partSearchRateVal = monthlySearchCountOnStock.map(val => { return Math.round(val.total / 12) });
+    const partSearchRateMonth = monthlySearchCountOnStock.map(val => { return t(val.month) + ' ' + val.year });
 
     const chartData = [
-        { name: t('Search rate for parts'), data: [1, 3, 8, 4, 6, 9, 7, 8, 9, 9.5, 6, 7] },
+        { name: t('Search rate for parts'), data: partSearchRateVal },
     ];
 
     const chartOptions = merge(ApexChartsOption(), {
         xaxis: {
-            categories: [
-                t('Jan'),
-                t('Feb'),
-                t('Mar'),
-                t('Apr'),
-                t('May'),
-                t('Jun'),
-                t('Jul'),
-                t('Aug'),
-                t('Sep'),
-                t('Oct'),
-                t('Nov'),
-                t('Dec')
-            ]
+            categories: partSearchRateMonth
         }
     });
 

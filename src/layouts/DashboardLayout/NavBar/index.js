@@ -55,12 +55,7 @@ const useStyles = makeStyles((theme) => {
         ? alpha(theme.palette.primary.main, 0.08)
         : theme.palette.primary.lighter
     },
-    textCent: {
-      textAlign: 'center',
-      '&:last-of-type ul a': {
-        paddingLeft: theme.spacing(5)
-      }
-    }
+    textCent: { textAlign: 'center' }
   };
 });
 
@@ -84,7 +79,6 @@ function reduceChild({ array, item, pathname, level, t }) {
         info={item.info}
         href={item.href}
         notification={item.notification}
-        logoutAttr={item.logoutAttr}
         title={t(item.title)}
         open={Boolean(match)}
       >
@@ -105,7 +99,6 @@ function reduceChild({ array, item, pathname, level, t }) {
         icon={item.icon}
         info={item.info}
         notification={item.notification}
-        logoutAttr={item.logoutAttr}
         title={t(item.title)}
       />
     ];
@@ -150,7 +143,7 @@ function NavBar({ isOpenNav, onCloseNav }) {
           <Logo style={{ margin: 'auto' }} />
         </RouterLink>
       </Box>
-      <Box sx={{mt: 1}}>
+      <Box sx={{ mt: 1 }}>
         <Box sx={{ mb: 2 }}><Hidden mdUp> <UpgradeBtn /> </Hidden></Box>
         <Hidden mdUp>
           <UploadStockBtn bg={theme.palette.grey[0]} color={theme.palette.secondary.main} />

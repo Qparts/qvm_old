@@ -117,6 +117,8 @@ const getValue = (object, path) => {
 };
 
 const getCellValue = (item, headerItem, maps) => {
+    const offersLength = item.offers === undefined ? null : item.offers.length
+
     let value = maps != null && maps.length && headerItem.isMapped ?
         maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
             maps[headerItem.mapIndex].get(getValue(item, headerItem.attr))[headerItem.mappedAttribute]
@@ -127,12 +129,23 @@ const getCellValue = (item, headerItem, maps) => {
             :
             (getValue(item, headerItem.attr));
 
+    if (offersLength > 0 && headerItem.num === 'num' ) {
+        value = helper.ccyFormat(getValue(item, 'offers[0].offerPrice'));
+    } else if(offersLength == 0 && headerItem.num === 'num' ) {
+        value = getValue(item, 'retailPrice');
+    }
+
     if (headerItem.type == 'number') {
         value = helper.ccyFormat(value);
     }
 
     if (headerItem.label)
         value = value + ' ' + headerItem.label;
+
+    if (headerItem.badge && offersLength > 0){
+        value = value + ' ' + headerItem.badge
+    }
+
     return value;
 }
 
@@ -285,7 +298,8 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                                             defaultValue={getCellValue(item, headerItem, maps)}
                                                                             value={getCellValue(item, headerItem, maps)}
                                                                         /> :
-                                                                        getCellValue(item, headerItem, maps)}
+                                                                        getCellValue(item, headerItem, maps)
+                                                                }
                                                             </TableCell>
                                                         );
                                                     })}

@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import faker from 'faker';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -10,29 +10,6 @@ import { More } from '../../../icons/icons';
 import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
-
-const INVOICES = [
-    {
-        id: faker.random.uuid(),
-        company: '011R0221',
-        partNum: 200
-    },
-    {
-        id: faker.random.uuid(),
-        company: 'FL3Z9925622AA',
-        partNum: 100
-    },
-    {
-        id: faker.random.uuid(),
-        company: 'AFLS123RM',
-        partNum: 500
-    },
-    {
-        id: faker.random.uuid(),
-        company: 'FL1A',
-        partNum: 8
-    },
-];
 
 const useStyles = makeStyles((theme) => ({
     root: {},
@@ -56,6 +33,10 @@ MostSearchedParts.propTypes = {
 function MostSearchedParts({ className, ...other }) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const { mostActiveCompaniesOnStock } = useSelector((state) => state.dashboard);
+    const { themeDirection } = useSelector((state) => state.settings);
+    const mostActiveCompaniesOnStockCopy = [...mostActiveCompaniesOnStock]
+    const mostActiveCompaniesOnStockSort = mostActiveCompaniesOnStockCopy.sort((a,b) => (a.total < b.total) ? 1 : ((b.total < a.total) ? -1 : 0));
 
     const showMoreActions = (item) => {
         return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
@@ -90,16 +71,16 @@ function MostSearchedParts({ className, ...other }) {
                 header={[
                     {
                         name: t('company'),
-                        attr: 'company',
+                        attr: themeDirection === 'ltr' ? 'company.name' : 'company.nameAr',
                     },
                     {
-                        name: t('parts number'),
-                        attr: 'partNum',
+                        name: t('search attempts'),
+                        attr: 'total',
                     }
                 ]}
 
                 actions={[{ element: showMoreActions }]}
-                datatable={INVOICES}
+                datatable={mostActiveCompaniesOnStockSort}
                 isLazy={true}
                 hasPagination={false}
                 dataTableGeneralDashboard='dataTableGeneralDashboard' />

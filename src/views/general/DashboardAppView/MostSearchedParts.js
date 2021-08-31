@@ -1,6 +1,6 @@
 import clsx from 'clsx';
-import faker from 'faker';
 import React from 'react';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
@@ -9,29 +9,6 @@ import { More } from '../../../icons/icons';
 import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
-
-const INVOICES = [
-    {
-        id: faker.random.uuid(),
-        partNum: '011R0221',
-        search: 200
-    },
-    {
-        id: faker.random.uuid(),
-        partNum: 'FL3Z9925622AA',
-        search: 100
-    },
-    {
-        id: faker.random.uuid(),
-        partNum: 'AFLS123RM',
-        search: 500
-    },
-    {
-        id: faker.random.uuid(),
-        partNum: 'FL1A',
-        search: 8
-    },
-];
 
 const useStyles = makeStyles(() => ({
     root: {},
@@ -55,6 +32,7 @@ MostSearchedParts.propTypes = {
 function MostSearchedParts({ className, ...other }) {
     const classes = useStyles();
     const { t } = useTranslation();
+    const { mostSearchedProductsOnStock } = useSelector((state) => state.dashboard);
 
     const showMoreActions = (item) => {
         return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
@@ -65,17 +43,17 @@ function MostSearchedParts({ className, ...other }) {
             <Datatable
                 header={[
                     {
-                        name: t('parts number'),
-                        attr: 'partNum',
+                        name: t('Part Number'),
+                        attr: 'productNumber',
                     },
                     {
                         name: t('search attempts'),
-                        attr: 'search',
+                        attr: 'total',
                     }
                 ]}
 
                 actions={[{ element: showMoreActions }]}
-                datatable={INVOICES}
+                datatable={mostSearchedProductsOnStock}
                 isLazy={true}
                 hasPagination={false}
                 dataTableGeneralDashboard='dataTableGeneralDashboard' />

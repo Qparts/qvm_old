@@ -86,7 +86,7 @@ function PurchaseOrderSection(props) {
             <Button
                 type='submit'
                 onClick={addToOrder}
-                disabled={quantity <= 0 || quantity === ' '}
+                disabled={!/^[1-9]+$/.test(quantity) || quantity === ' '}
             >
                 {t("Add to Purchase Order")}
             </Button>

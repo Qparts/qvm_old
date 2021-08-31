@@ -2,10 +2,7 @@ import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { NavLink as RouterLink, useHistory } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { useSnackbar } from 'notistack';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import { NavLink as RouterLink } from 'react-router-dom';
 import arrowIosForwardFill from '@iconify-icons/eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify-icons/eva/arrow-ios-downward-fill';
 import { makeStyles } from '@material-ui/core/styles';
@@ -16,9 +13,6 @@ import {
   ListItemIcon,
   ListItemText
 } from '@material-ui/core';
-import useAuth from 'src/hooks/useAuth';
-import helper from 'src/utils/helper';
-import { PATH_PAGE } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -40,7 +34,7 @@ const useStyles = makeStyles((theme) => ({
       flex: 'initial',
       paddingLeft: theme.spacing(1.25),
       [theme.breakpoints.up('md')]: {
-        fontSize: theme.direction === 'ltr' ? theme.typography.caption.fontSize :  theme.typography.body2.fontSize
+        fontSize: theme.direction === 'ltr' ? theme.typography.caption.fontSize : theme.typography.body2.fontSize
       }
     },
     '&:hover': {
@@ -129,7 +123,6 @@ function NavItem({
   info,
   icon,
   notification,
-  logoutAttr,
   open = false,
   children,
   className,
@@ -138,11 +131,6 @@ function NavItem({
   const classes = useStyles();
   const [show, setShow] = useState(open);
   const [notifi, setNotifi] = useState(notification);
-  const history = useHistory();
-  const dispatch = useDispatch();
-  const { logout } = useAuth();
-  const isMountedRef = useIsMountedRef();
-  const { enqueueSnackbar } = useSnackbar();
   const isSubItem = level > 0;
 
   const handleShow = () => {
@@ -150,9 +138,7 @@ function NavItem({
   };
 
   const navActionFun = () => {
-    if (logoutAttr) {
-      helper.handleLogout(logout, dispatch, isMountedRef, history, PATH_PAGE.auth.login, enqueueSnackbar);
-    } else if(notifi === true) {
+    if (notifi === true) {
       setNotifi(false);
     }
   }

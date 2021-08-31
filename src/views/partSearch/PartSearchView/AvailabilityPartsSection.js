@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
@@ -76,7 +76,6 @@ function AvailabilityPartsSection() {
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
         rowsPerPage, error, query, locationFilters, filter, orders } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
-
     const [searchTerm, setSearchTerm] = useState('');
 
     const changePagehandler = (event, newPage) => {
@@ -112,7 +111,7 @@ function AvailabilityPartsSection() {
                 onClick={() => addToCompanyCart(item)}
                 textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />} />
         )
-    }
+    };
 
     const closeOrderDailog = () => {
         dispatch(setSelectedPart({ selectedPart: null }));
@@ -129,6 +128,8 @@ function AvailabilityPartsSection() {
 
         return () => clearTimeout(delayDebounceFn)
     }, [searchTerm]);
+
+    // <Typography variant="caption">{t("Special offer")}</Typography>
 
     return (
         <Box className={orders.length > 0 ? classes.availabilityCont : null}>
@@ -167,6 +168,7 @@ function AvailabilityPartsSection() {
                         {
                             name: t("Part Number"),
                             attr: 'partNumber',
+                            badge: t("Special offer")
                         },
                         {
                             name: t("Brand"),
@@ -181,7 +183,8 @@ function AvailabilityPartsSection() {
                         },
                         {
                             name: t("Average market price"),
-                            attr: 'retailPrice'
+                            attr: 'retailPrice',
+                            num: 'num'
                         }
                     ]}
 

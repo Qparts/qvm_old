@@ -89,16 +89,6 @@ const navConfig = [
 
     ]
   },
-  {
-    items: [
-      {
-        icon: <LogoutIcon width='26' height='26' fill='#a2b4bd' />,
-        href: PATH_PAGE.auth.login,
-        logoutAttr: 'logout',
-      },
-
-    ]
-  },
 ];
 
 export default navConfig;

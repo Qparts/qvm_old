@@ -95,7 +95,7 @@ function SpecialOfferItemsSection() {
                     </Grid>
                 </Grid>
                 : null}
-            <OfferContainer md={3} />
+            <OfferContainer md={3} offers={specialOffers}/>
         </SecContainerOffer>
     );
 }

@@ -131,6 +131,7 @@ const product = {
   productInfoSearch: `${PRODUCT_SERVICE}/search-product`,
   getProductReplacement: `${PRODUCT_SERVICE}/search-replacement-product`,
   getSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live`,
+  getLatestSpecialOffersLive: `${PRODUCT_SERVICE}/special-offers/live?latest=true`,
   specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
   postQvmStockUpload: `${PRODUCT_SERVICE}/stock-upload`,
   postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`,

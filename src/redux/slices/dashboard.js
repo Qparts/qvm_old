@@ -8,6 +8,9 @@ const initialState = {
     error: '',
     mostSearchedProducts: [],
     mostSearchedCatalog: [],
+    mostActiveCompaniesOnStock: [],
+    monthlySearchCountOnStock: [],
+    mostSearchedProductsOnStock: [],
     numOfParts: 0,
     numOfStockParts: 0,
     partsSearchCount: 0
@@ -33,6 +36,9 @@ const slice = createSlice({
             state.isLoading = false;
             state.mostSearchedProducts = action.payload.dashboardMetrics.mostSearchedProducts;
             state.mostSearchedCatalog = action.payload.dashboardMetrics.mostSearchedCatalogBrands;
+            state.mostActiveCompaniesOnStock = action.payload.dashboardMetrics.mostActiveCompaniesOnStock;
+            state.monthlySearchCountOnStock = action.payload.dashboardMetrics.monthlySearchCountOnStock;
+            state.mostSearchedProductsOnStock = action.payload.dashboardMetrics.mostSearchedProductsOnStock;
             state.numOfParts = action.payload.dashboardMetrics.numberOfProducts;
             state.numOfStockParts = action.payload.dashboardMetrics.numberOfStockProducts;
             state.partsSearchCount = action.payload.dashboardMetrics.productSearchCount;
