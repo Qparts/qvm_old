@@ -51,7 +51,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function OneAvatar({ participants }) {
+function OneAvatar({ participants = [] }) {
   const classes = useStyles();
   const { t } = useTranslation();
   const participant = [...participants][0];
@@ -151,8 +151,8 @@ function HeaderDetail({ participants, className, ...other }) {
       {isGroup ? (
         <GroupAvatar participants={participants} />
       ) : (
-          <OneAvatar participants={participants} />
-        )}
+        <OneAvatar participants={participants} />
+      )}
 
       <Box sx={{ flexGrow: 1 }} />
     </div>

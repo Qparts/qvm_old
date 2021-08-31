@@ -662,6 +662,7 @@
   "Order has been rejected": "Order has been rejected",
   "And" :" And ",
   "Search limit exceeded!" : "You have exceeded your daily search attempts available in the free package. Upgrade your package and enjoy unlimited search.",
-  "persons": "Persons"
+  "persons": "Persons",
+  "There are no additional messages":"There are no additional messages"
 
 }

@@ -284,7 +284,7 @@ function MessageItem({
         updatedMessageMap = new Map();
       }
 
-      await dispatch(getConversation(activeConversation._id));
+      await dispatch(getConversation(activeConversation._id , 1));
 
 
     } catch (error) {
@@ -302,7 +302,7 @@ function MessageItem({
       await chatService.updateMessage(orderValue);
       const orderStatus = status == "A" ? t("Order has been accepted") : t("Order has been rejected");
       editOrderMessage(orderStatus);
-      await dispatch(getConversation(orderValue.conversationId));
+      await dispatch(getConversation(orderValue.conversationId , 1));
     } catch (error) {
       console.log("error", error);
     }
@@ -360,7 +360,7 @@ function MessageItem({
                   }
                 ]}
 
-                datatable={updatedOrder.orders}
+                datatable={updatedOrder?.orders}
                 dataTablePad='dataTablePad'
                 dataTableChat='dataTableChat'
               />
@@ -390,14 +390,14 @@ function MessageItem({
                 {window.innerWidth < 725 && window.innerWidth > 600 ? null
                   :
                   <EditBtn
-                    updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders)}
+                    updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder?.orders)}
                     isMe={!isMe}
                     editOrder={editOrder}
                   />}
               </Box>
               {window.innerWidth < 725 && window.innerWidth > 600 &&
                 <EditBtn
-                  updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder.orders)}
+                  updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder?.orders)}
                   isMe={!isMe}
                   editOrder={editOrder}
                 />}

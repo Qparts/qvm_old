@@ -1,6 +1,6 @@
 import MessageList from './MessageList';
 import HeaderDetail from './HeaderDetail';
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { PATH_APP } from 'src/routes/paths';
 import MessageInput from './MessageInput';
 import { useDispatch, useSelector } from 'react-redux';
@@ -53,6 +53,7 @@ function ChatWindow(props) {
   const history = useHistory();
   const { pathname } = useLocation();
   const { conversationKey } = useParams();
+  const messageListRef = useRef();
   const {
     activeConversationId,
     messages,
@@ -77,7 +78,7 @@ function ChatWindow(props) {
         //update the status of selected conversation's messages to be S.
         await chatService.markConversationAsSee(conversationKey, user.subscriber.id);
         dispatch(getUnseenMessages(user.subscriber.id, props.userConversations));
-        await dispatch(getConversation(conversationKey));
+        await dispatch(getConversation(conversationKey, 1));
       } catch (error) {
         console.error(error);
         history.push(PATH_APP.general.chat.new);
@@ -94,6 +95,7 @@ function ChatWindow(props) {
   const handleSendMessage = async (value) => {
     try {
       dispatch(createNewMessage(value, messages));
+      messageListRef.current.scrollDown();
       activeConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
         let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
         if (onlineUserIndex != -1) {
@@ -116,7 +118,7 @@ function ChatWindow(props) {
       {mode === 'DETAIL' ? <HeaderDetail participants={currentContact} /> : null}
       <div className={classes.main}>
         <Box sx={{ display: 'flex', flexGrow: 1, flexDirection: 'column' }}>
-          <MessageList />
+          <MessageList ref={messageListRef} />
           <Divider />
           <MessageInput
             conversationId={activeConversationId}

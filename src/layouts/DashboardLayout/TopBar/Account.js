@@ -126,7 +126,7 @@ function Account() {
           </MenuItem>
         ))}
 
-        <Box sx={{ p: 2, pt: 1.5 }}>
+        {/* <Box sx={{ p: 2, pt: 1.5 }}>
           <Button
             fullWidth
             color="inherit"
@@ -135,7 +135,7 @@ function Account() {
           >
             {t('Logout')}
           </Button>
-        </Box>
+        </Box> */}
       </PopoverMenu>
     </>
   );

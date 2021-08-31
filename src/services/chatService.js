@@ -20,8 +20,8 @@ function createUserConversation(conversation) {
   return http.post(chatUrl.postNewChat, conversation);
 }
 
-function getConversationMessage(conversationKey) {
-  return http.get(chatUrl.getConversationMessages(conversationKey));
+function getConversationMessage(conversationKey,page) {
+  return http.get(chatUrl.getConversationMessages(conversationKey , page));
 }
 
 function createMessage(message) {
