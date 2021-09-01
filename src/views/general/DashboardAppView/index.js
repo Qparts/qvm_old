@@ -13,7 +13,7 @@ import MostSearchedParts from './MostSearchedParts';
 import MostReactiveCompanies from './MostReactiveCompanies';
 import SecContainer from '../../../components/Ui/SecContainer';
 import { Parts, SearchFill, Search, Upload, Plus } from '../../../icons/icons';
-import { getLatestSpecialOffersLive } from 'src/redux/slices/specialOffer';
+import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
 import { getDashboardMetrics } from 'src/redux/slices/dashboard';
 import { PATH_APP } from 'src/routes/paths';
 import OfferContainer from '../../../components/Ui/OfferContainer'
@@ -35,18 +35,16 @@ function DashboardAppView() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { t } = useTranslation();
-  const { latestSpecialOffers = [] } = useSelector((state) => state.specialOffer);
+  const { specialOffers = [] } = useSelector((state) => state.specialOffer);
   const { numOfParts, partsSearchCount } = useSelector((state) => state.dashboard);
   const { currentPlan } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
-    if (latestSpecialOffers.length == 0) {
-      dispatch(getLatestSpecialOffersLive());
+    if (specialOffers.length == 0) {
+      dispatch(getSpecialOffersLive(true));
     }
     dispatch(getDashboardMetrics());
   }, []);
-
-  // console.log()
 
   return (
     <Page title="Dashboard App | Minimal-UI" className={classes.root}>
@@ -84,7 +82,7 @@ function DashboardAppView() {
                   path={PATH_APP.general.specialOffer}
                   icon={<Plus width='10' height='10' fill='#F20505' />}
                   footer={t('see all offers')}>
-                  <OfferContainer md={4} offers={latestSpecialOffers} />
+                  <OfferContainer md={4} />
                 </SecContainer>
               </Grid>
 
@@ -180,7 +178,7 @@ function DashboardAppView() {
               path={PATH_APP.general.specialOffer}
               icon={<Plus width='10' height='10' fill='#F20505' />}
               footer={t('see all offers')}>
-              <OfferContainer md={3} offers={latestSpecialOffers} />
+              <OfferContainer md={3} />
             </SecContainer>
           </Grid>
 

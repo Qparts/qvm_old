@@ -44,7 +44,7 @@ function PartsSearchRate({ className, ...other }) {
     const classes = useStyles();
     const { t } = useTranslation();
     const { monthlySearchCountOnStock } = useSelector((state) => state.dashboard);
-    const partSearchRateVal = monthlySearchCountOnStock.map(val => { return Math.round(val.total / 12) });
+    const partSearchRateVal = monthlySearchCountOnStock.map(val => { return Math.round(val.total) });
     const partSearchRateMonth = monthlySearchCountOnStock.map(val => { return t(val.month) + ' ' + val.year });
 
     const chartData = [

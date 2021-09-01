@@ -27,12 +27,12 @@ function OfferContainer(props) {
     const dispatch = useDispatch();
     const history = useHistory();
 
-    const { companies } = useSelector((state) => state.specialOffer);
+    const { specialOffers = [], companies } = useSelector((state) => state.specialOffer);
     const { themeDirection } = useSelector((state) => state.settings);
 
     return (
         <Grid container spacing={2}>
-            {props.offers.map((specialOffer, index) => {
+            {specialOffers.map((specialOffer, index) => {
                 return (
                     <Grid item xs={12} sm={6} md={props.md} key={index}>
                         <Box

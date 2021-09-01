@@ -1,39 +1,27 @@
 import clsx from 'clsx';
-import PropTypes from 'prop-types';
 import MessageItem from './MessageItem';
 import React, { useEffect, useRef, useState, useImperativeHandle, forwardRef } from 'react';
-import Scrollbars from 'src/components/Scrollbars';
-import { makeStyles } from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import chatService from 'src/services/chatService';
 import { updateMessages } from 'src/redux/slices/chat';
 import { useTranslation } from 'react-i18next';
 import links from 'src/constants/links';
-import {
-  Avatar,
-  Typography
-} from '@material-ui/core';
+import { Avatar, Typography, Box } from '@material-ui/core';
 // ----------------------------------------------------------------------
 
 const AVATAR_SIZE = 48;
-const AVATAR_SIZE_GROUP = 32;
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
   root: {},
-  scroll: { height: '100%', padding: theme.spacing(3) },
   avatar: {
     position: 'relative',
     width: AVATAR_SIZE,
     height: AVATAR_SIZE,
-    marginLeft: "auto",
-    marginRight: "auto",
+    margin: "auto",
     '& .MuiAvatar-img': { borderRadius: '50%' },
     '& .MuiAvatar-root': { width: '100%', height: '100%' }
-  },
-  center: {
-    marginLeft: "auto",
-    marginRight: "auto"
   }
 }));
 
@@ -49,6 +37,7 @@ const uploadUrl = links.upload;
 
 function MessageList(props, ref) {
   const classes = useStyles();
+  const theme = useTheme();
   const scrollRef = useRef();
   const { pathname } = useLocation();
   const dispatch = useDispatch();
@@ -118,27 +107,26 @@ function MessageList(props, ref) {
   const memberOfCompany = currentContact?.filter(x => x.companyId != user.company.companyId)[0];
 
   return (
-    <div onScroll={onScroll} ref={scrollRef} style={{ height: 400, overflowY: enableScroll ? "scroll" : "hidden" }}>
-      <div className={clsx(classes.root, props.className)}>
+    <Box onScroll={onScroll} ref={scrollRef}
+      sx={{
+        height: '100%',
+        overflowY: enableScroll ? "scroll" : "hidden",
+        padding: theme.spacing(3, 1.5, 0, 1.5)
+      }}>
+      <Box className={clsx(classes.root, props.className)}>
         {!hasMore &&
-          <div
-            className={classes.center}
-            style={{ textAlign: 'center' }}
-          >
-            <div className={classes.avatar} >
+          <Box sx={{ mb: 3 }}>
+            <Box className={classes.avatar} >
               <Avatar alt={memberOfCompany?.companyName} src={uploadUrl.getCompanyLogo(`logo_${memberOfCompany?.companyId}.png`)} />
-            </div>
+            </Box>
 
-            <Typography
-              variant="body2"
-              align="center"
-              sx={{ color: 'text.secondary', mt: 3 }}>
+            <Typography variant="subtitle1" align="center" sx={{ mt: 2 }}>
               {memberOfCompany?.companyName}
             </Typography>
-
-
-            {t("There are no additional messages")}
-          </div>}
+            <Typography variant="body2" align="center" sx={{ color: 'text.secondary' }}>
+              {t("There are no additional messages")}
+            </Typography>
+          </Box>}
         {pathname != '/app/chat/new' &&
           messages?.map((message, index) => (
             <MessageItem
@@ -148,8 +136,8 @@ function MessageList(props, ref) {
             />
           ))
         }
-      </div>
-    </div>
+      </Box>
+    </Box>
   );
 }
 

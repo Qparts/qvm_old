@@ -10,7 +10,6 @@ const initialState = {
     isLoading: false,
     error: '',
     specialOffers: [],
-    latestSpecialOffers: [],
     companies: new Map(),
     offerProducts: [],
     selectedOffer: null,
@@ -37,13 +36,6 @@ const slice = createSlice({
         getSpecialOffersLiveSuccess(state, action) {
             state.isLoading = false;
             state.specialOffers = action.payload.specialOffers;
-            state.companies = action.payload.companies;
-            state.error = '';
-        },
-
-        getLatestSpecialOffersLiveSuccess(state, action) {
-            state.isLoading = false;
-            state.latestSpecialOffers = action.payload.latestSpecialOffers;
             state.companies = action.payload.companies;
             state.error = '';
         },
@@ -80,11 +72,12 @@ export const {
 
 
 
-export function getSpecialOffersLive() {
+export function getSpecialOffersLive(latest = false) {
     return async (dispatch) => {
         dispatch(slice.actions.startLoading());
         try {
-            const { data: specialOffers } = await specialOfferService.getSpecialOffersLive();
+            let params = latest ? {latest:true} : {};
+            const { data: specialOffers } = await specialOfferService.getSpecialOffersLive(params);
             let selectedCompanies = new Set();
             specialOffers.forEach(element => {
                 selectedCompanies.add(element.companyId);
@@ -108,37 +101,6 @@ export function getSpecialOffersLive() {
         }
     };
 };
-
-
-export function getLatestSpecialOffersLive() {
-    return async (dispatch) => {
-        dispatch(slice.actions.startLoading());
-        try {
-            const { data: latestSpecialOffers } = await specialOfferService.getLatestSpecialOffersLive();
-            let selectedCompanies = new Set();
-            latestSpecialOffers.forEach(element => {
-                selectedCompanies.add(element.companyId);
-            });
-
-            const recentCompanyData = await GetData(constants.COMPANYIES);
-            var cachedCompanies = new Map();
-
-            getCachedCompany(recentCompanyData, selectedCompanies, cachedCompanies);
-
-            var tempCompanies = new Map();
-            await getMissingCompaniesFromAPI(tempCompanies, selectedCompanies);
-
-            cacheMissingCompanies(recentCompanyData, tempCompanies);
-
-            let newCompanies = new Map([...cachedCompanies, ...tempCompanies]);
-
-            dispatch(slice.actions.getLatestSpecialOffersLiveSuccess({ latestSpecialOffers: latestSpecialOffers, companies: newCompanies }));
-        } catch (error) {
-            dispatch(slice.actions.hasError(error.response?.data));
-        }
-    };
-}
-
 
 export function getSpecialOfferDetails(specialOfferId, offset, max, filter) {
     return async (dispatch) => {

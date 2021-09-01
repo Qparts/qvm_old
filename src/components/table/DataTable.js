@@ -8,7 +8,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
+    Paper
 } from '@material-ui/core';
 import clsx from 'clsx';
 import Button from "../button/CustomButton";
@@ -59,8 +59,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     dataTablePartSearch: {
-        '@media (max-width: 812px)': {
-            minWidth: '777px',
+        '@media (max-width: 915px)': {
+            minWidth: '844px',
         },
     },
     dataTableCata: {
@@ -129,9 +129,9 @@ const getCellValue = (item, headerItem, maps) => {
             :
             (getValue(item, headerItem.attr));
 
-    if (offersLength > 0 && headerItem.num === 'num' ) {
+    if (offersLength > 0 && headerItem.num === 'num') {
         value = helper.ccyFormat(getValue(item, 'offers[0].offerPrice'));
-    } else if(offersLength == 0 && headerItem.num === 'num' ) {
+    } else if (offersLength == 0 && headerItem.num === 'num') {
         value = getValue(item, 'retailPrice');
     }
 
@@ -142,8 +142,8 @@ const getCellValue = (item, headerItem, maps) => {
     if (headerItem.label)
         value = value + ' ' + headerItem.label;
 
-    if (headerItem.badge && offersLength > 0){
-        value = value + ' ' + headerItem.badge
+    if (headerItem.badge && offersLength > 0) {
+        value = <> {value} {headerItem.badge} </>
     }
 
     return value;

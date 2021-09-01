@@ -61,6 +61,13 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '100%',
             marginBottom: theme.spacing(2)
         },
+    },
+    specialOfferBadge: {
+        backgroundColor: '#FEE6E6',
+        color: theme.palette.primary.main,
+        borderRadius: '5px 0 5px 5px',
+        padding: '4px 7px',
+        marginLeft: '5px'
     }
 }));
 
@@ -129,7 +136,7 @@ function AvailabilityPartsSection() {
         return () => clearTimeout(delayDebounceFn)
     }, [searchTerm]);
 
-    // <Typography variant="caption">{t("Special offer")}</Typography>
+    // <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>
 
     return (
         <Box className={orders.length > 0 ? classes.availabilityCont : null}>
@@ -168,7 +175,7 @@ function AvailabilityPartsSection() {
                         {
                             name: t("Part Number"),
                             attr: 'partNumber',
-                            badge: t("Special offer")
+                            badge: <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>
                         },
                         {
                             name: t("Brand"),
