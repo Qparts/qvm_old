@@ -3,6 +3,7 @@ const SUBSCRIBER_SERVICE = `${API_URL}/subscriber`;
 const CUSTOMER_SERVICE = `${API_URL}/customer`;
 const STOCK_SERVICE = `${API_URL}/stock`;
 const LOCATION_SERVICE = `${API_URL}/location`;
+const MESSAGING_SERVICE = `${API_URL}/messaging`;
 
 const UPLOAD_SERVICE = `${API_URL}/upload`;
 const CATALOG_SERVICE = `${API_URL}/catalog`;
@@ -61,6 +62,10 @@ const customer = {
 const location = {
   getCountries: `${LOCATION_SERVICE}/countries`,
   postSearchLocation: `${LOCATION_SERVICE}/search-locations`
+};
+
+const messaging = {
+  postContactUs: `${MESSAGING_SERVICE}/contact-us`,
 };
 
 const stock = {
@@ -165,6 +170,7 @@ export default {
   subscriber,
   customer,
   location,
+  messaging,
   stock,
   setting,
   upload,

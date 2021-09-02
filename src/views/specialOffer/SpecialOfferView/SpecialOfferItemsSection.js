@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Grid, MenuItem } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
@@ -15,14 +15,10 @@ import OfferContainer from '../../../components/Ui/OfferContainer';
 function SpecialOfferItemsSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
-
-    const { specialOffers = [] } = useSelector((state) => state.specialOffer);
     const [filter, setFilter] = useState(false);
 
     useEffect(() => {
-        if (specialOffers.length == 0) {
-            dispatch(getSpecialOffersLive());
-        }
+        dispatch(getSpecialOffersLive());
     }, []);
 
     const toggleFilter = () => {
@@ -95,7 +91,7 @@ function SpecialOfferItemsSection() {
                     </Grid>
                 </Grid>
                 : null}
-            <OfferContainer md={3}/>
+            <OfferContainer md={3} />
         </SecContainerOffer>
     );
 }

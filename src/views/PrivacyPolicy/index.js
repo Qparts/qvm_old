@@ -43,7 +43,7 @@ function PrivacyPolicy({ formik }) {
   const { t } = useTranslation();
 
   return (
-    <Page className={classes.root}>
+    <Page title={t("Privacy Policy")} className={classes.root}>
       <Container maxWidth="lg">
         <Box>
           <Typography variant="h3" gutterBottom className={classes.heading}>{t("Privacy Policy")}</Typography>

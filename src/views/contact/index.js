@@ -1,17 +1,19 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
+import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
+import { useSnackbar } from 'notistack';
+import ContactForm from './ContactForm';
+import closeFill from '@iconify-icons/eva/close-fill';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, Container, Alert, Card, Typography } from '@material-ui/core';
+import { MIconButton } from 'src/theme';
+import helper from 'src/utils/helper';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Card from '@material-ui/core/Card';
-import {
-  Container,
-  makeStyles,
-  Box,
-  TextField,
-  Typography,
-  Grid
-} from '@material-ui/core';
-import Button from '../../components/Ui/Button';
+import { contactUsMessage } from 'src/redux/slices/messaging';
 
 // ----------------------------------------------------------------------
 
@@ -25,20 +27,101 @@ const useStyles = makeStyles((theme) => ({
   heading: {
     color: theme.palette.secondary.main,
     lineHeight: 1,
-    marginRight: '0.5rem'
+    marginRight: '0.5rem',
+    [theme.breakpoints.down('sm')]: {
+      fontSize: theme.typography.h4.fontSize
+    }
   }
 }));
 
 // ----------------------------------------------------------------------
 
-function RegisterForm({ formik }) {
+function  ContactView() {
   const classes = useStyles();
+  const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
   const { countries } = useSelector((state) => state.authJwt);
-  const { themeDirection } = useSelector((state) => state.settings);
+  const { error: contactError } = useSelector((state) => state.messaging);
+
+
+
+  const sendMessageSuccess = () => {
+    enqueueSnackbar(t('Your message sent successfully'), {
+      variant: 'success',
+      action: (key) => (
+        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+          <Icon icon={closeFill} />
+        </MIconButton>
+      )
+    });
+  }
+
+
+  useEffect(() => {
+    setLoaded(false);
+  }, [loaded])
+
+
+  const ContactSchema = Yup.object().shape({
+    companyName: Yup.string().required(t("Company Name Is Required")),
+    name: Yup.string().required(t("Name Is Required")),
+    phone: Yup.string().trim().matches('^[0-9]*$', t('Phone number is not valid'))
+      .length(11, t('Phone number must be 11')).required(t("Mobile Is Required")),
+    email: Yup.string()
+      .email(t("Email Is Invalid"))
+      .required(t("Email Is Required")),
+    notes: Yup.string().required(t("Notes Is Required"))
+  });
+
+
+  const submit = async (values) => {
+
+    await dispatch(
+      contactUsMessage({
+        name: values.name,
+        email: values.email,
+        mobile: helper.reconstructPhone(parseInt(values.countryId), values.phone, countries),
+        countryId: values.countryId,
+        companyName: values.companyName,
+        notes: values.notes,
+      })
+    );
+    setLoaded(true);
+  }
+
+
+  const formik = useFormik({
+    initialValues: {
+      name: '',
+      email: '',
+      phone: '',
+      countryId: '1',
+      companyName: '',
+      notes: '',
+    },
+    validationSchema: ContactSchema,
+    onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
+      try {
+        await submit(values);
+        sendMessageSuccess();
+        if (isMountedRef.current) {
+          setSubmitting(false);
+        }
+        resetForm();
+      } catch (error) {
+        if (isMountedRef.current) {
+          setErrors({ afterSubmit: error.code || error.message });
+          setSubmitting(false);
+        }
+      }
+    }
+  });
 
   return (
-    <Page className={classes.root}>
+    <Page title={t("contactUs")} className={classes.root}>
       <Container maxWidth="sm">
         <Box sx={{ mx: 'auto', textAlign: 'center' }}>
           <Typography variant="h4" gutterBottom className={classes.heading}>
@@ -49,65 +132,14 @@ function RegisterForm({ formik }) {
           </Typography>
         </Box>
         <Card sx={{ px: 2, py: 3, my: 3 }}>
-          <form>
-            <TextField
-              sx={{ mb: 3 }}
-              fullWidth
-              label={t("Name")}
-              variant="outlined"
-            />
-            <TextField
-              sx={{ mb: 3 }}
-              fullWidth
-              label={t('Email')}
-              variant="outlined"
-            />
-            <Grid container spacing={2}>
-              <Grid item xs={5}>
-                <TextField
-                  sx={{ mb: 3 }}
-                  select
-                  fullWidth
-                  id="countryId"
-                  name="countryId"
-                  SelectProps={{ native: true }}
-                >
-                  {countries.map((option, index) => (
-                    <option key={index} value={option.id}>
-                      (+{option.countryCode}) {themeDirection === "rtl" ? option.nameAr : option.name}
-                    </option>
-                  ))}
-                </TextField>
-              </Grid>
-              <Grid item xs={7}>
-                <TextField
-                  fullWidth
-                  name="phone"
-                  label={t('Mobile')}
-                />
-              </Grid>
-            </Grid>
-            <TextField
-              sx={{ mb: 3 }}
-              fullWidth
-              label={t("Company Name")}
-              variant="outlined"
-            />
-            <TextField
-              sx={{ mb: 3 }}
-              fullWidth
-              label={t("Notes")}
-              variant="outlined"
-              multiline
-              rowsMax={4}
-            />
-
-            <Button homeBtn='homeBtn'>{t("Send")} </Button>
-          </form>
+          {contactError != null && <Alert severity="error" sx={{ mb: 3 }}>
+            {contactError.data ? contactError.data : contactError.status}
+          </Alert>}
+          <ContactForm formik={formik} />
         </Card>
       </Container>
     </Page>
   );
 }
 
-export default RegisterForm;
+export default  ContactView;

@@ -148,7 +148,7 @@ function RegisterView() {
   });
 
   return (
-    <Page title="Register | Minimal-UI" className={classes.root}>
+    <Page title={t("registeration")} className={classes.root}>
 
       <Header
         auth={t("Already have an account?")}

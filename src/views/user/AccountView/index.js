@@ -2,6 +2,7 @@ import Page from 'src/components/Page';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Grid } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import BrancheView from './Branch';
 import SubscriptionView from './Subscription';
 import CompanyInfo from './CompanyInfo';
@@ -16,10 +17,11 @@ const useStyles = makeStyles((theme) => ({
 
 function AccountView() {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Page
-      title="Account Settings-Management | Minimal-UI"
+      title={t("Account Settings Management")}
       className={classes.root}
     >
       <CompanyInfo />

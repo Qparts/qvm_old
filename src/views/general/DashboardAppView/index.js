@@ -35,19 +35,16 @@ function DashboardAppView() {
   const dispatch = useDispatch();
   const classes = useStyles();
   const { t } = useTranslation();
-  const { specialOffers = [] } = useSelector((state) => state.specialOffer);
   const { numOfParts, partsSearchCount } = useSelector((state) => state.dashboard);
   const { currentPlan } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
-    if (specialOffers.length == 0) {
-      dispatch(getSpecialOffersLive(true));
-    }
+    dispatch(getSpecialOffersLive(true));
     dispatch(getDashboardMetrics());
   }, []);
 
   return (
-    <Page title="Dashboard App | Minimal-UI" className={classes.root}>
+    <Page title={t("dashboard")} className={classes.root}>
 
       {currentPlan.status != 'A' ?
         <Grid container spacing={2}>

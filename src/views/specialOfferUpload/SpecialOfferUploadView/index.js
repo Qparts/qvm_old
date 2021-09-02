@@ -37,7 +37,7 @@ function SpecialOfferUpload(props) {
 
     return (
         <Page
-            title={t("Special Offer Upload")}
+            title={t("Special Offers")}
             className={classes.root}>
             <LoadingOverlay
                 active={isLoading}

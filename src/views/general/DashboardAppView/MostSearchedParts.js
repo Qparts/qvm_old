@@ -33,6 +33,8 @@ function MostSearchedParts({ className, ...other }) {
     const classes = useStyles();
     const { t } = useTranslation();
     const { mostSearchedProductsOnStock } = useSelector((state) => state.dashboard);
+    const mostSearchedProductsOnStockCopy = [...mostSearchedProductsOnStock]
+    const mostSearchedProductsOnStockSort = mostSearchedProductsOnStockCopy.sort((a,b) => (a.total < b.total) ? 1 : ((b.total < a.total) ? -1 : 0));
 
     const showMoreActions = (item) => {
         return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
@@ -53,7 +55,7 @@ function MostSearchedParts({ className, ...other }) {
                 ]}
 
                 actions={[{ element: showMoreActions }]}
-                datatable={mostSearchedProductsOnStock}
+                datatable={mostSearchedProductsOnStockSort}
                 isLazy={true}
                 hasPagination={false}
                 dataTableGeneralDashboard='dataTableGeneralDashboard' />

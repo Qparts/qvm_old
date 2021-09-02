@@ -364,6 +364,7 @@
   "Name Is Required": "Name Is Required",
   "Mobile Is Required": "Mobile Is Required",
   "Mobile Is Invalid": "Mobile Is Invalid",
+  "Notes Is Required": "Notes Is Required",
   "password": "Password Is Invalid",
   "Please check your email!": "Please check your email!",
   "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.": "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.",
@@ -663,6 +664,8 @@
   "And" :" And ",
   "Search limit exceeded!" : "You have exceeded your daily search attempts available in the free package. Upgrade your package and enjoy unlimited search.",
   "persons": "Persons",
-  "There are no additional messages":"There are no additional messages"
-
+  "There are no additional messages":"There are no additional messages",
+  "Your message sent successfully": "Your message sent successfully",
+  "Confirm": "Confirm",
+  "Account Settings Management": "Account Settings-Management"
 }

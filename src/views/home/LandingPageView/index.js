@@ -25,19 +25,19 @@ function LandingPageView() {
 
   return (
     <Page
-    title="The starting point for your next project | Minimal-UI"
-    id="move_top"
-    className={classes.root}
+      title="QVM"
+      id="move_top"
+      className={classes.root}
     >
-    <Hero />
-    <div className={classes.content}>
-      <Catalog />
-      <PartAvailability/>
-      <Benefits/>
-      <NewsLetter/>
-      <Brands/>
-    </div>
-  </Page>
+      <Hero />
+      <div className={classes.content}>
+        <Catalog />
+        <PartAvailability />
+        <Benefits />
+        <NewsLetter />
+        <Brands />
+      </div>
+    </Page>
   );
 }
 

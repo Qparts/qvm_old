@@ -44,11 +44,11 @@ function RegisterForm({ formik }) {
   const { t } = useTranslation();
 
   return (
-    <Page className={classes.root}>
+    <Page title={t("Terms of Use")} className={classes.root}>
       <Container maxWidth="lg">
         <Box>
           <Typography variant="h3" gutterBottom className={classes.heading}>
-            اتفاقية الاستخدام
+            {t("Terms of Use")}
           </Typography>
           <Typography variant="body1" sx={{ mb: 5, mt: 3 }}>
             منصة تجار قطع غيار السيارات QVM المملوكة لشركة كيو بارتز القابضة

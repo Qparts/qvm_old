@@ -115,7 +115,7 @@
     "registerNow": "سجل الان",
     "error": {
       "require": {
-        "email": " البريدالالكترومى مطلوب",
+        "email": " البريدالالكترنى مطلوب",
         "password": "كلمةالمرور مطلوبه"
       },
       "invalid": {
@@ -188,7 +188,7 @@
     "invalidRequest": "الطلب غير متاح",
     "error": {
       "require": {
-        "email": " البريدالالكترومى مطلوب",
+        "email": " البريدالالكترونى مطلوب",
         "password": "كلمةالمرور مطلوبه",
         "newPassword": "كلمةالمرورالجديدة مطلوبه"
       },
@@ -348,7 +348,7 @@
   "Don't have account?": "ليس لديك حساب؟",
   "Register now": "سجل الان",
 
-  "Email Is Required": " البريدالالكترومى مطلوب",
+  "Email Is Required": " البريدالالكترونى مطلوب",
   "Password Is Required": "كلمةالمرور مطلوبه",
   "Email Is Invalid": "البريدالالكترونى خاطئ",
   "Password Is Invalid": "كلمةالمرور يجب ألا تقل عن 8 أحرف",
@@ -365,10 +365,11 @@
   "Multiple Brand Alternatives": "بدائل متعددة من البراندات",
   "Issuing and Receiving Purchase Oders (*soon)": "اصدار و استقبال امر شراء",
   "Company Name Is Required": "اسم الشركة مطلوب",
-  "email": " البريد الالكترومى مطلوب",
+  "email": " البريد الالكترونى مطلوب",
   "Name Is Required": "الإسم مطلوب",
   "Mobile Is Required": "رقم الجوال مطلوب",
   "Mobile Is Invalid": "رقم الجوال خاطئ",
+  "Notes Is Required": "الملاحظات مطلوبة",
   "password": "كلمة المرور يجب ألا تقل عن 8 أحرف",
 
   "Please check your email!": "تفقد بريدك الالكتروني من فضلك!",
@@ -704,6 +705,9 @@
   "Order has been rejected": "تم رفض الطلب",
   "Search limit exceeded!":"لقد إستنفذت محاولات البحث اليومية المتاحه في الباقه المجانيه, قم بترقيه باقتك و تمتع بالبحث اللامحدود عن القطع التي تريد",
   "persons": "شخص",
-  "There are no additional messages":"لا يوجد رسائل اضافيه"
+  "There are no additional messages":"لا يوجد رسائل اضافيه",
+  "Your message sent successfully": "تم إرسال رسالتك بنجاح",
+  "Confirm": "تأكيد",
+  "Account Settings Management": "إعدادات الحساب"
 
 }

@@ -70,7 +70,7 @@ function PricesView() {
   }, [isLoading]);
 
   return (
-    <Page title="Prices | Minimal UI" className={classes.root}>
+    <Page title={t("prices")} className={classes.root}>
       <LoadingOverlay
         active={isLoading}
         styles={{

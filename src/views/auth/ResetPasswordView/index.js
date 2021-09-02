@@ -97,7 +97,7 @@ function ResetPasswordView() {
   });
 
   return (
-    <Page title="Reset Password | Minimal UI" className={classes.root}>
+    <Page title={t("Reset Password")} className={classes.root}>
 
       <header className={classes.header}>
         <Hidden smDown>

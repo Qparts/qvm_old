@@ -88,7 +88,7 @@ function VerifyCodeView(props) {
   });
 
   return (
-    <Page title="Verify | Minimal UI" className={classes.root}>
+    <Page title={t("Verify")} className={classes.root}>
 
       <header className={classes.header}>
         <Hidden smDown>

@@ -121,7 +121,7 @@ function LoginView() {
   });
 
   return (
-    <Page title="Login | Minimal-UI" className={classes.root}>
+    <Page title={t("Login")} className={classes.root}>
 
       <Header
         auth={t("Don't have account?")}

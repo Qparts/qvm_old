@@ -33,7 +33,7 @@ function ConfirmView(props) {
   const classes = useStyles();
   const { t } = useTranslation();
   return (
-    <Page title="Verify | Minimal UI" className={classes.root}>
+    <Page title={t("Confirm")} className={classes.root}>
       <header className={classes.header}>
         <Hidden smDown>
           <Typography variant="body2" sx={{ mt: { md: -4 } }}>

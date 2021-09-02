@@ -2,8 +2,8 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 // import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 import homeFill from '@iconify-icons/eva/home-fill';
-import { Catalog, LogoutIcon, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
-import { PATH_APP, PATH_PAGE } from 'src/routes/paths';
+import { Catalog, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
