@@ -46,6 +46,9 @@ const useStyles = makeStyles((theme) => ({
     width: 96,
     [theme.breakpoints.down('md')]: {
       width: 86,
+    },
+    [theme.breakpoints.down('sm')]: {
+      width: 76,
     }
   },
   collapseMdDown: {

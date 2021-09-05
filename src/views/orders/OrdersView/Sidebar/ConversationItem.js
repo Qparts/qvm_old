@@ -26,6 +26,9 @@ const useStyles = makeStyles((theme) => ({
     '&:last-of-type': { borderBottom: 0 },
     '&:hover': {
       backgroundColor: 'rgb(235 242 255 / 45%)'
+    },
+    [theme.breakpoints.down('sm')]: {
+      padding: theme.spacing(1.5, 1.75)
     }
   },
   listItemSelected: {

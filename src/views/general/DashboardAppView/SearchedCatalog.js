@@ -98,8 +98,8 @@ function SearchedCatalog({ className, ...other }) {
       <Typography variant="h5" className={classes.searchedCataHeader}>{t("Most searched catalog")}</Typography>
       <CardContent className={classes.CardCont}>
         <Scrollbars>
-          {mostSearchedCatalog.map((cata) => (
-            <CatalogItem key={cata.name} catalog={cata} />
+          {mostSearchedCatalog.map((cata, index) => (
+            <CatalogItem key={index} catalog={cata} />
           ))}
         </Scrollbars>
         <Link to={PATH_APP.general.catalog}>

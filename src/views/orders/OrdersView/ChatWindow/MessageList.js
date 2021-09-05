@@ -13,8 +13,15 @@ import { Avatar, Typography, Box } from '@material-ui/core';
 
 const AVATAR_SIZE = 48;
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
   root: {},
+  scroll: {
+    height: '100%',
+    padding: theme.spacing(3, 1.5, 0, 1.5),
+    '&:hover': {
+      overflowY: "scroll"
+    }
+  },
   avatar: {
     position: 'relative',
     width: AVATAR_SIZE,
@@ -49,12 +56,11 @@ function MessageList(props, ref) {
   const [page, setPage] = useState(1);
   const [hasMore, setHasMore] = useState(true);
   const { user } = useSelector((state) => state.authJwt);
-  const [enableScroll, setEnableScroll] = useState(true);
+  const [enableScroll, setEnableScroll] = useState(false);
   const { t } = useTranslation();
 
   //members of active conversation.
   const currentContact = activeConversation?.members?.filter(x => x.id != user.subscriber.id);
-
 
   useEffect(() => {
     setPage(1);
@@ -101,6 +107,8 @@ function MessageList(props, ref) {
       } catch (error) {
         console.log(error);
       }
+    } else {
+      setEnableScroll(false);
     }
   };
 
@@ -108,11 +116,7 @@ function MessageList(props, ref) {
 
   return (
     <Box onScroll={onScroll} ref={scrollRef}
-      sx={{
-        height: '100%',
-        overflowY: enableScroll ? "scroll" : "hidden",
-        padding: theme.spacing(3, 1.5, 0, 1.5)
-      }}>
+      sx={{ overflowY: enableScroll ? "overlay" : "hidden" }} className={classes.scroll}>
       <Box className={clsx(classes.root, props.className)}>
         {!hasMore &&
           <Box sx={{ mb: 3 }}>

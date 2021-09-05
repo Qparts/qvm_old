@@ -36,6 +36,11 @@ const useStyles = makeStyles((theme) => ({
     '&.styleMe': {
       color: theme.palette.grey[800],
       backgroundColor: '#FFEDED'
+    },
+    '& p': {
+      '@media (max-width: 350px)': {
+        fontSize: '0.78rem',
+      },
     }
   },
   tableWid: {
@@ -284,7 +289,7 @@ function MessageItem({
         updatedMessageMap = new Map();
       }
 
-      await dispatch(getConversation(activeConversation._id , 1));
+      await dispatch(getConversation(activeConversation._id, 1));
 
 
     } catch (error) {
@@ -302,7 +307,7 @@ function MessageItem({
       await chatService.updateMessage(orderValue);
       const orderStatus = status == "A" ? t("Order has been accepted") : t("Order has been rejected");
       editOrderMessage(orderStatus);
-      await dispatch(getConversation(orderValue.conversationId , 1));
+      await dispatch(getConversation(orderValue.conversationId, 1));
     } catch (error) {
       console.log("error", error);
     }
