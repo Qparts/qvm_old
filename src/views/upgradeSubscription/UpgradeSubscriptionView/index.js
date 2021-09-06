@@ -10,14 +10,13 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { PATH_APP } from 'src/routes/paths';
 import paymentService from 'src/services/paymentService';
+import helper from 'src/utils/helper';
 import { updateCurrentPlan, updateLoginObject } from 'src/redux/slices/authJwt';
-import { MIconButton } from 'src/theme';
-import closeFill from '@iconify-icons/eva/close-fill';
-import { Icon } from '@iconify/react';
 
 // ----------------------------------------------------------------------
 
-const useStyles = makeStyles((theme) => ({
+const useStyles = makeStyles(() => ({
+    root: {}
 }));
 
 // ----------------------------------------------------------------------
@@ -52,27 +51,10 @@ function UpgradeSubscriptionView() {
             newLoginObject.company = company;
             dispatch(updateLoginObject({ 'loginObject': newLoginObject }));
             dispatch(updateCurrentPlan());
-            enqueueSnackbar(t('transaction successful'),
-                {
-                    variant: 'success',
-                    action: (key) => (
-                        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-                            <Icon icon={closeFill} />
-                        </MIconButton>
-                    )
-                });
+            helper.enqueueSnackbarMessage(enqueueSnackbar, t("transaction successful"), 'success', closeSnackbar)
         } catch (error) {
-            enqueueSnackbar(t('Transaction Declined'),
-                {
-                    variant: 'error',
-                    action: (key) => (
-                        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-                            <Icon icon={closeFill} />
-                        </MIconButton>
-                    )
-                });
+            helper.enqueueSnackbarMessage(enqueueSnackbar, t("Transaction Declined"), 'error', closeSnackbar)
         }
-
     }
 
     return (
@@ -80,7 +62,6 @@ function UpgradeSubscriptionView() {
             title={t("Upgrade to Premium")}
             className={classes.root}
         >
-
             <LoadingOverlay
                 active={isLoading}
                 styles={{

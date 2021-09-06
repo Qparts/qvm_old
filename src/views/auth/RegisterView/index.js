@@ -3,17 +3,14 @@ import * as Yup from 'yup';
 import Section from '../Ui/Section';
 import Header from '../Ui/Header';
 import { useFormik } from 'formik';
-import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
 import { useSnackbar } from 'notistack';
 import RegisterForm from './RegisterForm';
 import { PATH_PAGE } from 'src/routes/paths';
-import closeFill from '@iconify-icons/eva/close-fill';
 import { Link as RouterLink, useHistory } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/core';
-import { MIconButton } from 'src/theme';
 import helper from 'src/utils/helper';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -61,33 +58,14 @@ function RegisterView() {
     (state) => state.authJwt
   );
 
-
-
   const goToVerification = () => {
-    enqueueSnackbar('Register success', {
-      variant: 'success',
-      action: (key) => (
-        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-          <Icon icon={closeFill} />
-        </MIconButton>
-      )
-    });
-
-    history.push(
-      PATH_PAGE.auth.verify,
-      { email: email }
-    );
+    helper.enqueueSnackbarMessage(enqueueSnackbar, t("Register success"), 'success', closeSnackbar)
+    history.push(PATH_PAGE.auth.verify, { email: email });
   }
 
-
   useEffect(() => {
-    if (loaded && registerError == null) {
-      goToVerification();
-    }
     setLoaded(false);
-
   }, [loaded])
-
 
   const RegisterSchema = Yup.object().shape({
     companyName: Yup.string().required(t("Company Name Is Required")),
@@ -99,7 +77,6 @@ function RegisterView() {
       .required(t("Email Is Required")),
     password: Yup.string().required(t("Password Is Required"))
   });
-
 
   const submit = async (values) => {
 
@@ -120,7 +97,6 @@ function RegisterView() {
     setLoaded(true);
   }
 
-
   const formik = useFormik({
     initialValues: {
       companyName: '',
@@ -134,6 +110,7 @@ function RegisterView() {
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
         await submit(values);
+        goToVerification();
         if (isMountedRef.current) {
           setSubmitting(false);
         }
@@ -175,8 +152,6 @@ function RegisterView() {
           <Box sx={{ mb: 3 }} />
 
           <RegisterForm formik={formik} />
-
-
 
           <Hidden smUp>
             <Box sx={{ mt: 3, textAlign: 'center' }}>

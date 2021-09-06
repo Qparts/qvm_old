@@ -1,18 +1,20 @@
 import React, { useEffect, useState } from 'react';
+import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import { useSnackbar } from 'notistack';
+import { useTranslation } from 'react-i18next';
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, Container, Typography, Hidden, Button } from '@material-ui/core';
 import Page from 'src/components/Page';
 import useAuth from 'src/hooks/useAuth';
-import { useTranslation } from 'react-i18next';
 import { PATH_PAGE } from 'src/routes/paths';
 import ResetPasswordForm from './ResetPasswordForm';
-import { Link as RouterLink, useHistory, useLocation } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
-import Button from '../../../components/Ui/Button';
+import helper from 'src/utils/helper';
+import CustomButton from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 function ResetPasswordView() {
   const classes = useStyles();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const { resetPassword, validateResetToken } = useAuth();
   const isMountedRef = useIsMountedRef();
   const [loaded, setLoaded] = useState(false);
@@ -53,7 +56,6 @@ function ResetPasswordView() {
     (state) => state.authJwt
   );
 
-
   useEffect(() => {
     (async () => {
       await validateResetToken(codeParam);
@@ -61,8 +63,6 @@ function ResetPasswordView() {
     })()
 
   }, [])
-
-
 
   useEffect(() => {
     if (loaded && resetPasswordError == '') {
@@ -80,13 +80,15 @@ function ResetPasswordView() {
       password: ''
     },
     validationSchema: ResetPasswordSchema,
-    onSubmit: async (values, { setErrors, setSubmitting }) => {
+    onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
         await resetPassword({ code: codeParam, newPassword: values.password });
         setLoaded(true);
+        helper.enqueueSnackbarMessage(enqueueSnackbar, t("Your password has been successfully reset"), 'success', closeSnackbar)
         if (isMountedRef.current) {
           setSubmitting(false);
         }
+        resetForm();
       } catch (error) {
         if (isMountedRef.current) {
           setErrors({ afterSubmit: error.code });
@@ -111,7 +113,15 @@ function ResetPasswordView() {
         {validated && <Box sx={{ maxWidth: 480, mx: 'auto' }}>
           {validResetToken ? (
             <>
+              <Typography variant="h3" sx={{ color: (theme) => theme.palette.secondary.main }} gutterBottom>
+                {t("Reset Password")}
+              </Typography>
+              <Typography sx={{ color: 'text.secondary', mb: 5 }}>
+                {t("Please enter your new password then press the back button and log in again")}
+              </Typography>
+
               <ResetPasswordForm formik={formik} />
+
               <Button
                 fullWidth
                 size="large"
@@ -124,17 +134,16 @@ function ResetPasswordView() {
             </>
           ) : (
             <Box sx={{ textAlign: 'center' }}>
-              <Typography variant="h3"  sx={{mb: 3}}>
+              <Typography variant="h3" sx={{ mb: 3 }}>
                 {t("The request is not available")}
               </Typography>
-              <Button
+              <CustomButton
                 homeBtn='homeBtn'
-                btnWidth='btnWidth'
                 component={RouterLink}
                 to={PATH_PAGE.auth.login}
               >
                 {t("Back")}
-              </Button>
+              </CustomButton>
             </Box>
           )}
         </Box>}

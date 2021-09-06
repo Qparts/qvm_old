@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
 import { useSnackbar } from 'notistack';
 import ContactForm from './ContactForm';
-import closeFill from '@iconify-icons/eva/close-fill';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Container, Alert, Card, Typography } from '@material-ui/core';
-import { MIconButton } from 'src/theme';
 import helper from 'src/utils/helper';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -36,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function  ContactView() {
+function ContactView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -46,24 +43,9 @@ function  ContactView() {
   const { countries } = useSelector((state) => state.authJwt);
   const { error: contactError } = useSelector((state) => state.messaging);
 
-
-
-  const sendMessageSuccess = () => {
-    enqueueSnackbar(t('Your message sent successfully'), {
-      variant: 'success',
-      action: (key) => (
-        <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-          <Icon icon={closeFill} />
-        </MIconButton>
-      )
-    });
-  }
-
-
   useEffect(() => {
     setLoaded(false);
   }, [loaded])
-
 
   const ContactSchema = Yup.object().shape({
     companyName: Yup.string().required(t("Company Name Is Required")),
@@ -106,7 +88,7 @@ function  ContactView() {
     onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
       try {
         await submit(values);
-        sendMessageSuccess();
+        helper.enqueueSnackbarMessage(enqueueSnackbar, t("Your message sent successfully"), 'success', closeSnackbar)
         if (isMountedRef.current) {
           setSubmitting(false);
         }
@@ -142,4 +124,4 @@ function  ContactView() {
   );
 }
 
-export default  ContactView;
+export default ContactView;

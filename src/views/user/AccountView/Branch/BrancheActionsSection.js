@@ -8,11 +8,9 @@ import AddUser from './addUser/AddUser';
 import { Box, Typography } from '@material-ui/core';
 import AddUserVerification from './addUser/AddUserVerification';
 import { useSnackbar } from 'notistack';
-import { MIconButton } from 'src/theme';
-import { Icon } from '@iconify/react';
-import closeFill from '@iconify-icons/eva/close-fill';
 import CustomDialog from '../../../../components/Ui/Dialog';
 import { Branch, User } from '../../../../icons/icons';
+import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
@@ -54,15 +52,12 @@ function BrancheActionsSection() {
 
     useEffect(() => {
         if (error != null) {
-            enqueueSnackbar(error.status == 409 ? t('Subscriber already registered')
-                : error.data ? error.data : error.status, {
-                variant: 'error',
-                action: (key) => (
-                    <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-                        <Icon icon={closeFill} />
-                    </MIconButton>
-                )
-            });
+            helper.enqueueSnackbarMessage(
+                enqueueSnackbar,
+                error.status == 409 ? t('Subscriber already registered') : error.data ? error.data : error.status,
+                'error',
+                closeSnackbar
+            )
         }
     }, [error])
 

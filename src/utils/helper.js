@@ -1,8 +1,12 @@
 import { useEffect, useRef } from "react";
+import { Icon } from '@iconify/react';
+import closeFill from '@iconify-icons/eva/close-fill';
+import { MIconButton } from 'src/theme';
 import paymentService from 'src/services/paymentService';
 import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from 'src/redux/slices/partSearch';
 import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
-import { setActiveConversation } from 'src/redux/slices/chat';
+
+// ----------------------------------------------------------------------
 
 function toDate(mil) {
   const d = new Date(mil);
@@ -222,6 +226,17 @@ function calculateTimeLeft(startDate, endDate) {
     end = new Date(endDate),
     today = new Date();
   return Math.round(((today - start) / (end - start)) * 100);
+};
+
+function enqueueSnackbarMessage(enqueueSnackbar, message, variant, closeSnackbar) {
+  enqueueSnackbar(message, {
+    variant: variant,
+    action: (key) => (
+      <MIconButton size="small" onClick={() => closeSnackbar(key)}>
+        <Icon icon={closeFill} />
+      </MIconButton>
+    )
+  });
 }
 
 
@@ -246,5 +261,6 @@ export default {
   gotoPremium,
   calculateTimeLeft,
   handlePartSearch,
-  handleLogout
+  handleLogout,
+  enqueueSnackbarMessage
 };

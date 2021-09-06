@@ -4,12 +4,10 @@ import Section from '../Ui/Section';
 import Header from '../Ui/Header';
 import { useFormik } from 'formik';
 import LoginForm from './LoginForm';
-import { Icon } from '@iconify/react';
 import Page from 'src/components/Page';
 import useAuth from 'src/hooks/useAuth';
 import { useSnackbar } from 'notistack';
 import { PATH_PAGE } from 'src/routes/paths';
-import closeFill from '@iconify-icons/eva/close-fill';
 import { Link as RouterLink } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { makeStyles } from '@material-ui/core/styles';
@@ -21,10 +19,10 @@ import {
   Container,
   Typography
 } from '@material-ui/core';
-import { MIconButton } from 'src/theme';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getInitialize } from 'src/redux/slices/authJwt';
+import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
@@ -69,16 +67,7 @@ function LoginView() {
 
 
   useEffect(() => {
-    if (loaded && loginError == null) {
-      enqueueSnackbar('Login success', {
-        variant: 'success',
-        action: (key) => (
-          <MIconButton size="small" onClick={() => closeSnackbar(key)}>
-            <Icon icon={closeFill} />
-          </MIconButton>
-        )
-      });
-    }
+    setLoaded(false);
   }, [loaded])
 
   const LoginSchema = Yup.object().shape({
@@ -105,7 +94,7 @@ function LoginView() {
         await dispatch(getInitialize());
 
         setLoaded(true);
-
+        helper.enqueueSnackbarMessage(enqueueSnackbar, t("Login success"), 'success', closeSnackbar)
         if (isMountedRef.current) {
           setSubmitting(false);
         }

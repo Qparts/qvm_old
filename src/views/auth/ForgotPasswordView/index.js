@@ -13,6 +13,7 @@ import { Box, Button, Container, Typography, Hidden, Link } from '@material-ui/c
 import { useSelector } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
+import CustomButton from '../../../components/Ui/Button';
 
 // ----------------------------------------------------------------------
 
@@ -48,7 +49,7 @@ function ForgotPasswordView() {
   const { error: forgetPasswordError } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
-    if (loaded && forgetPasswordError == '') {
+    if (loaded && forgetPasswordError === null) {
       setSent(true);
     }
   }, [loaded])
@@ -96,7 +97,7 @@ function ForgotPasswordView() {
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
           {!sent ? (
             <>
-              <Typography variant="h3" sx={{color: (theme) => theme.palette.secondary.main}} gutterBottom>
+              <Typography variant="h3" sx={{ color: (theme) => theme.palette.secondary.main }} gutterBottom>
                 {t("Forgot your password?")}
               </Typography>
               <Typography sx={{ color: 'text.secondary', mb: 5 }}>
@@ -126,22 +127,20 @@ function ForgotPasswordView() {
               <Typography variant="h3" gutterBottom>
                 {t("Request sent successfully")}
               </Typography>
-              <Typography>
+              <Typography sx={{ mb: 5 }}>
                 {t("We have sent a confirmation email to")} &nbsp;
                 <strong>{formik.values.email}</strong>
                 <br />
                 {t("Please check your email!")}
               </Typography>
 
-              <Button
-                size="large"
-                variant="contained"
+              <CustomButton
+                homeBtn='homeBtn'
                 component={RouterLink}
                 to={PATH_PAGE.auth.login}
-                sx={{ mt: 5 }}
               >
                 {t("Back")}
-              </Button>
+              </CustomButton>
             </Box>
           )}
         </Box>
