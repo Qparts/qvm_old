@@ -64,6 +64,20 @@ axios.interceptors.response.use(
   }
 );
 
+
+function addReferrer() {
+  try {
+    axios.defaults.headers.common["Referrer"] = "qvm.parts";
+  } catch (error) {
+    console.log("error");
+    console.log(error);
+  }
+}
+
+
+addReferrer();
+
+
 export default {
   get: axios.get,
   post: axios.post,

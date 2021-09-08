@@ -41,17 +41,20 @@ function ConversationList({
 
   const handleSelectConversation = async (item) => {
     //update the unseen message list of online users that belong to the login user company. 
-    dispatch(updateMessages([]));
-    item.members.filter(x => x.id != user.subscriber.id &&
-      x.companyId == user.subscriber.companyId).map((member) => {
-        let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
-        if (onlineUserIndex != -1) {
-          currentSocket.current.emit("companyMemberReadMessage", member.id);
-        }
-      })
+    let isCurrentConversation = activeConversation != null && item._id == activeConversation._id;
+    if (isCurrentConversation == false) {
+      dispatch(updateMessages([]));
+      item.members.filter(x => x.id != user.subscriber.id &&
+        x.companyId == user.subscriber.companyId).map((member) => {
+          let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
+          if (onlineUserIndex != -1) {
+            currentSocket.current.emit("companyMemberReadMessage", member.id);
+          }
+        })
 
-    dispatch(setActiveConversation(item));
-    history.push(`/app/chat/${item._id}`);
+      dispatch(setActiveConversation(item));
+      history.push(`/app/chat/${item._id}`);
+    }
   };
 
   return (
