@@ -77,6 +77,7 @@ function SpecialOfferInfoActions(props) {
     const classes = useStyles();
     const { t } = useTranslation();
     const { loginObject } = useSelector((state) => state.authJwt);
+    const { selectedOffer } = useSelector((state) => state.specialOffer);
 
     return (
         <Box className={classes.forMoreInfoCont}>
@@ -92,7 +93,7 @@ function SpecialOfferInfoActions(props) {
                 <Grid item xs={12} md={5}>
                     <Box className={clsx(classes.forMoreInfo, classes.forMoreInfoFlex)}>
                         <Hidden smDown><Info width='24' height='24' /></Hidden>
-                        <Typography variant="subtitle1" className={classes.forMoreInfoChild}> {t("For inquiries, you can contact us at")} {loginObject.subscriber.mobile}+</Typography>
+                        <Typography variant="subtitle1" className={classes.forMoreInfoChild}> {selectedOffer.notes} </Typography>
                     </Box>
                 </Grid>
                 <Grid item xs={12} md={3}>

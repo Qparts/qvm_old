@@ -22,7 +22,6 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getInitialize } from 'src/redux/slices/authJwt';
-import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
@@ -92,9 +91,7 @@ function LoginView() {
         });
 
         await dispatch(getInitialize());
-
         setLoaded(true);
-        helper.enqueueSnackbarMessage(enqueueSnackbar, t("Login success"), 'success', closeSnackbar)
         if (isMountedRef.current) {
           setSubmitting(false);
         }

@@ -16,11 +16,6 @@ const LANGS = [
     icon: '/static/icons/ic_flag_en.svg'
   },
   {
-    value: 'en_US',
-    label: 'English',
-    icon: '/static/icons/ic_flag_en.svg'
-  },
-  {
     value: 'ar',
     label: 'Arabic',
     icon: '/static/icons/ic_flag_ar.svg'
@@ -65,8 +60,8 @@ function Languages() {
         className={clsx(classes.btnLang, { [classes.isSelected]: isOpen })}
       >
         <img
-          src={currentLang && currentLang.icon }
-          alt={currentLang && currentLang.label }
+          src={langStorage == 'en-US' ? LANGS[0].icon : currentLang.icon }
+          alt={langStorage == 'en-US' ? LANGS[0].label : currentLang.label }
         />
       </MIconButton>
 

@@ -38,8 +38,8 @@ const useStyles = makeStyles((theme) => ({
     dataTableBankTrans: { minWidth: '505px' },
     dataTableReplacementItem: { minWidth: '340px' },
     dataTableGeneral: {
-        '@media (max-width: 655px)': {
-            minWidth: '582px',
+        '@media (max-width: 665px)': {
+            minWidth: '592px',
         },
     },
     dataTableGeneralDashboard: {
