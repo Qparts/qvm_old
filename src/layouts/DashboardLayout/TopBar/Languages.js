@@ -60,8 +60,8 @@ function Languages() {
         className={clsx(classes.btnLang, { [classes.isSelected]: isOpen })}
       >
         <img
-          src={langStorage == 'en-US' ? LANGS[0].icon : currentLang.icon }
-          alt={langStorage == 'en-US' ? LANGS[0].label : currentLang.label }
+          src={(langStorage === 'en-US' || currentLang === undefined) ? LANGS[0].icon : currentLang.icon }
+          alt={(langStorage === 'en-US' || currentLang === undefined) ? LANGS[0].label : currentLang.label }
         />
       </MIconButton>
 

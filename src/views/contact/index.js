@@ -51,7 +51,7 @@ function ContactView() {
     companyName: Yup.string().required(t("Company Name Is Required")),
     name: Yup.string().required(t("Name Is Required")),
     phone: Yup.string().trim().matches('^[0-9]*$', t('Phone number is not valid'))
-      .length(11, t('Phone number must be 11')).required(t("Mobile Is Required")),
+      .required(t("Mobile Is Required")),
     email: Yup.string()
       .email(t("Email Is Invalid"))
       .required(t("Email Is Required")),
