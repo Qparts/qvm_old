@@ -58,17 +58,10 @@ function LoginView() {
   const { login } = useAuth();
   const isMountedRef = useIsMountedRef();
   const dispatch = useDispatch();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
   const { error: loginError } = useSelector(
     (state) => state.authJwt
   );
-
-
-  useEffect(() => {
-    setLoaded(false);
-  }, [loaded])
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -90,11 +83,7 @@ function LoginView() {
           email: values.email,
           password: values.password
         });
-
         await dispatch(getInitialize());
-
-        setLoaded(true);
-        helper.enqueueSnackbarMessage(enqueueSnackbar, t("Login success"), 'success', closeSnackbar)
         if (isMountedRef.current) {
           setSubmitting(false);
         }
