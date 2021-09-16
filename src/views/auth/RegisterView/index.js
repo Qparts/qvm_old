@@ -50,14 +50,21 @@ function RegisterView() {
   const isMountedRef = useIsMountedRef();
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { countries, error: registerError } = useSelector(
-    (state) => state.authJwt
-  );
+  const { countries, error: registerError } = useSelector((state) => state.authJwt);
+
+  const goToVerification = () => {
+    helper.enqueueSnackbarMessage(enqueueSnackbar, t("Register success"), 'success', closeSnackbar);
+    history.push(PATH_PAGE.auth.verify, { email: email });
+  };
 
   useEffect(() => {
+    if (loaded && registerError == null) {
+      goToVerification();
+    }
     setLoaded(false);
   }, [loaded])
 
@@ -107,7 +114,6 @@ function RegisterView() {
         if (isMountedRef.current) {
           setSubmitting(false);
         }
-        history.push(PATH_PAGE.auth.verify, { email: email });
       } catch (error) {
         if (isMountedRef.current) {
           setErrors({ afterSubmit: error.code || error.message });

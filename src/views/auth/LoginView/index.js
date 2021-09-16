@@ -22,6 +22,7 @@ import {
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { getInitialize } from 'src/redux/slices/authJwt';
+import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
@@ -60,14 +61,17 @@ function LoginView() {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
-  const { error: loginError } = useSelector(
-    (state) => state.authJwt
-  );
+  const { error: loginError } = useSelector((state) => state.authJwt);
 
+  const loginData = JSON.parse(localStorage.getItem('loginData'));
 
   useEffect(() => {
+    if (loaded && loginError == null) {
+      helper.enqueueSnackbarMessage(enqueueSnackbar, t("Login success"), 'success', closeSnackbar);
+    };
     setLoaded(false);
-  }, [loaded])
+    window.localStorage.removeItem('loginData');
+  }, [loaded]);
 
   const LoginSchema = Yup.object().shape({
     email: Yup.string()
@@ -78,18 +82,17 @@ function LoginView() {
 
   const formik = useFormik({
     initialValues: {
-      email: '',
-      password: '',
+      email: loginData ? loginData.email : "",
+      password: loginData ? loginData.password : "",
       remember: true
     },
     validationSchema: LoginSchema,
-    onSubmit: async (values, { setErrors, setSubmitting, resetForm }) => {
+    onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
         await login({
           email: values.email,
           password: values.password
         });
-
         await dispatch(getInitialize());
         setLoaded(true);
         if (isMountedRef.current) {
@@ -97,7 +100,6 @@ function LoginView() {
         }
       } catch (error) {
         console.error(error);
-        resetForm();
         if (isMountedRef.current) {
           setSubmitting(false);
           setErrors({ afterSubmit: error.code || error.message });

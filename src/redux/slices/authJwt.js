@@ -180,7 +180,9 @@ export function login({ email, password }) {
       setSession(accessToken);
       localStorage.setItem('loginObject', JSON.stringify(user));
       dispatch(slice.actions.loginSuccess({ user }));
+      window.localStorage.removeItem('loginData');
     } catch (error) {
+      localStorage.setItem('loginData', JSON.stringify({ email, password }));
       dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
     }
 
