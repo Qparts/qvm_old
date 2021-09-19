@@ -4,6 +4,8 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Box, Container, Typography, Hidden } from '@material-ui/core';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
+import TopBar from './../../../layouts/HomeLayout/TopBar';
+import Footer from 'src/layouts/HomeLayout/Footer';
 
 
 // ----------------------------------------------------------------------
@@ -34,17 +36,9 @@ function ConfirmView(props) {
   const { t } = useTranslation();
   return (
     <Page title={t("Confirm")} className={classes.root}>
-      <header className={classes.header}>
-        <Hidden smDown>
-          <Typography variant="body2" sx={{ mt: { md: -4 } }}>
-            <Languages />
-          </Typography>
-        </Hidden>
-      </header>
-
+      <TopBar className={classes.header} />
       <Container>
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-
           <Typography variant="h3" gutterBottom>
             {t("THANK YOU FOR REGISTRATION IN QVM")}
           </Typography>

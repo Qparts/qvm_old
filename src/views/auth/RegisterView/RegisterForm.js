@@ -37,6 +37,7 @@ function RegisterForm({ formik }) {
 
         <TextField
           fullWidth
+          required
           name="email"
           label={t("Company Name")}
           {...getFieldProps('companyName')}
@@ -47,6 +48,7 @@ function RegisterForm({ formik }) {
         <Box sx={{ mb: 3 }} />
         <TextField
           fullWidth
+          required
           name="email"
           type="email"
           label={t("Email")}
@@ -85,6 +87,7 @@ function RegisterForm({ formik }) {
 
             <TextField
               fullWidth
+              required
               name="phone"
               label={t("Mobile")}
               {...getFieldProps('phone')}
@@ -100,6 +103,7 @@ function RegisterForm({ formik }) {
 
         <TextField
           fullWidth
+          required
           name="name"
           label={t("Name")}
           {...getFieldProps('name')}
@@ -111,6 +115,7 @@ function RegisterForm({ formik }) {
 
         <TextField
           fullWidth
+          required
           type={showPassword ? 'text' : 'password'}
           label={t("Password")}
           {...getFieldProps('password')}

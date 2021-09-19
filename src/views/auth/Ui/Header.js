@@ -48,6 +48,7 @@ function HeaderAuth(props) {
                         variant="subtitle2"
                         component={RouterLink}
                         to={props.url}
+                        onClick={props.onClick}
                     >
                         {props.title}
                     </Link>

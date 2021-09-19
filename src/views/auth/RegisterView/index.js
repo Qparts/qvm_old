@@ -14,7 +14,7 @@ import { Box, Link, Hidden, Container, Typography, Alert } from '@material-ui/co
 import helper from 'src/utils/helper';
 import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { register } from 'src/redux/slices/authJwt';
+import { cleanup, register } from 'src/redux/slices/authJwt';
 
 // ----------------------------------------------------------------------
 
@@ -48,22 +48,23 @@ const useStyles = makeStyles((theme) => ({
 function RegisterView() {
   const classes = useStyles();
   const isMountedRef = useIsMountedRef();
-  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const history = useHistory();
   const [loaded, setLoaded] = useState(false);
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [email, setEmail] = useState('');
   const { t } = useTranslation();
   const dispatch = useDispatch();
-  const { countries, error: registerError } = useSelector(
-    (state) => state.authJwt
-  );
+  const { countries, error: registerError } = useSelector((state) => state.authJwt);
 
   const goToVerification = () => {
-    helper.enqueueSnackbarMessage(enqueueSnackbar, t("Register success"), 'success', closeSnackbar)
+    helper.enqueueSnackbarMessage(enqueueSnackbar, t("Register success"), 'success', closeSnackbar);
     history.push(PATH_PAGE.auth.verify, { email: email });
-  }
+  };
 
   useEffect(() => {
+    if (loaded && registerError == null) {
+      goToVerification();
+    }
     setLoaded(false);
   }, [loaded])
 
@@ -71,7 +72,7 @@ function RegisterView() {
     companyName: Yup.string().required(t("Company Name Is Required")),
     name: Yup.string().required(t("Name Is Required")),
     phone: Yup.string().trim().matches('^[0-9]*$', t('Phone number is not valid'))
-      .length(11, t('Phone number must be 11')).required(t("Mobile Is Required")),
+      .required(t("Mobile Is Required")),
     email: Yup.string()
       .email(t("Email Is Invalid"))
       .required(t("Email Is Required")),
@@ -110,11 +111,9 @@ function RegisterView() {
     onSubmit: async (values, { setErrors, setSubmitting }) => {
       try {
         await submit(values);
-        goToVerification();
         if (isMountedRef.current) {
           setSubmitting(false);
         }
-
       } catch (error) {
         if (isMountedRef.current) {
           setErrors({ afterSubmit: error.code || error.message });
@@ -129,7 +128,12 @@ function RegisterView() {
 
       <Header
         auth={t("Already have an account?")}
-        url={PATH_PAGE.auth.login}
+        onClick={async () => {
+          await dispatch(cleanup())
+          history.push(PATH_PAGE.auth.login);
+
+        }}
+        // url={PATH_PAGE.auth.login}
         title={t("Login")} />
 
       <Hidden mdDown>
@@ -145,6 +149,8 @@ function RegisterView() {
               </Typography>
             </Box>
           </Box>
+
+          <Box sx={{ mb: 3 }} />
 
           {registerError != null && <Alert severity="error">  {registerError.data ?
             t(registerError.data) : registerError.status} </Alert>}

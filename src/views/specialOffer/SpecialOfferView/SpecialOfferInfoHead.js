@@ -193,7 +193,7 @@ export default function SpecialOfferInfo(props) {
                 <Box className={classes.offerItemInfo}>
                     <Parts width='26' height='26' fill='#7E8D99' />
                     <Typography variant="caption" sx={{ display: 'block', color: '#526C78' }}> {t("parts number")} </Typography>
-                    <Typography variant="h3" className={classes.offerItemInfoNum}> 3745 </Typography>
+                    <Typography variant="h3" className={classes.offerItemInfoNum}> {selectedOffer.numberOfItems} </Typography>
                 </Box>
                 <Box className={classes.offerItemInfo} sx={{ borderLeft: '0 !important' }}>
                     <Offer width='26' height='26' fill='#7E8D99' />

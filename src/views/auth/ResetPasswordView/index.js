@@ -15,6 +15,7 @@ import { useSelector } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import helper from 'src/utils/helper';
 import CustomButton from '../../../components/Ui/Button';
+import TopBar from './../../../layouts/HomeLayout/TopBar';
 
 // ----------------------------------------------------------------------
 
@@ -65,7 +66,7 @@ function ResetPasswordView() {
   }, [])
 
   useEffect(() => {
-    if (loaded && resetPasswordError == '') {
+    if (loaded && resetPasswordError == null) {
       history.push(PATH_PAGE.auth.login);
     }
   }, [loaded])
@@ -101,13 +102,7 @@ function ResetPasswordView() {
   return (
     <Page title={t("Reset Password")} className={classes.root}>
 
-      <header className={classes.header}>
-        <Hidden smDown>
-          <Typography variant="body2" sx={{ mt: { md: -4 } }}>
-            <Languages />
-          </Typography>
-        </Hidden>
-      </header>
+      <TopBar className={classes.header} />
 
       <Container>
         {validated && <Box sx={{ maxWidth: 480, mx: 'auto' }}>

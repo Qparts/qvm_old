@@ -12,6 +12,7 @@ import { useSelector } from 'react-redux';
 import { PATH_PAGE } from 'src/routes/paths';
 import { useTranslation } from 'react-i18next';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
+import TopBar from './../../../layouts/HomeLayout/TopBar';
 
 
 // ----------------------------------------------------------------------
@@ -89,26 +90,18 @@ function VerifyCodeView(props) {
 
   return (
     <Page title={t("Verify")} className={classes.root}>
-
-      <header className={classes.header}>
-        <Hidden smDown>
-          <Typography variant="body2" sx={{ mt: { md: -4 } }}>
-            <Languages />
-          </Typography>
-        </Hidden>
-      </header>
-
-        <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-          <Typography variant="h3" gutterBottom>
-            {t("Please check your email!")}
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>
-            {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.", { email: props.location.state.email })}
-          </Typography>
-          <Box sx={{ mt: 5, mb: 3 }}>
-            <VerifyCodeForm formik={formik} />
-          </Box>
+      <TopBar className={classes.header} />
+      <Box sx={{ maxWidth: 480, mx: 'auto' }}>
+        <Typography variant="h3" gutterBottom>
+          {t("Please check your email!")}
+        </Typography>
+        <Typography sx={{ color: 'text.secondary' }}>
+          {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.", { email: props.location.state.email })}
+        </Typography>
+        <Box sx={{ mt: 5, mb: 3 }}>
+          <VerifyCodeForm formik={formik} />
         </Box>
+      </Box>
     </Page>
   );
 }

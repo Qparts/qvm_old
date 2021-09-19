@@ -14,6 +14,7 @@ import { useSelector } from 'react-redux';
 import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../../../components/Ui/Button';
+import TopBar from './../../../layouts/HomeLayout/TopBar';
 
 // ----------------------------------------------------------------------
 
@@ -85,13 +86,7 @@ function ForgotPasswordView() {
   return (
     <Page title={t("Forgot Password?")} className={classes.root}>
 
-      <header className={classes.header}>
-        <Hidden smDown>
-          <Typography variant="body2" sx={{ mt: { md: -4 } }}>
-            <Languages />
-          </Typography>
-        </Hidden>
-      </header>
+      <TopBar className={classes.header} />
 
       <Container>
         <Box sx={{ maxWidth: 480, mx: 'auto' }}>
