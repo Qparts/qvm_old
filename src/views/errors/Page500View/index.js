@@ -1,6 +1,6 @@
 import React from 'react';
 import Page from 'src/components/Page';
-import Logo from 'src/components/Logo';
+import LogoDark from 'src/components/LogoDark';
 import { Link as RouterLink } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Button, Typography, Container } from '@material-ui/core';
@@ -40,7 +40,7 @@ function Page500View() {
     >
       <header className={classes.header}>
         <RouterLink to="/">
-          <Logo />
+          <LogoDark />
         </RouterLink>
       </header>
 
