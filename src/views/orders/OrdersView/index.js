@@ -87,7 +87,7 @@ function OrdersView(_props) {
       >
         <Card className={classes.card}>
           <Sidebar />
-          {userConversations.length && <ChatWindow userConversations={userConversations} />}
+          {userConversations.length>0 && <ChatWindow userConversations={userConversations} />}
         </Card>
       </LoadingOverlay>
 
