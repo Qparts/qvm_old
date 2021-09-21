@@ -37,7 +37,7 @@ const useStyles = makeStyles((theme) => ({
 function CarDetails() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { selectedCatalog, selectedCar, fromList, groups, part, groupsStack, backToCarInfo } = useSelector((state) => state.catalogs);
+    const { selectedCatalog, selectedCar, fromList, groups, part, groupsStack, backToCarInfo ,cars} = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
 
     return (
@@ -58,7 +58,7 @@ function CarDetails() {
                     <Typography color="textPrimary">{t("Catalog Details")}</Typography>
                 </Breadcrumbs>
             }
-            {groups.length == 0 ?
+            {groups.length == 0&&cars.length>0 ?
                 <CarItems /> :
                 <Card cardBg='cardBg'>
                     <CatalogHead />

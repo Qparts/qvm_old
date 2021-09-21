@@ -44,7 +44,6 @@ export default function CatalogHead() {
                         name="catalog"
                         spaceToTop="spaceToTop"
                         onChange={(event) => {
-                            console.log(event.target.value);
                             dispatch(getModels(event.target.value, catalogs));
                         }}>
                         <MenuItem aria-label="None" value="" />

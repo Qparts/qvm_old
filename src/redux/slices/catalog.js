@@ -53,6 +53,11 @@ const slice = createSlice({
             state.models = action.payload.models;
             state.selectedCatalog = action.payload.selectedCatalog;
             state.selectedModel = action.payload.selectedModel;
+            state.cars = [];
+            state.filters = [];
+            state.groups = [];
+            state.filterKeysMap = new Map();
+            state.groupsStack = [];
             state.error = '';
         },
 
@@ -60,7 +65,11 @@ const slice = createSlice({
         handleModelChangeSuccess(state, action) {
             state.isLoading = false;
             state.filters = action.payload.filters;
+            state.filterKeysMap = new Map();
             state.selectedModel = action.payload.selectedModel;
+            state.cars = [];
+            state.groups = [];
+            state.groupsStack = [];
             state.error = '';
         },
 
