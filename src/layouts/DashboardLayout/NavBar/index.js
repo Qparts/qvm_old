@@ -140,7 +140,7 @@ function NavBar({ isOpenNav, onCloseNav }) {
     <Scrollbars>
       <Box sx={{ px: 2.5, py: 3 }}>
         <RouterLink to={PATH_APP.general.root}>
-          <Logo style={{ margin: 'auto' }} />
+          <Logo newLogo='newLogo' style={{ margin: 'auto' }} />
         </RouterLink>
       </Box>
       <Box sx={{ mt: 1 }}>

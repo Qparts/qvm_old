@@ -1,5 +1,5 @@
 import React from 'react';
-import Logo from 'src/components/Logo';
+import LogoDark from 'src/components/LogoDark';
 import Page from 'src/components/Page';
 import { motion } from 'framer-motion';
 import { Link as RouterLink } from 'react-router-dom';
@@ -43,7 +43,7 @@ function Page404View() {
     <Page title="404 Page Not Found | Minimal-UI" className={classes.root}>
       <header className={classes.header}>
         <RouterLink to="/">
-          <Logo />
+          <LogoDark />
         </RouterLink>
       </header>
 
