@@ -46,7 +46,7 @@ function ContactSocial({ className }) {
                         <Box className={classes.contactSocialItem}>
                             <Location width='20' height='20' fill='#7E8D99' />
                             <Typography variant="body3">
-                                10 street, al-Waha Dist. Dammam, Kingdom of Saudi Arabia
+                                10 Street, al-Waha Dist. Dammam, Kingdom of Saudi Arabia
                             </Typography>
                         </Box>
                     </Grid>
