@@ -58,6 +58,7 @@ const slice = createSlice({
             state.groups = [];
             state.filterKeysMap = new Map();
             state.groupsStack = [];
+            state.part = null;
             state.error = '';
         },
 
@@ -70,6 +71,7 @@ const slice = createSlice({
             state.cars = [];
             state.groups = [];
             state.groupsStack = [];
+            state.part = null;
             state.error = '';
         },
 
