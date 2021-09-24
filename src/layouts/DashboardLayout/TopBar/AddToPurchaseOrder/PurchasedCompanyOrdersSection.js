@@ -58,13 +58,16 @@ function PurchasedCompanyOrdersSection(props) {
                             },
                             {
                                 name: t("Average market price"),
-                                attr: 'order.retailPrice'
+                                attr: 'order.retailPrice',
+                                po: 'po'
                             }
                         ]}
                         actions={[{ element: deleteElement, name: t("Delete") }]}
                         datatable={companyOrders}
                         dataTableChat='dataTableChat'
                         dataTablePad='dataTablePad'
+                        dataTablePurchaseOrder='dataTablePurchaseOrder'
+
                     />
 
                     <Box className={classes.orderDataActions}>

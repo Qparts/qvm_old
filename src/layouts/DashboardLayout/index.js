@@ -5,7 +5,6 @@ import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
-import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +52,6 @@ function DashboardLayout({ children }) {
   const classes = useStyles();
   const [openNav, setOpenNav] = useState(false);
   const { pathname } = useLocation();
-
   const isChat = pathname.includes('chat');
 
   return (

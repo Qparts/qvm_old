@@ -40,7 +40,9 @@ function DashboardAppView() {
 
   useEffect(() => {
     dispatch(getSpecialOffersLive(true));
-    dispatch(getDashboardMetrics());
+    if(numOfParts === 0){
+      dispatch(getDashboardMetrics());
+    }
   }, []);
 
   return (

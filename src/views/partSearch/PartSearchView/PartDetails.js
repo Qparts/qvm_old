@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
+import { useTranslation } from 'react-i18next';
 import Box from '@material-ui/core/Box';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -9,7 +10,7 @@ import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import helper from 'src/utils/helper';
-import { useTranslation } from 'react-i18next';
+import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
 
@@ -32,7 +33,7 @@ function PartDetails() {
         <Box sx={{ width: '100%' }}>
             {selectedPart != null &&
                 <List
-                    sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}
+                    sx={{ width: '100%', bgcolor: 'background.paper' }}
                     component="nav"
                     aria-labelledby="availability-details-subheader"
                 >
@@ -53,18 +54,30 @@ function PartDetails() {
 
                                     <Collapse in={openItemID === item.id} timeout="auto" unmountOnExit>
                                         <List component="div" disablePadding>
-                                            <ListItem sx={{ pl: 4 }} button>
+                                            <ListItem button>
                                                 {
                                                     helper.getBranch(item.branchId, companies.get(selectedPart.companyId).branches).
                                                         contacts.length > 0 ?
-                                                        helper.getBranch(item.branchId, companies.get(selectedPart.companyId).branches).
-                                                            contacts.map((contact, index) => {
-                                                                return (
-                                                                    <ListItemText primary={`${contact.name}  / ${contact.email} / ${contact.phone} `} key={index} />
-                                                                )
-                                                            })
+                                                        <Datatable
+                                                            header={[
+                                                                {
+                                                                    name: t("Name"),
+                                                                    attr: 'name',
+                                                                },
+                                                                {
+                                                                    name: t("Email"),
+                                                                    attr: 'email',
+                                                                },
+                                                                {
+                                                                    name: t("Mobile"),
+                                                                    attr: 'phone'
+                                                                }
+                                                            ]}
+                                                            datatable={helper.getBranch(item.branchId, companies.get(selectedPart.companyId).branches).contacts}
+                                                            dataTablePad='dataTablePad'
+                                                        />
                                                         :
-                                                        <ListItemText primary={t("no contacts found")} />
+                                                        <ListItemText sx={{ pl: 4 }} primary={t("no contacts found")} />
                                                 }
                                             </ListItem>
                                         </List>

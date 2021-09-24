@@ -9,8 +9,7 @@ import ReactApexChart from 'react-apexcharts';
 import { ApexChartsOption } from 'src/components/Charts/Apexcharts';
 import { setSelectedOffer } from 'src/redux/slices/specialOffer';
 import helper from 'src/utils/helper';
-import { Calender, Location, Parts, OrdersArrow, Offer } from '../../../icons/icons';
-import CustomButton from '../../../components/Ui/Button';
+import { Calender, Parts, Offer } from '../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -25,7 +24,7 @@ const useStyles = makeStyles((theme) => ({
     },
     offerName: {
         color: theme.palette.secondary.darker,
-        margin: theme.spacing(1, 0, 0.5),
+        margin: theme.spacing(1, 0),
         lineHeight: 1,
         '@media (max-width: 517px)': {
             marginBottom: theme.spacing(1),
@@ -102,12 +101,6 @@ const useStyles = makeStyles((theme) => ({
         '@media (max-width: 517px)': {
             display: 'block'
         },
-    },
-    btnOrder: {
-        marginLeft: '20px',
-        '@media (max-width: 517px)': {
-            margin: theme.spacing(1.75, 0)
-        },
     }
 }));
 
@@ -168,7 +161,7 @@ export default function SpecialOfferInfo(props) {
                         {themeDirection == 'rtl' ? companies.get(selectedOffer.companyId).nameAr :
                             companies.get(selectedOffer.companyId).name}
                     </Typography>
-                    <Typography variant="h5" className={classes.offerName}>
+                    <Typography variant="subtitle1" className={classes.offerName}>
                         {themeDirection == 'rtl' ? selectedOffer.offerNameAr :
                             selectedOffer.offerName}
                     </Typography>
@@ -183,10 +176,6 @@ export default function SpecialOfferInfo(props) {
                             <Typography variant="body2" sx={{ color: theme.palette.secondary.main }}> {helper.toDate(selectedOffer.endDate)} </Typography>
                         </Box>
                     </Box>
-                    <Box className={classes.offerDetailsFlex} sx={{ marginTop: '7px' }}>
-                        <Location width='20' height='20' fill='#7E8D99' />
-                        <Typography variant="body3" sx={{ color: theme.palette.secondary.main, marginLeft: '4px' }}> {selectedOffer.offerNameAr} </Typography>
-                    </Box>
                 </Box>
             </Box>
             <Box className={clsx(classes.offerDetailsFlex, classes.placeOrder)}>
@@ -195,19 +184,13 @@ export default function SpecialOfferInfo(props) {
                     <Typography variant="caption" sx={{ display: 'block', color: '#526C78' }}> {t("parts number")} </Typography>
                     <Typography variant="h3" className={classes.offerItemInfoNum}> {selectedOffer.numberOfItems} </Typography>
                 </Box>
-                <Box className={classes.offerItemInfo} sx={{ borderLeft: '0 !important' }}>
+                <Box className={classes.offerItemInfo} sx={{ border: '0 !important' }}>
                     <Offer width='26' height='26' fill='#7E8D99' />
                     <Typography variant="caption" sx={{ display: 'block', color: '#526C78' }}> {t("total price")} </Typography>
                     <Typography variant="h3" className={classes.offerItemInfoNum}>
                         30.000
                         <Typography variant="caption"> {t("SAR")} </Typography>
                     </Typography>
-                </Box>
-                <Box className={classes.btnOrder}>
-                    <CustomButton>
-                        <OrdersArrow width='24' height='24' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
-                        {t("order the offer")}
-                    </CustomButton>
                 </Box>
             </Box>
         </Box>

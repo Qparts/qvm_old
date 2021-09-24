@@ -89,7 +89,7 @@ function Footer({ className }) {
 
           <Grid item xs={12} md={6}>
             <Typography className={classes.rightsReserved} variant="body1">
-              <span className={classes.headingDisc}> {t("All rights reserved for company")} </span>  Tatbiq Qata <span className={classes.headingDisc}> {t("for trading")} </span> @ 2021
+              <span className={classes.headingDisc}> {t("All rights reserved for company")} </span>  Tatbiq Qata' <span className={classes.headingDisc}> {t("for trading")} </span> @ 2021
             </Typography>
           </Grid>
           <Hidden only={['sm', 'xs']}>

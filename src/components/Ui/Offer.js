@@ -31,33 +31,38 @@ const useStyles = makeStyles((theme) => ({
     offerHeader: {
         color: theme.palette.secondary.darker,
         margin: '15px 0',
-        minHeight: '50px',
-        display: '-webkit-box',
-        WebkitBoxOrient: 'vertical',
-        WebkitLineClamp: 2,
-        overflow: 'hidden',
-        textOverflow: 'ellipsis',
+        minHeight: '49px',
         width: '85%',
+        WebkitLineClamp: 2
     },
     companyName: {
         color: '#526C78',
+        width: '80%',
+        WebkitLineClamp: 1
+    },
+    textTruncate: {
+        display: '-webkit-box',
+        WebkitBoxOrient: 'vertical',
+        overflow: 'hidden',
+        textOverflow: 'ellipsis',
+        wordBreak: 'break-all'
     },
     offerTimeLeft: {
         display: 'flex',
         '@media (max-width: 1000px) and (min-width: 960px)': {
-            alignItems: theme.direction === 'ltr' ? 'center' :  'normal'
+            alignItems: theme.direction === 'ltr' ? 'center' : 'normal'
         },
     },
     endOfDATE: {
         color: '#526C78',
         margin: '0 7px',
         '@media (max-width: 1000px) and (min-width: 960px)': {
-            fontSize: theme.direction === 'ltr' ? '0.726rem' :  theme.typography.body4.fontSize
+            fontSize: theme.direction === 'ltr' ? '0.726rem' : theme.typography.body4.fontSize
         },
     },
     date: {
         '@media (max-width: 970px) and (min-width: 960px)': {
-            fontSize: theme.direction === 'ltr' ? '0.8rem' :  theme.typography.subtitle2.fontSize
+            fontSize: theme.direction === 'ltr' ? '0.8rem' : theme.typography.subtitle2.fontSize
         },
     },
     partsNum: {
@@ -121,10 +126,12 @@ const Offer = (props, { className, ...other }) => {
                 <Typography variant="caption"> {t('Discount')}</Typography>
                 <Typography variant="h6" className={classes.percent}>{props.discount}</Typography>
             </Box>
-            <Typography variant="body4" className={classes.companyName}>{props.company}</Typography>
+            <Typography variant="body4" className={clsx(classes.companyName, classes.textTruncate)}>
+                {props.company}
+            </Typography>
             <Typography
                 variant="body3"
-                className={classes.offerHeader}>
+                className={clsx(classes.offerHeader, classes.textTruncate)}>
                 {props.offer}
             </Typography>
             <Box className={classes.offerTimeLeft}>
@@ -147,7 +154,7 @@ const Offer = (props, { className, ...other }) => {
                         {partsAvatars.length > 4 ?
                             <ListItem>
                                 <Avatar lastChildBg='lastChildBg'>
-                                {"+" + partsAvatarsPlus}
+                                    {"+" + partsAvatarsPlus}
                                 </Avatar>
                             </ListItem> : null
                         }

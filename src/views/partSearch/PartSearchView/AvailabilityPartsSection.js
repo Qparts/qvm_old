@@ -12,34 +12,12 @@ import TableAction from '../../../components/Ui/TableAction';
 import TextField from 'src/components/Ui/TextField';
 import SecContainer from '../../../components/Ui/SecContainer';
 import CustomDialog from '../../../components/Ui/Dialog';
-import CustomButton from '../../../components/Ui/Button';
 import { Plus, OrdersArrow } from "../../../icons/icons";
-import PurchaseOrderSection from './PurchaseOrderSection';
-import SendPurchaseOrderSection from './SendPurchaseOrderSection';
+import PurchaseOrderSection from 'src/layouts/DashboardLayout/TopBar/AddToPurchaseOrder/PurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    availabilityCont: {
-        position: 'relative',
-        '& .MuiTypography-h5': {
-            height: '60px',
-            lineHeight: '37px',
-        }
-    },
-    sendPo: {
-        position: 'absolute',
-        right: theme.spacing(2),
-        top: theme.spacing(1.25),
-        '& button': {
-            '@media (max-width: 320px) and (min-width: 300px)': {
-                padding: theme.spacing(0.875, 1.25),
-            },
-            '& svg': {
-                marginRight: theme.spacing(1)
-            }
-        },
-    },
     availabilityActionsCont: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -79,9 +57,8 @@ function AvailabilityPartsSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const [openAddToPO, setOpenAddToPO] = useState(false);
-    const [openSendPO, setOpenSendPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
-        rowsPerPage, error, query, locationFilters, filter, orders } = useSelector((state) => state.PartSearch);
+        rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -136,20 +113,8 @@ function AvailabilityPartsSection() {
         return () => clearTimeout(delayDebounceFn)
     }, [searchTerm]);
 
-    // <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>
-
     return (
-        <Box className={orders.length > 0 ? classes.availabilityCont : null}>
-            {orders.length > 0 ?
-                <Box className={classes.sendPo}>
-                    <CustomButton
-                        btnWidth='btnWidth'
-                        onClick={() => setOpenSendPO(true)}
-                    >
-                        <OrdersArrow width='17' height='17' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
-                        {t("Send PO")}
-                    </CustomButton>
-                </Box> : null}
+        <Box>
             <SecContainer
                 header={t('Search Results')}
                 secContainerMt='secContainerMt'>
@@ -213,7 +178,8 @@ function AvailabilityPartsSection() {
             <CustomDialog
                 open={selectedPart != null && openAddToPO == false}
                 handleClose={() => dispatch(setSelectedPart({ selectedPart: null }))}
-                title={t("Availability details")}>
+                title={t("Availability details")}
+                dialogWidth='dialogWidth'>
                 <PartDetails />
             </CustomDialog>
 
@@ -224,16 +190,8 @@ function AvailabilityPartsSection() {
                 dialogWidth='dialogWidth'>
                 {selectedPart != null &&
                     <PurchaseOrderSection
-                        closeOrderDailog={closeOrderDailog} />
+                        closeOrderDailog={closeOrderDailog} itemData={selectedPart} />
                 }
-            </CustomDialog>
-
-            <CustomDialog
-                fullWidth={true}
-                open={openSendPO}
-                handleClose={() => setOpenSendPO(false)}
-                title={t("Send PO")}>
-                <SendPurchaseOrderSection setOpenSendPO={setOpenSendPO} orders={orders} />
             </CustomDialog>
         </Box >
     );

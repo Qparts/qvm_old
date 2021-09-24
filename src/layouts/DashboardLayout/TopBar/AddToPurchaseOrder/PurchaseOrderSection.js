@@ -15,8 +15,12 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'space-between',
         padding: '10px',
+        borderBottom: '1px solid #efefef',
         '&:first-of-type': {
             paddingTop: 0,
+        },
+        '&:last-of-type': {
+            border: 0,
         },
     },
     partValue: {
@@ -31,16 +35,17 @@ function PurchaseOrderSection(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { selectedPart, companies, orders } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
     const [quantity, setQuantity] = useState('1');
+    const selectedItem = props.itemData;
+    const companyiesData = JSON.parse(localStorage.getItem('COMPANYIES'));
 
     //add order item to purchase from specific company.
     const addToOrder = () => {
         const order = {
-            companyId: selectedPart.companyId,
+            companyId: selectedItem.companyId,
             quantity: quantity,
-            order: selectedPart
+            order: selectedItem
         };
         dispatch(addOrder(order));
         props.closeOrderDailog();
@@ -53,20 +58,21 @@ function PurchaseOrderSection(props) {
                 <ListItem className={classes.partInfo}>
                     <Typography variant="body2">{t("Part Number")}</Typography>
                     <Typography variant="body3" className={classes.partValue}>
-                        {selectedPart.partNumber}
+                        {selectedItem.partNumber}
                     </Typography>
                 </ListItem>
                 <ListItem className={classes.partInfo}>
                     <Typography variant="body2">{t("Brand")}</Typography>
                     <Typography variant="body3" className={classes.partValue}>
-                        {selectedPart.brandName}
+                        {selectedItem.brandName}
                     </Typography>
                 </ListItem>
                 <ListItem className={classes.partInfo}>
                     <Typography variant="body2">{t("Vendor")}</Typography>
                     <Typography variant="body3" className={classes.partValue}>
-                        {themeDirection == 'ltr' ? companies.get(selectedPart.companyId).name
-                            : companies.get(selectedPart.companyId).nameAr}
+                        {themeDirection == 'ltr' ?
+                            companyiesData.filter(x => x[0] === selectedItem.companyId).map(w => w[1].name) :
+                            companyiesData.filter(x => x[0] === selectedItem.companyId).map(w => w[1].nameAr)}
                     </Typography>
                 </ListItem>
                 <ListItem className={classes.partInfo}>
@@ -77,6 +83,7 @@ function PurchaseOrderSection(props) {
                             type='input'
                             value={quantity}
                             // label={t('Quantity')}
+                            inputContChat='inputContChat'
                             onChange={event => setQuantity(event.target.value)} />
                     </Typography>
                 </ListItem>
@@ -86,7 +93,7 @@ function PurchaseOrderSection(props) {
             <Button
                 type='submit'
                 onClick={addToOrder}
-                disabled={!/^[1-9]+$/.test(quantity) || quantity === ' '}
+                disabled={!/^[1-9][0-9]*$/.test(quantity) || quantity === ' '}
             >
                 {t("Add to Purchase Order")}
             </Button>

@@ -2,11 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import {
-    Grid,
-    CardContent,
-    Box,
-} from '@material-ui/core';
+import { CardContent, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css';
 import { getSpecialOfferDetails, setFilter } from 'src/redux/slices/specialOffer';
@@ -21,6 +17,9 @@ import BackBtn from "../../../components/Ui/BackBtn";
 import { OrdersArrow, Search } from '../../../icons/icons';
 import TableAction from '../../../components/Ui/TableAction';
 import Card from '../../../components/Ui/Card';
+import CustomDialog from 'src/components/Ui/Dialog';
+import helper from 'src/utils/helper';
+import PurchaseOrderSection from 'src/layouts/DashboardLayout/TopBar/AddToPurchaseOrder/PurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
@@ -40,6 +39,8 @@ function SpecialOfferDetails({ specialOfferId }) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const [openAddToPO, setOpenAddToPO] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
     const { offerProducts = [], searchSize, error, filter } = useSelector((state) => state.specialOffer);
     const [page, setPage] = useState(0);
     const [searchTerm, setSearchTerm] = useState('');
@@ -76,6 +77,15 @@ function SpecialOfferDetails({ specialOfferId }) {
         setListView(false);
     }
 
+    const searchElement = (item) => {
+        helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, JSON.parse(item).partNumber)
+    };
+
+    const addToCompanyCart = (item) => {
+        setSelectedItem(JSON.parse(item));
+        setOpenAddToPO(true);
+    }
+
     const showDetailsElement = (item) => {
         return (
             <TableAction
@@ -85,7 +95,9 @@ function SpecialOfferDetails({ specialOfferId }) {
                 icon={<Search width='15' height='15' fill='#CED5D8' />}
                 link='/app/dashboard'
                 linkSearch='/app/dashboard'
-                mrItem="mrItem" />
+                mrItem="mrItem"
+                SearchEvent={() => searchElement(item)}
+                addItemEvent={() => addToCompanyCart(item)} />
         )
     }
 
@@ -121,10 +133,10 @@ function SpecialOfferDetails({ specialOfferId }) {
                                     name: t("Brand"),
                                     attr: 'brandName',
                                 },
-                                {
-                                    name: t("Quantity"),
-                                    attr: 'stock.length',
-                                },
+                                // {
+                                //     name: t("Quantity"),
+                                //     attr: 'stock.length',
+                                // },
                                 {
                                     name: t("Price"),
                                     attr: 'offers[0].offerPrice',
@@ -162,6 +174,13 @@ function SpecialOfferDetails({ specialOfferId }) {
                 </CardContent>
                 <CardFoot />
             </Card>
+            <CustomDialog
+                open={openAddToPO}
+                handleClose={() => setOpenAddToPO(false)}
+                title={t("Add to Purchase Order")}
+                dialogWidth='dialogWidth'>
+                <PurchaseOrderSection closeOrderDailog={() => setOpenAddToPO(false)} itemData={selectedItem} />
+            </CustomDialog>
         </>
     );
 }

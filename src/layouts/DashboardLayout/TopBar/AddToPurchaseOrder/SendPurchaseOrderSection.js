@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
+import { ListItem, ListItemIcon, ListItemText, Collapse } from '@material-ui/core';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import { deleteOrderFromCompany, updateCompaniesOrders, updateOrderItemQuantity } from 'src/redux/slices/partSearch';
@@ -13,7 +10,7 @@ import {
 } from 'src/redux/slices/chat';
 import chatService from 'src/services/chatService';
 import { useHistory } from 'react-router-dom';
-import { Delete } from "../../../icons/icons";
+import { Delete } from "src/icons/icons";
 import TableAction from 'src/components/Ui/TableAction';
 import PurchasedCompanyOrdersSection from './PurchasedCompanyOrdersSection';
 
@@ -22,12 +19,14 @@ import PurchasedCompanyOrdersSection from './PurchasedCompanyOrdersSection';
 function SendPurchaseOrderSection(props) {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { orders, companies } = useSelector((state) => state.PartSearch);
+    const { orders } = useSelector((state) => state.PartSearch);
     const { themeDirection } = useSelector((state) => state.settings);
     const { userConversations, messages, onlineUsers } = useSelector((state) => state.chat);
     const [openItemID, setOpenItemID] = useState(0);
     const { user, currentSocket } = useSelector((state) => state.authJwt);
 
+    const companyiesData = JSON.parse(localStorage.getItem('COMPANYIES'));
+    // const companyiesData = JSON.parse(localStorage.getItem('COMPANYIES')).filter(x => x[0] === 1).map(w => w[1].name);
 
     const handleClick = (itemID) => {
         if (openItemID != itemID)
@@ -54,6 +53,7 @@ function SendPurchaseOrderSection(props) {
 
     const sendOrder = async (order) => {
 
+        // console.log(order)
         //get conversation from current user cnversation list.
         let selectedConversation = getSelectedConversation(userConversations, order.companyId);
 
@@ -101,7 +101,7 @@ function SendPurchaseOrderSection(props) {
         dispatch(updateCompaniesOrders([]));
         dispatch(setActiveConversation(selectedConversation));
         history.push(`/app/chat/${selectedConversation._id}`);
-
+        props.setOpenSendPO(false);
     }
 
     //update order item quantity.
@@ -117,7 +117,7 @@ function SendPurchaseOrderSection(props) {
 
     //delete order item from company order list.
     const deleteOrder = (order) => {
-        console.log("orders", orders);
+        // console.log("orders", orders);
         dispatch(deleteOrderFromCompany(order));
     }
 
@@ -125,29 +125,33 @@ function SendPurchaseOrderSection(props) {
         <>
             {
                 orders.map((orderItem, index) => (
-                    <div key={index}>
-                        <ListItem button onClick={() => {
-                            handleClick(orderItem.companyId)
-                        }} >
-                            <ListItemIcon />
-                            <ListItemText primary={themeDirection == 'ltr' ?
-                                companies.get(orderItem.companyId).name :
-                                companies.get(orderItem.companyId).nameAr} />
-                            {openItemID === orderItem.companyId ? <ExpandLess /> : <ExpandMore />}
-                        </ListItem>
+                    <>
+                        {/* {console.log(orderItem)} */}
+                        <div key={index}>
+                            <ListItem button onClick={() => {
+                                handleClick(orderItem.companyId)
+                            }} >
+                                <ListItemIcon />
+                                <ListItemText primary={
+                                    themeDirection == 'ltr' ?
+                                        companyiesData.filter(x => x[0] === orderItem.companyId).map(w => w[1].name) :
+                                        companyiesData.filter(x => x[0] === orderItem.companyId).map(w => w[1].nameAr)} />
+                                {openItemID === orderItem.companyId ? <ExpandLess /> : <ExpandMore />}
+                            </ListItem>
 
-                        <Collapse in={openItemID === orderItem.companyId} timeout="auto" unmountOnExit>
+                            <Collapse in={openItemID === orderItem.companyId} timeout="auto" unmountOnExit>
 
-                            <PurchasedCompanyOrdersSection
-                                orderItem={orderItem}
-                                updateQuantity={updateQuantity}
-                                deleteElement={deleteElement}
-                                deleteCompanyOrders={deleteCompanyOrders}
-                                sendOrder={sendOrder}
-                            />
+                                <PurchasedCompanyOrdersSection
+                                    orderItem={orderItem}
+                                    updateQuantity={updateQuantity}
+                                    deleteElement={deleteElement}
+                                    deleteCompanyOrders={deleteCompanyOrders}
+                                    sendOrder={sendOrder}
+                                />
 
-                        </Collapse>
-                    </div >
+                            </Collapse>
+                        </div >
+                    </>
                 ))
             }
         </>

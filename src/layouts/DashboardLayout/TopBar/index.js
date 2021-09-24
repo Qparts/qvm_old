@@ -6,9 +6,9 @@ import Account from './Account';
 import PropTypes from 'prop-types';
 import Languages from './Languages';
 import UpgradeBtn from './UpgradeBtn';
-import { Icon } from '@iconify/react';
 import Notifications from './Notifications';
-import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
+import AddToPurchaseOrder from './AddToPurchaseOrder';
+import { Icon } from '@iconify/react';
 // import Orders from './Orders';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
 import { alpha, makeStyles, useTheme } from '@material-ui/core/styles';
@@ -16,6 +16,7 @@ import { Box, AppBar, Hidden, Toolbar, IconButton } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import { PATH_APP } from 'src/routes/paths';
 import helper from 'src/utils/helper';
+import UploadStockBtn from '../../../components/Ui/UploadStockBtn';
 import SearchBox from '../../../components/SearchBox';
 // import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 // import { MIconButton } from 'src/theme';
@@ -113,6 +114,7 @@ function TopBar({ onOpenNav, className }) {
           </MIconButton> */}
           {/* <Orders /> */}
           <Notifications />
+          <AddToPurchaseOrder />
           <Account />
         </Box>
       </Toolbar>

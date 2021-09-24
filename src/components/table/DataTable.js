@@ -58,6 +58,7 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '600px',
         },
     },
+    dataTablePurchaseOrder: { minWidth: '650px' },
     dataTablePartSearch: {
         '@media (max-width: 915px)': {
             minWidth: '844px',
@@ -117,7 +118,8 @@ const getValue = (object, path) => {
 };
 
 const getCellValue = (item, headerItem, maps) => {
-    const offersLength = item.offers === undefined ? null : item.offers.length
+    const offersLength = item.offers === undefined ? null : item.offers.length;
+    const purchaseOrderLength = item.order ? item.order.offers.length : null;
 
     let value = maps != null && maps.length && headerItem.isMapped ?
         maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
@@ -133,6 +135,12 @@ const getCellValue = (item, headerItem, maps) => {
         value = helper.ccyFormat(getValue(item, 'offers[0].offerPrice'));
     } else if (offersLength == 0 && headerItem.num === 'num') {
         value = getValue(item, 'retailPrice');
+    }
+
+    if (purchaseOrderLength > 0 && headerItem.po === 'po') {
+        value = helper.ccyFormat(getValue(item, 'order.offers[0].offerPrice'));
+    } else if (purchaseOrderLength == 0 && headerItem.po === 'po') {
+        value = getValue(item, 'order.retailPrice');
     }
 
     if (headerItem.type == 'number') {
@@ -212,7 +220,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     onRowsPerPageChange, hasChild = false, childData, childHeader,
     showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata, dataTableSetting,
     dataTableGeneral, dataTableChat, dataTablePartSearch, dataTableBankTrans, dataTableReplacementItem,
-    dataTableGeneralDashboard }) {
+    dataTableGeneralDashboard, dataTablePurchaseOrder }) {
 
     const classes = useStyles();
 
@@ -241,7 +249,8 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                 classes[dataTablePartSearch],
                                 classes[dataTableBankTrans],
                                 classes[dataTableReplacementItem],
-                                classes[dataTableGeneralDashboard]
+                                classes[dataTableGeneralDashboard],
+                                classes[dataTablePurchaseOrder]
                             )}
                             aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>
