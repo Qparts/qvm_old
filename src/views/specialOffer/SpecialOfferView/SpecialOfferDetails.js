@@ -78,11 +78,11 @@ function SpecialOfferDetails({ specialOfferId }) {
     }
 
     const searchElement = (item) => {
-        helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, JSON.parse(item).partNumber)
+        helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, item)
     };
 
     const addToCompanyCart = (item) => {
-        setSelectedItem(JSON.parse(item));
+        setSelectedItem(item);
         setOpenAddToPO(true);
     }
 
@@ -93,11 +93,9 @@ function SpecialOfferDetails({ specialOfferId }) {
                 title={t("order the offer")}
                 textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
                 icon={<Search width='15' height='15' fill='#CED5D8' />}
-                link='/app/dashboard'
-                linkSearch='/app/dashboard'
                 mrItem="mrItem"
-                SearchEvent={() => searchElement(item)}
-                addItemEvent={() => addToCompanyCart(item)} />
+                SearchEvent={() => searchElement(JSON.parse(item).partNumber)}
+                addItemEvent={() => addToCompanyCart(JSON.parse(item))} />
         )
     }
 
@@ -169,7 +167,9 @@ function SpecialOfferDetails({ specialOfferId }) {
                             isLazy={true}
                             size={searchSize}
                             rowsPerPage={constants.MAX}
-                            hasPagination={true} />
+                            hasPagination={true}
+                            searchElementGrid={searchElement}
+                            addToCompanyCartGrid={addToCompanyCart} />
                     }
                 </CardContent>
                 <CardFoot />

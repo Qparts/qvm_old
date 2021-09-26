@@ -9,7 +9,7 @@ import ReactApexChart from 'react-apexcharts';
 import { ApexChartsOption } from 'src/components/Charts/Apexcharts';
 import { setSelectedOffer } from 'src/redux/slices/specialOffer';
 import helper from 'src/utils/helper';
-import { Calender, Parts, Offer } from '../../../icons/icons';
+import { Calender, Parts, Offer, Location } from '../../../icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -111,8 +111,11 @@ export default function SpecialOfferInfo(props) {
     const theme = useTheme();
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const { countries } = useSelector((state) => state.authJwt);
     const { selectedOffer, companies } = useSelector((state) => state.specialOffer);
     const { themeDirection } = useSelector((state) => state.settings);
+    const getCountryId = companies.get(selectedOffer.companyId).countryId;
+    const companyLocation = countries.find((e) => e.id === getCountryId);
 
     const chartData = [helper.calculateTimeLeft(selectedOffer.startDate, selectedOffer.endDate)];
     const chartOptions = merge(ApexChartsOption(), {
@@ -175,6 +178,12 @@ export default function SpecialOfferInfo(props) {
                             <Typography variant="caption" sx={{ color: '#7E8D99', margin: '0 4px 0 7px' }}> {t('Expires in')}</Typography>
                             <Typography variant="body2" sx={{ color: theme.palette.secondary.main }}> {helper.toDate(selectedOffer.endDate)} </Typography>
                         </Box>
+                    </Box>
+                    <Box className={classes.offerDetailsFlex} sx={{ marginTop: '7px' }}>
+                        <Location width='20' height='20' fill='#7E8D99' />
+                        <Typography variant="body3" sx={{ color: theme.palette.secondary.main, marginLeft: '4px' }}>
+                            {themeDirection == 'rtl' ? companyLocation.nameAr : companyLocation.name}
+                        </Typography>
                     </Box>
                 </Box>
             </Box>

@@ -188,7 +188,11 @@ function MessageItem({
     let totalPrice = 0;
     for (let item of orders) {
       orderQuantity += parseInt(item.quantity);
-      totalPrice += parseInt(item.quantity) * item.order.retailPrice;
+      if (item.order.offers.length > 0) {
+        totalPrice += parseInt(item.quantity) * item.order.offers[0].offerPrice;
+      } else {
+        totalPrice += parseInt(item.quantity) * item.order.retailPrice;
+      }
     }
     return { orderQuantity: orderQuantity, totalPrice: totalPrice }
   }
@@ -361,7 +365,8 @@ function MessageItem({
                     name: t("Average market price"),
                     attr: 'order.retailPrice',
                     type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                    onchange: updateOrderField
+                    onchange: updateOrderField,
+                    po: 'po'
                   }
                 ]}
 

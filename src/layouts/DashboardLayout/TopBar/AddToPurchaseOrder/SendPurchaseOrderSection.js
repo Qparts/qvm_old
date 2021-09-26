@@ -28,6 +28,11 @@ function SendPurchaseOrderSection(props) {
     const companyiesData = JSON.parse(localStorage.getItem('COMPANYIES'));
     // const companyiesData = JSON.parse(localStorage.getItem('COMPANYIES')).filter(x => x[0] === 1).map(w => w[1].name);
 
+    useEffect(() => {
+        if (orders.length == 0)
+            props.setOpenSendPO(false);
+    }, [orders])
+
     const handleClick = (itemID) => {
         if (openItemID != itemID)
             setOpenItemID(itemID);
@@ -35,10 +40,10 @@ function SendPurchaseOrderSection(props) {
             setOpenItemID(0);
     };
 
-    useEffect(() => {
-        if (orders.length == 0)
-            props.setOpenSendPO(false);
-    }, [orders])
+    const getCompanyName = (orderItem) => {
+        const companiesFilter = companyiesData.filter(c => c[0] === orderItem.companyId)
+        return themeDirection === 'ltr' ? companiesFilter.map(n => n[1].name) : companiesFilter.map(n => n[1].nameAr)
+    }
 
     //delte item from company order list button.
     const deleteElement = (item) => {
@@ -51,9 +56,10 @@ function SendPurchaseOrderSection(props) {
     }
 
 
-    const sendOrder = async (order) => {
+    const sendOrder = async (order, companyId) => {
 
         // console.log(order)
+        let newCompanyOrders = [...orders];
         //get conversation from current user cnversation list.
         let selectedConversation = getSelectedConversation(userConversations, order.companyId);
 
@@ -98,7 +104,7 @@ function SendPurchaseOrderSection(props) {
             }
         })
 
-        dispatch(updateCompaniesOrders([]));
+        dispatch(updateCompaniesOrders(newCompanyOrders.filter(x => x.companyId !== companyId)));
         dispatch(setActiveConversation(selectedConversation));
         history.push(`/app/chat/${selectedConversation._id}`);
         props.setOpenSendPO(false);
@@ -132,10 +138,7 @@ function SendPurchaseOrderSection(props) {
                                 handleClick(orderItem.companyId)
                             }} >
                                 <ListItemIcon />
-                                <ListItemText primary={
-                                    themeDirection == 'ltr' ?
-                                        companyiesData.filter(x => x[0] === orderItem.companyId).map(w => w[1].name) :
-                                        companyiesData.filter(x => x[0] === orderItem.companyId).map(w => w[1].nameAr)} />
+                                <ListItemText primary={getCompanyName(orderItem)} />
                                 {openItemID === orderItem.companyId ? <ExpandLess /> : <ExpandMore />}
                             </ListItem>
 
