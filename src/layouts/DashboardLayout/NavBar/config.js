@@ -92,7 +92,7 @@ const navConfig = [
   // {
   //   items: [
   //     {
-  //       title: 'fund',
+  //       title: 'Request Fund',
   //       icon: <Catalog width='26' height='26' fill='#a2b4bd' />,
   //       href: PATH_APP.general.requestFund,
   //     },

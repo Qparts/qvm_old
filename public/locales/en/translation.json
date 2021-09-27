@@ -674,7 +674,16 @@
   "Confirm": "Confirm",
   "Account Settings Management": "Account Settings-Management",
   "You have no orders yet": "You have no orders yet",
-  "Quotation Price":"Quotation Price",
-  "Quotation Items":"Quotation Items",
-  "Fund Request":"Fund Request"
+  "Quotation Price": "Quotation Price",
+  "Quotation Items": "Quotation Items",
+  "Request Fund": "Request Fund",
+  "Upload CR file": "Upload CR file",
+  "Upload ID file": "Upload ID file",
+  "Upload the bank statement file": "Upload the bank statement file",
+  "Fund Amount": "Fund Amount",
+  "CR file is required": "CR file is required",
+  "Id file is required": "Id file is required",
+  "Banck Statement file is required": "Banck Statement file is required",
+  "Fund amount is required" :"Fund amount is required",
+  "Submit":"Submit"
 }

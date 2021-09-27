@@ -6,6 +6,7 @@ import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import Page from 'src/components/Page';
+import RequestFund from './RequestFund';
 
 // ----------------------------------------------------------------------
 
@@ -36,7 +37,7 @@ function RequestFundView() {
 
     return (
         <Page
-            title={t("Fund Request")}
+            title={t("Request Fund")}
             className={classes.root}
         >
             <LoadingOverlay
@@ -51,7 +52,7 @@ function RequestFundView() {
                     <LoadingScreen />
                 }
             >
-
+                <RequestFund />
             </LoadingOverlay>
         </Page>
     );
