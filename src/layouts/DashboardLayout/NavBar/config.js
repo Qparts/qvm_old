@@ -89,16 +89,16 @@ const navConfig = [
 
     ]
   },
-  {
-    items: [
-      {
-        title: 'fund',
-        icon: <Catalog width='26' height='26' fill='#a2b4bd' />,
-        href: PATH_APP.general.requestFund,
-      },
+  // {
+  //   items: [
+  //     {
+  //       title: 'fund',
+  //       icon: <Catalog width='26' height='26' fill='#a2b4bd' />,
+  //       href: PATH_APP.general.requestFund,
+  //     },
 
-    ]
-  },
+  //   ]
+  // },
 ];
 
 export default navConfig;
