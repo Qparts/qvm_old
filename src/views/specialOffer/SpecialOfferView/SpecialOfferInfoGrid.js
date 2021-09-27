@@ -68,7 +68,8 @@ const useStyles = makeStyles((theme) => ({
 // ----------------------------------------------------------------------
 
 function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = constants.MAX,
-    onSelectedPage, size = offerProducts.length, isLazy = true, hasPagination = false }) {
+    onSelectedPage, size = offerProducts.length, isLazy = true, hasPagination = false, searchElementGrid,
+    addToCompanyCartGrid }) {
 
     const classes = useStyles();
     const theme = useTheme();
@@ -119,8 +120,8 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
                                         textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
                                         icon={<Search width='15' height='15' fill='#CED5D8' />}
                                         TableActionBorder='TableActionBorder'
-                                        link='/app/dashboard'
-                                        linkSearch='/app/dashboard' />
+                                        SearchEvent={() => searchElementGrid(offerPro.partNumber)}
+                                        addItemEvent={() => addToCompanyCartGrid(offerPro)} />
                                 </CardContent>
                             </Card>
                         </Grid>
