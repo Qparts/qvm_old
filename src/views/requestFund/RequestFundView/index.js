@@ -1,16 +1,11 @@
-import Page from 'src/components/Page';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
-import {
-    Box,
-    Container,
-    Typography
-} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import QuotationSearchSection from './searchSection/QuotationSearchSection';
+import Page from 'src/components/Page';
 
 // ----------------------------------------------------------------------
 
@@ -32,16 +27,16 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function QuotationsReportView() {
+function RequestFundView() {
     const classes = useStyles();
-    const { isLoading } = useSelector((state) => state.quotationsReport);
     const { t } = useTranslation();
-
+    const dispatch = useDispatch();
+    const history = useHistory();
+    const { isLoading } = useSelector((state) => state.requestFund);
 
     return (
-
         <Page
-            title={t("reports")}
+            title={t("Fund Request")}
             className={classes.root}
         >
             <LoadingOverlay
@@ -56,11 +51,10 @@ function QuotationsReportView() {
                     <LoadingScreen />
                 }
             >
-                <QuotationSearchSection />
 
             </LoadingOverlay>
         </Page>
     );
 }
 
-export default QuotationsReportView;
+export default RequestFundView;

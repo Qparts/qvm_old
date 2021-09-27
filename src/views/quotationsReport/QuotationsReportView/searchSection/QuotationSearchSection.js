@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import 'react-slideshow-image/dist/styles.css'
 
@@ -10,6 +10,10 @@ import * as Yup from 'yup';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import QuotationSearchForm from './QuotationSearchForm';
 import Datatable from 'src/components/table/DataTable';
+import { getQuotationReport, setSelectedQuotation } from 'src/redux/slices/quotationsReport';
+import TableAction from 'src/components/Ui/TableAction';
+import { Plus } from 'src/icons/icons';
+import CustomDialog from 'src/components/Ui/Dialog';
 
 // ----------------------------------------------------------------------
 
@@ -36,6 +40,8 @@ function QuotationSearchSection() {
     const dispatch = useDispatch();
     const { t } = useTranslation();
     const isMountedRef = useIsMountedRef();
+    const { isLoading, data, selectedQuotation } = useSelector((state) => state.quotationsReport);
+    const { themeDirection } = useSelector((state) => state.settings);
 
     const date = new Date();
 
@@ -46,6 +52,23 @@ function QuotationSearchSection() {
             .required(t("Year is required")),
     });
 
+    const showDetailsElement = (item) => {
+        return (
+            <TableAction
+                type='partSearch'
+                title={t("Details")}
+                onClick={() => showDetailsAction(item)}
+                textIcon={<Plus width='14' height='14' fill='#CED5D8' />} />
+        )
+    }
+
+    const isSpecialOffer = (item) => {
+        return item.specialOffer;
+    }
+
+    const showDetailsAction = (item) => {
+        dispatch(setSelectedQuotation(JSON.parse(item)));
+    }
 
     const formik = useFormik({
         initialValues: {
@@ -58,6 +81,7 @@ function QuotationSearchSection() {
         onSubmit: async (values, { setErrors, setSubmitting }) => {
             try {
                 console.log("values", values);
+                dispatch(getQuotationReport(values.year, values.month))
             } catch (error) {
                 if (isMountedRef.current) {
                     setErrors({ afterSubmit: error.code || error.message });
@@ -76,33 +100,64 @@ function QuotationSearchSection() {
 
             <Box sx={{ mb: 6 }} />
 
-
             <Datatable
                 header={[
                     {
                         name: t("Received From"),
-                        attr: 'receivedFrom',
+                        attr: themeDirection == 'rtl' ? 'company.nameAr' : 'company.name',
                     },
                     {
                         name: t("Date"),
-                        attr: 'created'
+                        attr: 'created',
+                        type: 'date'
                     },
                     {
                         name: t("Number of items"),
-                        attr: 'numOfItems'
+                        attr: 'items.length'
                     }
                 ]}
-                datatable={[]}
+                actions={[{ element: showDetailsElement }]}
+                datatable={data}
                 page={0}
                 isLazy={false}
-                hasPagination={false}
-
+                hasPagination={true}
             />
 
+            <CustomDialog
+                open={selectedQuotation != null}
+                handleClose={() => dispatch(setSelectedQuotation(null))}
+                title={t("Quotation Items")}
+                dialogWidth='dialogWidth'>
+
+                <Datatable
+                    header={[
+                        {
+                            name: t("Part Number"),
+                            attr: 'productNumber',
+                            icon: <div style={{ color: 'red', backgroundColor: "rgba(238, 64, 54, 0.1)" }}>{t("Special Offer")}</div>,
+                            showIcon: isSpecialOffer,
+                        },
+                        {
+                            name: t("Brand"),
+                            attr: 'brand',
+                        },
+                        {
+                            name: t("Quotation Price"),
+                            trueAttr: 'specialOfferPrice',
+                            falseAttr: 'retailPrice',
+                            condition: isSpecialOffer,
+                            type: 'number'
+                        }
+                    ]}
+                    datatable={selectedQuotation?.items}
+                    page={0}
+                    isLazy={false}
+                    hasPagination={true}
+                    rowsPerPage={5}
+                />
+            </CustomDialog>
+
         </Box>
-
-
-
     );
 }
 

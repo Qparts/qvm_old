@@ -12,7 +12,7 @@ const navConfig = [
     items: [
       {
         title: 'home',
-        icon: <Icon icon={homeFill} color='#a2b4bd' style={{fontSize: '26px'}} />,
+        icon: <Icon icon={homeFill} color='#a2b4bd' style={{ fontSize: '26px' }} />,
         href: PATH_APP.general.root,
       },
 
@@ -85,6 +85,16 @@ const navConfig = [
         title: 'catalog',
         icon: <Catalog width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.catalog,
+      },
+
+    ]
+  },
+  {
+    items: [
+      {
+        title: 'fund',
+        icon: <Catalog width='26' height='26' fill='#a2b4bd' />,
+        href: PATH_APP.general.requestFund,
       },
 
     ]

@@ -51,6 +51,7 @@ export const PATH_APP = {
     specialOffer: path(ROOTS.app, '/special-offer'),
     specialOfferDetails: path(ROOTS.app, '/special-offer/:id'),
     quotationsReport: path(ROOTS.app, '/quotations-report'),
+    requestFund: path(ROOTS.app, '/request-fund'),
     upgradeSubscription: path(ROOTS.app, '/upgrade-subscription'),
     chat: {
       root: path(ROOTS.app, '/chat'),

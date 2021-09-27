@@ -81,6 +81,11 @@ const AppRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.general.requestFund,
+      component: lazy(() => import('src/views/requestFund/RequestFundView'))
+    },
+    {
+      exact: true,
       path: PATH_APP.general.upgradeSubscription,
       component: lazy(() => import('src/views/upgradeSubscription/UpgradeSubscriptionView'))
     },

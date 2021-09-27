@@ -113,21 +113,17 @@ const catalog = {
   getCatalogs: `${CATALOG_SERVICE}/catalogs`,
   getModels: (catalogid) => `${CATALOG_SERVICE}/models?catalogid=${catalogid}`,
   getCars: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${
-      params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
     } `,
   getCarByVIN: (vin) => `${CATALOG_SERVICE}/cars/vin?query=${vin}`,
   getFilters: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${
-      params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
     } `,
   getGroups: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${
-      groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `,
   getPart: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${
-      groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `
 };
 
@@ -139,7 +135,8 @@ const product = {
   specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
   postQvmStockUpload: `${PRODUCT_SERVICE}/stock-upload`,
   postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`,
-  getDashboardMetrics: `${PRODUCT_SERVICE}/dashboard-metrics`
+  getDashboardMetrics: `${PRODUCT_SERVICE}/dashboard-metrics`,
+  getQuotationReport: (year, month) => `${PRODUCT_SERVICE}/search-lists/year/${year}/month/${month}`
 };
 
 const plan = {
@@ -159,7 +156,7 @@ const chat = {
   getUserConversations: `${CHAT_SERVICE}/conversation/user-conversations`,
   postNewChat: `${CHAT_SERVICE}/conversation/`,
   postNewMessage: `${CHAT_SERVICE}/messages/`,
-  getConversationMessages: (conversationKey,page=1) =>
+  getConversationMessages: (conversationKey, page = 1) =>
     `${CHAT_SERVICE}/messages/${conversationKey}?page=${page}`,
   unseenMessages: `${CHAT_SERVICE}/messages/unseen`,
   putSeenConversationMessages: (conversationId, sender) =>

@@ -673,5 +673,8 @@
   "Your message sent successfully": "Your message sent successfully",
   "Confirm": "Confirm",
   "Account Settings Management": "Account Settings-Management",
-  "You have no orders yet": "You have no orders yet"
+  "You have no orders yet": "You have no orders yet",
+  "Quotation Price":"Quotation Price",
+  "Quotation Items":"Quotation Items",
+  "Fund Request":"Fund Request"
 }

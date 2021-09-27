@@ -8,7 +8,8 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper
+    Paper,
+    Typography
 } from '@material-ui/core';
 import clsx from 'clsx';
 import Button from "../button/CustomButton";
@@ -120,16 +121,17 @@ const getValue = (object, path) => {
 const getCellValue = (item, headerItem, maps) => {
     const offersLength = item.offers === undefined ? null : item.offers.length;
     const purchaseOrderLength = item.order ? item.order.offers.length : null;
-
-    let value = maps != null && maps.length && headerItem.isMapped ?
-        maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
-            maps[headerItem.mapIndex].get(getValue(item, headerItem.attr))[headerItem.mappedAttribute]
-            : getValue(item, headerItem.attr)
-        : headerItem.isBooleanOp ? getValue(item, headerItem.attr) ?
-            headerItem.Result.positiveValue :
-            headerItem.Result.negativeValue
-            :
-            (getValue(item, headerItem.attr));
+    let value;
+    if (headerItem.attr)
+        value = maps != null && maps.length && headerItem.isMapped ?
+            maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
+                maps[headerItem.mapIndex].get(getValue(item, headerItem.attr))[headerItem.mappedAttribute]
+                : getValue(item, headerItem.attr)
+            : headerItem.isBooleanOp ? getValue(item, headerItem.attr) ?
+                headerItem.Result.positiveValue :
+                headerItem.Result.negativeValue
+                :
+                (getValue(item, headerItem.attr));
 
     if (offersLength > 0 && headerItem.num === 'num') {
         value = helper.ccyFormat(getValue(item, 'offers[0].offerPrice'));
@@ -143,10 +145,20 @@ const getCellValue = (item, headerItem, maps) => {
         value = getValue(item, 'order.retailPrice');
     }
 
+    if (headerItem.condition) {
+        if (headerItem.condition(item)) {
+            value = getValue(item, headerItem.trueAttr)
+        }
+        else
+            value = getValue(item, headerItem.falseAttr)
+    }
+
     if (headerItem.type == 'number') {
         value = helper.ccyFormat(value);
     }
-
+    if (headerItem.type == 'date') {
+        value = helper.toDate(new Date(value));
+    }
     if (headerItem.label)
         value = value + ' ' + headerItem.label;
 
@@ -156,6 +168,8 @@ const getCellValue = (item, headerItem, maps) => {
 
     return value;
 }
+
+
 
 // ----------------------------------------------------------------------
 
@@ -307,7 +321,10 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                                             defaultValue={getCellValue(item, headerItem, maps)}
                                                                             value={getCellValue(item, headerItem, maps)}
                                                                         /> :
-                                                                        getCellValue(item, headerItem, maps)
+
+                                                                        headerItem.showIcon && headerItem.showIcon(item) ?
+                                                                            <div>{headerItem.icon} {getCellValue(item, headerItem, maps)}</div>
+                                                                            : getCellValue(item, headerItem, maps)
                                                                 }
                                                             </TableCell>
                                                         );
