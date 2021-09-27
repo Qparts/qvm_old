@@ -71,7 +71,7 @@ function PurchasedCompanyOrdersSection(props) {
                     />
 
                     <Box className={classes.orderDataActions}>
-                        <Button onClick={() => sendOrder(orderItem, orderItem.companyId)} disabled={orderItemQuantityVal === false}>
+                        <Button onClick={() => sendOrder(orderItem)} disabled={orderItemQuantityVal === false}>
                             {t("Send")}
                         </Button>
                         <Button

@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Box, Grid } from '@material-ui/core';
-import { Phone, Mail, Location } from 'src/icons/icons';
+import { Phone, Mail, Location, Company } from 'src/icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -19,8 +19,8 @@ const useStyles = makeStyles((theme) => ({
         justifyContent: 'flex-start',
         "& svg": { marginRight: theme.spacing(1) },
         '& span': {
-            '@media (max-width: 1049px) and (min-width: 960px)': {
-                fontSize: '0.848rem',
+            '@media (max-width: 1095px) and (min-width: 960px)': {
+                fontSize: '0.77rem',
             }
         },
     },
@@ -42,7 +42,7 @@ function ContactSocial({ className }) {
         <Box className={clsx(classes.root, className)} position='relative'>
             <Container maxWidth="lg">
                 <Grid container spacing={2} >
-                    <Grid item xs={12} md={6}>
+                    <Grid item xs={12} md={6} sm={6}>
                         <Box className={classes.contactSocialItem}>
                             <Location width='20' height='20' fill='#7E8D99' />
                             <Typography variant="body3">
@@ -50,13 +50,19 @@ function ContactSocial({ className }) {
                             </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={2} sm={6}>
+                        <Box className={classes.contactSocialItem}>
+                            <Company width='20' height='20' fill='#7E8D99' />
+                            <Typography variant="body3"> Postal Code: 34252 </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item xs={12} md={2} sm={6}>
                         <Box className={classes.contactSocialItem}>
                             <Phone width='20' height='20' fill='#7E8D99' className={classes.Phone} />
                             <Typography variant="body3"> 966582702017 </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={12} md={3}>
+                    <Grid item xs={12} md={2} sm={6}>
                         <Box className={classes.contactSocialItem}>
                             <Mail width='20' height='20' fill='#7E8D99' />
                             <Typography variant="body3"> info@qetaa.parts </Typography>

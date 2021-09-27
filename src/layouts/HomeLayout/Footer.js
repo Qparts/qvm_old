@@ -22,7 +22,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1, 0),
     '& p': {
       '@media (max-width: 985px) and (min-width: 960px)': {
-        fontSize: '0.97rem',
+        fontSize: '0.968rem',
       }
     }
 

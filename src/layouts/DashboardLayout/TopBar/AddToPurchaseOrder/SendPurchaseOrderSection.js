@@ -56,13 +56,12 @@ function SendPurchaseOrderSection(props) {
     }
 
 
-    const sendOrder = async (order, companyId) => {
+    const sendOrder = async (order) => {
 
         // console.log(order)
         let newCompanyOrders = [...orders];
         //get conversation from current user cnversation list.
         let selectedConversation = getSelectedConversation(userConversations, order.companyId);
-
 
         //if there is no a conversation between login user and company of orders create one.
         if (selectedConversation == null) {
@@ -104,7 +103,7 @@ function SendPurchaseOrderSection(props) {
             }
         })
 
-        dispatch(updateCompaniesOrders(newCompanyOrders.filter(x => x.companyId !== companyId)));
+        dispatch(updateCompaniesOrders(newCompanyOrders.filter(x => x.companyId !== order.companyId)));
         dispatch(setActiveConversation(selectedConversation));
         history.push(`/app/chat/${selectedConversation._id}`);
         props.setOpenSendPO(false);
