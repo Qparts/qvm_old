@@ -1,19 +1,21 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import 'react-slideshow-image/dist/styles.css'
-
-import Box from '@material-ui/core/Box';
+import { Box, Typography } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import QuotationSearchForm from './QuotationSearchForm';
+import { PATH_APP } from 'src/routes/paths';
 import Datatable from 'src/components/table/DataTable';
 import { getQuotationReport, setSelectedQuotation } from 'src/redux/slices/quotationsReport';
 import TableAction from 'src/components/Ui/TableAction';
 import { Plus } from 'src/icons/icons';
 import CustomDialog from 'src/components/Ui/Dialog';
+import SecContainer from 'src/components/Ui/SecContainer';
+import EmptyContent from "src/components/Ui/EmptyContent";
 
 // ----------------------------------------------------------------------
 
@@ -30,6 +32,13 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
+    },
+    specialOfferBadge: {
+        backgroundColor: '#FEE6E6',
+        color: theme.palette.primary.main,
+        borderRadius: '5px 0 5px 5px',
+        padding: '4px 7px',
+        marginLeft: '5px'
     }
 }));
 
@@ -39,9 +48,12 @@ function QuotationSearchSection() {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const history = useHistory();
     const isMountedRef = useIsMountedRef();
-    const { isLoading, data, selectedQuotation } = useSelector((state) => state.quotationsReport);
+    const [subscription, setSubscription] = useState(false);
+    const { data, selectedQuotation } = useSelector((state) => state.quotationsReport);
     const { themeDirection } = useSelector((state) => state.settings);
+    const { currentPlan } = useSelector((state) => state.authJwt);
 
     const date = new Date();
 
@@ -62,10 +74,6 @@ function QuotationSearchSection() {
         )
     }
 
-    const isSpecialOffer = (item) => {
-        return item.specialOffer;
-    }
-
     const showDetailsAction = (item) => {
         dispatch(setSelectedQuotation(JSON.parse(item)));
     }
@@ -80,8 +88,14 @@ function QuotationSearchSection() {
         validationSchema: stockSchema,
         onSubmit: async (values, { setErrors, setSubmitting }) => {
             try {
-                console.log("values", values);
-                dispatch(getQuotationReport(values.year, values.month))
+                if (currentPlan.status === 'A') {
+                    // console.log("values", values);
+                    dispatch(getQuotationReport(values.year, values.month));
+                    setSubscription(false);
+                }
+                else {
+                    setSubscription(true);
+                }
             } catch (error) {
                 if (isMountedRef.current) {
                     setErrors({ afterSubmit: error.code || error.message });
@@ -91,72 +105,81 @@ function QuotationSearchSection() {
         }
     });
 
+    // console.log(selectedQuotation)
 
     return (
-
         <Box sx={{ width: '100%' }}>
 
             <QuotationSearchForm formik={formik} />
-
-            <Box sx={{ mb: 6 }} />
-
-            <Datatable
-                header={[
-                    {
-                        name: t("Received From"),
-                        attr: themeDirection == 'rtl' ? 'company.nameAr' : 'company.name',
-                    },
-                    {
-                        name: t("Date"),
-                        attr: 'created',
-                        type: 'date'
-                    },
-                    {
-                        name: t("Number of items"),
-                        attr: 'items.length'
-                    }
-                ]}
-                actions={[{ element: showDetailsElement }]}
-                datatable={data}
-                page={0}
-                isLazy={false}
-                hasPagination={true}
-            />
-
-            <CustomDialog
-                open={selectedQuotation != null}
-                handleClose={() => dispatch(setSelectedQuotation(null))}
-                title={t("Quotation Items")}
-                dialogWidth='dialogWidth'>
-
-                <Datatable
-                    header={[
-                        {
-                            name: t("Part Number"),
-                            attr: 'productNumber',
-                            icon: <div style={{ color: 'red', backgroundColor: "rgba(238, 64, 54, 0.1)" }}>{t("Special Offer")}</div>,
-                            showIcon: isSpecialOffer,
-                        },
-                        {
-                            name: t("Brand"),
-                            attr: 'brand',
-                        },
-                        {
-                            name: t("Quotation Price"),
-                            trueAttr: 'specialOfferPrice',
-                            falseAttr: 'retailPrice',
-                            condition: isSpecialOffer,
-                            type: 'number'
-                        }
-                    ]}
-                    datatable={selectedQuotation?.items}
-                    page={0}
-                    isLazy={false}
-                    hasPagination={true}
-                    rowsPerPage={5}
+            <Box mb={4} />
+            {subscription ?
+                <EmptyContent
+                    btnTitle={t("Upgrade to Premium")}
+                    title={t("You are not subscribed")}
+                    description={t("In order to be able to know your sales and purchases reports throughout the year upgrade to the premium package")}
+                    url={() => history.push(PATH_APP.general.upgradeSubscription)}
                 />
-            </CustomDialog>
+                :
+                data.length > 0 ?
+                    <SecContainer header={t('reports')} bodyP="bodyP">
+                        <Datatable
+                            header={[
+                                {
+                                    name: t("Received From"),
+                                    attr: themeDirection == 'rtl' ? 'company.nameAr' : 'company.name',
+                                },
+                                {
+                                    name: t("Date"),
+                                    attr: 'created',
+                                    type: 'date'
+                                },
+                                {
+                                    name: t("Number of items"),
+                                    attr: 'items.length'
+                                }
+                            ]}
+                            actions={[{ element: showDetailsElement }]}
+                            datatable={data}
+                            page={0}
+                            isLazy={false}
+                            hasPagination={true}
+                            dataTableQuotationsReport="dataTableQuotationsReport"
+                        />
 
+                        <CustomDialog
+                            open={selectedQuotation != null}
+                            handleClose={() => dispatch(setSelectedQuotation(null))}
+                            title={t("Quotation Items")}
+                            dialogWidth='dialogWidth'>
+
+                            <Datatable
+                                header={[
+                                    {
+                                        name: t("Part Number"),
+                                        attr: 'productNumber',
+                                        badge: <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>,
+                                    },
+                                    {
+                                        name: t("Brand"),
+                                        attr: 'brand',
+                                    },
+                                    {
+                                        name: t("Quotation Price"),
+                                        attr: 'retailPrice',
+                                        type: 'number'
+                                    }
+                                ]}
+                                datatable={selectedQuotation?.items}
+                                page={0}
+                                isLazy={false}
+                                hasPagination={true}
+                                rowsPerPage={5}
+                                dataTablePad='dataTablePad'
+                                dataTableQuotationsReportDetail='dataTableQuotationsReportDetail'
+                            />
+                        </CustomDialog>
+                    </SecContainer>
+                    : ""}
         </Box>
     );
 }

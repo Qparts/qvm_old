@@ -32,12 +32,10 @@ const useStyles = makeStyles((theme) => ({
         color: theme.palette.secondary.darker,
         margin: '15px 0',
         minHeight: '49px',
-        width: '85%',
         WebkitLineClamp: 2
     },
     companyName: {
         color: '#526C78',
-        width: '80%',
         WebkitLineClamp: 1
     },
     textTruncate: {
@@ -91,19 +89,6 @@ const useStyles = makeStyles((theme) => ({
             }
         }
     },
-    discount: {
-        position: 'absolute',
-        top: 0,
-        right: 0,
-        background: '#F6F8FC',
-        borderRadius: '10px',
-        padding: '5px',
-        textAlign: 'center'
-    },
-    percent: {
-        color: '#F20505',
-        lineHeight: 1
-    },
     partsNumber: {
         color: theme.palette.secondary.darker,
         marginTop: '17px'
@@ -122,10 +107,6 @@ const Offer = (props, { className, ...other }) => {
 
     return (
         <Card className={clsx(classes.root, classes.offerBody, className)} {...other}>
-            <Box className={classes.discount}>
-                <Typography variant="caption"> {t('Discount')}</Typography>
-                <Typography variant="h6" className={classes.percent}>{props.discount}</Typography>
-            </Box>
             <Typography variant="body4" className={clsx(classes.companyName, classes.textTruncate)}>
                 {props.company}
             </Typography>

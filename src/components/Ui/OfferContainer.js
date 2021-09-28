@@ -47,7 +47,6 @@ function OfferContainer(props) {
                                 offer={themeDirection == 'rtl' ? specialOffer.offerNameAr : specialOffer.offerName}
                                 date={helper.toDate(specialOffer.endDate)}
                                 partsNum={specialOffer.numberOfItems}
-                                discount='50%'
                                 timeLeft={helper.calculateTimeLeft(specialOffer.startDate, specialOffer.endDate) + '%'}
                                 parts={PARTS} />
                         </Box>

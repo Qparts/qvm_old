@@ -63,6 +63,8 @@ function SendPurchaseOrderSection(props) {
         //get conversation from current user cnversation list.
         let selectedConversation = getSelectedConversation(userConversations, order.companyId);
 
+        // console.log(order, selectedConversation, user)
+
         //if there is no a conversation between login user and company of orders create one.
         if (selectedConversation == null) {
 
@@ -90,6 +92,7 @@ function SendPurchaseOrderSection(props) {
 
         //send order to all online users.
         selectedConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
+            // console.log("member", member)
             let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
             if (onlineUserIndex != -1) {
                 currentSocket.current.emit("sendMessage", {

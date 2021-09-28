@@ -2,11 +2,6 @@ import Page from 'src/components/Page';
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
-import {
-    Box,
-    Container,
-    Typography
-} from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
@@ -37,9 +32,7 @@ function QuotationsReportView() {
     const { isLoading } = useSelector((state) => state.quotationsReport);
     const { t } = useTranslation();
 
-
     return (
-
         <Page
             title={t("reports")}
             className={classes.root}
@@ -57,7 +50,7 @@ function QuotationsReportView() {
                 }
             >
                 <QuotationSearchSection />
-
+                
             </LoadingOverlay>
         </Page>
     );

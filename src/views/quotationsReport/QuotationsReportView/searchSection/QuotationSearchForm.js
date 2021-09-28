@@ -1,12 +1,10 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
 import { Form, FormikProvider } from 'formik';
-import { useSelector, useDispatch } from 'react-redux';
-import {
-    TextField,
-    Grid} from '@material-ui/core';
+import { Grid, MenuItem, Box } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
-import Button from "src/components/button/CustomButton";
+import Button from 'src/components/Ui/Button';
+import TextField from "src/components/Ui/TextField";
 
 // ----------------------------------------------------------------------
 
@@ -15,13 +13,9 @@ QuotationSearchForm.propTypes = {
 };
 
 
-
 function QuotationSearchForm({ formik }) {
-    const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
+    const { errors, touched, handleSubmit, getFieldProps } = formik;
     const { t } = useTranslation();
-    const dispatch = useDispatch();
-    const { themeDirection } = useSelector((state) => state.settings);
-
     const [months, setMonths] = useState(
         [
             "01",
@@ -40,31 +34,28 @@ function QuotationSearchForm({ formik }) {
 
     const [years, setYears] = useState([]);
 
-
     useEffect(() => {
         let date = new Date();
         const year = date.getFullYear();
 
         let currentYears = [];
         for (var i = year; i > year - 5; i--) {
-            currentYears.push(i);
+            if (i > 2019) currentYears.push(i);
         }
         setYears(currentYears);
     }, [])
-
-
 
     return (
         <FormikProvider value={formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
                 <Grid container spacing={2}>
 
-                    <Grid item xs={5} >
+                    <Grid item md={5} sm={4} xs={6} >
                         <TextField
-                            select
-                            fullWidth
+                            type='select'
                             name="year"
                             label={t("Year")}
+                            selectBg='selectBg'
                             {...getFieldProps('year')}
                             SelectProps={{ native: true }}
                             error={Boolean(touched.year && errors.year)}
@@ -72,49 +63,37 @@ function QuotationSearchForm({ formik }) {
                         >
                             {/* <option value="" /> */}
                             {years.map((option, index) => (
-                                <option key={index} value={option}>
+                                <MenuItem key={index} value={option}>
                                     {option}
-                                </option>
+                                </MenuItem>
                             ))}
                         </TextField>
                     </Grid>
 
-
-                    <Grid item xs={5} >
+                    <Grid item md={5} sm={4} xs={6} >
                         <TextField
-                            select
-                            fullWidth
+                            type='select'
                             name="month"
                             label={t("Month")}
+                            selectBg='selectBg'
                             {...getFieldProps('month')}
                             SelectProps={{ native: true }}
                             error={Boolean(touched.month && errors.month)}
                             helperText={touched.month && errors.month}
                         >
-                            <option value="" />
+                            <MenuItem value="" />
                             {months.map((option, index) => (
-                                <option key={index} value={option}>
+                                <MenuItem key={index} value={option}>
                                     {option}
-                                </option>
+                                </MenuItem>
                             ))}
                         </TextField>
                     </Grid>
 
-                    <Grid item xs={2}>
-                        <Button
-                            className="round"
-                            color="primary"
-                            className="mx-2"
-                            type="submit"
-                            round
-                            simple
-                        >
-                            {t("Create Report")}
-                        </Button>
+                    <Grid item md={2} sm={4} xs={12}>
+                        <Box mt={0.5}/>
+                        <Button type="submit"> {t("Create Report")} </Button>
                     </Grid>
-
-
-
                 </Grid>
             </Form>
         </FormikProvider>

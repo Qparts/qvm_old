@@ -60,7 +60,7 @@ function PartsSearchRate({ className, ...other }) {
     return (
         <Card className={clsx(classes.root, className)} {...other}>
             <Box className={classes.cardHeaderChart} >
-                <Typography variant="h5" className={classes.partSearchRateHead}> {t("Search rate for parts in your stock")} </Typography>
+                <Typography variant="h5" className={classes.partSearchRateHead}> {t("Search stats for the parts in your stock")} </Typography>
             </Box>
             <Box sx={{ mt: 3, mx: 3 }} dir="ltr">
                 <ReactApexChart

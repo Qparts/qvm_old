@@ -50,7 +50,7 @@
   "weekly report": "تقرير أسبوعى",
   "outgo orders": "طلبات صادره",
   "Search rate for parts": "معدل البحث على القطع",
-  "Search rate for parts in your stock": "معدل البحث على القطع فى مخزونك",
+  "Search stats for the parts in your stock": "احصائيات البحث على القطع فى مخزونك",
   "Most searched parts in your stock": "القطع الأكثر بحثا فى مخزونك",
   "Most reactive companies in your stock": "الشركات الأكثر تفاعلا على مخزونك",
   "add stock": "أضف مخزونك",
@@ -717,5 +717,8 @@
   "You have no orders yet": "ليس لديك أي طلبات حتى الآن",
   "Quotation Price":"السعر  في التسعيرة",
   "Quotation Items":"القطع في التسعيرة",
-  "Fund Request":"طلب الدعم"
+  "Fund Request":"طلب الدعم",
+  "Search in search results": "إبحث فى نتائج البحث",
+  "You are not subscribed": "أنت غير مشترك",
+  "In order to be able to know your sales and purchases reports throughout the year upgrade to the premium package": "لكي تتمكن من معرفة تقارير المبيعات والمشتريات الخاصة بك على مدار العام. قم ب الترقية للباقة المميزة."
 }

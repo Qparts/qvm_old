@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
-import { useHistory } from "react-router";
+import { useHistory, useLocation } from "react-router";
 import { useDispatch } from 'react-redux';
 import Account from './Account';
 import PropTypes from 'prop-types';
@@ -61,6 +61,8 @@ function TopBar({ onOpenNav, className }) {
   const dispatch = useDispatch();
   const history = useHistory();
   const { t } = useTranslation();
+  const { pathname } = useLocation();
+  const isSearch = pathname.includes('search');
   // const { cartItems } = useSelector((state) => state.market);
 
   const handlePartSearch = (search) => {
@@ -80,9 +82,13 @@ function TopBar({ onOpenNav, className }) {
             <Icon icon={menu2Fill} />
           </IconButton>
         </Hidden>
-
-        <Hidden lgDown><SearchBox type='topBarSearch' placeholder={t("Search by part number")} handleSubmit={handlePartSearch} /></Hidden>
-        <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handlePartSearch} /></Hidden>
+        {isSearch ? null
+          :
+          <>
+            <Hidden lgDown><SearchBox type='topBarSearch' placeholder={t("Search by part number")} handleSubmit={handlePartSearch} /></Hidden>
+            <Hidden lgUp><SearchBox type='topBarSearchSm' handleSubmit={handlePartSearch} /></Hidden>
+          </>
+        }
         <Box sx={{ flexGrow: 1 }} />
 
         <Box

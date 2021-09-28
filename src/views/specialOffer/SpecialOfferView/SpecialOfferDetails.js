@@ -137,9 +137,8 @@ function SpecialOfferDetails({ specialOfferId }) {
                                 // },
                                 {
                                     name: t("Price"),
-                                    attr: 'offers[0].offerPrice',
-                                    type: 'number',
-                                    label: t("SAR")
+                                    attr: 'retailPrice',
+                                    num: 'num'
                                 }
                             ]}
                             actions={[

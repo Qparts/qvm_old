@@ -49,7 +49,7 @@
   "weekly report": "Weekly report",
   "outgo orders": "outgo orders",
   "Search rate for parts": "Search rate for parts",
-  "Search rate for parts in your stock": "Search rate for parts in your stock",
+  "Search stats for the parts in your stock": "Search stats for the parts in your stock",
   "Most searched parts in your stock": "Most searched parts in your stock",
   "Most reactive companies in your stock": "Most reactive companies in your stock",
   "add stock": "Add stock",
@@ -676,5 +676,8 @@
   "You have no orders yet": "You have no orders yet",
   "Quotation Price":"Quotation Price",
   "Quotation Items":"Quotation Items",
-  "Fund Request":"Fund Request"
+  "Fund Request":"Fund Request",
+  "Search in search results": "Search in search results",
+  "You are not subscribed": "You are not subscribed",
+  "In order to be able to know your sales and purchases reports throughout the year upgrade to the premium package": "In order to be able to know your sales and purchases reports throughout the year. Upgrade to the premium package."
 }

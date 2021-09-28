@@ -248,7 +248,7 @@ function TopBar() {
           }}
         >
           <RouterLink to="/">
-            {isLogo ? <Logo newLogo='newLogo' /> : <LogoDark />}
+            {isLogo ? <Logo /> : <LogoDark />}
           </RouterLink>
           <Box sx={{ flexGrow: 1 }} />
 

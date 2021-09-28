@@ -8,8 +8,7 @@ import {
     TableContainer,
     TableHead,
     TableRow,
-    Paper,
-    Typography
+    Paper
 } from '@material-ui/core';
 import clsx from 'clsx';
 import Button from "../button/CustomButton";
@@ -59,7 +58,7 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '600px',
         },
     },
-    dataTablePurchaseOrder: { minWidth: '650px' },
+    dataTablePurchaseOrder: { minWidth: '579px' },
     dataTablePartSearch: {
         '@media (max-width: 915px)': {
             minWidth: '844px',
@@ -70,12 +69,22 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '735px',
         },
     },
-    dataTableSetting: {
-        '@media (max-width: 970px) and (min-width: 960px)': {
-            minWidth: '659px',
+    dataTableQuotationsReport: {
+        '@media (max-width: 550px)': {
+            minWidth: '478px',
         },
-        '@media (max-width: 740px)': {
-            minWidth: '666px',
+    },
+    dataTableQuotationsReportDetail: {
+        '@media (max-width: 487px)': {
+            minWidth: '447px',
+        },
+    },
+    dataTableSetting: {
+        // '@media (max-width: 970px) and (min-width: 960px)': {
+        //     minWidth: '659px',
+        // },
+        '@media (max-width: 607px)': {
+            minWidth: '535px',
         },
     },
     dataTablePad: {
@@ -121,17 +130,16 @@ const getValue = (object, path) => {
 const getCellValue = (item, headerItem, maps) => {
     const offersLength = item.offers === undefined ? null : item.offers.length;
     const purchaseOrderLength = item.order ? item.order.offers.length : null;
-    let value;
-    if (headerItem.attr)
-        value = maps != null && maps.length && headerItem.isMapped ?
-            maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
-                maps[headerItem.mapIndex].get(getValue(item, headerItem.attr))[headerItem.mappedAttribute]
-                : getValue(item, headerItem.attr)
-            : headerItem.isBooleanOp ? getValue(item, headerItem.attr) ?
-                headerItem.Result.positiveValue :
-                headerItem.Result.negativeValue
-                :
-                (getValue(item, headerItem.attr));
+
+    let value = maps != null && maps.length && headerItem.isMapped ?
+        maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
+            maps[headerItem.mapIndex].get(getValue(item, headerItem.attr))[headerItem.mappedAttribute]
+            : getValue(item, headerItem.attr)
+        : headerItem.isBooleanOp ? getValue(item, headerItem.attr) ?
+            headerItem.Result.positiveValue :
+            headerItem.Result.negativeValue
+            :
+            (getValue(item, headerItem.attr));
 
     if (offersLength > 0 && headerItem.num === 'num') {
         value = helper.ccyFormat(getValue(item, 'offers[0].offerPrice'));
@@ -145,12 +153,10 @@ const getCellValue = (item, headerItem, maps) => {
         value = getValue(item, 'order.retailPrice');
     }
 
-    if (headerItem.condition) {
-        if (headerItem.condition(item)) {
-            value = getValue(item, headerItem.trueAttr)
-        }
-        else
-            value = getValue(item, headerItem.falseAttr)
+    if (item.specialOffer && headerItem.type == 'number') {
+        value = helper.ccyFormat(getValue(item, 'specialOfferPrice'));
+    } else if (!item.specialOffer && headerItem.type == 'number') {
+        value = getValue(item, 'retailPrice');
     }
 
     if (headerItem.type == 'number') {
@@ -162,7 +168,7 @@ const getCellValue = (item, headerItem, maps) => {
     if (headerItem.label)
         value = value + ' ' + headerItem.label;
 
-    if (headerItem.badge && offersLength > 0) {
+    if ((headerItem.badge && offersLength > 0) || (headerItem.badge && item.specialOffer) ) {
         value = <> {value} {headerItem.badge} </>
     }
 
@@ -234,7 +240,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
     onRowsPerPageChange, hasChild = false, childData, childHeader,
     showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata, dataTableSetting,
     dataTableGeneral, dataTableChat, dataTablePartSearch, dataTableBankTrans, dataTableReplacementItem,
-    dataTableGeneralDashboard, dataTablePurchaseOrder }) {
+    dataTableGeneralDashboard, dataTablePurchaseOrder, dataTableQuotationsReport, dataTableQuotationsReportDetail }) {
 
     const classes = useStyles();
 
@@ -264,7 +270,9 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                 classes[dataTableBankTrans],
                                 classes[dataTableReplacementItem],
                                 classes[dataTableGeneralDashboard],
-                                classes[dataTablePurchaseOrder]
+                                classes[dataTablePurchaseOrder],
+                                classes[dataTableQuotationsReport],
+                                classes[dataTableQuotationsReportDetail]
                             )}
                             aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>
@@ -321,10 +329,7 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                                             defaultValue={getCellValue(item, headerItem, maps)}
                                                                             value={getCellValue(item, headerItem, maps)}
                                                                         /> :
-
-                                                                        headerItem.showIcon && headerItem.showIcon(item) ?
-                                                                            <div>{headerItem.icon} {getCellValue(item, headerItem, maps)}</div>
-                                                                            : getCellValue(item, headerItem, maps)
+                                                                        getCellValue(item, headerItem, maps)
                                                                 }
                                                             </TableCell>
                                                         );

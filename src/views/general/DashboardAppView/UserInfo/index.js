@@ -6,10 +6,11 @@ import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Card, Typography, Box } from '@material-ui/core';
 import clsx from 'clsx';
-import { Edit, Company } from '../../../../icons/icons';
-import UploadStockBtn from '../../../../components/Ui/UploadStockBtn';
 import Basic from './Basic';
 import Premium from './Premium';
+import { PATH_APP } from 'src/routes/paths';
+import { Edit, Company } from 'src/icons/icons';
+import UploadStockBtn from 'src/components/Ui/UploadStockBtn';
 
 // ----------------------------------------------------------------------
 
@@ -46,7 +47,7 @@ function UserInfo({ className, ...other }) {
 
     return (
         <Card className={clsx(classes.root, className)} {...other}>
-            <Link to='/app/dashboard' style={{ textAlign: 'left', display: 'block' }}>
+            <Link to={PATH_APP.management.user.account} style={{ textAlign: 'left', display: 'block' }}>
                 <Edit width='20' height='20' fill='#7E8D99' />
             </Link>
             <Typography variant="body1" sx={{

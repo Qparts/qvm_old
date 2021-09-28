@@ -127,7 +127,7 @@ function AvailabilityPartsSection() {
                                 dispatch(setFilter({ filter: e.target.value }));
                                 setSearchTerm(e.target.value);
                             }}
-                            label={t("Search by part number")}
+                            label={t("Search in search results")}
                             selectBg='selectBg' />
                     </Box>
 

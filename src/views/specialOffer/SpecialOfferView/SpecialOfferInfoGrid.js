@@ -43,22 +43,7 @@ const useStyles = makeStyles((theme) => ({
     offerDetailsGridInfo: {
         marginLeft: theme.spacing(2)
     },
-    offerDetailsGridQuantityCont: {
-        margin: '2px 0 5px',
-        '@media (max-width: 327px)': {
-            display: 'block !important',
-        },
-    },
-    offerDetailsGridBorder: {
-        paddingRight: '10px',
-        marginRight: '10px',
-        borderRight: '1px solid #CED5D8',
-        '@media (max-width: 327px)': {
-            border: 0,
-            marginRight: 0,
-            paddingRight: 0
-        },
-    },
+    offerDetailsGridQuantityCont: { margin: '2px 0 5px' },
     offerDetailsGridFlex: {
         display: 'flex',
         alignItems: 'center',
@@ -97,11 +82,7 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
                                         <Box className={classes.offerDetailsGridInfo}>
                                             <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.main }}> {offerPro.partNumber} </Typography>
                                             <Box>
-                                                <Box className={clsx(classes.offerDetailsGridQuantityCont, classes.offerDetailsGridFlex)}>
-                                                    <Box className={classes.offerDetailsGridBorder}>
-                                                        <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Quantity")}</Typography>
-                                                        <Typography variant="body3"> {offerPro.stock.length} </Typography>
-                                                    </Box>
+                                                <Box className={classes.offerDetailsGridQuantityCont}>
                                                     <Box>
                                                         <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Brand")}</Typography>
                                                         <Typography variant="body3"> {offerPro.brandName} </Typography>
