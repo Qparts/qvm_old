@@ -2,17 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
-import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
+import { handleChangePage, setSelectedPart, partSearch, setFilter } from 'src/redux/slices/partSearch';
 import constants from 'src/utils/constants';
 import LocationFilterSection from './LocationFilterSection';
-import TableAction from '../../../components/Ui/TableAction';
+import Label from "src/components/Ui/Label";
+import TableAction from 'src/components/Ui/TableAction';
 import TextField from 'src/components/Ui/TextField';
-import SecContainer from '../../../components/Ui/SecContainer';
-import CustomDialog from '../../../components/Ui/Dialog';
-import { Plus, OrdersArrow } from "../../../icons/icons";
+import SecContainer from 'src/components/Ui/SecContainer';
+import CustomDialog from 'src/components/Ui/Dialog';
+import { Plus, OrdersArrow } from "src/icons/icons";
 import PurchaseOrderSection from 'src/layouts/DashboardLayout/TopBar/AddToPurchaseOrder/PurchaseOrderSection';
 
 // ----------------------------------------------------------------------
@@ -39,13 +40,6 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '100%',
             marginBottom: theme.spacing(2)
         },
-    },
-    specialOfferBadge: {
-        backgroundColor: '#FEE6E6',
-        color: theme.palette.primary.main,
-        borderRadius: '5px 0 5px 5px',
-        padding: '4px 7px',
-        marginLeft: '5px'
     }
 }));
 
@@ -140,7 +134,7 @@ function AvailabilityPartsSection() {
                         {
                             name: t("Part Number"),
                             attr: 'partNumber',
-                            badge: <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>
+                            badge: <Label specialOffer="specialOffer" label={t("Special offer")} />
                         },
                         {
                             name: t("Brand"),

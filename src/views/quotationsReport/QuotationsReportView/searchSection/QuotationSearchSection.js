@@ -3,7 +3,7 @@ import { useHistory } from "react-router";
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
@@ -13,6 +13,7 @@ import Datatable from 'src/components/table/DataTable';
 import { getQuotationReport, setSelectedQuotation } from 'src/redux/slices/quotationsReport';
 import TableAction from 'src/components/Ui/TableAction';
 import { Plus } from 'src/icons/icons';
+import Label from "src/components/Ui/Label";
 import CustomDialog from 'src/components/Ui/Dialog';
 import SecContainer from 'src/components/Ui/SecContainer';
 import EmptyContent from "src/components/Ui/EmptyContent";
@@ -32,13 +33,6 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
-    },
-    specialOfferBadge: {
-        backgroundColor: '#FEE6E6',
-        color: theme.palette.primary.main,
-        borderRadius: '5px 0 5px 5px',
-        padding: '4px 7px',
-        marginLeft: '5px'
     }
 }));
 
@@ -157,7 +151,7 @@ function QuotationSearchSection() {
                                     {
                                         name: t("Part Number"),
                                         attr: 'productNumber',
-                                        badge: <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>,
+                                        badge: <Label specialOffer="specialOffer" label={t("Special offer")} />,
                                     },
                                     {
                                         name: t("Brand"),

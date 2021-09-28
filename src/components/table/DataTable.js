@@ -168,7 +168,7 @@ const getCellValue = (item, headerItem, maps) => {
     if (headerItem.label)
         value = value + ' ' + headerItem.label;
 
-    if ((headerItem.badge && offersLength > 0) || (headerItem.badge && item.specialOffer) ) {
+    if ((headerItem.badge && offersLength > 0) || (headerItem.badge && item.specialOffer)) {
         value = <> {value} {headerItem.badge} </>
     }
 
@@ -234,13 +234,39 @@ function Row({ header, title, item, maps, childData = [], childHeader, showChild
 }
 // ----------------------------------------------------------------------
 
-function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.MAX,
-    actions = [], error, onSelectedPage, onRowSelect,
-    maps, size = datatable.length, isLazy = true, hasPagination = false,
-    onRowsPerPageChange, hasChild = false, childData, childHeader,
-    showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata, dataTableSetting,
-    dataTableGeneral, dataTableChat, dataTablePartSearch, dataTableBankTrans, dataTableReplacementItem,
-    dataTableGeneralDashboard, dataTablePurchaseOrder, dataTableQuotationsReport, dataTableQuotationsReportDetail }) {
+function Datatable({
+    header,
+    datatable = [],
+    page = 1,
+    rowsPerPage = constants.MAX,
+    actions = [],
+    error,
+    onSelectedPage,
+    onRowSelect,
+    maps,
+    size = datatable.length,
+    isLazy = true,
+    hasPagination = false,
+    onRowsPerPageChange,
+    hasChild = false,
+    childData,
+    childHeader,
+    showChildNumbers,
+    childTitle,
+    noChildComponent,
+    dataTablePad,
+    dataTableCata,
+    dataTableSetting,
+    dataTableGeneral,
+    dataTableChat,
+    dataTablePartSearch,
+    dataTableBankTrans,
+    dataTableReplacementItem,
+    dataTableGeneralDashboard,
+    dataTablePurchaseOrder,
+    dataTableQuotationsReport,
+    dataTableQuotationsReportDetail
+}) {
 
     const classes = useStyles();
 

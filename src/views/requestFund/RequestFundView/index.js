@@ -1,11 +1,11 @@
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from "react-router";
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import Page from 'src/components/Page';
+import RequestFund from './RequestFund';
 
 // ----------------------------------------------------------------------
 
@@ -30,13 +30,11 @@ const useStyles = makeStyles((theme) => ({
 function RequestFundView() {
     const classes = useStyles();
     const { t } = useTranslation();
-    const dispatch = useDispatch();
-    const history = useHistory();
     const { isLoading } = useSelector((state) => state.requestFund);
 
     return (
         <Page
-            title={t("Fund Request")}
+            title={t("Request Fund")}
             className={classes.root}
         >
             <LoadingOverlay
@@ -51,7 +49,7 @@ function RequestFundView() {
                     <LoadingScreen />
                 }
             >
-
+                <RequestFund />
             </LoadingOverlay>
         </Page>
     );
