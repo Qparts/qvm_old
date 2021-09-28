@@ -94,7 +94,7 @@ function Footer({ className }) {
           </Grid>
           <Hidden only={['sm', 'xs']}>
             <Grid item md={2}>
-              <Logo width={80} ml='auto' />
+            <Logo newLogo='newLogo' root='root' />
             </Grid>
           </Hidden>
 
