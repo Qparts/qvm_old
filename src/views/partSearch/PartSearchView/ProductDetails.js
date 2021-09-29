@@ -13,7 +13,7 @@ function ProductDetails() {
             {selectedProduct != null &&
                 <DialogContent
                     type='mainSearch'
-                    image={selectedProduct.image}
+                    image={selectedProduct.brand.image}
                     partNumber={selectedProduct.productNumber}
                     brand={selectedProduct.brand.name}
                     average={selectedProduct.salesPrice}
