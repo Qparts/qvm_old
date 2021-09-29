@@ -74,7 +74,7 @@ function DialogContent(props) {
                     className={classes.productImg}
                     src={props.image}
                     onError={e => {
-                        e.target.src = 'https://images.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg';
+                        e.target.src = 'https://q-product.ams3.digitaloceanspaces.com/na.png';
                     }}
                 />
                 <Box>
