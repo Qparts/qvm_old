@@ -56,6 +56,7 @@ function RequestFunForm({ formik }) {
                     value={values.crFile}
                     touched={touched.crFile}
                     errors={errors.crFile}
+                    responsive='responsive'
                 // fileError={fileError} 
                 />
 
@@ -73,6 +74,7 @@ function RequestFunForm({ formik }) {
                     value={values.idFile}
                     touched={touched.idFile}
                     errors={errors.idFile}
+                    responsive='responsive'
                 />
 
                 <Box sx={{ mb: 3 }} />
@@ -88,6 +90,7 @@ function RequestFunForm({ formik }) {
                     value={values.banckStatementFile}
                     touched={touched.banckStatementFile}
                     errors={errors.banckStatementFile}
+                    responsive='responsive'
                 />
                 <Box sx={{ mb: 3 }} />
 

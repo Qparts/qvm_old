@@ -1,16 +1,21 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography, Divider, CardMedia } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import { Search } from '../../icons/icons';
+import { Search } from 'src/icons/icons';
+import helper from 'src/utils/helper';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
     productImg: {
-        width: '350px',
-        height: '170px'
+        width: '250px',
+        height: '159px',
+        margin: 'auto'
     },
     partNumber: {
         display: 'flex',
@@ -18,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '15px',
         padding: '11px',
         width: '80%',
+    },
+    partNumberMainSearch: {
+        width: '100%'
     },
     partNumberChild: {
         color: theme.palette.primary.main
@@ -50,20 +58,16 @@ const useStyles = makeStyles((theme) => ({
 
 function DialogContent(props) {
     const classes = useStyles();
+    const dispatch = useDispatch();
+    const history = useHistory();
     const { t } = useTranslation();
 
     let dialogContent;
     let relatedBox = (
-        <>
-            <Box className={clsx(classes.partNumberCard, classes.displayFlex, classes[props.partNumberCatalog])}>
-                <Box className={classes.partNumber}>
-                    <Typography variant='body2' sx={{ color: '#526C78', marginRight: '8px' }}>{t("Part Number")}</Typography>
-                    <Typography variant='body1' className={classes.partNumberChild}>{props.partNumber}</Typography>
-                </Box>
-                <Search width='24px' height='24' fill='#CED5D8' style={{ cursor: 'pointer' }} />
-            </Box>
-            <Divider />
-        </>
+        <Box className={clsx(classes.partNumber, props.type === 'mainSearch' ? classes.partNumberMainSearch : null)}>
+            <Typography variant='body2' sx={{ color: '#526C78', marginRight: '8px' }}>{t("Part Number")}</Typography>
+            <Typography variant='body1' className={classes.partNumberChild}>{props.partNumber}</Typography>
+        </Box>
     )
 
     if (props.type === 'mainSearch') {
@@ -78,7 +82,10 @@ function DialogContent(props) {
                     }}
                 />
                 <Box>
-                    {relatedBox}
+                    <Box className={classes.partNumberCard}>
+                        {relatedBox}
+                    </Box>
+                    <Divider />
                     <Box className={clsx(classes.partNumberCard, classes.displayFlex)}>
                         <Box>
                             <Typography className={classes.partNumberHaed} variant='body1'>{t("Brand")}</Typography>
@@ -100,7 +107,13 @@ function DialogContent(props) {
     } else {
         dialogContent = (
             <Box>
-                {relatedBox}
+                <Box className={clsx(classes.partNumberCard, classes.displayFlex, classes[props.partNumberCatalog])}>
+                    {relatedBox}
+                    <Box onClick={() => helper.handlePartSearch(dispatch, history, PATH_APP.general.partSearch, props.partNumber)}>
+                        <Search width='24px' height='24' fill='#CED5D8' style={{ cursor: 'pointer' }} />
+                    </Box>
+                </Box>
+                <Divider />
                 <Box className={classes.partNumberCard}>
                     <Typography className={classes.partNumberHaed} variant='body1'>{t("Part Name")}</Typography>
                     <Typography variant='body2'>{props.name}</Typography>

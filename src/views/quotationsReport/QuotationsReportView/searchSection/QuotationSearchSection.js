@@ -110,7 +110,7 @@ function QuotationSearchSection() {
                 <EmptyContent
                     btnTitle={t("Upgrade to Premium")}
                     title={t("You are not subscribed")}
-                    description={t("In order to be able to know your sales and purchases reports throughout the year upgrade to the premium package")}
+                    description={t("In order to view your reports please upgrade to the premium package")}
                     url={() => history.push(PATH_APP.general.upgradeSubscription)}
                 />
                 :

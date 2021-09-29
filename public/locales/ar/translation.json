@@ -718,7 +718,7 @@
   "Fund Request":"طلب الدعم",
   "Search in search results": "إبحث فى نتائج البحث",
   "You are not subscribed": "أنت غير مشترك",
-  "In order to be able to know your sales and purchases reports throughout the year upgrade to the premium package": "لكي تتمكن من معرفة تقارير المبيعات والمشتريات الخاصة بك على مدار العام. قم ب الترقية للباقة المميزة.",
+  "In order to view your reports please upgrade to the premium package": "لكي تتمكن من مشاهدة التقارير الخاصة بك. قم بالترقية للباقة المميزة.",
   "Quotation Price": "السعر  في التسعيرة",
   "Quotation Items": "القطع في التسعيرة",
   "Request Fund": "طلب الدعم",
@@ -730,5 +730,6 @@
   "Id file is required": "ملف الهوية مطلوب",
   "Banck Statement file is required": "كشف الحساب البنكي مطلوب",
   "Fund amount is required": "مبلغ الدعم مطلوب",
-  "Submit": "إرسال"
+  "Submit": "إرسال",
+  "Number of products": "عدد القطع"
 }

@@ -677,7 +677,7 @@
   "Fund Request":"Fund Request",
   "Search in search results": "Search in search results",
   "You are not subscribed": "You are not subscribed",
-  "In order to be able to know your sales and purchases reports throughout the year upgrade to the premium package": "In order to be able to know your sales and purchases reports throughout the year. Upgrade to the premium package.",
+  "In order to view your reports please upgrade to the premium package": "In order to view your reports, please upgrade to the premium package.",
   "Quotation Price": "Quotation Price",
   "Quotation Items": "Quotation Items",
   "Request Fund": "Request Fund",
@@ -689,5 +689,6 @@
   "Id file is required": "Id file is required",
   "Banck Statement file is required": "Banck Statement file is required",
   "Fund amount is required" :"Fund amount is required",
-  "Submit":"Submit"
+  "Submit":"Submit",
+  "Number of products": "Number of products"
 }

@@ -4,8 +4,15 @@ import { Icon } from '@iconify/react';
 import homeFill from '@iconify-icons/eva/home-fill';
 import { Catalog, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
 import { PATH_APP } from 'src/routes/paths';
+import { store } from 'src/redux/store'
 
 // ----------------------------------------------------------------------
+
+let unSeenMessages;
+
+store.subscribe(() => {
+  unSeenMessages = store.getState().chat.unseenMessages.length > 0 ? true : false;
+})
 
 const navConfig = [
   {
@@ -63,7 +70,7 @@ const navConfig = [
         title: 'reports',
         icon: <Chart width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.quotationsReport,
-        notification: true
+        // notification: true
       },
 
     ]
@@ -74,7 +81,7 @@ const navConfig = [
         title: 'offers',
         icon: <Offer width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.specialOffer,
-        notification: true
+        // notification: true
       },
 
     ]
