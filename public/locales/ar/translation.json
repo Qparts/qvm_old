@@ -721,15 +721,17 @@
   "In order to view your reports please upgrade to the premium package": "لكي تتمكن من مشاهدة التقارير الخاصة بك. قم بالترقية للباقة المميزة.",
   "Quotation Price": "السعر  في التسعيرة",
   "Quotation Items": "القطع في التسعيرة",
-  "Request Fund": "طلب الدعم",
-  "Upload CR file": "رفع ملف CR",
+  "Funding Request": "طلب التمويل",
+  "Upload CR file": "رفع السجل التجاري",
   "Upload ID file": "رفع ملف الهوية",
   "Upload the bank statement file": "رفع كشف الحساب البنكي",
-  "Fund Amount": "مبلغ الدعم",
+  "Funding Amount": "مبلغ التمويل",
   "CR file is required": "ملف CR مطلوب",
   "Id file is required": "ملف الهوية مطلوب",
   "Banck Statement file is required": "كشف الحساب البنكي مطلوب",
   "Fund amount is required": "مبلغ الدعم مطلوب",
   "Submit": "إرسال",
-  "Number of products": "عدد القطع"
+  "Number of products": "عدد القطع",
+  "The final amount will be determined after reviewing the submitted data": "المبلغ النهائي سوف يحدد بعد مراجعة البيانات المقدمة",
+  "Operations statement must be for the last 12 months": "يجب ان يكون كشف عمليات لاخر 12 شهر"
 }

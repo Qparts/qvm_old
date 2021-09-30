@@ -680,15 +680,17 @@
   "In order to view your reports please upgrade to the premium package": "In order to view your reports, please upgrade to the premium package.",
   "Quotation Price": "Quotation Price",
   "Quotation Items": "Quotation Items",
-  "Request Fund": "Request Fund",
+  "Funding Request": "Funding Request",
   "Upload CR file": "Upload CR file",
   "Upload ID file": "Upload ID file",
   "Upload the bank statement file": "Upload the bank statement file",
-  "Fund Amount": "Fund Amount",
+  "Funding Amount": "Funding Amount",
   "CR file is required": "CR file is required",
   "Id file is required": "Id file is required",
   "Banck Statement file is required": "Banck Statement file is required",
   "Fund amount is required" :"Fund amount is required",
   "Submit":"Submit",
-  "Number of products": "Number of products"
+  "Number of products": "Number of products",
+  "The final amount will be determined after reviewing the submitted data": "The final amount will be determined after reviewing the submitted data",
+  "Operations statement must be for the last 12 months": "Operations statement must be for the last 12 months"
 }

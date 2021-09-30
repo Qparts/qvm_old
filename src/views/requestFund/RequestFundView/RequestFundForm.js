@@ -1,11 +1,23 @@
 import PropTypes from 'prop-types';
 import React from 'react';
+import { makeStyles } from '@material-ui/core/styles';
 import { Form, FormikProvider } from 'formik';
-import { Box } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import StockFileBtn from 'src/components/Ui/StockFileBtn';
 import TextField from 'src/components/Ui/TextField';
 import CustomButton from 'src/components/Ui/Button';
+
+// ----------------------------------------------------------------------
+
+const useStyles = makeStyles((theme) => ({
+    userNotify: {
+        color: theme.palette.secondary.darker,
+        marginTop: theme.spacing(1.25),
+        display: 'block',
+        textAlign:'left'
+    }
+}));
 
 // ----------------------------------------------------------------------
 
@@ -14,6 +26,7 @@ RequestFunForm.propTypes = {
 };
 
 function RequestFunForm({ formik }) {
+    const classes = useStyles();
     const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
     const { t } = useTranslation();
     // const [fileError, setFileError] = useState(null);
@@ -28,6 +41,7 @@ function RequestFunForm({ formik }) {
                     getField={getFieldProps('companyName')}
                     touched={touched.companyName}
                     errors={errors.companyName} />
+
                 <Box sx={{ mb: 3 }} />
 
                 <TextField
@@ -37,6 +51,7 @@ function RequestFunForm({ formik }) {
                     getField={getFieldProps('name')}
                     touched={touched.name}
                     errors={errors.name} />
+
                 <Box sx={{ mb: 3 }} />
 
                 <StockFileBtn
@@ -61,7 +76,6 @@ function RequestFunForm({ formik }) {
                 />
 
                 <Box sx={{ mb: 3 }} />
-
 
                 <StockFileBtn
                     upload
@@ -92,16 +106,23 @@ function RequestFunForm({ formik }) {
                     errors={errors.banckStatementFile}
                     responsive='responsive'
                 />
+
+                <Typography variant="body2" className={classes.userNotify}>
+                    {t("Operations statement must be for the last 12 months")}
+                </Typography>
                 <Box sx={{ mb: 3 }} />
 
                 <TextField
                     type='input'
                     name='fundAmount'
-                    label={t('Fund Amount')}
+                    label={t('Funding Amount')}
                     getField={getFieldProps('fundAmount')}
                     touched={touched.fundAmount}
                     errors={errors.fundAmount} />
 
+                <Typography variant="body2" className={classes.userNotify}>
+                    {t("The final amount will be determined after reviewing the submitted data")}
+                </Typography>
                 <Box sx={{ mb: 3 }} />
 
                 <TextField
@@ -113,7 +134,6 @@ function RequestFunForm({ formik }) {
                     errors={errors.mobile} />
 
                 <Box sx={{ mb: 3 }} />
-
 
                 <TextField
                     type='input'
