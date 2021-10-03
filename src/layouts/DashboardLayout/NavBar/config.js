@@ -2,17 +2,10 @@ import React from 'react';
 import { Icon } from '@iconify/react';
 // import roundAddShoppingCart from '@iconify-icons/ic/round-add-shopping-cart';
 import homeFill from '@iconify-icons/eva/home-fill';
-import { Catalog, Offer, SettingsIcon, Chart, Dashboard, Orders } from '../../../icons/icons';
+import { Catalog, Offer, SettingsIcon, Chart, Dashboard, Orders, Company } from '../../../icons/icons';
 import { PATH_APP } from 'src/routes/paths';
-import { store } from 'src/redux/store'
 
 // ----------------------------------------------------------------------
-
-let unSeenMessages;
-
-store.subscribe(() => {
-  unSeenMessages = store.getState().chat.unseenMessages.length > 0 ? true : false;
-})
 
 const navConfig = [
   {
@@ -99,8 +92,8 @@ const navConfig = [
   {
     items: [
       {
-        title: 'Request Fund',
-        icon: <Catalog width='26' height='26' fill='#a2b4bd' />,
+        title: 'Fund',
+        icon: <Company width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.requestFund,
       },
 

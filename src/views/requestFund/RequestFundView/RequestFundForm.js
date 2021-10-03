@@ -15,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         color: '#7E8D99',
         marginTop: theme.spacing(1.25),
         display: 'block',
-        textAlign:'left'
+        textAlign: 'left'
     }
 }));
 
@@ -52,6 +52,39 @@ function RequestFunForm({ formik }) {
                     touched={touched.name}
                     errors={errors.name} />
 
+                <Box sx={{ mb: 3 }} />
+
+                <TextField
+                    type='input'
+                    name='mobile'
+                    label={t('Mobile')}
+                    getField={getFieldProps('mobile')}
+                    touched={touched.mobile}
+                    errors={errors.mobile} />
+
+                <Box sx={{ mb: 3 }} />
+
+                <TextField
+                    type='input'
+                    name='email'
+                    label={t('Email')}
+                    getField={getFieldProps('email')}
+                    touched={touched.email}
+                    errors={errors.email} />
+
+                <Box sx={{ mb: 3 }} />
+
+                <TextField
+                    type='input'
+                    name='fundAmount'
+                    label={t('Funding Amount')}
+                    getField={getFieldProps('fundAmount')}
+                    touched={touched.fundAmount}
+                    errors={errors.fundAmount} />
+
+                <Typography variant="body2" className={classes.userNotify}>
+                    {t("The final amount will be determined after reviewing the submitted data")}
+                </Typography>
                 <Box sx={{ mb: 3 }} />
 
                 <StockFileBtn
@@ -110,38 +143,6 @@ function RequestFunForm({ formik }) {
                 <Typography variant="body2" className={classes.userNotify}>
                     {t("Operations statement must be for the last 12 months")}
                 </Typography>
-                <Box sx={{ mb: 3 }} />
-
-                <TextField
-                    type='input'
-                    name='fundAmount'
-                    label={t('Funding Amount')}
-                    getField={getFieldProps('fundAmount')}
-                    touched={touched.fundAmount}
-                    errors={errors.fundAmount} />
-
-                <Typography variant="body2" className={classes.userNotify}>
-                    {t("The final amount will be determined after reviewing the submitted data")}
-                </Typography>
-                <Box sx={{ mb: 3 }} />
-
-                <TextField
-                    type='input'
-                    name='mobile'
-                    label={t('Mobile')}
-                    getField={getFieldProps('mobile')}
-                    touched={touched.mobile}
-                    errors={errors.mobile} />
-
-                <Box sx={{ mb: 3 }} />
-
-                <TextField
-                    type='input'
-                    name='email'
-                    label={t('Email')}
-                    getField={getFieldProps('email')}
-                    touched={touched.email}
-                    errors={errors.email} />
 
                 <Box sx={{ marginTop: '20px' }}>
                     <CustomButton type="submit">{t("Submit")}</CustomButton>

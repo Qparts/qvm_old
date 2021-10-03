@@ -70,7 +70,7 @@ function RequestFund() {
         <Grid container spacing={3}>
             <Grid item sm />
             <Grid item md={6} sm={8} xs={12}>
-                <MainCard title={t("Funding Request")}>
+                <MainCard title={t("Fund")}>
                     <RequestFunForm formik={formik} />
                 </MainCard>
             </Grid>
