@@ -8,20 +8,6 @@ import { setSelectedOffer } from 'src/redux/slices/specialOffer';
 
 // ----------------------------------------------------------------------
 
-const PARTS = [
-    {
-        shortcut: '/static/icons/ic_chrome.svg'
-    },
-    {
-        shortcut: '/static/icons/ic_drive.svg'
-    },
-    {
-        shortcut: '/static/icons/ic_dropbox.svg'
-    },
-];
-
-// ----------------------------------------------------------------------
-
 
 function OfferContainer(props) {
     const dispatch = useDispatch();
@@ -48,7 +34,7 @@ function OfferContainer(props) {
                                 date={helper.toDate(specialOffer.endDate)}
                                 partsNum={specialOffer.numberOfItems}
                                 timeLeft={helper.calculateTimeLeft(specialOffer.startDate, specialOffer.endDate) + '%'}
-                                parts={PARTS} />
+                                tags={specialOffer.tag} />
                         </Box>
                     </Grid>
                 )

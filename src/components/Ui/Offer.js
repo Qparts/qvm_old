@@ -6,10 +6,12 @@ import {
     Card,
     Box,
     Typography,
+    List, 
+    ListItem
 } from '@material-ui/core';
 import { Calender } from '../../icons/icons';
 import ProgressBar from './ProgressBar';
-// import Avatar from './Avatar'
+import Avatar from './Avatar'
 
 // ----------------------------------------------------------------------
 
@@ -69,24 +71,25 @@ const useStyles = makeStyles((theme) => ({
         color: '#526C78',
     },
     partsNumCont: {
-        display: 'flex'
+        display: 'flex',
+        alignItems: 'center'
     },
-    // brands: {
-    //     display: 'flex',
-    //     margin: '0 0 0 10px',
-    //     paddingBottom: 0,
-    //     '& $li': {
-    //         padding: '0 0 0 8px',
-    //         '&:first-of-type': {
-    //             padding: 0
-    //         },
-    //         '& $img': {
-    //             width: '18px',
-    //             height: '18px',
-    //             margin: 'auto',
-    //         }
-    //     }
-    // },
+    brands: {
+        display: 'flex',
+        margin: '0 0 0 10px',
+        paddingBottom: 0,
+        '& $li': {
+            padding: '0 0 0 8px',
+            '&:first-of-type': {
+                padding: 0
+            },
+            '& $img': {
+                width: '18px',
+                height: '18px',
+                margin: 'auto',
+            }
+        }
+    },
     partsNumber: {
         color: theme.palette.secondary.darker,
         marginTop: theme.spacing(1.25)
@@ -99,9 +102,9 @@ const Offer = (props, { className, ...other }) => {
     const classes = useStyles();
     const { t } = useTranslation();
 
-    const partsAvatars = props.parts;
-    // const partsAvatarsPlus = partsAvatars.length - 4;
-    // const x = partsAvatars.length > 4 ? partsAvatars.slice(0, 4) : partsAvatars
+    const partsAvatars = props.tags;
+    const partsAvatarsPlus = partsAvatars.length - 4;
+    const brandTags = partsAvatars.length > 4 ? partsAvatars.slice(0, 4) : partsAvatars;
 
     return (
         <Card className={clsx(classes.root, classes.offerBody, className)} {...other}>
@@ -122,11 +125,11 @@ const Offer = (props, { className, ...other }) => {
                 <Typography variant="caption"> {t('Number of products')}</Typography>
                 <Box className={classes.partsNumCont}>
                     <Typography variant="body3" className={classes.partsNumber}> {props.partsNum}</Typography>
-                    {/* <List className={classes.brands}>
-                        {x.map((partAva) => (
-                            <ListItem key={Math.random() * 2856984.368}>
+                    <List className={classes.brands}>
+                        {brandTags.map((tag, index) => (
+                            <ListItem key={index}>
                                 <Avatar avatarWidth='avatarWidth'>
-                                    <img src={partAva.shortcut} alt={partAva.shortcut} />
+                                    <img src={`/static/images/brands/${tag}.png`} alt='Brand' />
                                 </Avatar>
                             </ListItem>
                         ))}
@@ -137,7 +140,7 @@ const Offer = (props, { className, ...other }) => {
                                 </Avatar>
                             </ListItem> : null
                         }
-                    </List> */}
+                    </List>
                 </Box>
             </Box>
             <ProgressBar

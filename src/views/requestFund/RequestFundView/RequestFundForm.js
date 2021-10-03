@@ -12,7 +12,7 @@ import CustomButton from 'src/components/Ui/Button';
 
 const useStyles = makeStyles((theme) => ({
     userNotify: {
-        color: theme.palette.secondary.darker,
+        color: '#7E8D99',
         marginTop: theme.spacing(1.25),
         display: 'block',
         textAlign:'left'
