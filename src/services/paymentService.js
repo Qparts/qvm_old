@@ -39,6 +39,15 @@ function wirePaymentOrder(data) {
   return http.post(invoiceUrl.wirepaymentOrder, data, config);
 }
 
+function fundRequestUpload(data) {
+  const config = {
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    }
+  };
+  return http.post(invoiceUrl.postFundRequest, data, config);
+}
+
 const updatePaymentOrder = (data) => {
   return http.put(invoiceUrl.paymentOrder, data);
 };
@@ -55,5 +64,6 @@ export default {
   paymentOrder,
   updatePaymentOrder,
   wirePaymentOrder,
-  getPendingSubscription
+  getPendingSubscription,
+  fundRequestUpload
 };

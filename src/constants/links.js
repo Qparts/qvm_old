@@ -149,7 +149,8 @@ const invoice = {
   getBanks: `${INVOICE_SERVICE}/banks`,
   paymentOrder: `${INVOICE_SERVICE}/payment-order`,
   wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
-  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`
+  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`,
+  postFundRequest: `${INVOICE_SERVICE}/request-fund`
 };
 
 const chat = {

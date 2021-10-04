@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Form, FormikProvider } from 'formik';
 import { Box, Typography } from '@material-ui/core';
@@ -29,7 +29,9 @@ function RequestFunForm({ formik }) {
     const classes = useStyles();
     const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
     const { t } = useTranslation();
-    // const [fileError, setFileError] = useState(null);
+    const [crFileError, setCrFileError] = useState(null);
+    const [idFileError, setIdFileError] = useState(null);
+    const [banckStatementFileError, setBanckStatementFileError] = useState(null);
 
     return (
         <FormikProvider value={formik}>
@@ -89,14 +91,16 @@ function RequestFunForm({ formik }) {
 
                 <StockFileBtn
                     upload
+                    id="crFile"
                     onChange={(event) => {
-                        // if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx') {
-                        //     setFileError(t("Stock file must be Excel File"))
-                        //     setFieldValue("offerFile", "");
-                        //     return;
-                        // }
-                        // setFileError(null)
-                        setFieldValue("crFile", event.currentTarget.files[0]);
+                        const extension = event.currentTarget.files[0].name.split(".")[1];
+                        if (!['jpeg', 'png', 'jpg', 'pdf'].includes(extension.toLowerCase())) {
+                            setCrFileError(t("CR file must be in these extensions jpeg, png, jpg, pdf"))
+                            setFieldValue("crFile", "");
+                        } else {
+                            setCrFileError(null)
+                            setFieldValue("crFile", event.currentTarget.files[0]);
+                        }
                     }}
                     title={t("Upload CR file")}
                     file='crFile'
@@ -105,15 +109,23 @@ function RequestFunForm({ formik }) {
                     touched={touched.crFile}
                     errors={errors.crFile}
                     responsive='responsive'
-                // fileError={fileError} 
+                    fileError={crFileError}
                 />
 
                 <Box sx={{ mb: 3 }} />
 
                 <StockFileBtn
                     upload
+                    id="idFile"
                     onChange={(event) => {
-                        setFieldValue("idFile", event.currentTarget.files[0]);
+                        const extension = event.currentTarget.files[0].name.split(".")[1];
+                        if (!['jpeg', 'png', 'jpg', 'pdf'].includes(extension.toLowerCase())) {
+                            setIdFileError(t("ID file must be in these extensions jpeg, png, jpg, pdf"))
+                            setFieldValue("idFile", "");
+                        } else {
+                            setIdFileError(null);
+                            setFieldValue("idFile", event.currentTarget.files[0]);
+                        }
                     }}
                     title={t("Upload ID file")}
                     file='idFile'
@@ -122,14 +134,23 @@ function RequestFunForm({ formik }) {
                     touched={touched.idFile}
                     errors={errors.idFile}
                     responsive='responsive'
+                    fileError={idFileError}
                 />
 
                 <Box sx={{ mb: 3 }} />
 
                 <StockFileBtn
                     upload
+                    id="banckStatementFile"
                     onChange={(event) => {
-                        setFieldValue("banckStatementFile", event.currentTarget.files[0]);
+                        const extension = event.currentTarget.files[0].name.split(".")[1];
+                        if (!['jpeg', 'png', 'jpg', 'pdf'].includes(extension.toLowerCase())) {
+                            setBanckStatementFileError(t("Bank statement file must be in these extensions jpeg, png, jpg, pdf"))
+                            setFieldValue("banckStatementFile", "");
+                        } else {
+                            setBanckStatementFileError(null);
+                            setFieldValue("banckStatementFile", event.currentTarget.files[0]);
+                        }
                     }}
                     title={t("Upload the bank statement file")}
                     file='banckStatementFile'
@@ -138,6 +159,7 @@ function RequestFunForm({ formik }) {
                     touched={touched.banckStatementFile}
                     errors={errors.banckStatementFile}
                     responsive='responsive'
+                    fileError={banckStatementFileError}
                 />
 
                 <Typography variant="body2" className={classes.userNotify}>

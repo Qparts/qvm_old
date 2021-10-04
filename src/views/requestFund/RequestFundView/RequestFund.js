@@ -8,6 +8,10 @@ import * as Yup from 'yup';
 import RequestFunForm from './RequestFundForm';
 import { Grid } from '@material-ui/core';
 import MainCard from 'src/components/Ui/MainCard';
+import paymentService from 'src/services/paymentService';
+import LoadingOverlay from "react-loading-overlay";
+import LoadingScreen from 'src/components/LoadingScreen';
+import { useState } from 'react';
 
 // ----------------------------------------------------------------------
 
@@ -15,9 +19,9 @@ function RequestFund() {
     const { t } = useTranslation();
     const isMountedRef = useIsMountedRef();
     const { enqueueSnackbar } = useSnackbar();
-    const { loginObject } = useSelector(
-        (state) => state.authJwt
-    );
+    const { loginObject } = useSelector((state) => state.authJwt);
+    const [loaded, setLoaded] = useState(true);
+
 
     const userSchema = Yup.object().shape({
         companyName: Yup.string().required(t("Company Name Is Required")),
@@ -53,8 +57,30 @@ function RequestFund() {
         validationSchema: userSchema,
         onSubmit: async (values, { setErrors, setSubmitting, resetForm, setFieldValue }) => {
             try {
-                console.log("values", values);
-                document.getElementById("offerFile").value = "";
+                setLoaded(false);
+                const formData = new FormData();
+                formData.append("fundRequest", JSON.stringify({
+                    name: values.name,
+                    companyName: values.companyName,
+                    mobile: values.mobile,
+                    email: values.email,
+                    amount: values.fundAmount,
+                    idFileExtension: values.idFile.name.split(".")[1],
+                    idFileMimeType: values.idFile.type,
+                    crFileExtension: values.crFile.name.split(".")[1],
+                    crFileMimeType: values.crFile.type,
+                    statementFileExtension: values.banckStatementFile.name.split(".")[1],
+                    statementFileMimeType: values.banckStatementFile.type
+                }));
+                formData.append("fund_id", values.idFile);
+                formData.append("fund_cr", values.crFile);
+                formData.append("fund_bank_statement", values.banckStatementFile);
+                await paymentService.fundRequestUpload(formData);
+                setLoaded(true);
+                // enqueueSnackbar(t('Stock file has been uploaded'), { variant: 'success' });
+                document.getElementById("crFile").value = "";
+                document.getElementById("idFile").value = "";
+                document.getElementById("banckStatementFile").value = "";
                 resetForm();
             } catch (error) {
                 if (isMountedRef.current) {
@@ -67,15 +93,28 @@ function RequestFund() {
     });
 
     return (
-        <Grid container spacing={3}>
-            <Grid item sm />
-            <Grid item md={6} sm={8} xs={12}>
-                <MainCard title={t("Fund")}>
-                    <RequestFunForm formik={formik} />
-                </MainCard>
+        <LoadingOverlay
+            active={!loaded}
+            styles={{
+                wrapper: {
+                    width: "100%",
+                    height: "100%",
+                },
+            }}
+            spinner={
+                <LoadingScreen />
+
+            }>
+            <Grid container spacing={3}>
+                <Grid item sm />
+                <Grid item md={6} sm={8} xs={12}>
+                    <MainCard title={t("Fund")}>
+                        <RequestFunForm formik={formik} />
+                    </MainCard>
+                </Grid>
+                <Grid item sm />
             </Grid>
-            <Grid item sm />
-        </Grid>
+        </LoadingOverlay>
     )
 }
 
