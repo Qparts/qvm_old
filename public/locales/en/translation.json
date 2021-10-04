@@ -674,7 +674,7 @@
   "Confirm": "Confirm",
   "Account Settings Management": "Account Settings-Management",
   "You have no orders yet": "You have no orders yet",
-  "Fund Request":"Fund Request",
+  "Fund Request": "Fund Request",
   "Search in search results": "Search in search results",
   "You are not subscribed": "You are not subscribed",
   "In order to view your reports please upgrade to the premium package": "In order to view your reports, please upgrade to the premium package.",
@@ -688,9 +688,12 @@
   "CR file is required": "CR file is required",
   "Id file is required": "Id file is required",
   "Banck Statement file is required": "Banck Statement file is required",
-  "Fund amount is required" :"Fund amount is required",
-  "Submit":"Submit",
+  "Fund amount is required": "Fund amount is required",
+  "Submit": "Submit",
   "Number of products": "Number of products",
   "The final amount will be determined after reviewing the submitted data": "The final amount will be determined after reviewing the submitted data",
-  "Operations statement must be for the last 12 months": "Operations statement must be for the last 12 months"
+  "Operations statement must be for the last 12 months": "Operations statement must be for the last 12 months",
+  "CR file must be in these extensions jpeg, png, jpg, pdf": "CR file must be in these extensions jpeg, png, jpg, pdf",
+  "ID file must be in these extensions jpeg, png, jpg, pdf": "ID file must be in these extensions jpeg, png, jpg, pdf",
+  "Bank statement file must be in these extensions jpeg, png, jpg, pdf": "Bank statement file must be in these extensions jpeg, png, jpg, pdf"
 }

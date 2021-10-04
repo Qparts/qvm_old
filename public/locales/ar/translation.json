@@ -715,7 +715,7 @@
   "Confirm": "تأكيد",
   "Account Settings Management": "إعدادات الحساب",
   "You have no orders yet": "ليس لديك أي طلبات حتى الآن",
-  "Fund Request":"طلب الدعم",
+  "Fund Request": "طلب الدعم",
   "Search in search results": "إبحث فى نتائج البحث",
   "You are not subscribed": "أنت غير مشترك",
   "In order to view your reports please upgrade to the premium package": "لكي تتمكن من مشاهدة التقارير الخاصة بك. قم بالترقية للباقة المميزة.",
@@ -726,12 +726,15 @@
   "Upload ID file": "رفع ملف الهوية",
   "Upload the bank statement file": "رفع كشف الحساب البنكي",
   "Funding Amount": "مبلغ التمويل",
-  "CR file is required": "ملف CR مطلوب",
+  "CR file is required": "ملف السجل التجاري مطلوب",
   "Id file is required": "ملف الهوية مطلوب",
   "Banck Statement file is required": "كشف الحساب البنكي مطلوب",
   "Fund amount is required": "مبلغ الدعم مطلوب",
   "Submit": "إرسال",
   "Number of products": "عدد القطع",
   "The final amount will be determined after reviewing the submitted data": "المبلغ النهائي سوف يحدد بعد مراجعة البيانات المقدمة",
-  "Operations statement must be for the last 12 months": "يجب ان يكون كشف عمليات لاخر 12 شهر"
+  "Operations statement must be for the last 12 months": "يجب ان يكون كشف عمليات لاخر 12 شهر",
+  "CR file must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون ملف السجل التجاري في هذه الامتدادات jpeg، png، jpg، pdf",
+  "ID file must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون ملف الهوية في هذه الامتدادات jpeg، png، jpg، pdf",
+  "Bank statement file must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون ملف كشف الحساب في هذه الامتدادات jpeg، png، jpg، pdf"
 }
