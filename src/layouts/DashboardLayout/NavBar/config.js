@@ -14,8 +14,8 @@ const navConfig = [
         title: 'home',
         icon: <Icon icon={homeFill} color='#a2b4bd' style={{ fontSize: '26px' }} />,
         href: PATH_APP.general.root,
+        notification: false
       },
-
     ]
   },
   {
@@ -24,8 +24,8 @@ const navConfig = [
         title: 'replacements',
         icon: <SettingsIcon width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.replacements,
+        notification: false
       },
-
     ]
   },
   {
@@ -33,7 +33,8 @@ const navConfig = [
       {
         icon: <Dashboard width='26' height='26' fill='#a2b4bd' />,
         title: 'dashboard',
-        href: PATH_APP.general.dashboard
+        href: PATH_APP.general.dashboard,
+        notification: false
       }
     ]
   },
@@ -45,7 +46,6 @@ const navConfig = [
         href: PATH_APP.general.chat.root,
         notification: true
       },
-
     ]
   },
   // {
@@ -63,9 +63,9 @@ const navConfig = [
         title: 'reports',
         icon: <Chart width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.quotationsReport,
+        notification: false
         // notification: true
       },
-
     ]
   },
   {
@@ -74,9 +74,9 @@ const navConfig = [
         title: 'offers',
         icon: <Offer width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.specialOffer,
+        notification: false
         // notification: true
       },
-
     ]
   },
   {
@@ -85,8 +85,8 @@ const navConfig = [
         title: 'catalog',
         icon: <Catalog width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.catalog,
+        notification: false
       },
-
     ]
   },
   {
@@ -95,8 +95,8 @@ const navConfig = [
         title: 'Fund',
         icon: <Company width='26' height='26' fill='#a2b4bd' />,
         href: PATH_APP.general.requestFund,
+        notification: false
       },
-
     ]
   },
 ];

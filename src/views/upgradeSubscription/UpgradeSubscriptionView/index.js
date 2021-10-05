@@ -16,7 +16,10 @@ import { updateCurrentPlan, updateLoginObject } from 'src/redux/slices/authJwt';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles(() => ({
-    root: {}
+    root: {},
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { zIndex: 1101 }
+      }
 }));
 
 // ----------------------------------------------------------------------
@@ -70,6 +73,7 @@ function UpgradeSubscriptionView() {
                         height: "100%",
                     },
                 }}
+                className={classes.overlayFullPage}
                 spinner={
                     <LoadingScreen />
 

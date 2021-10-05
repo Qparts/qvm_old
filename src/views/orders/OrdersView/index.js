@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       height: '87.75vh',
     }
+  },
+  overlayFullPage: {
+    '& ._loading_overlay_overlay': { zIndex: 1101 }
   }
 }));
 
@@ -80,6 +83,7 @@ function OrdersView(_props) {
             height: "100%",
           },
         }}
+        className={classes.overlayFullPage}
         spinner={
           <LoadingScreen />
 
@@ -87,7 +91,7 @@ function OrdersView(_props) {
       >
         <Card className={classes.card}>
           <Sidebar />
-          {userConversations.length>0 && <ChatWindow userConversations={userConversations} />}
+          {userConversations.length > 0 && <ChatWindow userConversations={userConversations} />}
         </Card>
       </LoadingOverlay>
 

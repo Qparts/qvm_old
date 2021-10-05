@@ -24,10 +24,9 @@ const useStyles = makeStyles((theme) => ({
             height: 320
         }
     },
-    wrapper: {
-        width: "100%",
-        height: "100%",
-    },
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { zIndex: 1101 }
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -43,7 +42,13 @@ function MarketView(props) {
         >
             <LoadingOverlay
                 active={isLoading}
-                className={classes.wrapper}
+                styles={{
+                    wrapper: {
+                        width: "100%",
+                        height: "100%",
+                    },
+                }}
+                className={classes.overlayFullPage}
                 spinner={<LoadingScreen />}
             >
 

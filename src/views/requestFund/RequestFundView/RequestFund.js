@@ -15,7 +15,7 @@ import { useState } from 'react';
 
 // ----------------------------------------------------------------------
 
-function RequestFund() {
+function RequestFund(props) {
     const { t } = useTranslation();
     const isMountedRef = useIsMountedRef();
     const { enqueueSnackbar } = useSnackbar();
@@ -102,10 +102,8 @@ function RequestFund() {
                     height: "100%",
                 },
             }}
-            spinner={
-                <LoadingScreen />
-
-            }>
+            className={props.overlay}
+            spinner={<LoadingScreen />}>
             <Grid container spacing={3}>
                 <Grid item sm />
                 <Grid item md={6} sm={8} xs={12}>

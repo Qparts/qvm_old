@@ -1,8 +1,9 @@
+import React, { useState } from 'react';
+import { NavLink as RouterLink } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import clsx from 'clsx';
 import PropTypes from 'prop-types';
 import { Icon } from '@iconify/react';
-import React, { useState } from 'react';
-import { NavLink as RouterLink } from 'react-router-dom';
 import arrowIosForwardFill from '@iconify-icons/eva/arrow-ios-forward-fill';
 import arrowIosDownwardFill from '@iconify-icons/eva/arrow-ios-downward-fill';
 import { makeStyles } from '@material-ui/core/styles';
@@ -130,6 +131,7 @@ function NavItem({
 }) {
   const classes = useStyles();
   const [show, setShow] = useState(open);
+  const { unseenMessages } = useSelector((state) => state.chat);
   const [notifi, setNotifi] = useState(notification);
   const isSubItem = level > 0;
 
@@ -141,7 +143,7 @@ function NavItem({
     if (notifi === true) {
       setNotifi(false);
     }
-  }
+  };
 
   if (children) {
     return (
@@ -160,7 +162,7 @@ function NavItem({
           {...other}
         >
           <ListItemIcon>{icon && icon}</ListItemIcon>
-          {notifi === true ? <span className={classes.notificationBadge}></span> : ''}
+          {notifi === true && unseenMessages.length > 0 ? <span className={classes.notificationBadge}></span> : ''}
           <ListItemText disableTypography primary={title} />
           {info && info}
           <Box
@@ -206,7 +208,7 @@ function NavItem({
       <ListItemIcon className={classes.listIcon}>
         {isSubItem ? <span className={classes.subIcon} /> : icon}
       </ListItemIcon>
-      {notifi === true ? <span className={classes.notificationBadge}></span> : ''}
+      {notifi === true && unseenMessages.length > 0 ? <span className={classes.notificationBadge}></span> : ''}
       <ListItemText disableTypography primary={title} />
 
       {info && info}

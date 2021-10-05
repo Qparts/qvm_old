@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
+    },
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { zIndex: 1101 }
     }
 }));
 
@@ -61,6 +64,7 @@ function PartSearchView() {
                         height: "100%",
                     },
                 }}
+                className={classes.overlayFullPage}
                 spinner={
                     <LoadingScreen />
 

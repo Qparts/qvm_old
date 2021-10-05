@@ -52,6 +52,9 @@ const useStyles = makeStyles((theme) => ({
         borderBottom: '1px solid #88A2AE',
       }
     },
+  },
+  overlayFullPage: {
+    '& ._loading_overlay_overlay': { position: 'fixed', zIndex: 1101 }
   }
 }));
 
@@ -79,6 +82,7 @@ function PricesView() {
             height: "100%",
           },
         }}
+        className={classes.overlayFullPage}
         spinner={
           <LoadingScreen />
         }
