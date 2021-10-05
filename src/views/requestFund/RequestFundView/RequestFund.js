@@ -77,7 +77,7 @@ function RequestFund() {
                 formData.append("fund_bank_statement", values.banckStatementFile);
                 await paymentService.fundRequestUpload(formData);
                 setLoaded(true);
-                // enqueueSnackbar(t('Stock file has been uploaded'), { variant: 'success' });
+                enqueueSnackbar(t('Fund request has been submitted'), { variant: 'success' });
                 document.getElementById("crFile").value = "";
                 document.getElementById("idFile").value = "";
                 document.getElementById("banckStatementFile").value = "";

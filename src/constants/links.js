@@ -151,6 +151,7 @@ const invoice = {
   wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
   pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`,
   postFundRequest: `${INVOICE_SERVICE}/request-fund`
+  // postFundRequest: `http://localhost:3000/invoice/request-fund`
 };
 
 const chat = {

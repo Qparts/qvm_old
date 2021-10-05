@@ -7,6 +7,7 @@ import { useTranslation } from 'react-i18next';
 import StockFileBtn from 'src/components/Ui/StockFileBtn';
 import TextField from 'src/components/Ui/TextField';
 import CustomButton from 'src/components/Ui/Button';
+import constants from 'src/utils/constants';
 
 // ----------------------------------------------------------------------
 
@@ -32,6 +33,11 @@ function RequestFunForm({ formik }) {
     const [crFileError, setCrFileError] = useState(null);
     const [idFileError, setIdFileError] = useState(null);
     const [banckStatementFileError, setBanckStatementFileError] = useState(null);
+    const maxFileSize = constants.UPLOADEDFILESIZE;
+
+    const exceedFileSizeLimit = (file) => {
+        return (file.size / (1024 * 1024)) > maxFileSize;
+    }
 
     return (
         <FormikProvider value={formik}>
@@ -93,13 +99,18 @@ function RequestFunForm({ formik }) {
                     upload
                     id="crFile"
                     onChange={(event) => {
-                        const extension = event.currentTarget.files[0].name.split(".")[1];
+                        const file = event.currentTarget.files[0];
+                        const extension = file.name.split(".")[1];
                         if (!['jpeg', 'png', 'jpg', 'pdf'].includes(extension.toLowerCase())) {
                             setCrFileError(t("CR file must be in these extensions jpeg, png, jpg, pdf"))
                             setFieldValue("crFile", "");
-                        } else {
+                        } else if (exceedFileSizeLimit(file)) {
+                            setCrFileError(t('CR file must not be greater than', { value: maxFileSize }))
+                            setFieldValue("crFile", "");
+                        }
+                        else {
                             setCrFileError(null)
-                            setFieldValue("crFile", event.currentTarget.files[0]);
+                            setFieldValue("crFile", file);
                         }
                     }}
                     title={t("Upload CR file")}
@@ -118,13 +129,18 @@ function RequestFunForm({ formik }) {
                     upload
                     id="idFile"
                     onChange={(event) => {
-                        const extension = event.currentTarget.files[0].name.split(".")[1];
+                        const file = event.currentTarget.files[0];
+                        const extension = file.name.split(".")[1];
                         if (!['jpeg', 'png', 'jpg', 'pdf'].includes(extension.toLowerCase())) {
                             setIdFileError(t("ID file must be in these extensions jpeg, png, jpg, pdf"))
                             setFieldValue("idFile", "");
-                        } else {
+                        } else if (exceedFileSizeLimit(file)) {
+                            setIdFileError(t('ID file must not be greater than', { value: maxFileSize }))
+                            setFieldValue("idFile", "");
+                        }
+                        else {
                             setIdFileError(null);
-                            setFieldValue("idFile", event.currentTarget.files[0]);
+                            setFieldValue("idFile", file);
                         }
                     }}
                     title={t("Upload ID file")}
@@ -143,13 +159,20 @@ function RequestFunForm({ formik }) {
                     upload
                     id="banckStatementFile"
                     onChange={(event) => {
-                        const extension = event.currentTarget.files[0].name.split(".")[1];
+                        const file = event.currentTarget.files[0];
+                        console.log("size", file.size)
+                        const extension = file.name.split(".")[1];
                         if (!['jpeg', 'png', 'jpg', 'pdf'].includes(extension.toLowerCase())) {
                             setBanckStatementFileError(t("Bank statement file must be in these extensions jpeg, png, jpg, pdf"))
                             setFieldValue("banckStatementFile", "");
-                        } else {
+                        }
+                        else if (exceedFileSizeLimit(file)) {
+                            setBanckStatementFileError(t("Bank statement file must not be greater than", { value: maxFileSize }))
+                            setFieldValue("banckStatementFile", "");
+                        }
+                        else {
                             setBanckStatementFileError(null);
-                            setFieldValue("banckStatementFile", event.currentTarget.files[0]);
+                            setFieldValue("banckStatementFile", file);
                         }
                     }}
                     title={t("Upload the bank statement file")}

@@ -695,5 +695,9 @@
   "Operations statement must be for the last 12 months": "Operations statement must be for the last 12 months",
   "CR file must be in these extensions jpeg, png, jpg, pdf": "CR file must be in these extensions jpeg, png, jpg, pdf",
   "ID file must be in these extensions jpeg, png, jpg, pdf": "ID file must be in these extensions jpeg, png, jpg, pdf",
-  "Bank statement file must be in these extensions jpeg, png, jpg, pdf": "Bank statement file must be in these extensions jpeg, png, jpg, pdf"
+  "Bank statement file must be in these extensions jpeg, png, jpg, pdf": "Bank statement file must be in these extensions jpeg, png, jpg, pdf",
+  "CR file must not be greater than": "CR file must not be greater than {{value}} Mega.",
+  "ID file must not be greater than": "ID file must not be greater than {{value}} Mega",
+  "Bank statement file must not be greater than": "Bank statement file must not be greater than {{value}} Mega",
+  "Fund request has been submitted":"Fund request has been submitted"
 }

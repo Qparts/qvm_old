@@ -736,5 +736,10 @@
   "Operations statement must be for the last 12 months": "يجب ان يكون كشف عمليات لاخر 12 شهر",
   "CR file must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون ملف السجل التجاري في هذه الامتدادات jpeg، png، jpg، pdf",
   "ID file must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون ملف الهوية في هذه الامتدادات jpeg، png، jpg، pdf",
-  "Bank statement file must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون ملف كشف الحساب في هذه الامتدادات jpeg، png، jpg، pdf"
+  "Bank statement file must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون ملف كشف الحساب في هذه الامتدادات jpeg، png، jpg، pdf",
+  "CR file must not be greater than": "يجب ألا يكون ملف السجل التجاري أكبر من {{value}} ميغا.",
+  "ID file must not be greater than": "يجب ألا يكون ملف الهوية أكبر من {{value}} ميغا",
+  "Bank statement file must not be greater than": "يجب ألا يكون ملف كشف الحساب المصرفي أكبر من {{value}} ميغا",
+  "Fund request has been submitted":"تم تقديم طلب الدعم"
+
 }
