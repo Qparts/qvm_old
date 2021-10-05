@@ -87,6 +87,7 @@ function RequestFund() {
                     setErrors({ afterSubmit: error.code || error.message });
                     setSubmitting(false);
                 }
+                setLoaded(true);
                 enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
             }
         }
