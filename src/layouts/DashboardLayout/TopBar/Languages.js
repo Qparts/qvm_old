@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import { useTranslation } from 'react-i18next';
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import PopoverMenu from 'src/components/PopoverMenu';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, MenuItem, ListItemIcon, ListItemText } from '@material-ui/core';
@@ -45,12 +45,42 @@ function Languages() {
   const langStorage = localStorage.getItem('i18nextLng');
   const currentLang = LANGS.find((_lang) => _lang.value === langStorage);
 
+  useEffect(()=>{
+    handleChatPosition(langStorage)
+  },[])
+
+  const handleChatPosition = (lang) => {
+    const element = document.querySelector('#tidio-chat-iframe')
+
+    if (element){
+      const iframe = document.querySelectorAll('iframe').forEach( item =>{
+        const widgetPosition = item.contentWindow.document.body.querySelector('.bubbleWithLabel')
+        if (widgetPosition) {
+          lang == 'ar' ?
+          widgetPosition.className = 'widget-position-right sidebar-position-right bubbleWithLabel' :
+          widgetPosition.className = 'widget-position-left sidebar-position-right bubbleWithLabel'
+        }
+        // else setTimeout(()=>handleChatPosition(lang),1000)
+      })
+      lang == 'ar' ?
+      element.style.inset = "auto 9px 35px auto" :
+      element.style.inset = "auto auto 35px 9px"
+    }else setTimeout(()=>handleChatPosition(lang),1000)
+  }
+
   const handleChangeLanguage = (lng) => {
-    if (lng == 'ar') selectDirection('rtl');
-    else selectDirection('ltr');
+    if (lng == 'ar') {
+      handleChatPosition('ar')
+      selectDirection('rtl');
+    }else {
+      handleChatPosition('en')
+      selectDirection('ltr');
+    }
     i18n.changeLanguage(lng);
     setOpen(false);
   };
+
+
 
   return (
     <>
