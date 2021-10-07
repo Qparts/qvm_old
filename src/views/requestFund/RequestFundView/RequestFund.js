@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { useSnackbar } from 'notistack';
@@ -12,6 +12,7 @@ import paymentService from 'src/services/paymentService';
 import LoadingOverlay from "react-loading-overlay";
 import LoadingScreen from 'src/components/LoadingScreen';
 import { useState } from 'react';
+import { getfundRequests } from 'src/redux/slices/requestFund';
 
 // ----------------------------------------------------------------------
 
@@ -21,6 +22,7 @@ function RequestFund(props) {
     const { enqueueSnackbar } = useSnackbar();
     const { loginObject } = useSelector((state) => state.authJwt);
     const [loaded, setLoaded] = useState(true);
+    const dispatch = useDispatch();
 
 
     const userSchema = Yup.object().shape({
@@ -76,6 +78,7 @@ function RequestFund(props) {
                 formData.append("fund_cr", values.crFile);
                 formData.append("fund_bank_statement", values.banckStatementFile);
                 await paymentService.fundRequestUpload(formData);
+                dispatch(getfundRequests());
                 setLoaded(true);
                 enqueueSnackbar(t('Fund request has been submitted'), { variant: 'success' });
                 document.getElementById("crFile").value = "";
@@ -105,13 +108,11 @@ function RequestFund(props) {
             className={props.overlay}
             spinner={<LoadingScreen />}>
             <Grid container spacing={3}>
-                <Grid item sm />
-                <Grid item md={6} sm={8} xs={12}>
+                <Grid item md={12} sm={12} xs={12}>
                     <MainCard title={t("Fund")}>
                         <RequestFunForm formik={formik} />
                     </MainCard>
                 </Grid>
-                <Grid item sm />
             </Grid>
         </LoadingOverlay>
     )

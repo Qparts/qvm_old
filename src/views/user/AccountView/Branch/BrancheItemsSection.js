@@ -24,18 +24,6 @@ function BrancheItemsSection() {
         dispatch(loadBranches(countries));
     }, []);
 
-    // const showDetailsElement = (item) => {
-    //     return (
-    //         <TableAction
-    //             type='setting'
-    //             title={t("Edit")}
-    //             titleDel={t("Delete")}
-    //             textIcon={<Edit width='14' height='14' fill='#CCD3D7' />}
-    //             textIconDel={<Delete width='13' height='16' fill='#CCD3D7' />}
-    //         />
-    //     )
-    // }
-
     return (
         <Box sx={{ padding: branches.length > constants.MAX ? '10px 15px' : '10px 15px 0' }}>
             <BrancheActionsSection />

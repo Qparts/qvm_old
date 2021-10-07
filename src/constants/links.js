@@ -150,8 +150,10 @@ const invoice = {
   paymentOrder: `${INVOICE_SERVICE}/payment-order`,
   wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
   pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`,
-  postFundRequest: `${INVOICE_SERVICE}/request-fund`
-  // postFundRequest: `http://localhost:3000/invoice/request-fund`
+  postFundRequest: `${INVOICE_SERVICE}/request-fund`,
+  getFundRequests: `${INVOICE_SERVICE}/request-fund`,
+  // getFundRequests: `http://localhost:3000/invoice/request-fund`
+  // postFundRequest: `http://localhost:3000/invoice/request-fund`\
 };
 
 const chat = {

@@ -740,6 +740,12 @@
   "CR file must not be greater than": "يجب ألا يكون ملف السجل التجاري أكبر من {{value}} ميغا.",
   "ID file must not be greater than": "يجب ألا يكون ملف الهوية أكبر من {{value}} ميغا",
   "Bank statement file must not be greater than": "يجب ألا يكون ملف كشف الحساب المصرفي أكبر من {{value}} ميغا",
-  "Fund request has been submitted":"تم تقديم طلب الدعم"
+  "Fund request has been submitted": "تم تقديم طلب الدعم",
+  "You Still Have Pending Fund Request": "لا يزال لديك طلب تمويل معلق",
+  "This Request Is Under Review": "هذا الطلب ({{value}}) قيد المراجعة",
+  "Requests History": "طلبات الدعم السابقه",
+  "Under Review": "قيد المراجعة",
+  "Id": "رمز التعريف",
+  "Approved":"مقبول"
 
 }

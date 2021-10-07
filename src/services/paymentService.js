@@ -56,6 +56,9 @@ const getPendingSubscription = () => {
   return http.get(invoiceUrl.pendingSubscription);
 };
 
+const getfundRequests = () => {
+  return http.get(invoiceUrl.getFundRequests);
+};
 export default {
   getPlans,
   getPlansFeatures,
@@ -65,5 +68,6 @@ export default {
   updatePaymentOrder,
   wirePaymentOrder,
   getPendingSubscription,
-  fundRequestUpload
+  fundRequestUpload,
+  getfundRequests
 };
