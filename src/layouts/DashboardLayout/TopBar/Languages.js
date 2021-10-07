@@ -53,28 +53,58 @@ function Languages() {
     const element = document.querySelector('#tidio-chat-iframe')
 
     if (element){
-      const iframe = document.querySelectorAll('iframe').forEach( item =>{
-        const widgetPosition = item.contentWindow.document.body.querySelector('.bubbleWithLabel')
-        if (widgetPosition) {
-          lang == 'ar' ?
-          widgetPosition.className = 'widget-position-right sidebar-position-right bubbleWithLabel' :
-          widgetPosition.className = 'widget-position-left sidebar-position-right bubbleWithLabel'
-        }
-        // else setTimeout(()=>handleChatPosition(lang),1000)
-      })
-      lang == 'ar' ?
-      element.style.inset = "auto 9px 35px auto" :
-      element.style.inset = "auto auto 35px 9px"
-    }else setTimeout(()=>handleChatPosition(lang),1000)
+      const iframe = document.querySelectorAll('#tidio-chat-iframe')
+      if (iframe) {
+        iframe.forEach( item =>{
+
+          const open = item.contentWindow.document.body.querySelector('.button-body');
+          if (open) {
+            const close = item.contentWindow.document.body.querySelector('.exit-chat');
+            console.log('close',close);
+            if (close) {
+              close.addEventListener('click', function(event) {
+                event.preventDefault();
+                alert('7aamooo')
+              });
+            }
+          }
+
+
+
+
+
+          const widgetPosition = item.contentWindow.document.body.querySelector('.sidebar-position-right')
+          if (widgetPosition) {
+            lang == 'en' ?
+            widgetPosition.className = 'widget-position-right sidebar-position-right bubbleWithLabel' :
+            widgetPosition.className = 'widget-position-left sidebar-position-right bubbleWithLabel'
+          }else{
+            // setTimeout(()=>handleChatPosition(lang),4000)
+          }
+        })
+      }else {
+        setTimeout(()=>handleChatPosition(lang),2000)
+      }
+
+      if (lang == 'en') {
+        element.style.marginLeft = 'auto'
+        element.style.inset = "auto 9px 35px auto"
+      }else {
+        element.style.inset = "auto auto 35px 9px"
+      }
+    }
+    else setTimeout(()=>handleChatPosition(lang),1000)
   }
 
   const handleChangeLanguage = (lng) => {
     if (lng == 'ar') {
-      handleChatPosition('ar')
+
       selectDirection('rtl');
+      handleChatPosition('ar')
     }else {
-      handleChatPosition('en')
+
       selectDirection('ltr');
+        handleChatPosition('en')
     }
     i18n.changeLanguage(lng);
     setOpen(false);

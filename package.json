@@ -131,7 +131,7 @@
     "prettier": "2.2.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "env-cmd -f .env.testing react-scripts start",
     "start:development": "env-cmd -f .env.development react-scripts start",
     "build": "react-scripts build",
     "build:testing": "env-cmd -f .env.testing react-scripts build",
