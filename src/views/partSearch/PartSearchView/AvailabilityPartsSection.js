@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
@@ -6,6 +7,8 @@ import { Box } from '@material-ui/core';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
 import { handleChangePage, setSelectedPart, partSearch, setFilter } from 'src/redux/slices/partSearch';
+import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
+import { setSelectedOffer } from 'src/redux/slices/specialOffer';
 import constants from 'src/utils/constants';
 import LocationFilterSection from './LocationFilterSection';
 import Label from "src/components/Ui/Label";
@@ -49,10 +52,12 @@ function AvailabilityPartsSection() {
     const classes = useStyles();
     const theme = useTheme();
     const dispatch = useDispatch();
+    const history = useHistory();
     const { t } = useTranslation();
     const [openAddToPO, setOpenAddToPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
         rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
+    const { specialOffers = [], latest } = useSelector((state) => state.specialOffer);
     const { themeDirection } = useSelector((state) => state.settings);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -68,6 +73,12 @@ function AvailabilityPartsSection() {
     const addToCompanyCart = (item) => {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
         setOpenAddToPO(true);
+    }
+
+    const partSpecialOffer = (item) => {
+        const companyFiltered = specialOffers.filter(c => c.id == JSON.parse(item).offers[0].offerRequestId);
+        history.push(`/app/special-offer/${companyFiltered[0].id}`);
+        dispatch(setSelectedOffer({ selectedOffer: companyFiltered[0] }));
     }
 
     const showDetailsElement = (item) => {
@@ -101,6 +112,9 @@ function AvailabilityPartsSection() {
             if (query != "") {
                 dispatch(handleChangePage({ newPage: 0 }));
                 dispatch(partSearch(query, 0, 0, searchTerm, locationFilters));
+                if (specialOffers.length === 0 || latest === true) {
+                    dispatch(getSpecialOffersLive());
+                }
             }
         }, 300)
 
@@ -134,7 +148,11 @@ function AvailabilityPartsSection() {
                         {
                             name: t("Part Number"),
                             attr: 'partNumber',
-                            badge: <Label specialOffer="specialOffer" label={t("Special offer")} />
+                            badge: (item) => <Label
+                                click={() => partSpecialOffer(item)}
+                                specialOffer="specialOffer"
+                                cursorStyl='cursorStyl'
+                                label={t("Special offer")} />
                         },
                         {
                             name: t("Brand"),

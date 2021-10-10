@@ -43,8 +43,8 @@ const useStyles = makeStyles((theme) => ({
         },
     },
     dataTableGeneralDashboard: {
-        '@media (max-width: 405px)': {
-            minWidth: '334px',
+        '@media (max-width: 413px)': {
+            minWidth: '341px',
         },
     },
     dataTableChat: {
@@ -169,7 +169,7 @@ const getCellValue = (item, headerItem, maps) => {
         value = value + ' ' + headerItem.label;
 
     if ((headerItem.badge && offersLength > 0) || (headerItem.badge && item.specialOffer)) {
-        value = <> {value} {headerItem.badge} </>
+        value = <> {value} {headerItem.badge(JSON.stringify(item))} </>
     }
 
     return value;
