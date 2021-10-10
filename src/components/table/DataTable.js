@@ -141,6 +141,10 @@ const getCellValue = (item, headerItem, maps) => {
             :
             (getValue(item, headerItem.attr));
 
+    if (headerItem.getValue) {
+        value = headerItem.getValue(item);
+    }
+
     if (offersLength > 0 && headerItem.num === 'num') {
         value = helper.ccyFormat(getValue(item, 'offers[0].offerPrice'));
     } else if (offersLength == 0 && headerItem.num === 'num') {

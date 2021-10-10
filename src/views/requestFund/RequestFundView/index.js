@@ -1,11 +1,14 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
 import Page from 'src/components/Page';
 import RequestFund from './RequestFund';
+import { getfundRequests } from 'src/redux/slices/requestFund';
+import EmptyContent from 'src/components/EmptyContent';
+import RequestFundHistory from './RequestFundHistory';
 
 // ----------------------------------------------------------------------
 
@@ -33,7 +36,13 @@ const useStyles = makeStyles((theme) => ({
 function RequestFundView() {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { isLoading } = useSelector((state) => state.requestFund);
+    const { isLoading, pendingRequest, fundRequests } = useSelector((state) => state.requestFund);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getfundRequests());
+    }, [])
+
 
     return (
         <Page
@@ -53,7 +62,22 @@ function RequestFundView() {
                     <LoadingScreen />
                 }
             >
-                <RequestFund overlay={classes.overlayFullPage} />
+                {!isLoading &&
+                    <>
+                        {pendingRequest ?
+
+                            <div style={{ marginTop: -100 }}>
+                                <EmptyContent
+                                    title={t("You Still Have Pending Fund Request")}
+                                    description={t("This Request Is Under Review", { value:pendingRequest.id })}
+                                />
+                            </div>
+                            :
+                            <RequestFund overlay={classes.overlayFullPage} />
+                        }
+                        {fundRequests.length > 0 && <RequestFundHistory />}
+                    </>
+                }
             </LoadingOverlay>
         </Page>
     );
