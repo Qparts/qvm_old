@@ -7,7 +7,7 @@ import LoadingOverlay from "react-loading-overlay";
 import Page from 'src/components/Page';
 import RequestFund from './RequestFund';
 import { getfundRequests } from 'src/redux/slices/requestFund';
-import EmptyContent from 'src/components/EmptyContent';
+import EmptyContent from 'src/components/Ui/EmptyContent';
 import RequestFundHistory from './RequestFundHistory';
 
 // ----------------------------------------------------------------------
@@ -65,11 +65,11 @@ function RequestFundView() {
                 {!isLoading &&
                     <>
                         {pendingRequest ?
-
-                            <div style={{ marginTop: -100 }}>
+                            <div>
                                 <EmptyContent
+                                    btnHome
                                     title={t("You Still Have Pending Fund Request")}
-                                    description={t("This Request Is Under Review", { value:pendingRequest.id })}
+                                    description={t("This Request Is Under Review", { value: pendingRequest.id })}
                                 />
                             </div>
                             :
