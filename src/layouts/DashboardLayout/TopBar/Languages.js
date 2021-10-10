@@ -45,36 +45,33 @@ function Languages() {
   const langStorage = localStorage.getItem('i18nextLng');
   const currentLang = LANGS.find((_lang) => _lang.value === langStorage);
 
-  useEffect(()=>{
-    handleChatPosition(langStorage)
-  },[])
+  useEffect(() => {
+    handleChatPosition(langStorage);
+  }, []);
 
   const handleChatPosition = (lang) => {
-    const element = document.querySelector('#tidio-chat-iframe')
-    if (element){
+    const element = document.querySelector('#tidio-chat-iframe');
+    if (element) {
       if (lang == 'en') {
-        element.style.marginLeft = 'auto'
-        element.style.inset = "auto 9px 35px auto"
-      }else {
-        element.style.inset = "auto auto 35px 9px"
+        element.style.marginLeft = 'auto';
+        element.style.inset = 'auto 9px 35px auto';
+      } else {
+        element.style.inset = 'auto auto 35px 9px';
       }
-    }
-    else setTimeout(()=>handleChatPosition(lang),1000)
-  }
+    } else setTimeout(() => handleChatPosition(lang), 1000);
+  };
 
   const handleChangeLanguage = (lng) => {
     if (lng == 'ar') {
       selectDirection('rtl');
-      handleChatPosition('ar')
-    }else {
+      handleChatPosition('ar');
+    } else {
       selectDirection('ltr');
-      handleChatPosition('en')
+      handleChatPosition('en');
     }
     i18n.changeLanguage(lng);
     setOpen(false);
   };
-
-
 
   return (
     <>
@@ -84,8 +81,16 @@ function Languages() {
         className={clsx(classes.btnLang, { [classes.isSelected]: isOpen })}
       >
         <img
-          src={(langStorage === 'en-US' || currentLang === undefined) ? LANGS[0].icon : currentLang.icon }
-          alt={(langStorage === 'en-US' || currentLang === undefined) ? LANGS[0].label : currentLang.label }
+          src={
+            langStorage === 'en-US' || currentLang === undefined
+              ? LANGS[0].icon
+              : currentLang.icon
+          }
+          alt={
+            langStorage === 'en-US' || currentLang === undefined
+              ? LANGS[0].label
+              : currentLang.label
+          }
         />
       </MIconButton>
 

@@ -10,12 +10,14 @@ const initialState = {
     isLoading: false,
     error: '',
     specialOffers: [],
+    filteredSpecialOffers: [],
+    tags: [],
     companies: new Map(),
     offerProducts: [],
     selectedOffer: null,
     filter: "",
     searchSize: 0,
-
+    latest: false
 };
 
 
@@ -36,7 +38,10 @@ const slice = createSlice({
         getSpecialOffersLiveSuccess(state, action) {
             state.isLoading = false;
             state.specialOffers = action.payload.specialOffers;
+            state.filteredSpecialOffers = action.payload.specialOffers;
             state.companies = action.payload.companies;
+            state.tags = action.payload.tags;
+            state.latest = action.payload.latest;
             state.error = '';
         },
 
@@ -49,6 +54,14 @@ const slice = createSlice({
 
         setSelectedOffer(state, action) {
             state.selectedOffer = action.payload.selectedOffer;
+        },
+
+        setFilteredSepcialOffer(state, action) {
+            state.filteredSpecialOffers = action.payload.filteredSpecialOffers;
+        },
+
+        setTags(state, action) {
+            state.tags = action.payload.tags;
         },
 
         setFilter(state, action) {
@@ -67,7 +80,8 @@ export default slice.reducer;
 // Actions
 export const {
     setSelectedOffer,
-    setFilter
+    setFilter,
+    setFilteredSepcialOffer
 } = slice.actions;
 
 
@@ -76,7 +90,7 @@ export function getSpecialOffersLive(latest = false) {
     return async (dispatch) => {
         dispatch(slice.actions.startLoading());
         try {
-            let params = latest ? {latest:true} : {};
+            let params = latest ? { latest: true } : {};
             const { data: specialOffers } = await specialOfferService.getSpecialOffersLive(params);
             let selectedCompanies = new Set();
             specialOffers.forEach(element => {
@@ -94,8 +108,16 @@ export function getSpecialOffersLive(latest = false) {
             cacheMissingCompanies(recentCompanyData, tempCompanies);
 
             let newCompanies = new Map([...cachedCompanies, ...tempCompanies]);
-
-            dispatch(slice.actions.getSpecialOffersLiveSuccess({ specialOffers: specialOffers, companies: newCompanies }));
+            let tags = ['all'];
+            const specialOffersTags = specialOffers.map(sp => sp.tag);
+            for (var i = 0; i < specialOffersTags.length; i++) {
+                for (var j = 0; j < specialOffersTags[i].length; j++) {
+                    if (tags.indexOf(specialOffersTags[i][j]) == -1) {
+                        tags.push(specialOffersTags[i][j])
+                    }
+                }
+            };
+            dispatch(slice.actions.getSpecialOffersLiveSuccess({ specialOffers: specialOffers, tags: tags, latest: latest, companies: newCompanies }));
         } catch (error) {
             dispatch(slice.actions.hasError(error.response?.data));
         }

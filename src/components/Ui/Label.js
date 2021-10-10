@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
+import clsx from 'clsx';
 
 // ----------------------------------------------------------------------
 
@@ -18,6 +19,9 @@ const useStyles = makeStyles((theme) => ({
         borderRadius: '5px 0 5px 5px',
         padding: theme.spacing(0.5, 0.875),
         marginLeft: theme.spacing(0.625)
+    },
+    cursorStyl: {
+        cursor: 'pointer'
     }
 }));
 
@@ -29,7 +33,9 @@ export default function Label(props) {
     return (
         <>
             {props.specialOffer ?
-                <Typography variant="caption" className={classes.specialOfferLabel}>{props.label}</Typography>
+                <Typography variant="caption" className={clsx(classes.specialOfferLabel, classes[props.cursorStyl],)} onClick={props.click}>
+                    {props.label}
+                </Typography>
                 :
                 <label className={classes.labelStyl}> {props.name} </label>}
         </>

@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@material-ui/core';
-import { More } from '../../../icons/icons';
+// import { More } from '../../../icons/icons';
 import Datatable from 'src/components/table/DataTable';
 
 // ----------------------------------------------------------------------
@@ -36,9 +36,9 @@ function MostSearchedParts({ className, ...other }) {
     const mostSearchedProductsOnStockCopy = [...mostSearchedProductsOnStock]
     const mostSearchedProductsOnStockSort = mostSearchedProductsOnStockCopy.sort((a,b) => (a.total < b.total) ? 1 : ((b.total < a.total) ? -1 : 0));
 
-    const showMoreActions = (item) => {
-        return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
-    }
+    // const showMoreActions = (item) => {
+    //     return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
+    // }
 
     return (
         <Card className={clsx(classes.root, classes.partsSearch, className)} {...other}>
@@ -51,10 +51,14 @@ function MostSearchedParts({ className, ...other }) {
                     {
                         name: t('search attempts'),
                         attr: 'total',
+                    },
+                    {
+                        name: t('Brand'),
+                        attr: 'brand',
                     }
                 ]}
 
-                actions={[{ element: showMoreActions }]}
+                // actions={[{ element: showMoreActions }]}
                 datatable={mostSearchedProductsOnStockSort}
                 isLazy={true}
                 hasPagination={false}
