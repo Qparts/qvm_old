@@ -14,7 +14,7 @@
 .swiper-pagination-bullets {
     bottom: -20px !important;
   }
-  
+
   .swiper-pagination-bullet {
     height: 3px;
     border-radius: 0;
@@ -25,13 +25,13 @@
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
   }
-  
+
   .swiper-pagination-bullet-active {
     background: #F20505;
     width: 35px;
   }
 
-  
+
 .box-shadow {
     display: flex;
     align-items: center;
@@ -100,7 +100,7 @@
       max-width: 100%;
     }
   }
-  
+
   .features .swiper-container {
     overflow: visible !important;
   }
