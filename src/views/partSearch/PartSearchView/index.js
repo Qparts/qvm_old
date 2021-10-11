@@ -69,7 +69,7 @@ function PartSearchView() {
                     <LoadingScreen />
 
                 }>
-
+                <SearchBar searchPartStyl='searchPartStyl' />
                 {error != null && error === "Search limit exceeded!" ?
                     <EmptyContent
                         btnTitle={t("Upgrade to Premium")}
@@ -86,7 +86,6 @@ function PartSearchView() {
                         />
                         :
                         <>
-                            {productResult.length > 0 && <SearchBar searchPartStyl='searchPartStyl' />}
                             {productResult.length > 0 ? <AvailabilityPartsSection /> : null}
                             {productInfoResult.length > 0 ?
                                 <>

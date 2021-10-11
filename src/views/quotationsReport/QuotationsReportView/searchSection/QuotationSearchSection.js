@@ -151,7 +151,7 @@ function QuotationSearchSection() {
                                     {
                                         name: t("Part Number"),
                                         attr: 'productNumber',
-                                        badge: <Label specialOffer="specialOffer" label={t("Special offer")} />,
+                                        badge: () => <Label specialOffer="specialOffer" label={t("Special offer")} />,
                                     },
                                     {
                                         name: t("Brand"),

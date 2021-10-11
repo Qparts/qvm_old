@@ -6,7 +6,7 @@ import { useSnackbar } from 'notistack';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import RequestFunForm from './RequestFundForm';
-import { Grid } from '@material-ui/core';
+import { Grid, Box } from '@material-ui/core';
 import MainCard from 'src/components/Ui/MainCard';
 import paymentService from 'src/services/paymentService';
 import LoadingOverlay from "react-loading-overlay";
@@ -108,12 +108,15 @@ function RequestFund(props) {
             className={props.overlay}
             spinner={<LoadingScreen />}>
             <Grid container spacing={3}>
-                <Grid item md={12} sm={12} xs={12}>
+                <Grid item sm />
+                <Grid item md={6} sm={8} xs={12}>
                     <MainCard title={t("Fund")}>
                         <RequestFunForm formik={formik} />
                     </MainCard>
                 </Grid>
+                <Grid item sm />
             </Grid>
+            <Box mb={3} />
         </LoadingOverlay>
     )
 }

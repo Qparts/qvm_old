@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         '&:hover': {
             borderRight: `3px solid ${theme.palette.primary.main}`,
-            '& $a span': {
+            '& $div span': {
                 color: theme.palette.secondary.darker,
             },
             '& $svg path': {

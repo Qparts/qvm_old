@@ -155,7 +155,7 @@ function SpecialOfferDetails({ specialOfferId }) {
                             size={searchSize}
                             rowsPerPage={constants.MAX}
                             hasPagination={true}
-                            dataTableGeneral='dataTableGeneral'
+                            dataTableSetting='dataTableSetting'
                         />
                         :
                         <SpecialOfferInfoGrid
