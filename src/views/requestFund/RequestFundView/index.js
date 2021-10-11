@@ -9,6 +9,7 @@ import RequestFund from './RequestFund';
 import { getfundRequests } from 'src/redux/slices/requestFund';
 import EmptyContent from 'src/components/EmptyContent';
 import RequestFundHistory from './RequestFundHistory';
+import { Box } from '@material-ui/core';
 
 // ----------------------------------------------------------------------
 
@@ -69,12 +70,14 @@ function RequestFundView() {
                             <div style={{ marginTop: -100 }}>
                                 <EmptyContent
                                     title={t("You Still Have Pending Fund Request")}
-                                    description={t("This Request Is Under Review", { value:pendingRequest.id })}
+                                    description={t("This Request Is Under Review", { value: pendingRequest.id })}
                                 />
                             </div>
                             :
                             <RequestFund overlay={classes.overlayFullPage} />
                         }
+                        <Box sx={{ mb: 5 }} />
+
                         {fundRequests.length > 0 && <RequestFundHistory />}
                     </>
                 }
