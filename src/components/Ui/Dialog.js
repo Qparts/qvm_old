@@ -13,13 +13,6 @@ import CloseIcon from '@material-ui/icons/Close';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    uploadStockBtn: {
-        padding: '9px 16px',
-        boxShadow: 'none',
-        '&:hover': {
-            boxShadow: '0px 3px 1px -2px rgb(145 158 171 / 20%), 0px 2px 2px 0px rgb(145 158 171 / 14%), 0px 1px 5px 0px rgb(145 158 171 / 12%)'
-        }
-    },
     closeButton: {
         marginLeft: theme.spacing(4),
         padding: theme.spacing(1),
@@ -43,39 +36,71 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '500px',
         },
     },
+    welcomeDialogWidth: { boxShadow: 'none' },
+    welcomeCloseButton: {
+        width: '30px',
+        height: '30px',
+        background: theme.palette.grey[0],
+        borderRadius: '50%',
+        position: 'absolute',
+        top: '10px',
+        right: '10px'
+    },
+    welcomeDialogContent: { padding: '0 !important' }
 }));
 
 // ----------------------------------------------------------------------
 
-const UploadStockBtn = (props) => {
+const Modal = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
-        <Dialog
-            fullScreen={fullScreen}
-            fullWidth={props.fullWidth}
-            open={props.open}
-            onClose={props.handleClose}
-            aria-labelledby="responsive-dialog-title"
-            classes={{ paper: classes[props.dialogWidth] }}
-        >
-            <DialogTitle id="responsive-dialog-title" className={classes.headCol}>
-                {props.title}
+        props.welcomePopUp ?
+            <Dialog
+                fullScreen={fullScreen}
+                fullWidth={props.fullWidth}
+                open={props.open}
+                onClose={props.handleClose}
+                aria-labelledby="responsive-dialog-title"
+                classes={{ paper: classes.welcomeDialogWidth }}
+            >
                 {props.handleClose ? (
-                    <IconButton aria-label="close" className={classes.closeButton} onClick={props.handleClose}>
+                    <IconButton aria-label="close" className={classes.welcomeCloseButton} onClick={props.handleClose}>
                         <CloseIcon />
                     </IconButton>
                 ) : null}
-            </DialogTitle>
-            <DialogContent className={classes.dialogContent}>
-                <DialogContentText style={{ margin: 0 }}>
-                    {props.children}
-                </DialogContentText>
-            </DialogContent>
-        </Dialog>
+                <DialogContent className={classes.welcomeDialogContent}>
+                    <DialogContentText style={{ margin: 0 }}>
+                        {props.children}
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
+            :
+            <Dialog
+                fullScreen={fullScreen}
+                fullWidth={props.fullWidth}
+                open={props.open}
+                onClose={props.handleClose}
+                aria-labelledby="responsive-dialog-title"
+                classes={{ paper: classes[props.dialogWidth] }}
+            >
+                <DialogTitle id="responsive-dialog-title" className={classes.headCol}>
+                    {props.title}
+                    {props.handleClose ? (
+                        <IconButton aria-label="close" className={classes.closeButton} onClick={props.handleClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    ) : null}
+                </DialogTitle>
+                <DialogContent className={classes.dialogContent}>
+                    <DialogContentText style={{ margin: 0 }}>
+                        {props.children}
+                    </DialogContentText>
+                </DialogContent>
+            </Dialog>
     )
 }
 
-export default UploadStockBtn
+export default Modal

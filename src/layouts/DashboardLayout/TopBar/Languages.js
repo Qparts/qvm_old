@@ -52,7 +52,7 @@ function Languages() {
   const handleChatPosition = (lang) => {
     const element = document.querySelector('#tidio-chat-iframe')
     if (element) {
-      if (lang == 'en') {
+      if (lang == 'en' || !lang) {
         element.style.marginLeft = 'auto'
         element.style.inset = "auto 9px 35px auto"
       } else {
