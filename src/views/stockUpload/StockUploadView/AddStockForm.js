@@ -19,6 +19,7 @@ import { Download } from '../../../icons/icons';
 import StockFileBtn from '../../../components/Ui/StockFileBtn';
 import TextField from '../../../components/Ui/TextField';
 import CustomButton from '../../../components/Ui/Button';
+import stockService from 'src/services/stockService';
 
 // ----------------------------------------------------------------------
 
@@ -66,6 +67,17 @@ function AddStockForm(props) {
     const [fileError, setFileError] = useState(null);
 
 
+    const downloadStockFile = async () => {
+        await stockService.getStockFile().then((res) => {
+            const url = window.URL.createObjectURL(new Blob([res.data]));
+            const link = document.createElement('a');
+            link.href = url;
+            link.setAttribute('download', "stock.xlsx");
+            document.body.appendChild(link);
+            link.click();
+        })
+    }
+
     return (
         <FormikProvider value={props.formik}>
             <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
@@ -78,6 +90,7 @@ function AddStockForm(props) {
                     round
                     component="span"
                     className={classes.uploadStockMainBtn}
+                    onClick={downloadStockFile}
                 >
                     {t("download stock file")}
                     <Download width='20' height='20' fill={theme.palette.primary.main} />

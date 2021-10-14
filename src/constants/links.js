@@ -106,7 +106,10 @@ const stock = {
   getSalesCreditBalance: `${STOCK_SERVICE}/sales-credit-balance`,
   postCreditPayment: (type) => `${STOCK_SERVICE}/credit-payment/${type}`,
   getPendingItems: `${STOCK_SERVICE}/pending-items`,
-  putPendingItems: `${STOCK_SERVICE}/pending-item`
+  putPendingItems: `${STOCK_SERVICE}/pending-item`,
+  getStockFile: `${STOCK_SERVICE}/download-stock-file`,
+  // getStockFile: `http://localhost:3000/stock/download-stock-file`,
+  
 };
 
 const catalog = {
