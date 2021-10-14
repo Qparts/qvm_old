@@ -18,7 +18,8 @@ import constants from 'src/utils/constants';
 import TextField from '../../../components/Ui/TextField';
 import Button from '../../../components/Ui/Button';
 import StockFileBtn from '../../../components/Ui/StockFileBtn';
-
+import LoadingOverlay from "react-loading-overlay";
+import LoadingScreen from 'src/components/LoadingScreen';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
@@ -63,6 +64,9 @@ const useStyles = makeStyles((theme) => ({
     totalAmountNum: {
         color: theme.palette.secondary.main,
         fontWeight: theme.typography.fontWeightMedium
+    },
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { position: 'fixed', zIndex: 1101 }
     }
 }));
 
@@ -73,6 +77,8 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
     const { t } = useTranslation();
     const { enqueueSnackbar } = useSnackbar();
     const [receipt, setReceipt] = useState(null);
+    const [receiptFileError, setReceiptFileError] = useState(null);
+    const [loaded, setLoaded] = useState(true);
 
     const paymentMethods = [
         { id: 1, name: 'Bank Transfer', nameAr: 'تحويل بنكي' },
@@ -115,8 +121,18 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
     }
 
     const onAttach = async (event) => {
-        console.log("file", event.target.files[0]);
-        setReceipt(event.target.files[0]);
+        const file = event.currentTarget.files[0];
+        const extension = file.name.split(".")[1];
+        if (!['jpeg', 'png', 'jpg', 'pdf'].includes(extension.toLowerCase())) {
+            setReceiptFileError(t("File must be in these extensions jpeg, png, jpg, pdf"))
+            setReceipt(null);
+        }
+        else {
+            setReceiptFileError(null)
+            setReceipt(file);
+        }
+        // setReceipt(event.target.files[0]);
+
     }
 
     const submitPaymentOrder = async () => {
@@ -144,6 +160,7 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                 countryCode: country.countryCode
             };
 
+            setLoaded(false);
             if (paymentMethod == "1") {
                 paymentObject.mimeType = receipt.type;
                 paymentObject.extension = receipt.type.split('/')[1];
@@ -151,6 +168,7 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                 formData.append("paymentOrder", JSON.stringify(paymentObject));
                 formData.append("file", receipt);
                 await paymentService.wirePaymentOrder(formData);
+                setLoaded(true);
                 setPlanDuration(null);
                 enqueueSnackbar(t('Request has been uploaded'), { variant: 'success' });
             }
@@ -158,13 +176,25 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                 const { data: payment } = await paymentService.paymentOrder(paymentObject);
                 window.location = payment.url;
             }
+
         } catch (error) {
+            setLoaded(true);
             enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
         }
     }
 
     return (
-        <>
+        <LoadingOverlay
+            active={!loaded}
+            styles={{
+                wrapper: {
+                    width: "100%",
+                    height: "100%",
+                },
+            }}
+            className={classes.overlayFullPage}
+            spinner={<LoadingScreen />}>
+
             {planDuration != null &&
                 <Box>
                     <List className={classes.totalAmount}>
@@ -277,11 +307,13 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                                 <StockFileBtn
                                     onChange={onAttach}
                                     title={t("Attach Transfer Receipt")}
+                                    value={receipt}
+                                    fileError={receiptFileError}
                                     file='attach-transfer-receipt' />
                             </Box>
 
                             <Button
-                                disabled={!receipt}
+                                disabled={!receipt || receiptFileError != null}
                                 onClick={() => submitPaymentOrder()}
                             >
                                 {t("Submit Order")}
@@ -290,7 +322,7 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                     }
                 </Box>
             }
-        </>
+        </LoadingOverlay>
     );
 }
 
