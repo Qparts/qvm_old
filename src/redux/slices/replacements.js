@@ -7,10 +7,9 @@ import partSearchService from 'src/services/partSearchService';
 const initialState = {
     isLoading: false,
     error: '',
-    partReplacements: []
-
+    partReplacements: [],
+    partReplacementStatus: false
 };
-
 
 const slice = createSlice({
     name: 'replacements',
@@ -18,6 +17,7 @@ const slice = createSlice({
     reducers: {
         startLoading(state) {
             state.isLoading = true;
+            state.partReplacementStatus = false;
         },
 
         // HAS ERROR
@@ -31,16 +31,16 @@ const slice = createSlice({
             state.isLoading = false;
             state.partReplacements = action.payload.partReplacements;
             state.error = '';
+            state.partReplacementStatus = true;
         },
         cleanup(state) {
             state.isLoading = false;
             state.error = '';
-            state.partReplacements = []
+            state.partReplacements = [];
+            state.partReplacementStatus = false;
         }
     }
-
 });
-
 
 
 // Reducer

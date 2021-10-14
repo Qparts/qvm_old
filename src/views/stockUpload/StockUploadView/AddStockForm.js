@@ -7,9 +7,9 @@ import {
     Box,
     Divider,
     MenuItem,
-    Checkbox,
-    FormControlLabel,
-    Grid,
+    // Checkbox,
+    // FormControlLabel,
+    // Grid,
     Typography,
     Button,
 } from '@material-ui/core';
@@ -60,9 +60,7 @@ function AddStockForm(props) {
     const { t } = useTranslation();
     const classes = useStyles();
     const theme = useTheme();
-    const { countries } = useSelector(
-        (state) => state.authJwt
-    );
+    const { countries } = useSelector((state) => state.authJwt);
     const [branches, setBranches] = useState(getBranches(countries));
     const { themeDirection } = useSelector((state) => state.settings);
     const [fileError, setFileError] = useState(null);
@@ -115,47 +113,12 @@ function AddStockForm(props) {
                     }}
                     title={t("upload stock file")}
                     file='stockFile'
-                    label = {t("upload stock file")}
+                    label={t("upload stock file")}
                     value={values.stockFile}
                     touched={touched.stockFile}
                     errors={errors.stockFile}
                     fileError={fileError} />
-
-                <FormControlLabel
-                    control={<Checkbox checked={props.checked} onChange={props.handleChange} />}
-                    label={t("special offer")}
-                    style={{ marginTop: '15px' }}
-                />
-                {props.checked ?
-                    <>
-                        <Divider />
-                        <TextField
-                            type='input'
-                            name='offerName'
-                            label={t('add offer name')}
-                            spaceToTop='spaceToTop' />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    type='date'
-                                    id='offerStartDate'
-                                    name='offerStartDate'
-                                    label={t("Offer Start Date")} />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    type='date'
-                                    id='offerEndDate'
-                                    name='offerEndDate'
-                                    label={t("Offer End Date")} />
-                            </Grid>
-                        </Grid>
-                        <TextField
-                            type='input'
-                            name='discount'
-                            label={t('put discount value')}
-                            spaceToTop='spaceToTop' />
-                    </> : ""}
+                    
                 <Box sx={{ marginTop: '20px' }}>
                     <CustomButton type="submit">{t("upload stock")}</CustomButton>
                 </Box>

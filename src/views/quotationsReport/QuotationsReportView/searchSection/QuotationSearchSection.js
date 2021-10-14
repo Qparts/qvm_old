@@ -45,7 +45,7 @@ function QuotationSearchSection() {
     const history = useHistory();
     const isMountedRef = useIsMountedRef();
     const [subscription, setSubscription] = useState(false);
-    const { data, selectedQuotation } = useSelector((state) => state.quotationsReport);
+    const { data, selectedQuotation, quotationsReportStatus } = useSelector((state) => state.quotationsReport);
     const { themeDirection } = useSelector((state) => state.settings);
     const { currentPlan } = useSelector((state) => state.authJwt);
 
@@ -173,7 +173,12 @@ function QuotationSearchSection() {
                             />
                         </CustomDialog>
                     </SecContainer>
-                    : ""}
+                    : data.length === 0 && quotationsReportStatus === true ?
+                        <EmptyContent
+                            btnHome
+                            title={t("Unable to receive your order")}
+                            description={t("look like there are no results for the report you were looking for")}
+                        /> : null}
         </Box>
     );
 }

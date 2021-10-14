@@ -52,7 +52,6 @@ function StockUploadView(props) {
                     <LoadingScreen />
                 }>
                 <UploadSection
-                    checked={props.checked}
                     handleChange={props.handleChange} />
             </LoadingOverlay>
         </Page>
