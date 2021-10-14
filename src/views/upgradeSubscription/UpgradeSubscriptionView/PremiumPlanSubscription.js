@@ -156,7 +156,7 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
             }
             else {
                 const { data: payment } = await paymentService.paymentOrder(paymentObject);
-                window.locationF = payment.url;
+                window.location = payment.url;
             }
         } catch (error) {
             enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
