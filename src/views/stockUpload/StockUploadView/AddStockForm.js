@@ -20,6 +20,8 @@ import StockFileBtn from '../../../components/Ui/StockFileBtn';
 import TextField from '../../../components/Ui/TextField';
 import CustomButton from '../../../components/Ui/Button';
 import stockService from 'src/services/stockService';
+import axios from 'axios';
+import links from 'src/constants/links';
 
 // ----------------------------------------------------------------------
 
@@ -56,6 +58,9 @@ AddStockForm.propTypes = {
     formik: PropTypes.object.isRequired
 };
 
+const stockUrl = links.stock;
+
+
 function AddStockForm(props) {
     const { errors, touched, handleSubmit, getFieldProps, setFieldValue, values } = props.formik;
     const { t } = useTranslation();
@@ -70,14 +75,18 @@ function AddStockForm(props) {
 
 
     const downloadStockFile = async () => {
-        await stockService.getStockFile().then((res) => {
-            const url = window.URL.createObjectURL(new Blob([res.data]));
-            const link = document.createElement('a');
-            link.href = url;
-            link.setAttribute('download', "stock.xlsx");
-            document.body.appendChild(link);
-            link.click();
-        })
+        axios.get(stockUrl.getStockFile, {
+            responseType: 'blob'
+        }).then((response) => {
+            const url = URL.createObjectURL(new Blob([response.data], {
+                type: 'application/vnd.ms-excel'
+            }))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', "stock.xlsx")
+            document.body.appendChild(link)
+            link.click()
+        });
     }
 
     return (
