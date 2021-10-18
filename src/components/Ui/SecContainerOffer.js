@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import {
@@ -35,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     secHeader: {
         borderRadius: '20px 20px 0 0',
         color: '#14455B',
-        marginTop: '5px',
         '@media (max-width: 450px)': {
             textAlign: 'center',
             marginBottom: theme.spacing(2)
@@ -77,11 +77,11 @@ const useStyles = makeStyles((theme) => ({
 // ----------------------------------------------------------------------
 
 const SecContainerOffer = (props, { className, ...other }) => {
-
     const classes = useStyles();
     const theme = useTheme();
     const { t } = useTranslation();
-    const [open, setOpen] = React.useState(false);
+    const { tags = [] } = useSelector((state) => state.specialOffer);
+    const [open, setOpen] = useState(false);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -96,10 +96,12 @@ const SecContainerOffer = (props, { className, ...other }) => {
             <Box className={classes.secHeadCont}>
                 <Typography variant="h5" className={classes.secHeader}> {props.header} </Typography>
                 <Box className={classes.secAction}>
-                    <Button variant="contained" onClick={props.filter} className={classes.offerBtn} style={{ background: '#EEF2F9', color: theme.palette.secondary.main }}>
-                        <Filter width='17px' height='17px' fill={theme.palette.secondary.main} />
-                        <Typography variant="body2" sx={{ marginLeft: '5px' }}>{t("filter")}</Typography>
-                    </Button>
+                    {tags.length > 1 ?
+                        <Button variant="contained" onClick={props.filter} className={classes.offerBtn} style={{ background: '#EEF2F9', color: theme.palette.secondary.main }}>
+                            <Filter width='17px' height='17px' fill={theme.palette.secondary.main} />
+                            <Typography variant="body2" sx={{ marginLeft: '5px' }}>{t("filter")}</Typography>
+                        </Button> : null
+                    }
                     <Button variant="contained" onClick={handleClickOpen} className={classes.offerBtn} style={{ background: theme.palette.primary.main, color: theme.palette.grey[0] }}>
                         <OfferOne width='21px' height='21px' fill={theme.palette.grey[0]} />
                         <Typography variant="body2" sx={{ marginLeft: '5px' }}>{t("add offer")}</Typography>

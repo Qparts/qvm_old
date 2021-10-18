@@ -49,42 +49,6 @@ function SpecialOfferItemsSection() {
             {filter ?
                 <>
                     <Grid container spacing={2}>
-                        {/* <Grid item xs={12} sm={6} md={3}>
-                        <TextField
-                            type='select'
-                            label={t("sort by")}
-                            id="sort"
-                            name="sort"
-                            value='branch1'
-                            selectBg='selectBg'
-                            spaceToTop="spaceToTop"
-                        >
-                            <MenuItem key="branch1" value="branch1">
-                                branch1
-                            </MenuItem>
-                            <MenuItem key="branch2" value="branch2">
-                                branch2
-                            </MenuItem>
-                        </TextField>
-                    </Grid>
-                    <Grid item xs={12} sm={6} md={3}>
-                        <TextField
-                            type='select'
-                            label={t("location")}
-                            id="location"
-                            name="location"
-                            value="Cairo"
-                            selectBg='selectBg'
-                            spaceToTop="spaceToTop"
-                        >
-                            <MenuItem key="Cairo" value="Cairo">
-                                Cairo
-                            </MenuItem>
-                            <MenuItem key="Alex" value="Alex">
-                                Alex
-                            </MenuItem>
-                        </TextField>
-                    </Grid> */}
                         <Grid item xs={12} sm={6} md={3}>
                             <TextField
                                 type='select'
@@ -97,16 +61,12 @@ function SpecialOfferItemsSection() {
                                 onChange={(event) => handleOffersFilterChange(event)}
                             >
                                 {tags.map((option, index) => (
-                                    <MenuItem key={index} value={option}>
+                                    <MenuItem key={index} value={option} sx={{ textTransform: 'capitalize' }}>
                                         {option === 'all' ? t("Show all brands") : option}
                                     </MenuItem>
                                 ))}
                             </TextField>
                         </Grid>
-                        {/* <Grid item xs={12} sm={6} md={3}>
-                        <Label name={t("discount value")} />
-                        <Slider />
-                    </Grid> */}
                     </Grid>
                     <Box mb={2} />
                 </>
