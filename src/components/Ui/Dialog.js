@@ -62,7 +62,6 @@ const Modal = (props) => {
                 fullScreen={fullScreen}
                 fullWidth={props.fullWidth}
                 open={props.open}
-                onClose={props.handleClose}
                 aria-labelledby="responsive-dialog-title"
                 classes={{ paper: classes.welcomeDialogWidth }}
             >

@@ -7,7 +7,8 @@ const initialState = {
     isLoading: false,
     error: '',
     data: [],
-    selectedQuotation:null
+    selectedQuotation: null,
+    quotationsReportStatus: false,
 };
 
 
@@ -17,6 +18,7 @@ const slice = createSlice({
     reducers: {
         startLoading(state) {
             state.isLoading = true;
+            state.quotationsReportStatus = false;
         },
 
         // HAS ERROR
@@ -28,10 +30,19 @@ const slice = createSlice({
         getQuotationReportSuccess(state, action) {
             state.data = action.payload;
             state.isLoading = false;
+            state.quotationsReportStatus = true;
         },
 
-        setSelectedQuotation(state, action){
+        setSelectedQuotation(state, action) {
             state.selectedQuotation = action.payload;
+        },
+
+        cleanup(state) {
+            state.isLoading = false;
+            state.error = '';
+            state.data = [];
+            state.selectedQuotation = null;
+            state.quotationsReportStatus = false;
         }
     }
 
@@ -45,7 +56,8 @@ export default slice.reducer;
 
 // Actions
 export const {
-    setSelectedQuotation
+    setSelectedQuotation,
+    cleanup
 } = slice.actions;
 
 
