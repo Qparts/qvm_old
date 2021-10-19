@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'lodash'
 import Button from "src/components/Ui/Button";
 import chatService from 'src/services/chatService';
-import { createNewMessage, getConversation } from 'src/redux/slices/chat';
+import { createNewMessage, getConversation, updateOrderMessage, updateRecivedOrderMessages } from 'src/redux/slices/chat';
 import helper from 'src/utils/helper';
 import { Parts, Price, Correct, Times, Edit } from 'src/icons/icons';
 
@@ -200,7 +200,7 @@ function MessageItem({
 
   useEffect(() => {
     if (message.contentType == 'order') {
-      // setUpdatedOrder(JSON.parse(message.text));
+      setUpdatedOrder(JSON.parse(message.text));
       const details = getOrderDetails();
       setOrderDetails(details);
     }
@@ -293,14 +293,12 @@ function MessageItem({
         updatedMessageMap = new Map();
       }
 
-      await dispatch(getConversation(activeConversation._id, 1));
-
+      dispatch(getConversation(activeConversation._id, 1));
 
     } catch (error) {
       console.log("error", error);
     }
   }
-
 
 
   const orderOperation = async (status) => {
@@ -310,8 +308,8 @@ function MessageItem({
       emitUpdateMessage(orderValue);
       await chatService.updateMessage(orderValue);
       const orderStatus = status == "A" ? t("Order has been accepted") : t("Order has been rejected");
+      dispatch(getConversation(orderValue.conversationId, 1));
       editOrderMessage(orderStatus);
-      await dispatch(getConversation(orderValue.conversationId, 1));
     } catch (error) {
       console.log("error", error);
     }

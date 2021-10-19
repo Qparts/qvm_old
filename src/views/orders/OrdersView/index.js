@@ -48,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 function OrdersView(_props) {
   const classes = useStyles();
-  const { isLoading } = useSelector((state) => state.quotationsReport);
+  const { isLoading } = useSelector((state) => state.chat);
   const { user, currentSocket } = useSelector((state) => state.authJwt);
   const { userConversations } = useSelector((state) => state.chat);
   const { t } = useTranslation();
