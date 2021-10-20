@@ -11,18 +11,22 @@ import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import NotistackProvider from 'src/components/NotistackProvider';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import WelcomeDialog from 'src/components/Ui/WelcomeDialog'
+import WelcomeDialog from 'src/components/Ui/WelcomeDialog';
 
 // Using for Auth (Check doc https://minimals.cc/docs/authentication)
 import JwtProvider from 'src/components/Auth/JwtProvider';
 // import FirebaseProvider from 'src/components/Auth/FirebaseProvider';
-
+import ReactGA from 'react-ga4';
 // ----------------------------------------------------------------------
+
+if (process.env.REACT_APP_ENV === 'prod') {
+  ReactGA.initialize('G-N6Y4FR8EYZ');
+  ReactGA.send('pageview');
+}
 
 const history = createBrowserHistory();
 
 function App() {
-
   const popUp = JSON.parse(localStorage.getItem('popUp'));
   const [open, setOpen] = useState(false);
 
