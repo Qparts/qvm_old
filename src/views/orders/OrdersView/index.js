@@ -76,7 +76,7 @@ function OrdersView(_props) {
     >
 
       <LoadingOverlay
-        active={isLoading}
+        active={false}
         styles={{
           wrapper: {
             width: "100%",
