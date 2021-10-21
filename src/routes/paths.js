@@ -5,7 +5,7 @@ function path(root, sublink) {
 }
 
 const ROOTS = {
-  auth: '/auth',
+  auth: '',
   app: '/app',
   docs: '/docs'
 };
@@ -13,12 +13,12 @@ const ROOTS = {
 export const PATH_PAGE = {
   auth: {
     root: ROOTS.auth,
-    login: path(ROOTS.auth, '/login'),
-    loginUnprotected: path(ROOTS.auth, '/login-unprotected'),
-    register: path(ROOTS.auth, '/register'),
-    registerUnprotected: path(ROOTS.auth, '/register-unprotected'),
+    login: path(ROOTS.auth, '/signin'),
+    loginUnprotected: path(ROOTS.auth, '/signin-unprotected'),
+    register: path(ROOTS.auth, '/signup'),
+    registerUnprotected: path(ROOTS.auth, '/signup-unprotected'),
     forgotPassword: path(ROOTS.auth, '/forgot-password'),
-    resetPassword: path(ROOTS.auth, '/reset-password'),
+    resetPassword: path(ROOTS.auth, '/password-reset'),
     verify: path(ROOTS.auth, '/verify'),
     confirm: path(ROOTS.auth, '/confirm')
   },

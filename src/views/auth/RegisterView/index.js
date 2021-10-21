@@ -129,11 +129,11 @@ function RegisterView() {
       <Header
         auth={t("Already have an account?")}
         onClick={async () => {
-          await dispatch(cleanup())
+          dispatch(cleanup())
           history.push(PATH_PAGE.auth.login);
 
         }}
-        // url={PATH_PAGE.auth.login}
+        url={PATH_PAGE.auth.login}
         title={t("Login")} />
 
       <Hidden mdDown>

@@ -113,13 +113,15 @@ function LoginView() {
     <Page title={t("Login")} className={classes.root}>
 
       <Header
-        auth={t("Don't have account?")}
+        auth={t("Don't have account")}
         onClick={async () => {
-          await dispatch(cleanup())
-          history.push(PATH_PAGE.auth.register);
+          dispatch(cleanup())
+          // history.push(PATH_PAGE.auth.register);
 
         }}
-        title={t("Register now")} />
+        title={t("Register now")}
+        url={PATH_PAGE.auth.register}
+      />
 
       <Hidden mdDown>
         <Section />
