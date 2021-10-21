@@ -165,7 +165,7 @@ function TopBar() {
   const offset = useOffSetTop(100);
   const [openMenu, setOpenMenu] = useState(false);
   const isHome = pathname === '/';
-  const isLogo = (pathname === '/' || pathname === '/auth/login' || pathname === '/auth/register');
+  const isLogo = (pathname === '/' || pathname === 'signin' || pathname === 'signup');
 
 
   const registeration = (
