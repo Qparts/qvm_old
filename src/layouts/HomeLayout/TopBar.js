@@ -23,6 +23,7 @@ import {
   MenuItem,
   Container,
   ListItemText,
+  Typography
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
@@ -248,7 +249,10 @@ function TopBar() {
           }}
         >
           <RouterLink to="/">
-            {isLogo ? <Logo newLogo='newLogo' /> : <LogoDark />}
+            <Box sx={{ textAlign: 'center' }}>
+              {isLogo ? <Logo newLogo='newLogo' /> : <LogoDark />}
+              <Typography variant='caption' sx={{ color: isLogo ? '#fff' : 'rgba(237,28,36,255)', fontSize: '11px' }}>QVM Home</Typography>
+            </Box>
           </RouterLink>
           <Box sx={{ flexGrow: 1 }} />
 

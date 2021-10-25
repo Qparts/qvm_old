@@ -11,6 +11,7 @@ import {
   Drawer,
   Hidden,
   ListSubheader,
+  Typography
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import Logo from 'src/components/Logo';
@@ -140,7 +141,10 @@ function NavBar({ isOpenNav, onCloseNav }) {
     <Scrollbars>
       <Box sx={{ px: 2.5, py: 3 }}>
         <RouterLink to={PATH_APP.general.root}>
-          <Logo newLogo='newLogo' style={{ margin: 'auto' }} />
+          <Box sx={{ textAlign: 'center', lineHeight: 0 }}>
+            <Logo newLogo='newLogo' style={{ margin: 'auto' }} />
+            <Typography variant='caption' sx={{ color: '#fff', fontSize: '11px' }}>QVM Home</Typography>
+          </Box>
         </RouterLink>
       </Box>
       <Box sx={{ mt: 1 }}>
