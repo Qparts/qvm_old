@@ -14,7 +14,6 @@
   "advertise": "إعلن معنا",
   "stockUpload": "رفع المخزون",
   "market": "التسوق",
-
   "Subscriber already registered": "المشترك مسجل بالفعل",
   "qvm orders": "الطلبات من خلال المنصة",
   "daily searches": "عمليات البحث اليومى",
@@ -339,7 +338,6 @@
   "Account Type": "نوع الحساب",
   "--Choose--": "--اختر--",
   "More Offers": "المزيد من العروض",
-
   "Sign into QVM Vendor Market Place": "تسجيل دخول لمنصة التجار",
   "Password": "كلمه المرور",
   "Login": "تسجيل الدخول",
@@ -349,12 +347,10 @@
   "Don't have account?": "ليس لديك حساب؟",
   "Register now": "سجل الان",
   "Register success": "تم إنشاء حساب بنجاح",
-
   "Email Is Required": " البريدالالكترونى مطلوب",
   "Password Is Required": "كلمةالمرور مطلوبه",
   "Email Is Invalid": "البريدالالكترونى خاطئ",
   "Password Is Invalid": "كلمةالمرور يجب ألا تقل عن 8 أحرف",
-
   "Signup Request in": "طلب التسجيل في منصة التجار",
   "Already have an account?": "لديك حساب بالفعل؟",
   "Signup": "التسجيل",
@@ -373,7 +369,6 @@
   "Mobile Is Invalid": "رقم الجوال خاطئ",
   "Notes Is Required": "الملاحظات مطلوبة",
   "password": "كلمة المرور يجب ألا تقل عن 8 أحرف",
-
   "Please check your email!": "تفقد بريدك الالكتروني من فضلك!",
   "We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.": "لقد أرسلنا عبر البريد الإلكتروني رمز تأكيد مكونًا من 4 أرقام إلى {{email}} ، يرجى إدخال الرمز في المربع أدناه للتحقق من بريدك الإلكتروني.",
   "Verification Code": "رمز التحقق",
@@ -382,7 +377,6 @@
   "Verification Code Is Invalid": "رمز التحقق خاطئ",
   "THANK YOU FOR REGISTRATION IN QVM": "شكرا لك على التسجيل في QVM",
   "Your request have been sent, Your application will be reviewed by our team we will contact with you soon": "تم إرسال طلبك ، وسيقوم فريقنا بمراجعة طلبك وسنتواصل معك قريبًا.",
-
   "Forgot your password?": "هل نسيت رقمك السري؟",
   "Please enter the email address associated with your account and We will email you a link to reset your password": "يرجى إدخال عنوان البريد الإلكتروني المرتبط بحسابك وسنرسل لك عبر البريد الإلكتروني رابطًا لإعادة تعيين كلمة المرور الخاصة بك.",
   "Reset Password": "إعادة تعيين كلمة المرور",
@@ -393,7 +387,6 @@
   "New Password Is Required": "كلمةالمرورالجديدة مطلوبه",
   "Your password has been successfully reset": "تم إعادة تعيين كلمة المرور الخاصة بك بنجاح",
   "Please enter your new password then press the back button and log in again": "يرجى إدخال الرقم السرى الجديد الخاص بك, ثم أضغط على زر العوده وقم بتسجيل الدخول مرة أخرى.",
-
   "Catalog": "كاتالوج القطع",
   "Parts Catalog": "كاتالوج القطع",
   "Car Details": "تفاصيل السيارة",
@@ -430,7 +423,6 @@
   "Part Details": "تفاصيل القطعة",
   "Reference Number": "الرقم المرجعي",
   "Part Name": "اسم القطعة",
-
   "Search Parts": "بحث القطع",
   "Search": "بحث",
   "result": "نتيجة البحث عن",
@@ -455,24 +447,18 @@
   "No Options": "لا توجد خيارات متاحه",
   "Filter results by location": "تصنيف النتائج بحسب الموقع",
   "Search by part number": "إبحث برقم القطعة",
-
   "Quotations Report": "تقرير التسعيرات",
-
   "Special Offers": "عروض خاصة",
   "Offer End Date": "تاريخ انتهاء العرض",
   "Parts Number": "رقم القطعة",
   "Start in": "يبداء في",
   "Expires in": "ينتهي في ",
-
   "Replacement Parts Search": "بحث القطع البديلة",
   "Replacement Parts Search results": "نتائج بحث القطع البديلة",
   "Description": "الوصف",
   "Applicable OEM Parts": "القطع الأصلية المتوافقة",
-
   "Special Offer Upload": "رفع العروض الخاصة",
-
   "Stock Upload": "رفع المخزون",
-
   "offerNo": "رقم العرض",
   "Category": "الصنف",
   "Quantity": "الكمية",
@@ -481,7 +467,6 @@
   "noData": "لا توجد بيانات !!",
   "Part Number": "رقم القطعة",
   "Brand": "الصنف",
-
   "Branches": "الفروع",
   "Name": "الاسم",
   "Country": "الدوله",
@@ -527,7 +512,6 @@
   "Account Number": "رقم الحساب",
   "Bank": "البنك",
   "Account Name": "اسم الحساب",
-
   "Stock file has been uploaded": "تم رفع المخزون",
   "Offer file has been uploaded": "تم تحميل ملف العرض",
   "Who subscribed in this package": "إعرف من يستخدم هذه الباقه من التجار",
@@ -747,10 +731,12 @@
   "Requests History": "طلبات الدعم السابقه",
   "Under Review": "قيد المراجعة",
   "Id": "رمز التعريف",
-  "Approved":"مقبول",
+  "Approved": "مقبول",
   "Dear Merchant": "تاجرنا العزيز",
   "If you have any questions do not hesitate to contact us to serve you": "في حال وجود اي استفسار لا تتردد بالتواصل معنا لخدمتك.",
   "The QVM platform has been launched in its new look with features that meet your needs and aspirations, and we are always happy to serve you": "تم اطلاق منصة QVM بحلتها الجديدة بمميزات تلبي احتياجكم وتطلعاتكم ونسعد بخدمتكم دائما.",
-  "File must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون الملف  في هذه الامتدادات jpeg، png، jpg، pdf"
-
+  "File must be in these extensions jpeg, png, jpg, pdf": "يجب أن يكون الملف  في هذه الامتدادات jpeg، png، jpg، pdf",
+  "Sorry page not found": "عذرا، لم يتم العثور على الصفحة!",
+  "There was an error please try again later": "كان هناك خطأ، الرجاء المحاولة مجددا لاحقا.",
+  "Sorry, we couldn't find the page you’re looking for Perhaps you've mistyped the URL? Be sure to check your spelling": "معذرةً ، لم نتمكن من العثور على الصفحة التي تبحث عنها. ربما أخطأت في كتابة عنوان URL؟ تأكد من التحقق من التهجئة."
 }

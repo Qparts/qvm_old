@@ -1,9 +1,10 @@
 import React from 'react';
-import Page from 'src/components/Page';
-import LogoDark from 'src/components/LogoDark';
 import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Button, Typography, Container } from '@material-ui/core';
+import Page from 'src/components/Page';
+import LogoDark from 'src/components/LogoDark';
 
 // ----------------------------------------------------------------------
 
@@ -32,10 +33,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Page500View() {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
     <Page
-      title="500 Internal Server Error | Minimal-UI"
+      title="500 Internal Server Error"
       className={classes.root}
     >
       <header className={classes.header}>
@@ -50,7 +52,7 @@ function Page500View() {
             500 Internal Server Error
           </Typography>
           <Typography sx={{ color: 'text.secondary' }}>
-            There was an error, please try again later.
+            {t("There was an error please try again later")}
           </Typography>
 
           <Box
@@ -66,7 +68,7 @@ function Page500View() {
             variant="contained"
             component={RouterLink}
           >
-            Go to Home
+            {t("Back to home")}
           </Button>
         </Box>
       </Container>
