@@ -22,7 +22,7 @@ import {
   Toolbar,
   MenuItem,
   Container,
-  ListItemText,
+  ListItemText
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';

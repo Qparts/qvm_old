@@ -37,8 +37,8 @@ function HeaderAuth(props) {
     return (
         <header className={classes.header}>
             <RouterLink to="/">
-                <Hidden mdDown><Logo newLogo='newLogo' /></Hidden>
-                <Hidden mdUp><LogoDark /></Hidden>
+                <Hidden mdDown> <Logo newLogo='newLogo' /> </Hidden>
+                <Hidden mdUp> <LogoDark /> </Hidden>
             </RouterLink>
             <Hidden smDown>
                 <Typography variant="body2" sx={{ mt: { md: -2 } }}>
@@ -55,7 +55,7 @@ function HeaderAuth(props) {
                     <Languages />
                 </Typography>
             </Hidden>
-        </header>
+        </header >
     );
 }
 
