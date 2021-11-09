@@ -8,13 +8,14 @@ import ForgotPasswordForm from './ForgotPasswordForm';
 import { Link as RouterLink } from 'react-router-dom';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Button, Container, Typography, Hidden, Link } from '@material-ui/core';
+import { Box, Button, Container, Typography } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 
 import { useSelector } from 'react-redux';
-import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import { useTranslation } from 'react-i18next';
 import CustomButton from '../../../components/Ui/Button';
 import TopBar from './../../../layouts/HomeLayout/TopBar';
+import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
@@ -44,6 +45,7 @@ function ForgotPasswordView() {
   const classes = useStyles();
   const { forgotPassword } = useAuth();
   const isMountedRef = useIsMountedRef();
+  const { enqueueSnackbar, closeSnackbar } = useSnackbar();
   const [sent, setSent] = useState(false);
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
@@ -53,7 +55,14 @@ function ForgotPasswordView() {
     if (loaded && forgetPasswordError === null) {
       setSent(true);
     }
-  }, [loaded])
+  }, [loaded]);
+
+  useEffect(() => {
+    if (forgetPasswordError !== null) {
+      helper.enqueueSnackbarMessage(enqueueSnackbar, t('Email Is Invalid'), 'error', closeSnackbar);
+    }
+  }, [forgetPasswordError]);
+
 
   const ResetPasswordSchema = Yup.object().shape({
     email: Yup.string()
