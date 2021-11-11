@@ -21,6 +21,7 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Pagination from '../Ui/Pagination';
 import TextField from '../Ui/TextField';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -127,7 +128,7 @@ const getValue = (object, path) => {
         .reduce((o, k) => (o || {})[k], object);
 };
 
-const getCellValue = (item, headerItem, maps) => {
+const getCellValue = (item, headerItem, maps, t) => {
     const offersLength = item.offers === undefined ? null : item.offers.length;
     const purchaseOrderLength = item.order ? item.order.offers.length : null;
 
@@ -176,6 +177,10 @@ const getCellValue = (item, headerItem, maps) => {
         value = <> {value} {headerItem.badge(JSON.stringify(item))} </>
     }
 
+    if (headerItem.isTrans) {
+        value = t(value);
+    }
+
     return value;
 }
 
@@ -186,6 +191,7 @@ const getCellValue = (item, headerItem, maps) => {
 function Row({ header, title, item, maps, childData = [], childHeader, showChildNumbers, noChildComponent }) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
+    const { t } = useTranslation();
 
     return (
         <React.Fragment>
@@ -193,7 +199,7 @@ function Row({ header, title, item, maps, childData = [], childHeader, showChild
                 {header.map((headerItem, j) => {
                     return (
                         <TableCell key={j}>
-                            {getCellValue(item, headerItem, maps)}
+                            {getCellValue(item, headerItem, maps, t)}
                         </TableCell>
                     );
                 })}
@@ -273,7 +279,7 @@ function Datatable({
 }) {
 
     const classes = useStyles();
-
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
 
 
@@ -354,12 +360,12 @@ function Datatable({
                                                                                 if (event.target.value != "") {
                                                                                     headerItem.onchange(event.target.value, item, headerItem.attr)
                                                                                 } else
-                                                                                    event.target.value = getCellValue(item, headerItem, maps);
+                                                                                    event.target.value = getCellValue(item, headerItem, maps, t);
                                                                             }}
-                                                                            defaultValue={getCellValue(item, headerItem, maps)}
-                                                                            value={getCellValue(item, headerItem, maps)}
+                                                                            defaultValue={getCellValue(item, headerItem, maps, t)}
+                                                                            value={getCellValue(item, headerItem, maps, t)}
                                                                         /> :
-                                                                        getCellValue(item, headerItem, maps)
+                                                                        getCellValue(item, headerItem, maps, t)
                                                                 }
                                                             </TableCell>
                                                         );

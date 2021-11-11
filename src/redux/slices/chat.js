@@ -13,7 +13,8 @@ const initialState = {
   userConversations: [],
   unseenMessages: [],
   messages: [],
-  onlineUsers: []
+  onlineUsers: [],
+  conversationsCompanies: []
 };
 
 const slice = createSlice({
@@ -109,6 +110,11 @@ const slice = createSlice({
       state.isLoading = false;
     },
 
+    setConversationsCompanies(state, action) {
+      state.conversationsCompanies = action.payload;
+      state.isLoading = false;
+    },
+
     // SIDEBAR
     onOpenSidebarConversation(state) {
       state.isOpenSidebarConversation = true;
@@ -157,11 +163,33 @@ export function getContacts(userId) {
       const {
         data: userConversations
       } = await chatService.getUserConversations();
+
+      var conversationsCompanies = getAllConversationsCompanies(userConversations);
+
       dispatch(slice.actions.getUserConversationsSuccess(userConversations));
+      dispatch(slice.actions.setConversationsCompanies(conversationsCompanies));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
+}
+
+const getAllConversationsCompanies = (userConversations) => {
+  let userConversationsCompanies = new Set();
+  const currentCompanyId = JSON.parse(localStorage.getItem('loginObject')).company.id;
+  userConversations.forEach(element => {
+    element.members.forEach(member => {
+      if (member.companyId != currentCompanyId) {
+        userConversationsCompanies.add(JSON.stringify({
+          companyId: member.companyId,
+          companyName: member.companyName,
+          companyNameAr: member.companyNameAr
+        }))
+      }
+    })
+  });
+
+  return Array.from(userConversationsCompanies);
 }
 
 //GET UNSEEN MESSAGES OF LOGIN USER (FOR ALL USER'S CONVERSATIONS)

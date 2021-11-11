@@ -20,8 +20,8 @@ function createUserConversation(conversation) {
   return http.post(chatUrl.postNewChat, conversation);
 }
 
-function getConversationMessage(conversationKey,page) {
-  return http.get(chatUrl.getConversationMessages(conversationKey , page));
+function getConversationMessage(conversationKey, page) {
+  return http.get(chatUrl.getConversationMessages(conversationKey, page));
 }
 
 function createMessage(message) {
@@ -40,6 +40,10 @@ function markConversationAsSee(conversationId, sender) {
   return http.put(chatUrl.putSeenConversationMessages(conversationId, sender));
 }
 
+function getPreviousOrders(companyId,page, count) {
+  return http.get(chatUrl.getPreviousOrders(companyId ,page, count));
+}
+
 export default {
   chatSearch,
   getUserConversations,
@@ -49,5 +53,6 @@ export default {
   getCompanyUsers,
   updateMessage,
   getUnseenMessages,
-  markConversationAsSee
+  markConversationAsSee,
+  getPreviousOrders
 };
