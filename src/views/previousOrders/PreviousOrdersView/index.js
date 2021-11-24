@@ -43,7 +43,7 @@ function PreviousOrderView(props) {
 
     return (
         <Page
-            title={t("Previous Orders")}
+            title={t("My Orders")}
             className={classes.root}>
 
             <LoadingOverlay

@@ -51,7 +51,7 @@ const navConfig = [
   {
     items: [
       {
-        title: 'Previous Orders',
+        title: 'My Orders',
         icon: <Orders width='26' height='26' fill='#a2b4bd' fillArr='#F20505' />,
         href: PATH_APP.general.previousOrders,
         notification: true
