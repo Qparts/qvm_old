@@ -43,9 +43,8 @@ function VerifyCodeView(props) {
   const { verify } = useAuth();
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
-  const { error: verifyError } = useSelector(
-    (state) => state.authJwt
-  );
+  const { error: verifyError } = useSelector((state) => state.authJwt);
+  const { themeDirection } = useSelector((state) => state.settings);
 
 
   useLayoutEffect(() => {
@@ -79,7 +78,9 @@ function VerifyCodeView(props) {
     },
     validationSchema: VerifyCodeSchema,
     onSubmit: async (values) => {
-      let code = values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4;
+      let code = themeDirection == 'ltr' ? values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4
+        : values.code4 + '' + values.code3 + '' + values.code2 + '' + values.code1;
+      console.log(code)
       await verify({ code: code, email: props.location.state.email })
       // enqueueSnackbar('Verify success', { variant: 'success' });
       setLoaded(true);
