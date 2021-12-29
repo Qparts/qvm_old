@@ -174,6 +174,8 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
             }
             else {
                 const { data: payment } = await paymentService.paymentOrder(paymentObject);
+                console.log("payment" , payment);
+                console.log("paymentObject" , paymentObject);
                 window.location = payment.url;
             }
 
