@@ -6,7 +6,7 @@ import partSearchService from 'src/services/partSearchService';
 
 const initialState = {
     isLoading: false,
-    error: '',
+    error: null,
     partReplacements: [],
     partReplacementStatus: false
 };
@@ -30,12 +30,12 @@ const slice = createSlice({
         getPartReplacementsSuccess(state, action) {
             state.isLoading = false;
             state.partReplacements = action.payload.partReplacements;
-            state.error = '';
+            state.error = null;
             state.partReplacementStatus = true;
         },
         cleanup(state) {
             state.isLoading = false;
-            state.error = '';
+            state.error = null;
             state.partReplacements = [];
             state.partReplacementStatus = false;
         }
@@ -58,7 +58,7 @@ export function getPartReplacements(query) {
         dispatch(slice.actions.startLoading());
         try {
             const { data: replacements } = await partSearchService.getPartReplacements(query);
-            dispatch(slice.actions.getPartReplacementsSuccess({ partReplacements: replacements.articles }));
+            dispatch(slice.actions.getPartReplacementsSuccess({ partReplacements: replacements.companyProducts }));
         } catch (error) {
             dispatch(slice.actions.hasError(error.response?.data));
         }
