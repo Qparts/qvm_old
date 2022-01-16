@@ -1,3 +1,5 @@
+import constants from "src/utils/constants";
+
 const API_URL = process.env.REACT_APP_API_URL;
 const SUBSCRIBER_SERVICE = `${API_URL}/subscriber`;
 const CUSTOMER_SERVICE = `${API_URL}/customer`;
@@ -109,7 +111,7 @@ const stock = {
   putPendingItems: `${STOCK_SERVICE}/pending-item`,
   getStockFile: `${STOCK_SERVICE}/download-stock-file`,
   // getStockFile: `http://localhost:3000/stock/download-stock-file`,
-  
+
 };
 
 const catalog = {
@@ -167,7 +169,9 @@ const chat = {
     `${CHAT_SERVICE}/messages/${conversationKey}?page=${page}`,
   unseenMessages: `${CHAT_SERVICE}/messages/unseen`,
   putSeenConversationMessages: (conversationId, sender) =>
-    `${CHAT_SERVICE}/messages/seen/${conversationId}/${sender}`
+    `${CHAT_SERVICE}/messages/seen/${conversationId}/${sender}`,
+  getPreviousOrders: (companyId = 0, page = 1, count = constants.MAX) =>
+    `${CHAT_SERVICE}/previous-orders?companyId=${companyId}&page=${page}&count=${count}`,
 };
 
 export default {

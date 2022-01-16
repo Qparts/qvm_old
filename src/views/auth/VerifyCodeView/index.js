@@ -78,9 +78,9 @@ function VerifyCodeView(props) {
     },
     validationSchema: VerifyCodeSchema,
     onSubmit: async (values) => {
+      // let code = values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4;
       let code = themeDirection == 'ltr' ? values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4
-        : values.code4 + '' + values.code3 + '' + values.code2 + '' + values.code1;
-      console.log(code)
+      : values.code4 + '' + values.code3 + '' + values.code2 + '' + values.code1;
       await verify({ code: code, email: props.location.state.email })
       // enqueueSnackbar('Verify success', { variant: 'success' });
       setLoaded(true);

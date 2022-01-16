@@ -69,15 +69,17 @@ function JwtProvider(props) {
       //if user focus on the conversation of recieved message push the recieved message to message list.
       //if user is not the conversation of the arrival message update the unseen messages.
       socket.current.on('getMessage', (data) => {
-        if (data && data.createdAt == null && userConversations.length > 0) {
-          data.createdAt = Date.now();
+        if (data && userConversations.length > 0) {
+          if (data.createdAt == null)
+            data.createdAt = Date.now();
           const path = window.location.pathname.split('/');
           if (path[path.length - 1] == data.conversationId) {
-            data.status = 'S';
+            if (data.status == 'I' || !data.status) {
+              data.status = 'S';
+              // markConversationAsSeen(data.conversationId);
+            }
             dispatch(updateRecivedMessages(data));
-            markConversationAsSeen(data.conversationId);
           } else {
-            // dispatch(getUnseenMessages(user.subscriber.id, userConversations));
             dispatch(updateUnseenMessages(data));
           }
         }

@@ -18,6 +18,7 @@ import marketReducer from './slices/market';
 import chatReducer from './slices/chat';
 import dashboardReducer from './slices/dashboard';
 import messagingReducer from './slices/messaging';
+import previousOrdersReducer from './slices/previousOrders';
 
 // ----------------------------------------------------------------------
 
@@ -53,7 +54,8 @@ const rootReducer = combineReducers({
   chat: chatReducer,
   dashboard: dashboardReducer,
   messaging: messagingReducer,
-  requestFund: requestFundReducer
+  requestFund: requestFundReducer,
+  previousOrders:previousOrdersReducer
 });
 
 export { rootPersistConfig, rootReducer };

@@ -26,9 +26,14 @@ function Part() {
     const [partAreaDetails, setPartAreaDetails] = useState(null);
 
     const mapperAreaClickHandler = async (item) => {
-        let parts = part.partGroups[0].parts;
-        let selectedArea = parts.find((e) => item.name == e.positionNumber);
-        setPartAreaDetails(selectedArea);
+        for (let partgroup of part.partGroups) {
+            for (let value of partgroup.parts) {
+                if (value.id == item.name || value.positionNumber == item.name) {
+                    setPartAreaDetails(value);
+                    break;
+                }
+            }
+        }
     };
 
     return (

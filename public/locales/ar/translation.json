@@ -739,5 +739,16 @@
   "Sorry page not found": "عذرا، لم يتم العثور على الصفحة!",
   "There was an error please try again later": "كان هناك خطأ، الرجاء المحاولة مجددا لاحقا.",
   "Sorry, we couldn't find the page you’re looking for Perhaps you've mistyped the URL? Be sure to check your spelling": "معذرةً ، لم نتمكن من العثور على الصفحة التي تبحث عنها. ربما أخطأت في كتابة عنوان URL؟ تأكد من التحقق من التهجئة.",
-  "Visit Qstock": "تعرف على كيوستوك"
+  "Visit Qstock": "تعرف على كيوستوك",
+  "My Orders":"طلباتي",
+  "Receiver Company":"الشركه المستلمه",
+  "Sender":"الراسل",
+  "Filter Orders By Company":"تصفية الطلبات حسب الشركة",
+  "Send Again":"أعد الإرسال",
+  "Previous Order Details":"تفاصيل الطلب السابق"
+
+
+
+
+
 }

@@ -148,7 +148,7 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
                 actualDays: planDuration.actualDays,
                 baseAmount: price,
                 planDiscount: Math.round(planDuration.discountPercentage),
-                promoDiscount: promotion != null ? Math.round(promotion.discountPercentage) * promotion.discountPercentage * price : 0,
+                promoDiscount: promotion != null ?Math.round(promotion.discountPercentage * price) : 0,
                 vatPercentage: .15,
                 startDate: (new Date()).getTime(),
                 countryId: loginObject.company.countryId,
@@ -174,6 +174,8 @@ function PremiumPlanSubscription({ planDuration, setPlanDuration }) {
             }
             else {
                 const { data: payment } = await paymentService.paymentOrder(paymentObject);
+                console.log("payment" , payment);
+                console.log("paymentObject" , paymentObject);
                 window.location = payment.url;
             }
 

@@ -97,7 +97,8 @@ function CarItems() {
                     isLazy={false}
                     rowsPerPage={rowsPerPage}
                     hasPagination={cars.length > constants.MAX ? true : false}
-                    dataTableCata='dataTableCata' />
+                    // dataTableCata='dataTableCata'
+                     />
             </CardContent >
             <CardFoot />
         </Card>

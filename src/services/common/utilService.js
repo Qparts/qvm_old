@@ -28,6 +28,25 @@ export function getAvaliableCompanies(selectedCompanies) {
     };
 }
 
+export const loadMissingCompanies = async (selectedCompanies) => {
+    const recentCompanyData = await GetData(constants.COMPANYIES);
+    var newCachedCompanies = new Map();
+
+    getCachedCompany(recentCompanyData, selectedCompanies, newCachedCompanies);
+
+
+    //get not cached companies from backend.
+    var tempCompanies = new Map();
+    await getMissingCompaniesFromAPI(tempCompanies, selectedCompanies);
+
+    //add missing companies to cache.
+    cacheMissingCompanies(recentCompanyData, tempCompanies);
+
+    let newCompanies = new Map([...newCachedCompanies, ...tempCompanies]);
+
+    return newCompanies;
+}
+
 
 export const getCachedCompany = (recentCompanyData, selectedCompanies, cachedCompanies) => {
     const companyMapData = new Map(recentCompanyData);

@@ -32,7 +32,7 @@ function AddOfferForm({ formik }) {
                 <StockFileBtn
                     upload
                     onChange={(event) => {
-                        if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx') {
+                        if (event.currentTarget.files[0].name.split(".")[1] != 'xlsx' && event.currentTarget.files[0].name.split(".")[1] != 'xls') {
                             setFileError(t("Stock file must be Excel File"))
                             setFieldValue("offerFile", "");
                             return;

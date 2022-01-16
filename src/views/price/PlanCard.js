@@ -268,31 +268,31 @@ function PlanCard({ plan, duration }) {
         title={t("Subscribers to the package") + (themeDirection == 'ltr' ? plan.name : plan.nameAr)}>
         <Grid container spacing={2}>
           {plan.companies.map((company, index) => {
-            if (company.logo == null)
-              return (
-                <Grid item xs={12} key={index}>
-                  <ListItem sx={{ padding: theme.spacing(0, 0, 2, 0) }}>
-                    {company.name}
-                  </ListItem>
-                  <Divider />
-                </Grid>
-              )
-            else
-              return (
-                <Grid item xs={6} sm={4} key={index}>
-                  <Box sx={{
-                    border: '1px solid #efefef',
-                    padding: '10px'
-                  }}>
-                    <Box
-                      component="img"
-                      alt={company.name}
-                      src={company.logo}
-                      sx={{ margin: '0 auto' }}
-                    />
-                  </Box>
-                </Grid>
-              )
+            // if (company.logo == null)
+            return (
+              <Grid item xs={12} key={index}>
+                <ListItem sx={{ padding: theme.spacing(0, 0, 2, 0) }}>
+                  {themeDirection == 'ltr' ? company.name : company.nameAr}
+                </ListItem>
+                <Divider />
+              </Grid>
+            )
+            //   else
+            //     return (
+            //       <Grid item xs={6} sm={4} key={index}>
+            //         <Box sx={{
+            //           border: '1px solid #efefef',
+            //           padding: '10px'
+            //         }}>
+            //           <Box
+            //             component="img"
+            //             alt={company.name}
+            //             src={company.logo}
+            //             sx={{ margin: '0 auto' }}
+            //           />
+            //         </Box>
+            //       </Grid>
+            //     )
           })}
         </Grid>
       </CustomDialog>

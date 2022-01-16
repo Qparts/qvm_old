@@ -120,7 +120,7 @@ function DialogContent(props) {
                 </Box>
                 <Divider />
                 <Box className={classes.displayFlex}>
-                    {props.partAreaDetails.split("\n").map((item, index) => {
+                    {props.partAreaDetails?.split("\n").map((item, index) => {
                         if (item)
                             return (
                                 <>

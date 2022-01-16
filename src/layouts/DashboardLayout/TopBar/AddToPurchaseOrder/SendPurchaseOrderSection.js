@@ -6,7 +6,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import { deleteOrderFromCompany, updateCompaniesOrders, updateOrderItemQuantity } from 'src/redux/slices/partSearch';
 import {
   createNewMessage, getCompanyUsers, getContacts,
-  getSelectedConversation, setActiveConversation
+  getSelectedConversation, setActiveConversation, updateRecivedMessages
 } from 'src/redux/slices/chat';
 import chatService from 'src/services/chatService';
 import { useHistory } from 'react-router-dom';
@@ -88,23 +88,36 @@ function SendPurchaseOrderSection(props) {
     };
 
 
-    dispatch(createNewMessage(newMessage, messages));
+    // dispatch(createNewMessage(newMessage, messages));
 
-    //send order to all online users.
-    selectedConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
-      // console.log("member", member)
-      let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
-      if (onlineUserIndex != -1) {
-        currentSocket.current.emit("sendMessage", {
-          senderId: user.subscriber.id,
-          receiverId: member.id,
-          text: JSON.stringify(order),
-          contentType: 'order',
-          conversationId: selectedConversation._id,
-          companyId: user.company.companyId
-        });
-      }
-    })
+    const response = await chatService.createMessage(newMessage);
+
+    if (response.status == 200) {
+      //send order to all online users.
+      selectedConversation.members.filter(x => x.id != user.subscriber.id).map((member) => {
+        // console.log("member", member)
+        let onlineUserIndex = onlineUsers.findIndex(x => x.userId == member.id);
+        if (onlineUserIndex != -1) {
+          currentSocket.current.emit("sendMessage",
+            {
+              senderId: user.subscriber.id,
+              receiverId: member.id,
+              text: JSON.stringify(order),
+              contentType: 'order',
+              conversationId: selectedConversation._id,
+              companyId: user.company.companyId,
+              _id: response.data._id,
+              status: response.data.status,
+              createdAt: response.data.createdAt,
+              updatedAt: response.data.updatedAt
+            }
+
+          );
+        }
+      })
+
+      dispatch(updateRecivedMessages(response.data));
+    }
 
     dispatch(updateCompaniesOrders(newCompanyOrders.filter(x => x.companyId !== order.companyId)));
     dispatch(setActiveConversation(selectedConversation));

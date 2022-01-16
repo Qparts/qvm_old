@@ -93,7 +93,7 @@ function UnseenMessage({ setOpen, className, messages }) {
   const history = useHistory();
   const dispatch = useDispatch();
   const { user, currentSocket } = useSelector((state) => state.authJwt);
-  const friend = userConversations.filter(c => c._id == messages[0].conversationId)[0].members.
+  const friend = userConversations.filter(c => c._id == messages[0].conversationId)[0]?.members.
     filter(x => x.id == parseInt(messages[0].sender))[0];
   const avatar = <Avatar alt={friend.companyName}
     src={uploadUrl.getCompanyLogo(`logo_${friend.companyId}.png`)} />;
