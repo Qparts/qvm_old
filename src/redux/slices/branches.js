@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import partSearchService from 'src/services/partSearchService';
+import paymentService from 'src/services/paymentService';
 import settingService from 'src/services/settingService';
 import helper from 'src/utils/helper';
 
@@ -13,6 +13,7 @@ const initialState = {
     branches: loginObject ? loginObject.company.branches : "",
     verificationMode: null,
     verifiedEmail: null,
+    pendingSubscriptions: null,
     error: null,
 };
 
@@ -50,6 +51,11 @@ const slice = createSlice({
             state.error = null;
         },
 
+        getPendingSubscriptionsSuccess(state, action) {
+            state.isLoading = false;
+            state.pendingSubscriptions = action.payload;
+            state.error = null;
+        },
 
         cleanup(state) {
             state.isLoading = false;
@@ -93,6 +99,8 @@ export function createBranch(branchName, countryId, regionId, cityId, location, 
             };
 
             const { data: branchData } = await settingService.addBranch(branch);
+            console.log(branchData)
+            await settingService.updateActivateBranch({ branchId: branchData.id })
             const newBranches = loginObject.company.branches;
             newBranches.push(branchData);
             loginObject.company.branches = newBranches;
@@ -176,13 +184,21 @@ export function verifyUser(code) {
     return async (dispatch) => {
         dispatch(slice.actions.startLoading());
         try {
-
-            await settingService.verifyUser({
-                code: code
-            });
-
+            const { data: userData } = await settingService.verifyUser({ code: code });
+            await settingService.updateActivateUser({ userId: userData.id })
             dispatch(slice.actions.resetError());
+        } catch (error) {
+            dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+        }
+    };
+}
 
+export function getPendingSubscriptions() {
+    return async (dispatch) => {
+        dispatch(slice.actions.startLoading());
+        try {
+            const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
+            dispatch(slice.actions.getPendingSubscriptionsSuccess(pendingSubscriptions));
         } catch (error) {
             dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
         }

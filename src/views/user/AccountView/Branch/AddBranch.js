@@ -6,7 +6,9 @@ import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import { Grid, Box, MenuItem, Typography } from '@material-ui/core';
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import PlacesAutocomplete from "react-places-autocomplete";
+import { PATH_APP } from 'src/routes/paths';
 import { createBranch } from 'src/redux/slices/branches';
+import { refreshToken } from 'src/redux/slices/authJwt';
 import TextField from '../../../../components/Ui/TextField';
 import CustomButton from '../../../../components/Ui/Button';
 import { Location } from '../../../../icons/icons';
@@ -275,9 +277,10 @@ function AddBranch(props) {
             <Box sx={{ marginTop: '20px' }}>
                 <CustomButton
                     disabled={branchName == "" || countryId == 0 || regionId == 0 || cityId == 0 || !location.latitude || !location.longitude}
-                    onClick={() => {
-                        dispatch(createBranch(branchName, countryId, regionId, cityId, location, countries));
-                        props.setAddBranchIsOpen(false);
+                    onClick={async () => {
+                        await dispatch(createBranch(branchName, countryId, regionId, cityId, location, countries));
+                        await dispatch(refreshToken());
+                        window.location = PATH_APP.management.user.account;
                     }}
                 >
                     {t("Create")}

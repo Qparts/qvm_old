@@ -745,8 +745,14 @@
   "Sender":"الراسل",
   "Filter Orders By Company":"تصفية الطلبات حسب الشركة",
   "Send Again":"أعد الإرسال",
-  "Previous Order Details":"تفاصيل الطلب السابق"
-
+  "Previous Order Details":"تفاصيل الطلب السابق",
+  "Number of branches": "عدد الفروع",
+  "Users number": "عدد المستخدمين",
+  "Activation": "تفعيل",
+  "Subtotal Amount": "صافي القيمة الاجمالية",
+  "It seems that you do not have more branches or users in your plan in order to be able to create new users or create new branches, you must subscribe now": "يبدو انه ليس لديك المزيد من الفروع او المستخدمين فى باقتك لكى تتمكن من انشاء مستخدمين جدد او انشاء فروع جديده عليك الاشتراك الان.",
+  "It seems that you do not have more users in your plan to be able to create new users you have to subscribe now": "يبدو انه ليس لديك المزيد من المستخدمين فى باقتك لكى تتمكن من انشاء مستخدمين جدد عليك الاشتراك الان.",
+  "It seems that you do not have more branches in your plan to be able to create new branches, you have to subscribe now": "يبدو انه ليس لديك المزيد من الفروع فى باقتك لكى تتمكن من انشاء فروع جديده عليك الاشتراك الان."
 
 
 

@@ -4,6 +4,8 @@ import closeFill from '@iconify-icons/eva/close-fill';
 import { MIconButton } from 'src/theme';
 import paymentService from 'src/services/paymentService';
 import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from 'src/redux/slices/partSearch';
+import { updateCurrentPlan, updateLoginObject } from 'src/redux/slices/authJwt';
+import { getPendingSubscriptions } from 'src/redux/slices/branches';
 import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 
 // ----------------------------------------------------------------------
@@ -180,16 +182,25 @@ function reconstructPhone(countryId, phone, countries) {
     : countryCode + modifiedPhone;
 }
 
-const gotoPremium = async (history, enqueueSnackbar, message, url, t) => {
-  try {
-    const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
-    if (pendingSubscriptions != null && pendingSubscriptions != "")
-      enqueueSnackbar(message, { variant: 'warning' });
-    else
-      history.push(url);
+const gotoPremium = async (pendingSubscriptions, history, enqueueSnackbar, message, url, dispatch) => {
+  await dispatch(getPendingSubscriptions());
+  if (pendingSubscriptions != null && pendingSubscriptions != "")
+    enqueueSnackbar(message, { variant: 'warning' });
+  else
+    history.push(url);
+}
 
+const updatePaymentOrder = async (history, path, tapId, loginObject, dispatch, enqueueSnackbar, closeSnackbar, t) => {
+  try {
+    history.push(path);
+    const { data: company } = await paymentService.updatePaymentOrder({ chargeId: tapId });
+    let newLoginObject = Object.assign({}, loginObject);
+    newLoginObject.company = company;
+    dispatch(updateLoginObject({ 'loginObject': newLoginObject }));
+    dispatch(updateCurrentPlan());
+    enqueueSnackbarMessage(enqueueSnackbar, t("transaction successful"), 'success', closeSnackbar)
   } catch (error) {
-    enqueueSnackbar(error.response.data ? t(error.response.data) : error.response.status, { variant: 'error' });
+    enqueueSnackbarMessage(enqueueSnackbar, t("Transaction Declined"), 'error', closeSnackbar)
   }
 }
 
@@ -259,6 +270,7 @@ export default {
   getLocation,
   reconstructPhone,
   gotoPremium,
+  updatePaymentOrder,
   calculateTimeLeft,
   handlePartSearch,
   handleLogout,
