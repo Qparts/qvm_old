@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useHistory } from "react-router";
+import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import { Tab, Box, Tabs, Typography } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
@@ -7,7 +8,8 @@ import { useSnackbar } from 'notistack';
 import BranchesItemsSection from './BrancheItemsSection';
 import UsersItemsSection from './UsersItemsSection';
 import BrancheActionsSection from './BrancheActionsSection';
-import { getPendingSubscriptions } from 'src/redux/slices/branches';
+import paymentService from 'src/services/paymentService';
+import { PATH_APP } from 'src/routes/paths';
 
 // ----------------------------------------------------------------------
 
@@ -49,10 +51,10 @@ const useStyles = makeStyles((theme) => ({
 function BranchesHead() {
     const classes = useStyles();
     const { t } = useTranslation();
-    const dispatch = useDispatch();
+    const history = useHistory();
     const { enqueueSnackbar } = useSnackbar();
     const { loginObject } = useSelector((state) => state.authJwt);
-    const { branches, pendingSubscriptions } = useSelector((state) => state.branches);
+    const { branches } = useSelector((state) => state.branches);
     const [currentTab, setCurrentTab] = useState('branches');
     const [addBranchIsOpen, setAddBranchIsOpen] = useState(false);
     const [addUserIsOpen, setAddUserIsOpen] = useState(false);
@@ -63,17 +65,29 @@ function BranchesHead() {
     const branchesNum = validSubscriptions[0].subscriptionBranches.filter(e => e.branchId === null).length;
     const usersNum = validSubscriptions[0].subscriptionUsers.filter(e => e.subscriberId === null).length;
 
-    const openAddModel = async (setStat, num) => {
-        if (num === 0) await dispatch(getPendingSubscriptions());
-        setStat(true)
-    }
-
-    const checkPendingSubscriptions = (user) => {
-        if (pendingSubscriptions != null && pendingSubscriptions != "")
-            enqueueSnackbar(t('There is a pending subscription'), { variant: 'warning' });
-        else
-            if (user) openAddModel(setAddUserIsOpen, usersNum)
-            else openAddModel(setAddBranchIsOpen, branchesNum)
+    const checkPendingSubscriptions = async (user, num) => {
+        try {
+            if (validSubscriptions[0].status !== 'A') {
+                const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
+                if (pendingSubscriptions != null && pendingSubscriptions != "")
+                    enqueueSnackbar(t('There is a pending subscription'), { variant: 'warning' });
+                else history.push(PATH_APP.general.upgradeSubscription)
+            } else {
+                if (num === 0) {
+                    const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
+                    if (pendingSubscriptions != null && pendingSubscriptions != "")
+                        enqueueSnackbar(t('There is a pending subscription'), { variant: 'warning' });
+                    else
+                        if (user) setAddUserIsOpen(true)
+                        else setAddBranchIsOpen(true)
+                } else {
+                    if (user) setAddUserIsOpen(true)
+                    else setAddBranchIsOpen(true)
+                }
+            }
+        } catch (error) {
+            enqueueSnackbar(t('There was an error please try again later'), { variant: 'error' });
+        }
     }
 
     const branchesTitle = (
@@ -96,14 +110,14 @@ function BranchesHead() {
             label: branchesTitle,
             component: <BranchesItemsSection
                 branchesNum={branchesNum}
-                openAddBranchModel={() => checkPendingSubscriptions(false)} />
+                openAddBranchModel={() => checkPendingSubscriptions(false, branchesNum)} />
         },
         {
             value: 'Users',
             label: usersTitle,
             component: <UsersItemsSection
                 usersNum={usersNum}
-                openAddUserModel={() => checkPendingSubscriptions(true)} />
+                openAddUserModel={() => checkPendingSubscriptions(true, usersNum)} />
         },
     ];
 
@@ -139,8 +153,8 @@ function BranchesHead() {
                 setAddUserIsOpen={setAddUserIsOpen}
                 branchesNum={branchesNum}
                 usersNum={usersNum}
-                openAddBranchModel={() => checkPendingSubscriptions(false)}
-                openAddUserModel={() => checkPendingSubscriptions(true)} />
+                openAddBranchModel={() => checkPendingSubscriptions(false, branchesNum)}
+                openAddUserModel={() => checkPendingSubscriptions(true, usersNum)} />
 
             {ACCOUNT_TABS.map((tab) => {
                 const isMatched = tab.value === currentTab;

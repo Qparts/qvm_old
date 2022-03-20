@@ -1,5 +1,5 @@
 import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { Typography } from '@material-ui/core';
@@ -51,11 +51,9 @@ function Basic() {
     const classes = useStyles();
     const theme = useTheme();
     const history = useHistory();
-    const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
     const { t } = useTranslation();
     const { partsSearchCount } = useSelector((state) => state.dashboard);
-    const { pendingSubscriptions } = useSelector((state) => state.branches);
 
     const chartData = [10 - partsSearchCount.count, partsSearchCount.count];
     const chartOptions = merge(ApexChartsOption(), {
@@ -126,12 +124,11 @@ function Basic() {
                 btnWidth="btnWidth"
                 weightLight="weightLight"
                 onClick={() => helper.gotoPremium(
-                    pendingSubscriptions,
                     history,
                     enqueueSnackbar,
                     t('There is a pending subscription'),
                     PATH_APP.general.upgradeSubscription,
-                    dispatch
+                    t('There was an error please try again later')
                 )}
             >
                 {t("Upgrade to Premium")}

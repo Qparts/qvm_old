@@ -6,6 +6,7 @@ import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import { Grid, Box, MenuItem, Typography } from '@material-ui/core';
 import { geocodeByAddress, getLatLng } from "react-places-autocomplete";
 import PlacesAutocomplete from "react-places-autocomplete";
+import { useSnackbar } from 'notistack';
 import { PATH_APP } from 'src/routes/paths';
 import { createBranch } from 'src/redux/slices/branches';
 import { refreshToken } from 'src/redux/slices/authJwt';
@@ -58,7 +59,8 @@ function AddBranch(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const { t } = useTranslation();
-    const { countries } = useSelector((state) => state.authJwt);
+    const { enqueueSnackbar } = useSnackbar();
+    const { countries, loginObject } = useSelector((state) => state.authJwt);
     const { themeDirection } = useSelector((state) => state.settings);
 
     const [cities, setCities] = useState([]);
@@ -94,6 +96,12 @@ function AddBranch(props) {
             })
             .catch((error) => console.error("Error", error));
     };
+
+    const BranchExists = (branchName) => {
+        return loginObject.company.branches.some(el => {
+            return el.name == branchName.trim();
+        });
+    }
 
     return (
         <>
@@ -278,9 +286,14 @@ function AddBranch(props) {
                 <CustomButton
                     disabled={branchName == "" || countryId == 0 || regionId == 0 || cityId == 0 || !location.latitude || !location.longitude}
                     onClick={async () => {
-                        await dispatch(createBranch(branchName, countryId, regionId, cityId, location, countries));
-                        await dispatch(refreshToken());
-                        window.location = PATH_APP.management.user.account;
+                        if (BranchExists(branchName)) {
+                            enqueueSnackbar(t('Branch already exist'), { variant: 'error' });
+                        } else {
+                            await dispatch(createBranch(branchName, countryId, regionId, cityId, location, countries));
+                            await dispatch(refreshToken());
+                            window.location = PATH_APP.management.user.account;
+                            enqueueSnackbar(t('Success'), { variant: 'success' });
+                        }
                     }}
                 >
                     {t("Create")}

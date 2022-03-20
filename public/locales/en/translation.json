@@ -721,11 +721,20 @@
   "Filter Orders By Company": "Filter Orders By Company",
   "Send Again": "Send Again",
   "Previous Order Details": "Previous Order Details",
-  "Number of branches": "Number of branches",
+  "Branches number": "Branches number",
   "Users number": "Users number",
   "Activation": "Activation",
   "Subtotal Amount": "Subtotal Amount",
   "It seems that you do not have more branches or users in your plan in order to be able to create new users or create new branches, you must subscribe now": "It seems that you do not have more branches or users in your plan in order to be able to create new users or create new branches, you must subscribe now.",
   "It seems that you do not have more users in your plan to be able to create new users you have to subscribe now": "It seems that you do not have more users in your plan to be able to create new users you have to subscribe now.",
-  "It seems that you do not have more branches in your plan to be able to create new branches, you have to subscribe now": "It seems that you do not have more branches in your plan to be able to create new branches, you have to subscribe now."
+  "It seems that you do not have more branches in your plan to be able to create new branches, you have to subscribe now": "It seems that you do not have more branches in your plan to be able to create new branches, you have to subscribe now.",
+  "This account is not activated": "This account is not activated",
+  "This account must be activated through the admin in order to be able to log in": "This account must be activated through the admin in order to be able to log in",
+  "back to": "Back to",
+  "Invalid promotion code": "Invalid promotion code",
+  "Branch already exist": "Branch already exist",
+  "User already exist": "User already exist",
+  "Success": "Success",
+  "You must have at least a branch to be able to upload the offer": "You must have at least a branch to be able to upload the offer",
+  "The end date of the offer must be greater than the date of the start of the offer": "The end date of the offer must be greater than the date of the start of the offer"
 }

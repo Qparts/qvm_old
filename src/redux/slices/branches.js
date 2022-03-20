@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import paymentService from 'src/services/paymentService';
+// import paymentService from 'src/services/paymentService';
 import settingService from 'src/services/settingService';
 import helper from 'src/utils/helper';
 
@@ -10,10 +10,10 @@ const loginObject = JSON.parse(localStorage.getItem("loginObject"))
 
 const initialState = {
     isLoading: false,
-    branches: loginObject ? loginObject.company.branches : "",
+    branches: loginObject ? loginObject.company.branches : [],
     verificationMode: null,
     verifiedEmail: null,
-    pendingSubscriptions: null,
+    // pendingSubscriptions: null,
     error: null,
 };
 
@@ -51,11 +51,11 @@ const slice = createSlice({
             state.error = null;
         },
 
-        getPendingSubscriptionsSuccess(state, action) {
-            state.isLoading = false;
-            state.pendingSubscriptions = action.payload;
-            state.error = null;
-        },
+        // getPendingSubscriptionsSuccess(state, action) {
+        //     state.isLoading = false;
+        //     state.pendingSubscriptions = action.payload;
+        //     state.error = null;
+        // },
 
         cleanup(state) {
             state.isLoading = false;
@@ -99,7 +99,6 @@ export function createBranch(branchName, countryId, regionId, cityId, location, 
             };
 
             const { data: branchData } = await settingService.addBranch(branch);
-            console.log(branchData)
             await settingService.updateActivateBranch({ branchId: branchData.id })
             const newBranches = loginObject.company.branches;
             newBranches.push(branchData);
@@ -193,14 +192,14 @@ export function verifyUser(code) {
     };
 }
 
-export function getPendingSubscriptions() {
-    return async (dispatch) => {
-        dispatch(slice.actions.startLoading());
-        try {
-            const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
-            dispatch(slice.actions.getPendingSubscriptionsSuccess(pendingSubscriptions));
-        } catch (error) {
-            dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
-        }
-    };
-}
+// export function getPendingSubscriptions() {
+//     return async (dispatch) => {
+//         dispatch(slice.actions.startLoading());
+//         try {
+//             const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
+//             dispatch(slice.actions.getPendingSubscriptionsSuccess(pendingSubscriptions));
+//         } catch (error) {
+//             dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
+//         }
+//     };
+// }

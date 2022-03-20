@@ -166,8 +166,8 @@ export default function CustomTextField(props) {
                         fullWidth
                         className={classes.dateCont}
                         name={props.name}
-                        error={Boolean(props.touched && props.errors)}
-                        helperText={props.touched && props.errors}
+                        error={Boolean((props.touched && props.errors) || props.dateError)}
+                        helperText={(props.touched && props.errors) || props.dateError}
                     />
                 }
             />

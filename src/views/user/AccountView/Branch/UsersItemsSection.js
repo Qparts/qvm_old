@@ -33,7 +33,7 @@ function UsersItemsSection({ openAddUserModel, usersNum }) {
                 await settingService.updateActivateUser({ userId: item.id })
                 await dispatch(refreshToken());
                 window.location = PATH_APP.management.user.account;
-                enqueueSnackbar(t('Request has been uploaded'), { variant: 'success' });
+                enqueueSnackbar(t('Success'), { variant: 'success' });
             } else {
                 return openAddUserModel()
             }

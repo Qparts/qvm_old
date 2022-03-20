@@ -5,7 +5,6 @@ import { MIconButton } from 'src/theme';
 import paymentService from 'src/services/paymentService';
 import { partSearch, getProductInfo, handleChangePage, resetLocationfilter, setFilter } from 'src/redux/slices/partSearch';
 import { updateCurrentPlan, updateLoginObject } from 'src/redux/slices/authJwt';
-import { getPendingSubscriptions } from 'src/redux/slices/branches';
 import { updateBillingAddress, updateCartItems } from 'src/redux/slices/market';
 
 // ----------------------------------------------------------------------
@@ -176,18 +175,21 @@ function reconstructPhone(countryId, phone, countries) {
   const countryCode = countries.find((x) => x.id === countryId).countryCode;
   let modifiedPhone =
     "" + parseInt(phone.replace("/D/g", "").replace(" ", ""), 10);
-  console.log("modifiedPhone : " + modifiedPhone);
   return modifiedPhone.substring(0, countryCode.length) === countryCode
     ? modifiedPhone
     : countryCode + modifiedPhone;
 }
 
-const gotoPremium = async (pendingSubscriptions, history, enqueueSnackbar, message, url, dispatch) => {
-  await dispatch(getPendingSubscriptions());
-  if (pendingSubscriptions != null && pendingSubscriptions != "")
-    enqueueSnackbar(message, { variant: 'warning' });
-  else
-    history.push(url);
+const gotoPremium = async (history, enqueueSnackbar, message, url, errMessage) => {
+  try {
+    const { data: pendingSubscriptions } = await paymentService.getPendingSubscription();
+    if (pendingSubscriptions != null && pendingSubscriptions != "")
+      enqueueSnackbar(message, { variant: 'warning' });
+    else
+      history.push(url);
+  } catch (error) {
+    enqueueSnackbar(errMessage, { variant: 'error' });
+  }
 }
 
 const updatePaymentOrder = async (history, path, tapId, loginObject, dispatch, enqueueSnackbar, closeSnackbar, t) => {

@@ -10,6 +10,7 @@ import { useLocation, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { PATH_APP } from 'src/routes/paths';
 import helper from 'src/utils/helper';
+import Card from 'src/components/Ui/Card';
 
 // ----------------------------------------------------------------------
 
@@ -63,7 +64,9 @@ function UpgradeSubscriptionView() {
 
                 }
             >
-                <PremiumPlanSubscription />
+                <Card cardUnActivPad="cardUnActivPad">
+                    <PremiumPlanSubscription />
+                </Card>
             </LoadingOverlay>
         </Page>
     );

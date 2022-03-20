@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
@@ -49,8 +49,6 @@ const useStyles = makeStyles((theme) => ({
         fontWeight: theme.typography.fontWeightMedium,
     },
     totalAmount: {
-        borderRadius: '10px',
-        border: '1px solid #E7F0F7',
         marginBottom: '20px',
         padding: 0
     },
@@ -58,16 +56,42 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'space-between',
-        padding: '10px',
-        borderBottom: '1px solid #efefef',
-        '&:last-of-type': {
-            border: 0,
-        },
+        padding: '10px'
+    },
+    total: {
+        borderTop: "1px solid #efefef",
+        margin: theme.spacing(2, 0),
+        paddingTop: theme.spacing(1),
+        "& span, p": { fontWeight: 600 },
     },
     totalAmountNum: {
         color: theme.palette.secondary.main,
         fontWeight: theme.typography.fontWeightMedium
     },
+    plusOptionsCont: {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        '& .MuiFormControl-root': { width: 'auto' },
+        '& .MuiOutlinedInput-root': {
+            width: '87px',
+            '@media (max-width: 430px) and (min-width: 300px)': { width: '45px' }
+        },
+        '& .css-g2jkac-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline, & .rtl-gsvaid-MuiInputBase-root-MuiOutlinedInput-root.Mui-focused .MuiOutlinedInput-notchedOutline': {
+            borderWidth: 0
+        },
+        '& .MuiOutlinedInput-input': {
+            border: 0,
+            borderBottom: '1px solid #EEF1F5',
+            borderRadius: 0,
+            padding: 0,
+            background: theme.palette.grey[0],
+
+        }
+    },
+    bigMarg: { marginRight: theme.spacing(11.5) },
+    MedMarg: { marginRight: theme.spacing(9.25) },
+    smallMarg: { marginRight: theme.spacing(6.25) },
     overlayFullPage: {
         '& ._loading_overlay_overlay': { position: 'fixed', zIndex: 1101 }
     }
@@ -123,9 +147,14 @@ function PremiumPlanSubscription({ settings, close, addUserCheck, addBranchCheck
     const totalAmount = subtotal + vatAmount;
 
     const handlePromotionSubmit = async ({ code }) => {
-        const { data: promotionValue } = await paymentService.activePromtion(code, availablePlans[1].id);
-        if (promotionValue) {
-            setPromotion(promotionValue);
+        try {
+            const { data: promotionValue } = await paymentService.activePromtion(code, availablePlans[1].id);
+            if (promotionValue) {
+                setPromotion(promotionValue);
+            }
+        }
+        catch (error) {
+            enqueueSnackbar(t('Invalid promotion code'), { variant: 'error' });
         }
     }
 
@@ -192,8 +221,6 @@ function PremiumPlanSubscription({ settings, close, addUserCheck, addBranchCheck
                 paymentBodyObject("A", subtotalSetting, itemsToSetting, country) :
                 paymentBodyObject("S", subtotalSubscription, itemsToUpgrade, country);
 
-            console.log(paymentType)
-
             setLoaded(false);
             if (paymentMethod == "1") {
                 paymentType.mimeType = receipt.type;
@@ -208,8 +235,6 @@ function PremiumPlanSubscription({ settings, close, addUserCheck, addBranchCheck
             }
             else {
                 const { data: payment } = await paymentService.paymentOrder(paymentType);
-                console.log("payment", payment);
-                console.log("paymentType", paymentType);
                 window.location = payment.url;
             }
 
@@ -294,31 +319,37 @@ function PremiumPlanSubscription({ settings, close, addUserCheck, addBranchCheck
                             </Typography>
                         </ListItem> */}
                     <ListItem className={classes.totalAmountChild}>
-                        <Typography variant="body3">
-                            {t("Number of branches")}
+                        <Box className={classes.plusOptionsCont}>
+                            <Typography
+                                variant="body3"
+                                className={themeDirection == 'ltr' ? classes.smallMarg : classes.bigMarg}>
+                                {t("Branches number")}
+                            </Typography>
                             <TextField
                                 type="input"
                                 name="Number of branches"
-                                label={t("Promotion Code")}
                                 value={branchsNum}
                                 onChange={(e) => setBranchsNum(e.target.value)}
                             />
-                        </Typography>
+                        </Box>
                         <Typography variant="body1" className={classes.totalAmountNum}>
                             {helper.ccyFormat(branchsNumCost)} {t("SAR")}
                         </Typography>
                     </ListItem>
                     <ListItem className={classes.totalAmountChild}>
-                        <Typography variant="body3">
-                            {t("Users number")}
+                        <Box className={classes.plusOptionsCont}>
+                            <Typography
+                                variant="body3"
+                                className={themeDirection == 'ltr' ? classes.MedMarg : classes.smallMarg}>
+                                {t("Users number")}
+                            </Typography>
                             <TextField
                                 type="input"
                                 name="Users number"
-                                label={t("Promotion Code")}
                                 value={usersNum}
                                 onChange={(e) => setUsersNum(e.target.value)}
                             />
-                        </Typography>
+                        </Box>
                         <Typography variant="body1" className={classes.totalAmountNum}>
                             {helper.ccyFormat(usersNumCost)} {t("SAR")}
                         </Typography>
@@ -335,7 +366,7 @@ function PremiumPlanSubscription({ settings, close, addUserCheck, addBranchCheck
                             {helper.ccyFormat(vatAmount)} {t('SAR')}
                         </Typography>
                     </ListItem>
-                    <ListItem className={classes.totalAmountChild}>
+                    <ListItem className={clsx(classes.totalAmountChild, classes.total)}>
                         <Typography variant="body3">{t("Total Amount")}</Typography>
                         <Typography variant="body1" className={classes.totalAmountNum}>
                             {helper.ccyFormat(totalAmount)} {t('SAR')}
@@ -358,6 +389,7 @@ function PremiumPlanSubscription({ settings, close, addUserCheck, addBranchCheck
                             <Grid item xs={12} sm={4}>
                                 <Button
                                     onClick={() => handlePromotionSubmit({ code: code })}
+                                    disabled={code == '' || totalAmount == 0}
                                 >
                                     {t("Active Discount")}
                                 </Button>
@@ -369,6 +401,7 @@ function PremiumPlanSubscription({ settings, close, addUserCheck, addBranchCheck
                         {t("Promotion discount applied")} {promotion.promoCode}
                     </Typography>
                 }
+
                 <Box className={classes.spaceBetweenElements}>
                     <TextField
                         type="select"

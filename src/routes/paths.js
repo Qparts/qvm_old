@@ -54,6 +54,7 @@ export const PATH_APP = {
     requestFund: path(ROOTS.app, '/request-fund'),
     previousOrders: path(ROOTS.app, '/previous-orders'),
     upgradeSubscription: path(ROOTS.app, '/upgrade-subscription'),
+    unactiveUser: path(ROOTS.app, '/unactive'),
     chat: {
       root: path(ROOTS.app, '/chat'),
       new: path(ROOTS.app, '/chat/new'),

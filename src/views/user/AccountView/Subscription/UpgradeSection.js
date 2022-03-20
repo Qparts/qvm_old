@@ -1,14 +1,11 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from "react-router";
 import { PATH_APP } from 'src/routes/paths';
 import { useSnackbar } from 'notistack';
-import {
-    Typography,
-    Box
-} from '@material-ui/core';
+import { Typography, Box } from '@material-ui/core';
 import helper from 'src/utils/helper';
 import Button from '../../../../components/Ui/Button';
 
@@ -18,11 +15,9 @@ function UpgradeSection() {
     const theme = useTheme();
     const { t } = useTranslation();
     const history = useHistory();
-    const dispatch = useDispatch();
     const { enqueueSnackbar } = useSnackbar();
     const { currentPlan } = useSelector((state) => state.authJwt);
     const { themeDirection } = useSelector((state) => state.settings);
-    const { pendingSubscriptions } = useSelector((state) => state.branches);
 
     return (
         <Box>
@@ -39,12 +34,11 @@ function UpgradeSection() {
                 <Button
                     upgradeBtn="upgradeBtn"
                     onClick={() => helper.gotoPremium(
-                        pendingSubscriptions,
                         history,
                         enqueueSnackbar,
                         t('There is a pending subscription'),
                         PATH_APP.general.upgradeSubscription,
-                        dispatch
+                        t('There was an error please try again later')
                     )}
                 >
                     {t("Upgrade to Premium")}
