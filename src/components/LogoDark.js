@@ -13,8 +13,8 @@ function LogoDark({ className, ...other }) {
         <Box
             component="img"
             alt="logo"
-            src="/static/images/logo.png"
-            width="auto"
+            src="/static/images/QVM.svg"
+            width={100}
             className={className}
             {...other}
         />

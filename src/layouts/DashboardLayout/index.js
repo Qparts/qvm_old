@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import NavBar from './NavBar';
 import TopBar from './TopBar';
+import UnActiveSubscriberTopBar from './TopBar/unActiveSubscriberTopBar';
 
 // ----------------------------------------------------------------------
 
@@ -53,11 +55,16 @@ function DashboardLayout({ children }) {
   const [openNav, setOpenNav] = useState(false);
   const { pathname } = useLocation();
   const isChat = pathname.includes('chat');
+  const { loginObject } = useSelector((state) => state.authJwt);
 
   return (
     <div className={classes.root}>
-      <TopBar onOpenNav={() => setOpenNav(true)} />
-      <NavBar onCloseNav={() => setOpenNav(false)} isOpenNav={openNav} />
+      {((!loginObject?.subscriber.admin && loginObject?.subscriber.active) || loginObject?.subscriber.admin) ? (
+        <>
+          <TopBar onOpenNav={() => setOpenNav(true)} />
+          <NavBar onCloseNav={() => setOpenNav(false)} isOpenNav={openNav} />
+        </>
+      ) : <UnActiveSubscriberTopBar />}
 
       <div className={clsx(classes.main, isChat ? classes.chatPadding : null)}>{children}</div>
     </div>

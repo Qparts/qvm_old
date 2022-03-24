@@ -16,7 +16,6 @@ import { Download } from '../../../icons/icons';
 import StockFileBtn from '../../../components/Ui/StockFileBtn';
 import TextField from '../../../components/Ui/TextField';
 import CustomButton from '../../../components/Ui/Button';
-import stockService from 'src/services/stockService';
 import axios from 'axios';
 import links from 'src/constants/links';
 

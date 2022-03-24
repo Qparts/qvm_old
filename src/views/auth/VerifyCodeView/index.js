@@ -6,14 +6,12 @@ import { useSnackbar } from 'notistack';
 import VerifyCodeForm from './VerifyCodeForm';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography, Hidden } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import useAuth from 'src/hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { PATH_PAGE } from 'src/routes/paths';
 import { useTranslation } from 'react-i18next';
-import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
 import TopBar from './../../../layouts/HomeLayout/TopBar';
-
 
 // ----------------------------------------------------------------------
 
@@ -45,10 +43,7 @@ function VerifyCodeView(props) {
   const { verify } = useAuth();
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
-  const { error: verifyError } = useSelector(
-    (state) => state.authJwt
-  );
-  
+  const { error: verifyError } = useSelector((state) => state.authJwt);
   const { themeDirection } = useSelector((state) => state.settings);
 
 
@@ -97,10 +92,10 @@ function VerifyCodeView(props) {
       <TopBar className={classes.header} />
       <Box sx={{ maxWidth: 480, mx: 'auto' }}>
         <Typography variant="h3" gutterBottom>
-          {t("Please check your email!")}
+          {t("Please check your phone or email!")}
         </Typography>
         <Typography sx={{ color: 'text.secondary' }}>
-          {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.", { email: props.location.state.email })}
+          {t("please enter the code in below box to verify your email")}
         </Typography>
         <Box sx={{ mt: 5, mb: 3 }}>
           <VerifyCodeForm formik={formik} />

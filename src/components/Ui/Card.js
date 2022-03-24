@@ -21,6 +21,7 @@ const useStyles = makeStyles((theme) => ({
     cardPad: {
         padding: '10px 15px',
     },
+    cardUnActivPad: { padding: theme.spacing(3, 2) },
     cardBg: {
         background: '#F6F8FC',
     }
@@ -39,6 +40,7 @@ function MainCard(props, { className, ...other }) {
         <Card className={clsx(
             classes.root,
             classes[props.cardPad],
+            classes[props.cardUnActivPad],
             classes[props.cardBg],
             classes[props.upgradeCard],
             className

@@ -36,17 +36,14 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '500px',
         },
     },
-    welcomeDialogWidth: { boxShadow: 'none' },
-    welcomeCloseButton: {
-        width: '30px',
-        height: '30px',
-        background: theme.palette.grey[0],
-        borderRadius: '50%',
+    qstockDialogWidth: { boxShadow: 'none' },
+    qstockCloseButton: {
+        color: '#9f9fa9',
         position: 'absolute',
         top: '10px',
         right: '10px'
     },
-    welcomeDialogContent: { padding: '0 !important' }
+    qstockDialogContent: { padding: '0 !important', backgroundColor: '#1f2442' }
 }));
 
 // ----------------------------------------------------------------------
@@ -57,23 +54,21 @@ const Modal = (props) => {
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
-        props.welcomePopUp ?
+        props.Qstock ?
             <Dialog
                 fullScreen={fullScreen}
                 fullWidth={props.fullWidth}
                 open={props.open}
                 aria-labelledby="responsive-dialog-title"
-                classes={{ paper: classes.welcomeDialogWidth }}
+                classes={{ paper: classes.qstockDialogWidth }}
             >
                 {props.handleClose ? (
-                    <IconButton aria-label="close" className={classes.welcomeCloseButton} onClick={props.handleClose}>
+                    <IconButton aria-label="close" className={classes.qstockCloseButton} onClick={props.handleClose}>
                         <CloseIcon />
                     </IconButton>
                 ) : null}
-                <DialogContent className={classes.welcomeDialogContent}>
-                    <DialogContentText style={{ margin: 0 }}>
-                        {props.children}
-                    </DialogContentText>
+                <DialogContent className={classes.qstockDialogContent}>
+                    {props.children}
                 </DialogContent>
             </Dialog>
             :
@@ -94,9 +89,7 @@ const Modal = (props) => {
                     ) : null}
                 </DialogTitle>
                 <DialogContent className={classes.dialogContent}>
-                    <DialogContentText style={{ margin: 0 }}>
-                        {props.children}
-                    </DialogContentText>
+                    {props.children}
                 </DialogContent>
             </Dialog>
     )

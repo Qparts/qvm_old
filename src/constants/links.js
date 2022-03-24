@@ -49,7 +49,9 @@ const setting = {
   putDefaultPolicy: `${SUBSCRIBER_SERVICE}/default-policy`,
   putDefaultCustomer: `${SUBSCRIBER_SERVICE}/default-customer`,
   putDefaultBranch: `${SUBSCRIBER_SERVICE}/default-branch`,
-  putSettingVariables: `${SUBSCRIBER_SERVICE}/setting-variables`
+  putSettingVariables: `${SUBSCRIBER_SERVICE}/setting-variables`,
+  putActivateUser: `${SUBSCRIBER_SERVICE}/activate-user`,
+  putActivateBranch: `${SUBSCRIBER_SERVICE}/activate-branch`,
 };
 
 const customer = {
@@ -145,16 +147,15 @@ const product = {
 };
 
 const plan = {
-  getPlans: `${PLAN_SERVICE}/plans`,
-  getPlansFeatures: `${PLAN_SERVICE}/plans-features`,
-  getPromtion: `${PLAN_SERVICE}//promo-code?`
+  getPlans: `${PLAN_SERVICE}/plans-v2`,
+  getPromtion: `${PLAN_SERVICE}/promo-code?`
 };
 
 const invoice = {
   getBanks: `${INVOICE_SERVICE}/banks`,
-  paymentOrder: `${INVOICE_SERVICE}/payment-order`,
-  wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
-  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`,
+  paymentOrder: `${INVOICE_SERVICE}/payment-order-v2`,
+  wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order-v2`,
+  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/qvm-pending-subscriptions`,
   postFundRequest: `${INVOICE_SERVICE}/request-fund`,
   getFundRequests: `${INVOICE_SERVICE}/request-fund`,
   // getFundRequests: `http://localhost:3000/invoice/request-fund`

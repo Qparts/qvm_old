@@ -371,6 +371,7 @@ function Datatable({
                                                         );
                                                     })}
                                                     {actions.map((actionItem, index) => {
+                                                        // const checkAction = actionItem.element(JSON.stringify(item))
                                                         return (
                                                             <TableCell key={index}>
                                                                 {actionItem.element ?

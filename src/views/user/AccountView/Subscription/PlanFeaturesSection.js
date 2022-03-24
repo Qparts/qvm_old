@@ -2,14 +2,8 @@ import React from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import {
-    Box,
-    Typography,
-    ListItem,
-    List
-} from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import helper from 'src/utils/helper';
-import Accordion from '../../../../components/Ui/Accordion';
 import ProgressBar from '../../../../components/Ui/ProgressBar'
 // ----------------------------------------------------------------------
 
@@ -47,12 +41,11 @@ function PlanFeaturesSection() {
     const classes = useStyles();
     const theme = useTheme();
     const { t } = useTranslation();
-    const { planFeatures, currentPlan, loginObject } = useSelector((state) => state.authJwt);
-    const { themeDirection } = useSelector((state) => state.settings);
+    const { currentPlan, loginObject } = useSelector((state) => state.authJwt);
 
     return (
         <>
-            {currentPlan.name == 'Premium Plan' &&
+            {currentPlan.name === 'Premium Plan' &&
                 <Box sx={{ marginBottom: theme.spacing(2) }}>
                     <Box className={classes.currentPlanTime}>
                         <Box>
@@ -77,25 +70,6 @@ function PlanFeaturesSection() {
                         timeLeft={helper.calculateTimeLeft(loginObject.company.subscriptions[0].startDate, loginObject.company.subscriptions[0].endDate) + '%'} />
                 </Box>
             }
-
-            <Accordion
-                head={t("Features")}
-                accordionStyle="accordionStyle">
-                <List>
-                    {planFeatures.find(e => e.name == currentPlan.name).features.map((feature, index) => {
-                        return (
-                            <ListItem key={index} className={classes.planFeaturesChild}>
-                                <Typography variant="body2" sx={{ color: theme.palette.secondary.main }}>
-                                    {themeDirection == 'ltr' ? feature.name : feature.nameAr}
-                                </Typography>
-                                <Typography variant="body4" className={classes.planFeaturesOptionChild}>
-                                    {themeDirection == 'ltr' ? feature.value : feature.valueAr}
-                                </Typography>
-                            </ListItem>
-                        )
-                    })}
-                </List>
-            </Accordion>
         </>
     );
 }
