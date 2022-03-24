@@ -34,14 +34,14 @@ export const planFeatures = [
                 valueAr: "غير متوفر"
             },
             {
-                name: "Number of users",
-                nameAr: "عدد المستخدمين",
+                name: "Add user",
+                nameAr: "اضافة مستخدم",
                 value: "Unavailable",
                 valueAr: "غير متوفر"
             },
             {
-                name: "Number of branches",
-                nameAr: "عدد الفروع",
+                name: "Add branch",
+                nameAr: "اضافة فرع",
                 value: "Unavailable",
                 valueAr: "غير متوفر"
             },
@@ -95,16 +95,16 @@ export const planFeatures = [
                 valueAr: "غير محدودة"
             },
             {
-                name: "Number of users",
-                nameAr: "عدد المستخدمين",
-                value: "1 User",
-                valueAr: "1 مستخدم"
+                name: "Add users",
+                nameAr: "اضافة مستخدم",
+                value: "Available",
+                valueAr: "متوفر"
             },
             {
-                name: "Number of branches",
-                nameAr: "عدد الفروع",
-                value: "1 Branch",
-                valueAr: "1 فرع"
+                name: "Add branches",
+                nameAr: "اضافة فرع",
+                value: "Available",
+                valueAr: "متوفر"
             },
             {
                 name: "Stock upload mechanism",

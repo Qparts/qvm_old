@@ -37,7 +37,7 @@ function HeaderAuth(props) {
     return (
         <header className={classes.header}>
             <RouterLink to="/">
-                <Hidden mdDown> <Logo newLogo='newLogo' /> </Hidden>
+                <Hidden mdDown><Logo /></Hidden>
                 <Hidden mdUp> <LogoDark /> </Hidden>
             </RouterLink>
             <Hidden smDown>

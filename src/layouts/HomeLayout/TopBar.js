@@ -175,7 +175,6 @@ function TopBar() {
       widthAuto='widthAuto'
       whiteBtn={isHome ? 'whiteBtn' : null}
       component={Link}
-      target="_blank"
       href={PATH_PAGE.auth.register}
     >
       {t("registeration")}
@@ -189,7 +188,6 @@ function TopBar() {
           exact
           to={link.href}
           key={link.title}
-          target={link.title === 'login' ? "_blank" : null}
           underline="none"
           variant="subtitle1"
           component={RouterLink}
@@ -248,7 +246,7 @@ function TopBar() {
           }}
         >
           <RouterLink to="/">
-            {isLogo ? <Logo newLogo='newLogo' /> : <LogoDark />}
+            {isLogo ? <Logo /> : <LogoDark />}
           </RouterLink>
           <Box sx={{ flexGrow: 1 }} />
 
