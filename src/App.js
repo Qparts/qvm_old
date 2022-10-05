@@ -11,7 +11,7 @@ import AdapterDateFns from '@material-ui/lab/AdapterDateFns';
 import NotistackProvider from 'src/components/NotistackProvider';
 import { PersistGate } from 'redux-persist/lib/integration/react';
 import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
-import WelcomeDialog from 'src/components/Ui/WelcomeDialog';
+import QstockDialog from 'src/components/Ui/QstockDialog';
 
 // Using for Auth (Check doc https://minimals.cc/docs/authentication)
 import JwtProvider from 'src/components/Auth/JwtProvider';
@@ -40,7 +40,7 @@ function App() {
       delay = setTimeout(() => {
         setOpen(true);
         localStorage.setItem('popUp', JSON.stringify(1));
-      }, 30000);
+      }, 20000);
     }
     return () => clearTimeout(delay);
   }, [popUp]);
@@ -58,7 +58,7 @@ function App() {
                 </JwtProvider>
               </Router>
             </NotistackProvider>
-            <WelcomeDialog open={open} handleClose={handleClose} />
+            <QstockDialog open={open} handleClose={handleClose} />
           </LocalizationProvider>
         </ThemeConfig>
       </PersistGate>

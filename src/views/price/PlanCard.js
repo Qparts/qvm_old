@@ -1,14 +1,13 @@
 import clsx from 'clsx';
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import { PATH_APP, PATH_PAGE } from 'src/routes/paths';
-import { Link as RouterLink, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { Card, Typography, Box, Grid, Link, Divider, ListItem, List } from '@material-ui/core';
+import { Card, Typography, Box, ListItem, List } from '@material-ui/core';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import Button from '../../components/Ui/Button';
-import CustomDialog from '../../components/Ui/Dialog';
 
 // ----------------------------------------------------------------------
 
@@ -37,7 +36,6 @@ const useStyles = makeStyles((theme) => ({
     },
   },
   planHeadSec: {
-    minHeight: '72px',
     marginBottom: '10px',
     [theme.breakpoints.down('md')]: {
       minHeight: 'auto'
@@ -109,16 +107,6 @@ const useStyles = makeStyles((theme) => ({
     padding: '3px 8px',
     borderRadius: '30px',
   },
-  planUsed: {
-    display: 'block',
-    textAlign: 'left',
-    padding: ' 0 10px',
-    marginTop: theme.spacing(2),
-    fontWeight: theme.typography.fontWeightBold,
-    [theme.breakpoints.down('md')]: {
-      fontSize: theme.typography.subtitle2.fontSize
-    },
-  },
   basicPlan: {
     borderRadius: '30px 0 0 30px',
     borderRight: 0,
@@ -127,17 +115,12 @@ const useStyles = makeStyles((theme) => ({
       borderRadius: 0
     },
   },
-  customPlan: {
-    borderRadius: '0 30px 30px 0',
-    borderLeft: 0,
-    [theme.breakpoints.down('md')]: {
-      borderLeft: '1px solid #E4E4E4',
-      borderRadius: 0
-    },
-  },
   premiumPlan: {
     borderColor: 'rgba(238, 64, 54, 0.6)',
-    boxShadow: '0 0 30px rgb(238 64 54 / 16%)',
+    borderRadius: '0 30px 30px 0',
+    [theme.breakpoints.down('md')]: {
+      borderRadius: 0
+    },
   }
 }));
 
@@ -149,25 +132,17 @@ PlanCard.propTypes = {
   className: PropTypes.string
 };
 
-function PlanCard({ plan, duration }) {
+function PlanCard({ plan }) {
   const classes = useStyles();
   const theme = useTheme();
-  const history = useHistory();
-  const [open, setOpen] = useState(false);
   const { t } = useTranslation();
+  const history = useHistory();
   const { themeDirection } = useSelector((state) => state.settings);
-  const { availablePlans } = useSelector((state) => state.authJwt);
-
-  const getSaveValue = () => {
-    return Math.round((duration.discountPercentage * (availablePlans[1].price / 360) * duration.calculationDays));
-  };
 
   let cardStyle;
-  if (plan.name === 'Custom Plan')
-    cardStyle = classes.customPlan;
-  else if (plan.name === 'Basic Plan')
+  if (plan.name === 'Basic Plan')
     cardStyle = classes.basicPlan;
-  else if (plan.name == 'Premium Plan' && duration && duration.calculationDays > 180)
+  else if (plan.name == 'Premium Plan')
     cardStyle = classes.premiumPlan;
 
   return (
@@ -179,51 +154,22 @@ function PlanCard({ plan, duration }) {
 
       <Box className={classes.planHeadSec}>
         <Typography variant='h3' className={classes.planHead}>{themeDirection == 'ltr' ? plan.name : plan.nameAr} </Typography>
-
-        <Typography
-          variant='subtitle1'
-          sx={{
-            color: theme.palette.primary.main,
-            fontWeight: theme.typography.fontWeightRegular,
-          }}
-        >
-          {plan.name == 'Premium Plan' && duration && getSaveValue() > 0 ?
-            t("Save") + ' ' +
-            getSaveValue()
-            + ' ' + t('SAR')
-            : ''}
-        </Typography>
       </Box>
 
-      {plan.name === 'Custom Plan' ?
-        <Box
-          component="img"
-          alt="Custom"
-          src="/static/images/custom.svg"
-          height={80}
-          sx={{ margin: '0 auto 20px' }}
-        />
-        :
-        <Box sx={{ marginBottom: '20px' }}>
-          <Typography variant="h2"
-            sx={{
-              color: theme.palette.secondary.main,
-              fontWeight: 400,
-              lineHeight: 1
-            }}>
-            {plan.name === 'Basic Plan' ? t('Free') : plan.name === 'Premium Plan' && duration ?
-              Math.round(((availablePlans[1].price / 360) - (duration.discountPercentage * (availablePlans[1].price / 360))) * duration.calculationDays)
-              : '-'}
-          </Typography>
+      <Box sx={{ marginBottom: '20px' }}>
+        <Typography variant="h2"
+          sx={{
+            color: theme.palette.secondary.main,
+            fontWeight: 400,
+            lineHeight: 1
+          }}>
+          {plan.name === 'Basic Plan' ? t("Free") : plan.price}
+        </Typography>
 
-          <Typography variant="h5" sx={{ color: '#8B8B8B' }}>
-            {plan.name === 'Basic Plan' ? t('Forever') : plan.name === 'Premium Plan' && duration ?
-              duration.calculationDays == 30 ? t('SAR') + ' ' + '/' + ' ' + t('Monthly') :
-                duration.calculationDays == 180 ?
-                  t('SAR') + ' ' + '/' + ' ' + 6 + ' ' + t('Months') : t('SAR') + ' ' + '/' + ' ' + t('Yearly') : '-'}
-          </Typography>
-        </Box>
-      }
+        <Typography variant="h5" sx={{ color: '#8B8B8B' }}>
+          {plan.name === 'Basic Plan' ? t('Forever') :  t('SAR') + ' ' + '/' + ' ' + t('Yearly')}
+        </Typography>
+      </Box>
 
       <Button
         to={PATH_APP.root}
@@ -232,7 +178,7 @@ function PlanCard({ plan, duration }) {
         btnWidth='btnWidth'
         onClick={() => history.push(PATH_PAGE.auth.register)}
       >
-        {plan.name != 'Custom Plan' ? t('Signup') : t('Contact Our Team')}
+        {t('Signup')}
       </Button>
 
       <Box className={classes.planFeatures}>
@@ -250,52 +196,7 @@ function PlanCard({ plan, duration }) {
             )
           })}
         </List>
-        <Link
-          className={classes.planUsed}
-          variant="body1"
-          component={RouterLink}
-          onClick={() => {
-            setOpen(true);
-          }}
-        >
-          {t("Who subscribed in this package")}
-        </Link>
       </Box>
-
-      <CustomDialog
-        open={open}
-        handleClose={() => setOpen(false)}
-        title={t("Subscribers to the package") + (themeDirection == 'ltr' ? plan.name : plan.nameAr)}>
-        <Grid container spacing={2}>
-          {plan.companies.map((company, index) => {
-            // if (company.logo == null)
-            return (
-              <Grid item xs={12} key={index}>
-                <ListItem sx={{ padding: theme.spacing(0, 0, 2, 0) }}>
-                  {themeDirection == 'ltr' ? company.name : company.nameAr}
-                </ListItem>
-                <Divider />
-              </Grid>
-            )
-            //   else
-            //     return (
-            //       <Grid item xs={6} sm={4} key={index}>
-            //         <Box sx={{
-            //           border: '1px solid #efefef',
-            //           padding: '10px'
-            //         }}>
-            //           <Box
-            //             component="img"
-            //             alt={company.name}
-            //             src={company.logo}
-            //             sx={{ margin: '0 auto' }}
-            //           />
-            //         </Box>
-            //       </Grid>
-            //     )
-          })}
-        </Grid>
-      </CustomDialog>
     </Card >
   );
 }

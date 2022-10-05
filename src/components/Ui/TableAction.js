@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import clsx from 'clsx';
@@ -16,7 +15,7 @@ const useStyles = makeStyles((theme) => ({
         borderRight: '1px solid #CED5D8',
     },
     TableActionFlex: {
-        display: 'flex',
+        display: 'inline-flex',
         alignItems: 'center'
     },
     hoverLink: {
@@ -42,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
     },
     cursor: {
         cursor: 'pointer'
+    },
+    disableTableAction: {
+        pointerEvents: 'none',
+        opacity: 0.8,
     }
 }));
 
@@ -69,7 +72,7 @@ export default function TableAction(props) {
     } else if (props.type === 'partSearch') {
         tableActions = (
             <Box
-                className={clsx(classes.hoverLink, classes.TableActionFlex, classes.cursor)}
+                className={clsx(classes.hoverLink, classes.TableActionFlex, classes.cursor, classes[props.disableTableAction])}
                 onClick={props.onClick} >
                 <Box className={classes.TableActionIcon}>
                     {props.textIcon}

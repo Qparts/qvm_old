@@ -28,8 +28,6 @@ const slice = createSlice({
         getFundRequests(state, action) {
             const fundRequests = action.payload;
             const pendingRequest = fundRequests.find(x => x.status == 'N');
-            console.log("fundRequests", fundRequests);
-            console.log("pendingRequests", pendingRequest);
             state.fundRequests = fundRequests;
             state.pendingRequest = pendingRequest;
             state.isLoading = false;

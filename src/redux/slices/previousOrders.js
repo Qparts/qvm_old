@@ -64,7 +64,6 @@ export function getPreviousOrders(companyId, page, count) {
             });
 
             const currentCompnaies = await loadMissingCompanies(selectedCompanies);
-            console.log("currentCompnaies", currentCompnaies);
             const ordersTable = [];
 
             previousOrders.docs.forEach(element => {
