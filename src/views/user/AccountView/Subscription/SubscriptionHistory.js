@@ -44,12 +44,12 @@ function SubscriptionHistory() {
                 head={t("Subscription History")}
                 accordionStyle="accordionStyle">
                 <List>
-                    {loginObject.company.subscriptions.filter(e => e.status != 'F').map((item, index) => {
+                    {loginObject.company.subscriptions.filter(e => e.status !== 'F').map((item, index) => {
                         return (
                             <ListItem className={classes.subscriptionHistoryChild} key={index}>
                                 <Typography variant="body2" sx={{ color: theme.palette.secondary.darker }}>
-                                    {item.status == 'B' ?
-                                        t("Basic Plan") : item.status == 'A' ? t("Premium Plan") + "(" + t("Active") + ")" : t("Premium Plan")}
+                                    {item.status === 'B' ?
+                                        t("Basic Plan") : item.status === 'A' ? t("Premium Plan") + "(" + t("Active") + ")" : t("Premium Plan")}
                                 </Typography>
                                 <Typography variant="body4" sx={{ color: '#7E8D99' }}>
                                     {helper.toDate(item.startDate)} {item.endDate ? ' - ' + helper.toDate(item.endDate) : ""}

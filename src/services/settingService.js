@@ -47,6 +47,14 @@ function getUsers() {
   return http.get(settingUrl.getUsers);
 }
 
+function updateActivateUser(data) {
+  return http.put(settingUrl.putActivateUser, data);
+}
+
+function updateActivateBranch(data) {
+  return http.put(settingUrl.putActivateBranch, data);
+}
+
 export default {
   addBranch,
   updateDefaultPolicy,
@@ -56,5 +64,7 @@ export default {
   refreshToken,
   addUser,
   getUsers,
-  verifyUser
+  verifyUser,
+  updateActivateUser,
+  updateActivateBranch,
 };

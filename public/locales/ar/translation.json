@@ -740,15 +740,26 @@
   "There was an error please try again later": "كان هناك خطأ، الرجاء المحاولة مجددا لاحقا.",
   "Sorry, we couldn't find the page you’re looking for Perhaps you've mistyped the URL? Be sure to check your spelling": "معذرةً ، لم نتمكن من العثور على الصفحة التي تبحث عنها. ربما أخطأت في كتابة عنوان URL؟ تأكد من التحقق من التهجئة.",
   "Visit Qstock": "تعرف على كيوستوك",
-  "My Orders":"طلباتي",
-  "Receiver Company":"الشركه المستلمه",
-  "Sender":"الراسل",
-  "Filter Orders By Company":"تصفية الطلبات حسب الشركة",
-  "Send Again":"أعد الإرسال",
-  "Previous Order Details":"تفاصيل الطلب السابق"
-
-
-
-
-
+  "My Orders": "طلباتي",
+  "Receiver Company": "الشركه المستلمه",
+  "Sender": "الراسل",
+  "Filter Orders By Company": "تصفية الطلبات حسب الشركة",
+  "Send Again": "أعد الإرسال",
+  "Previous Order Details": "تفاصيل الطلب السابق",
+  "Branches number": "عدد الفروع",
+  "Users number": "عدد المستخدمين",
+  "Activation": "تفعيل",
+  "Subtotal Amount": "صافي القيمة الاجمالية",
+  "It seems that you do not have more branches or users in your plan in order to be able to create new users or create new branches, you must subscribe now": "يبدو انه ليس لديك المزيد من الفروع او المستخدمين فى باقتك لكى تتمكن من انشاء مستخدمين جدد او انشاء فروع جديده عليك الاشتراك الان.",
+  "It seems that you do not have more users in your plan to be able to create new users you have to subscribe now": "يبدو انه ليس لديك المزيد من المستخدمين فى باقتك لكى تتمكن من انشاء مستخدمين جدد عليك الاشتراك الان.",
+  "It seems that you do not have more branches in your plan to be able to create new branches, you have to subscribe now": "يبدو انه ليس لديك المزيد من الفروع فى باقتك لكى تتمكن من انشاء فروع جديده عليك الاشتراك الان.",
+  "This account is not activated": "هذا الحساب غير مفعل",
+  "This account must be activated through the admin in order to be able to log in": "يجب تفعيل هذا الحساب من خلال الادمن لكى تتمكن من تسجيل الدخول",
+  "back to": "العوده لـ",
+  "Invalid promotion code": "رمز الترويج غير صحيح",
+  "Branch already exist": "الفرع موجود بالفعل",
+  "User already exist": "المستخدم موجود بالفعل",
+  "Success": "تمت العملية بنجاح",
+  "You must have at least a branch to be able to upload the offer": "يجب ان يكون لديك على الاقل فرع لتتمكن من رفع العرض",
+  "The end date of the offer must be greater than the date of the start of the offer": "يجب ان يكون تاريخ نهاية العرض اكبر من تاريخ بداية العرض"
 }

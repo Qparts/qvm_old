@@ -91,6 +91,11 @@ const AppRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.general.unactiveUser,
+      component: lazy(() => import('src/views/upgradeSubscription/UpgradeSubscriptionView/UnActiveUser'))
+    },
+    {
+      exact: true,
       path: PATH_APP.general.chat.conversation,
       component: lazy(() => import('src/views/orders/OrdersView'))
     },

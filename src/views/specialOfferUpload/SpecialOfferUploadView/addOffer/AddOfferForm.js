@@ -16,6 +16,7 @@ AddOfferForm.propTypes = {
 function AddOfferForm({ formik }) {
     const { errors, touched, handleSubmit, isSubmitting, getFieldProps, setFieldValue, values } = formik;
     const { t } = useTranslation();
+    const [offerDateError, setOfferDateError] = useState(null);
     const [fileError, setFileError] = useState(null);
 
     return (
@@ -58,9 +59,16 @@ function AddOfferForm({ formik }) {
                             value={values.offerStartDate}
                             onChange={(newValue) => {
                                 setFieldValue("offerStartDate", newValue);
+                                if (Date.parse(values.offerEndDate) < Date.parse(newValue)) {
+                                    setOfferDateError(t("The end date of the offer must be greater than the date of the start of the offer"));
+                                    return;
+                                }
+                                else
+                                    setOfferDateError(null)
                             }}
                             touched={touched.offerStartDate}
-                            errors={errors.offerStartDate} />
+                            errors={errors.offerStartDate}
+                            dateError={offerDateError} />
 
                     </Grid>
                     <Grid item xs={12} md={6}>
@@ -72,9 +80,16 @@ function AddOfferForm({ formik }) {
                             value={values.offerEndDate}
                             onChange={(newValue) => {
                                 setFieldValue("offerEndDate", newValue);
+                                if (Date.parse(newValue) < Date.parse(values.offerStartDate)) {
+                                    setOfferDateError(t("The end date of the offer must be greater than the date of the start of the offer"));
+                                    return;
+                                }
+                                else
+                                    setOfferDateError(null)
                             }}
                             touched={touched.offerEndDate}
-                            errors={errors.offerEndDate} />
+                            errors={errors.offerEndDate}
+                            dateError={offerDateError} />
                     </Grid>
                 </Grid>
 
@@ -88,7 +103,12 @@ function AddOfferForm({ formik }) {
                     errors={errors.notes} />
 
                 <Box sx={{ marginTop: '20px' }}>
-                    <CustomButton type="submit">{t("add offer")}</CustomButton>
+                    <CustomButton
+                        type="submit"
+                        disabled={Date.parse(values.offerEndDate) < Date.parse(values.offerStartDate)}
+                    >
+                        {t("add offer")}
+                    </CustomButton>
                 </Box>
             </Form>
         </FormikProvider >

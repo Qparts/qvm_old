@@ -1,6 +1,7 @@
 import React, { lazy } from 'react';
 import { Redirect } from 'react-router-dom';
 import HomeLayout from 'src/layouts/HomeLayout';
+import { PATH_PAGE } from './paths';
 
 // ----------------------------------------------------------------------
 
@@ -10,23 +11,23 @@ const HomeRoutes = {
   routes: [
     {
       exact: true,
-      path: '/',
+      path: PATH_PAGE.common.home,
       component: lazy(() => import('src/views/home/LandingPageView'))
     },
     {
-      path: '/contact-us',
+      path: PATH_PAGE.common.contactUs,
       component: lazy(() => import('src/views/contact'))
     },
     {
-      path: '/prices',
+      path: PATH_PAGE.common.prices,
       component: lazy(() => import('src/views/price'))
     },
     {
-      path: '/terms-view',
+      path: PATH_PAGE.common.termsView,
       component: lazy(() => import('src/views/TermsView'))
     },
     {
-      path: '/privacy-policy',
+      path: PATH_PAGE.common.privacy,
       component: lazy(() => import('src/views/PrivacyPolicy'))
     },
     {

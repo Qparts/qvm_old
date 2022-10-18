@@ -20,7 +20,13 @@ function UpgradeBtn() {
         (currentPlan.status != 'A') &&
         <Button
             btnWidth="btnWidth"
-            onClick={() => { helper.gotoPremium(history, enqueueSnackbar, t('There is a pending subscription'), PATH_APP.general.upgradeSubscription, t) }}
+            onClick={() => helper.gotoPremium(
+                history,
+                enqueueSnackbar,
+                t('There is a pending subscription'),
+                PATH_APP.general.upgradeSubscription,
+                t('There was an error please try again later')
+            )}
         >
             {t("Upgrade to Premium")}
         </Button>

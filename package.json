@@ -137,6 +137,7 @@
     "build": "react-scripts build",
     "build:testing": "env-cmd -f .env.testing react-scripts build",
     "build:prod": "env-cmd -f .env.production react-scripts build",
+    "build:development": "env-cmd -f .env.development react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint --ext js,jsx src/",
