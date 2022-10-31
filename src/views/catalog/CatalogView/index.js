@@ -7,7 +7,7 @@ import CarDetails from './CarDetails';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import { cleanup } from 'src/redux/slices/catalog';
+import { cleanup, getCatalogs } from 'src/redux/slices/catalog';
 
 // ----------------------------------------------------------------------
 
@@ -36,12 +36,14 @@ const useStyles = makeStyles((theme) => ({
 function CatalogView() {
     const classes = useStyles();
     const dispatch = useDispatch();
-    const { showCarInfo, isLoading } = useSelector((state) => state.catalogs);
+    const { showCarInfo, isLoading, catalogs } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
 
     useEffect(() => {
+        if (catalogs.length === 0)
+            dispatch(getCatalogs());
         return () => {
-            dispatch(cleanup())
+            dispatch(cleanup());
         }
     }, []);
 

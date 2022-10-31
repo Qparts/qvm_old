@@ -16,8 +16,7 @@ import Button from "./../../../components/Ui/Button";
 
 function CatalogSearch() {
     const dispatch = useDispatch();
-    const { models, selectedCatalog, selectedModel } = useSelector((state) => state.catalogs);
-    const { catalogs } = useSelector((state) => state.authJwt);
+    const { models, selectedCatalog, selectedModel, catalogs } = useSelector((state) => state.catalogs);
     const { t } = useTranslation();
 
     const getCars = () => {
@@ -46,7 +45,7 @@ function CatalogSearch() {
                             value={selectedCatalog ? selectedCatalog.id : ""}
                             name="catalog"
                             onChange={(event) => {
-                                console.log(event.target.value);
+                                // console.log(event.target.value);
                                 dispatch(getModels(event.target.value, catalogs));
                             }}>
                             <MenuItem aria-label="None" value="" />
@@ -64,7 +63,7 @@ function CatalogSearch() {
                             name="model"
                             spaceToTop="spaceToTop"
                             onChange={(event) => {
-                                console.log(event.target.value);
+                                // console.log(event.target.value);
                                 dispatch(handleModelChange(event.target.value, models, selectedCatalog));
                             }}>
                             <MenuItem aria-label="None" value="" />

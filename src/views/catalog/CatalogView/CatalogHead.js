@@ -25,7 +25,8 @@ export default function CatalogHead() {
     const { t } = useTranslation();
 
     useEffect(() => {
-        dispatch(getCatalogs());
+        if (catalogs.length === 0)
+            dispatch(getCatalogs());
     }, [dispatch]);
 
     const getCars = () => {
