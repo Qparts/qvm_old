@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import { addUser } from 'src/redux/slices/branches';
+import { useSnackbar } from 'notistack';
 import { useFormik } from 'formik';
 import * as Yup from 'yup';
 import AddUserForm from './AddUserForm';
+import useIsMountedRef from 'src/hooks/useIsMountedRef';
+import { addUser } from 'src/redux/slices/branches';
 import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
@@ -13,9 +14,16 @@ import helper from 'src/utils/helper';
 function AddUser(props) {
     const dispatch = useDispatch();
     const { t } = useTranslation();
+    const { enqueueSnackbar } = useSnackbar();
     const isMountedRef = useIsMountedRef();
     const [loaded, setLoaded] = useState(false);
-    const { countries } = useSelector((state) => state.authJwt);
+    const { countries, loginObject } = useSelector((state) => state.authJwt);
+
+    const userExists = (name, phone, email) => {
+        return loginObject.company.subscribers.some(el => {
+            return el.name == name.trim() || el.mobile == phone.trim() || el.email == email.trim();
+        });
+    }
 
     const userSchema = Yup.object().shape({
         name: Yup.string().required(t("Name Is Required")),
@@ -39,12 +47,17 @@ function AddUser(props) {
         validationSchema: userSchema,
         onSubmit: async (values, { setErrors, setSubmitting }) => {
             try {
-                dispatch(addUser(values.email, helper.reconstructPhone(values.countryId, values.phone, countries),
-                    values.countryId, values.password, values.name, values.branch))
-                if (isMountedRef.current) {
-                    setSubmitting(false);
+                const reconstructPhone = helper.reconstructPhone(values.countryId, values.phone, countries)
+                if (userExists(values.name, reconstructPhone, values.email)) {
+                    enqueueSnackbar(t('User already exist'), { variant: 'error' });
+                } else {
+                    dispatch(addUser(values.email, reconstructPhone, values.countryId,
+                        values.password, values.name, values.branch))
+                    if (isMountedRef.current) {
+                        setSubmitting(false);
+                    }
+                    setLoaded(true);
                 }
-                setLoaded(true);
             } catch (error) {
                 if (isMountedRef.current) {
                     setErrors({ afterSubmit: error.code || error.message });

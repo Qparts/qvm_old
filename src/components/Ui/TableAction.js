@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Typography } from '@material-ui/core';
 import clsx from 'clsx';
@@ -16,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
         borderRight: '1px solid #CED5D8',
     },
     TableActionFlex: {
-        display: 'flex',
+        display: 'inline-flex',
         alignItems: 'center'
     },
     hoverLink: {
         lineHeight: 1,
+        cursor: 'pointer',
         '& span': {
             color: '#CED5D8'
         },
@@ -41,6 +41,10 @@ const useStyles = makeStyles((theme) => ({
     },
     cursor: {
         cursor: 'pointer'
+    },
+    disableTableAction: {
+        pointerEvents: 'none',
+        opacity: 0.8,
     }
 }));
 
@@ -54,21 +58,21 @@ export default function TableAction(props) {
     if (props.type === 'offerActions') {
         tableActions = (
             <Box className={clsx(classes.TableActionFlex)}>
-                <Link to={props.link} className={clsx(classes[props.TableActionBorder], classes.TableActionFlex, classes.hoverLink)}>
+                <Box onClick={props.addItemEvent} className={clsx(classes[props.TableActionBorder], classes.TableActionFlex, classes.hoverLink)}>
                     <Box className={classes.TableActionIcon}>
                         {props.textIcon}
                     </Box>
                     <Typography variant="body4"> {props.title} </Typography>
-                </Link>
-                <Link to={props.linkSearch} className={clsx(classes.hoverLink, classes[props.mrItem])}>
+                </Box>
+                <Box onClick={props.SearchEvent} className={clsx(classes.hoverLink, classes[props.mrItem])}>
                     {props.icon}
-                </Link>
+                </Box>
             </Box>
         )
     } else if (props.type === 'partSearch') {
         tableActions = (
             <Box
-                className={clsx(classes.hoverLink, classes.TableActionFlex, classes.cursor)}
+                className={clsx(classes.hoverLink, classes.TableActionFlex, classes.cursor, classes[props.disableTableAction])}
                 onClick={props.onClick} >
                 <Box className={classes.TableActionIcon}>
                     {props.textIcon}

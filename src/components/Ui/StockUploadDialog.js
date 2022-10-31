@@ -7,11 +7,6 @@ import StockUpload from '../../views/stockUpload/StockUploadView/index';
 
 const StockUploadDialog = (props) => {
     const { t } = useTranslation();
-    const [checked, setChecked] = React.useState(false);
-
-    const handleChange = (event) => {
-        setChecked(event.target.checked);
-    };
 
     return (
         <CustomDialog
@@ -19,9 +14,7 @@ const StockUploadDialog = (props) => {
             handleClose={props.handleClose}
             title={t("add stock")}
         >
-            <StockUpload
-                handleChange={handleChange}
-                checked={checked} />
+            <StockUpload />
         </CustomDialog>
     )
 }

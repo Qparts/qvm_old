@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import { Card } from '@material-ui/core';
-import { More } from '../../../icons/icons';
+// import { More } from '../../../icons/icons';
 // import TextField from '../../../components/Ui/TextField';
 import Datatable from 'src/components/table/DataTable';
 
@@ -38,9 +38,9 @@ function MostSearchedParts({ className, ...other }) {
     const mostActiveCompaniesOnStockCopy = [...mostActiveCompaniesOnStock]
     const mostActiveCompaniesOnStockSort = mostActiveCompaniesOnStockCopy.sort((a,b) => (a.total < b.total) ? 1 : ((b.total < a.total) ? -1 : 0));
 
-    const showMoreActions = (item) => {
-        return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
-    }
+    // const showMoreActions = (item) => {
+    //     return <More width='20' height='20' fill='#a6bcc5' className={classes.more} />
+    // }
 
     return (
         <Card className={clsx(classes.root, classes.reactiveCompanies, className)} {...other}>
@@ -79,11 +79,10 @@ function MostSearchedParts({ className, ...other }) {
                     }
                 ]}
 
-                actions={[{ element: showMoreActions }]}
+                // actions={[{ element: showMoreActions }]}
                 datatable={mostActiveCompaniesOnStockSort}
                 isLazy={true}
-                hasPagination={false}
-                dataTableGeneralDashboard='dataTableGeneralDashboard' />
+                hasPagination={false} />
         </Card>
     );
 }

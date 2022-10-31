@@ -24,7 +24,6 @@ const initialState = {
   availablePlans: [],
   currentPlan: null,
   premiumPlan: null,
-  planFeatures: [],
   catalogs: [],
   bancks: [],
   conversations: [],
@@ -55,7 +54,6 @@ const slice = createSlice({
       state.loginObject = action.payload.user;
       state.countries = action.payload.countries;
       state.currentPlan = action.payload.currentPlan;
-      state.planFeatures = action.payload.planFeatures;
       state.availablePlans = action.payload.availablePlans;
       state.premiumPlan = action.payload.premiumPlan;
       state.bancks = action.payload.bancks;
@@ -130,6 +128,11 @@ const slice = createSlice({
       state.loginObject = null;
     },
 
+    cleanup(state) {
+      state.isLoading = false;
+      state.error = null;
+    }
+
   }
 });
 
@@ -140,6 +143,7 @@ export default slice.reducer;
 
 // Actions
 export const {
+  cleanup,
   updateLoginObject,
   updateCurrentPlan,
   updateCurrentSocket
@@ -180,7 +184,9 @@ export function login({ email, password }) {
       setSession(accessToken);
       localStorage.setItem('loginObject', JSON.stringify(user));
       dispatch(slice.actions.loginSuccess({ user }));
+      window.localStorage.removeItem('loginData');
     } catch (error) {
+      localStorage.setItem('loginData', JSON.stringify({ email, password }));
       dispatch(slice.actions.hasError({ data: error.response?.data, status: error.response?.status }));
     }
 
@@ -315,7 +321,6 @@ export function getInitialize() {
     dispatch(slice.actions.startLoading());
     try {
       let { data: countries } = await locationService.getCountries();
-      const { data: planFeatures } = await paymentService.getPlansFeatures();
       const { data: plans } = await paymentService.getPlans();
       const accessToken = window.localStorage.getItem('accessToken');
       if (accessToken && isValidToken(accessToken)) {
@@ -323,7 +328,7 @@ export function getInitialize() {
         const loginObject = JSON.parse(localStorage.getItem('loginObject'));
         await dispatch(getContacts(loginObject.subscriber.id));
         let currentPlan = getCurrentPlan(plans);
-        const { data: catalogs } = await catalogService.getCatalogs();
+        // const { data: catalogs } = await catalogService.getCatalogs();
         const { data: bancks } = await paymentService.getBancks();
         // const { data: userConversations } = await chatService.getUserConversations(loginObject.subscriber.id);
         dispatch(
@@ -333,9 +338,8 @@ export function getInitialize() {
             loginObject: loginObject,
             countries: countries,
             currentPlan: currentPlan,
-            planFeatures: planFeatures,
             availablePlans: plans,
-            catalogs: catalogs,
+            // catalogs: catalogs,
             bancks: bancks,
             // conversations: userConversations,
             premiumPlan: plans.find(e => e.name == 'Premium Plan')
@@ -349,7 +353,6 @@ export function getInitialize() {
             loginObject: null,
             countries: countries,
             currentPlan: null,
-            planFeatures: planFeatures,
             availablePlans: plans,
             bancks: []
           })
@@ -361,7 +364,6 @@ export function getInitialize() {
           isAuthenticated: false,
           user: null,
           currentPlan: null,
-          planFeatures: [],
           availablePlans: [],
           bancks: []
         })

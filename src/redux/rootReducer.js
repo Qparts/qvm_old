@@ -8,6 +8,7 @@ import notificationsReducer from './slices/notifications';
 import catalogReducer from './slices/catalog';
 import partSearchReducer from './slices/partSearch';
 import quotationsReportReducer from './slices/quotationsReport';
+import requestFundReducer from './slices/requestFund';
 import specialOfferReducer from './slices/specialOffer';
 import replacementsReducer from './slices/replacements';
 import stockUploadReducer from './slices/stockUpload';
@@ -17,6 +18,7 @@ import marketReducer from './slices/market';
 import chatReducer from './slices/chat';
 import dashboardReducer from './slices/dashboard';
 import messagingReducer from './slices/messaging';
+import previousOrdersReducer from './slices/previousOrders';
 
 // ----------------------------------------------------------------------
 
@@ -48,10 +50,12 @@ const rootReducer = combineReducers({
   stockUpload: stockUploadReducer,
   specialOfferUpload: specialOfferUploadReducer,
   branches: branchesReducer,
-  market : marketReducer,
+  market: marketReducer,
   chat: chatReducer,
   dashboard: dashboardReducer,
-  messaging: messagingReducer
+  messaging: messagingReducer,
+  requestFund: requestFundReducer,
+  previousOrders:previousOrdersReducer
 });
 
 export { rootPersistConfig, rootReducer };

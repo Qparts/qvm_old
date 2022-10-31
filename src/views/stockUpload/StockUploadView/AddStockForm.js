@@ -7,9 +7,6 @@ import {
     Box,
     Divider,
     MenuItem,
-    Checkbox,
-    FormControlLabel,
-    Grid,
     Typography,
     Button,
 } from '@material-ui/core';
@@ -19,6 +16,8 @@ import { Download } from '../../../icons/icons';
 import StockFileBtn from '../../../components/Ui/StockFileBtn';
 import TextField from '../../../components/Ui/TextField';
 import CustomButton from '../../../components/Ui/Button';
+import axios from 'axios';
+import links from 'src/constants/links';
 
 // ----------------------------------------------------------------------
 
@@ -55,18 +54,34 @@ AddStockForm.propTypes = {
     formik: PropTypes.object.isRequired
 };
 
+const stockUrl = links.stock;
+
+
 function AddStockForm(props) {
     const { errors, touched, handleSubmit, getFieldProps, setFieldValue, values } = props.formik;
     const { t } = useTranslation();
     const classes = useStyles();
     const theme = useTheme();
-    const { countries } = useSelector(
-        (state) => state.authJwt
-    );
+    const { countries } = useSelector((state) => state.authJwt);
     const [branches, setBranches] = useState(getBranches(countries));
     const { themeDirection } = useSelector((state) => state.settings);
     const [fileError, setFileError] = useState(null);
 
+
+    const downloadStockFile = async () => {
+        axios.get(stockUrl.getStockFile, {
+            responseType: 'blob'
+        }).then((response) => {
+            const url = URL.createObjectURL(new Blob([response.data], {
+                type: 'application/vnd.ms-excel'
+            }))
+            const link = document.createElement('a')
+            link.href = url
+            link.setAttribute('download', "stock.xlsx")
+            document.body.appendChild(link)
+            link.click()
+        });
+    }
 
     return (
         <FormikProvider value={props.formik}>
@@ -80,6 +95,7 @@ function AddStockForm(props) {
                     round
                     component="span"
                     className={classes.uploadStockMainBtn}
+                    onClick={downloadStockFile}
                 >
                     {t("download stock file")}
                     <Download width='20' height='20' fill={theme.palette.primary.main} />
@@ -115,47 +131,12 @@ function AddStockForm(props) {
                     }}
                     title={t("upload stock file")}
                     file='stockFile'
-                    label = {t("upload stock file")}
+                    label={t("upload stock file")}
                     value={values.stockFile}
                     touched={touched.stockFile}
                     errors={errors.stockFile}
                     fileError={fileError} />
-
-                <FormControlLabel
-                    control={<Checkbox checked={props.checked} onChange={props.handleChange} />}
-                    label={t("special offer")}
-                    style={{ marginTop: '15px' }}
-                />
-                {props.checked ?
-                    <>
-                        <Divider />
-                        <TextField
-                            type='input'
-                            name='offerName'
-                            label={t('add offer name')}
-                            spaceToTop='spaceToTop' />
-                        <Grid container spacing={1}>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    type='date'
-                                    id='offerStartDate'
-                                    name='offerStartDate'
-                                    label={t("Offer Start Date")} />
-                            </Grid>
-                            <Grid item xs={12} md={6}>
-                                <TextField
-                                    type='date'
-                                    id='offerEndDate'
-                                    name='offerEndDate'
-                                    label={t("Offer End Date")} />
-                            </Grid>
-                        </Grid>
-                        <TextField
-                            type='input'
-                            name='discount'
-                            label={t('put discount value')}
-                            spaceToTop='spaceToTop' />
-                    </> : ""}
+                    
                 <Box sx={{ marginTop: '20px' }}>
                     <CustomButton type="submit">{t("upload stock")}</CustomButton>
                 </Box>

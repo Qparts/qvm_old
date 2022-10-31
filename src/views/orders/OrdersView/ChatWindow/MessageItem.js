@@ -11,7 +11,7 @@ import { useTranslation } from 'react-i18next';
 import _ from 'lodash'
 import Button from "src/components/Ui/Button";
 import chatService from 'src/services/chatService';
-import { createNewMessage, getConversation } from 'src/redux/slices/chat';
+import { createNewMessage, getConversation, updateOrderMessage, updateRecivedOrderMessages } from 'src/redux/slices/chat';
 import helper from 'src/utils/helper';
 import { Parts, Price, Correct, Times, Edit } from 'src/icons/icons';
 
@@ -179,16 +179,22 @@ function MessageItem({
   const [orderDetails, setOrderDetails] = useState(null);
   const [updatedOrder, setUpdatedOrder] = useState(message.contentType == 'order' ?
     JSON.parse(message.text) : null);
-
+    
 
   //get order details (quantity and total price).
   const getOrderDetails = () => {
-    const orders = JSON.parse(message.text).orders;
+    const orders = JSON.parse(message.text)?.orders;
     let orderQuantity = 0;
     let totalPrice = 0;
-    for (let item of orders) {
-      orderQuantity += parseInt(item.quantity);
-      totalPrice += parseInt(item.quantity) * item.order.retailPrice;
+    if (orders) {
+      for (let item of orders) {
+        orderQuantity += parseInt(item.quantity);
+        if (item.order.offers.length > 0) {
+          totalPrice += parseInt(item.quantity) * item.order.offers[0].offerPrice;
+        } else {
+          totalPrice += parseInt(item.quantity) * item.order.retailPrice;
+        }
+      }
     }
     return { orderQuantity: orderQuantity, totalPrice: totalPrice }
   }
@@ -196,7 +202,7 @@ function MessageItem({
 
   useEffect(() => {
     if (message.contentType == 'order') {
-      // setUpdatedOrder(JSON.parse(message.text));
+      setUpdatedOrder(JSON.parse(message.text));
       const details = getOrderDetails();
       setOrderDetails(details);
     }
@@ -289,14 +295,12 @@ function MessageItem({
         updatedMessageMap = new Map();
       }
 
-      await dispatch(getConversation(activeConversation._id, 1));
-
+      dispatch(getConversation(activeConversation._id, 1));
 
     } catch (error) {
       console.log("error", error);
     }
   }
-
 
 
   const orderOperation = async (status) => {
@@ -306,8 +310,8 @@ function MessageItem({
       emitUpdateMessage(orderValue);
       await chatService.updateMessage(orderValue);
       const orderStatus = status == "A" ? t("Order has been accepted") : t("Order has been rejected");
+      dispatch(getConversation(orderValue.conversationId, 1));
       editOrderMessage(orderStatus);
-      await dispatch(getConversation(orderValue.conversationId, 1));
     } catch (error) {
       console.log("error", error);
     }
@@ -361,7 +365,8 @@ function MessageItem({
                     name: t("Average market price"),
                     attr: 'order.retailPrice',
                     type: !isMe && (message.status === 'I' || message.status === 'S') ? 'text' : '',
-                    onchange: updateOrderField
+                    onchange: updateOrderField,
+                    po: 'po'
                   }
                 ]}
 
@@ -395,14 +400,14 @@ function MessageItem({
                 {window.innerWidth < 725 && window.innerWidth > 600 ? null
                   :
                   <EditBtn
-                    updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder?.orders)}
+                    updatedOrder={!_.isEqual(JSON.parse(message.text)?.orders, updatedOrder?.orders)}
                     isMe={!isMe}
                     editOrder={editOrder}
                   />}
               </Box>
               {window.innerWidth < 725 && window.innerWidth > 600 &&
                 <EditBtn
-                  updatedOrder={!_.isEqual(JSON.parse(message.text).orders, updatedOrder?.orders)}
+                  updatedOrder={!_.isEqual(JSON.parse(message.text)?.orders, updatedOrder?.orders)}
                   isMe={!isMe}
                   editOrder={editOrder}
                 />}

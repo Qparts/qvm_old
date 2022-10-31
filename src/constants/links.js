@@ -1,3 +1,5 @@
+import constants from "src/utils/constants";
+
 const API_URL = process.env.REACT_APP_API_URL;
 const SUBSCRIBER_SERVICE = `${API_URL}/subscriber`;
 const CUSTOMER_SERVICE = `${API_URL}/customer`;
@@ -47,7 +49,9 @@ const setting = {
   putDefaultPolicy: `${SUBSCRIBER_SERVICE}/default-policy`,
   putDefaultCustomer: `${SUBSCRIBER_SERVICE}/default-customer`,
   putDefaultBranch: `${SUBSCRIBER_SERVICE}/default-branch`,
-  putSettingVariables: `${SUBSCRIBER_SERVICE}/setting-variables`
+  putSettingVariables: `${SUBSCRIBER_SERVICE}/setting-variables`,
+  putActivateUser: `${SUBSCRIBER_SERVICE}/activate-user`,
+  putActivateBranch: `${SUBSCRIBER_SERVICE}/activate-branch`,
 };
 
 const customer = {
@@ -106,28 +110,27 @@ const stock = {
   getSalesCreditBalance: `${STOCK_SERVICE}/sales-credit-balance`,
   postCreditPayment: (type) => `${STOCK_SERVICE}/credit-payment/${type}`,
   getPendingItems: `${STOCK_SERVICE}/pending-items`,
-  putPendingItems: `${STOCK_SERVICE}/pending-item`
+  putPendingItems: `${STOCK_SERVICE}/pending-item`,
+  getStockFile: `${STOCK_SERVICE}/download-stock-file`,
+  // getStockFile: `http://localhost:3000/stock/download-stock-file`,
+
 };
 
 const catalog = {
   getCatalogs: `${CATALOG_SERVICE}/catalogs`,
   getModels: (catalogid) => `${CATALOG_SERVICE}/models?catalogid=${catalogid}`,
   getCars: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${
-      params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/cars?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
     } `,
   getCarByVIN: (vin) => `${CATALOG_SERVICE}/cars/vin?query=${vin}`,
   getFilters: (catalogId, modelId, params) =>
-    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${
-      params != null ? 'params=' + params : ''
+    `${CATALOG_SERVICE}/model-filters?catalogid=${catalogId}&modelid=${modelId}&${params != null ? 'params=' + params : ''
     } `,
   getGroups: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${
-      groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/groups?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `,
   getPart: (catalogId, carId, groupId, criterias) =>
-    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${
-      groupId ? 'groupid=' + groupId : ''
+    `${CATALOG_SERVICE}/parts?catalogid=${catalogId}&carid=${carId}&${groupId ? 'groupid=' + groupId : ''
     }&${criterias != null ? 'criterias=' + criterias : ''} `
 };
 
@@ -139,31 +142,37 @@ const product = {
   specialOfferDetails: `${PRODUCT_SERVICE}/special-offer-products`,
   postQvmStockUpload: `${PRODUCT_SERVICE}/stock-upload`,
   postQvmSpecialOfferUploadRequest: `${PRODUCT_SERVICE}/special-offer-upload`,
-  getDashboardMetrics: `${PRODUCT_SERVICE}/dashboard-metrics`
+  getDashboardMetrics: `${PRODUCT_SERVICE}/dashboard-metrics`,
+  getQuotationReport: (year, month) => `${PRODUCT_SERVICE}/search-lists/year/${year}/month/${month}`
 };
 
 const plan = {
-  getPlans: `${PLAN_SERVICE}/plans`,
-  getPlansFeatures: `${PLAN_SERVICE}/plans-features`,
-  getPromtion: `${PLAN_SERVICE}//promo-code?`
+  getPlans: `${PLAN_SERVICE}/plans-v2`,
+  getPromtion: `${PLAN_SERVICE}/promo-code?`
 };
 
 const invoice = {
   getBanks: `${INVOICE_SERVICE}/banks`,
-  paymentOrder: `${INVOICE_SERVICE}/payment-order`,
-  wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order`,
-  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/pending-subscriptions`
+  paymentOrder: `${INVOICE_SERVICE}/payment-order-v2`,
+  wirepaymentOrder: `${INVOICE_SERVICE}/wire-transfer/payment-order-v2`,
+  pendingSubscription: `${INVOICE_SERVICE}/wire-transfer/qvm-pending-subscriptions`,
+  postFundRequest: `${INVOICE_SERVICE}/request-fund`,
+  getFundRequests: `${INVOICE_SERVICE}/request-fund`,
+  // getFundRequests: `http://localhost:3000/invoice/request-fund`
+  // postFundRequest: `http://localhost:3000/invoice/request-fund`\
 };
 
 const chat = {
   getUserConversations: `${CHAT_SERVICE}/conversation/user-conversations`,
   postNewChat: `${CHAT_SERVICE}/conversation/`,
   postNewMessage: `${CHAT_SERVICE}/messages/`,
-  getConversationMessages: (conversationKey,page=1) =>
+  getConversationMessages: (conversationKey, page = 1) =>
     `${CHAT_SERVICE}/messages/${conversationKey}?page=${page}`,
   unseenMessages: `${CHAT_SERVICE}/messages/unseen`,
   putSeenConversationMessages: (conversationId, sender) =>
-    `${CHAT_SERVICE}/messages/seen/${conversationId}/${sender}`
+    `${CHAT_SERVICE}/messages/seen/${conversationId}/${sender}`,
+  getPreviousOrders: (companyId = 0, page = 1, count = constants.MAX) =>
+    `${CHAT_SERVICE}/previous-orders?companyId=${companyId}&page=${page}&count=${count}`,
 };
 
 export default {

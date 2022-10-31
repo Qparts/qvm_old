@@ -13,7 +13,6 @@ import {
   CardContent
 } from '@material-ui/core';
 import { PATH_APP } from 'src/routes/paths';
-import Avatar from '../../../components/Ui/Avatar'
 
 // ----------------------------------------------------------------------
 
@@ -70,10 +69,6 @@ function CatalogItem({ catalog }) {
 
   return (
     <div className={classes.listItem}>
-      <Avatar>
-        <img src='/static/icons/ic_chrome.svg' alt='CatalogImg' width={24} height={24} />
-      </Avatar>
-
       <Box sx={{ flexGrow: 1, minWidth: 160, margin: theme.spacing(0, 0, 0, 2) }}>
         <Typography variant="body1" sx={{ textTransform: 'capitalize' }}>{catalogId}</Typography>
         <Typography variant="caption" sx={{ color: '#7E8D99' }}>{t("Search times")}:

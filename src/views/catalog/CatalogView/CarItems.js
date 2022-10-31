@@ -97,61 +97,8 @@ function CarItems() {
                     isLazy={false}
                     rowsPerPage={rowsPerPage}
                     hasPagination={cars.length > constants.MAX ? true : false}
-                    dataTableCata='dataTableCata' />
-                {/* 
-                <Scrollbars>
-                    <TableContainer>
-                        <Table className={classes.catalogTable}>
-                            <TableHead className={classes.catalogTableHead}>
-                                <TableRow>
-                                    <TableCell><Typography variant="body4">{t('Car Name')}</Typography></TableCell>
-                                    <TableCell><Typography variant="body4">{t('Brand')}</Typography></TableCell>
-                                    <TableCell><Typography variant="body4">{t('year')}</Typography></TableCell>
-                                    <TableCell><Typography variant="body4">{t('Engine')}</Typography></TableCell>
-                                    <TableCell><Typography variant="body4">{t('Transmission type')}</Typography></TableCell>
-                                    <TableCell><Typography variant="body4">{t('Region')}</Typography></TableCell>
-                                    {cars[0].parameters.map((param) => (
-                                                <TableCell key={param.key}> {t("catalogTab." + param.key)}</TableCell>
-                                            ))}
-                                    <TableCell></TableCell>
-                                </TableRow>
-                            </TableHead>
-                            <TableBody>
-                                {cars.map((car) => (
-                                    <TableRow
-                                        key={car.id}
-                                        className={classes.catalogTableTr}
-                                        onClick={() => {
-                                            const catalogId = fromList ? selectedCatalog.id : car.catalogId;
-                                            const carId = fromList ? car.id : car.carId;
-                                            dispatch(getGroups(catalogId, carId, null, null, car));
-                                        }}>
-                                        <TableCell>{fromList ? car.name : car.title}</TableCell>
-                                        <TableCell>{fromList ? car.modelName : car.brand}</TableCell>
-                                        <TableCell>{fromList ? car.parameters[5].value : car.parameters[0].value}</TableCell>
-                                        <TableCell>{fromList ? car.parameters[3].value : car.parameters[3].value}</TableCell>
-                                        <TableCell>{fromList ? car.parameters[7].value : car.parameters[8].value}</TableCell>
-                                        <TableCell>{fromList ? car.parameters[6].value : car.parameters[6].value}</TableCell>
-                                        <TableCell>
-                                            <Button
-                                                variant="contained"
-                                                simple
-                                                component="span"
-                                                className={classes.browseCatalog}
-                                                onClick={() => {
-                                                    const catalogId = fromList ? selectedCatalog.id : car.catalogId;
-                                                    const carId = fromList ? car.id : car.carId;
-                                                    dispatch(getGroups(catalogId, carId, null, null, car));
-                                                }}
-                                            >
-                                                {t("Browse Catalog")}
-                                            </Button></TableCell>
-                                    </TableRow>
-                                ))}
-                            </TableBody>
-                        </Table>
-                    </TableContainer>
-                </Scrollbars> */}
+                    // dataTableCata='dataTableCata'
+                     />
             </CardContent >
             <CardFoot />
         </Card>

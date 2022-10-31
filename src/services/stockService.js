@@ -147,6 +147,10 @@ function updatePendingItems(data) {
   return http.put(stockUrl.putPendingItems, data);
 }
 
+function getStockFile() {
+  return http.get(stockUrl.getStockFile);
+}
+
 export default {
   getBrands,
   getBrandClasses,
@@ -183,5 +187,6 @@ export default {
   getPurchaseCreditBalance,
   postCreditPayment,
   getPendingItems,
-  updatePendingItems
+  updatePendingItems,
+  getStockFile
 };

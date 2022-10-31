@@ -13,7 +13,8 @@ const initialState = {
   userConversations: [],
   unseenMessages: [],
   messages: [],
-  onlineUsers: []
+  onlineUsers: [],
+  conversationsCompanies: []
 };
 
 const slice = createSlice({
@@ -34,11 +35,13 @@ const slice = createSlice({
     // GET CONTACT SSUCCESS
     getUserConversationsSuccess(state, action) {
       state.userConversations = action.payload;
+      state.isLoading = false;
     },
 
     //MESSAGE WITH I STATUS.
     getUnseenMessagesSuccess(state, action) {
       state.unseenMessages = action.payload;
+      state.isLoading = false;
     },
 
     // GET MESSAGES OF SELECTED  CONVERSATION.
@@ -50,6 +53,7 @@ const slice = createSlice({
       } else {
         state.activeConversationId = null;
       }
+      state.isLoading = false;
     },
 
     //SET ACTIVE CONVERSATION AND ACTIVE CONVERSATION KEY
@@ -57,17 +61,20 @@ const slice = createSlice({
       const conversation = action.payload;
       state.activeConversation = conversation;
       state.activeConversationId = conversation?._id;
+      state.isLoading = false;
     },
 
     //CREATE NEW MESSAGE SUCCESS
     createMessageSuccess(state, action) {
       state.messages = action.payload;
+      state.isLoading = false;
     },
 
     //APPAND ARRIVAL MESSAGE TO MESSAGE LIST IF ACTOIVE CONVERSATION ID
     // EQUALS ARRIVALE MESSAGE CONVERSATION ID.
     updateRecivedMessages(state, action) {
       state.messages = [...state.messages, action.payload];
+      state.isLoading = false;
     },
 
     //UPDATE ORDERR IN THE RECIVER SIDE.
@@ -75,26 +82,37 @@ const slice = createSlice({
       let updatedOrder = action.payload;
       let newMessages = [...state.messages];
       let orderIndex = newMessages.findIndex((x) => x._id == updatedOrder._id);
-      newMessages[orderIndex] = updatedOrder;
+      if (orderIndex != -1)
+        newMessages[orderIndex] = updatedOrder;
       state.messages = newMessages;
+      state.isLoading = false;
     },
 
     //UDATE ONLINE USERS.
     updateOnlineUsers(state, action) {
       state.onlineUsers = action.payload;
+      state.isLoading = false;
     },
 
     updateUnseenMessages(state, action) {
       state.unseenMessages = [...state.unseenMessages, action.payload];
+      state.isLoading = false;
     },
 
     updateMessages(state, action) {
       state.messages = action.payload;
+      state.isLoading = false;
     },
 
     //UPDATE ACTIVE CONVERSATION ID.
     setActiveConversationId(state, action) {
       state.activeConversationId = action.payload;
+      state.isLoading = false;
+    },
+
+    setConversationsCompanies(state, action) {
+      state.conversationsCompanies = action.payload;
+      state.isLoading = false;
     },
 
     // SIDEBAR
@@ -145,11 +163,33 @@ export function getContacts(userId) {
       const {
         data: userConversations
       } = await chatService.getUserConversations();
+
+      var conversationsCompanies = getAllConversationsCompanies(userConversations);
+
       dispatch(slice.actions.getUserConversationsSuccess(userConversations));
+      dispatch(slice.actions.setConversationsCompanies(conversationsCompanies));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }
   };
+}
+
+const getAllConversationsCompanies = (userConversations) => {
+  let userConversationsCompanies = new Set();
+  const currentCompanyId = JSON.parse(localStorage.getItem('loginObject')).company.id;
+  userConversations.forEach(element => {
+    element.members.forEach(member => {
+      if (member.companyId != currentCompanyId) {
+        userConversationsCompanies.add(JSON.stringify({
+          companyId: member.companyId,
+          companyName: member.companyName,
+          companyNameAr: member.companyNameAr
+        }))
+      }
+    })
+  });
+
+  return Array.from(userConversationsCompanies);
 }
 
 //GET UNSEEN MESSAGES OF LOGIN USER (FOR ALL USER'S CONVERSATIONS)
@@ -174,7 +214,7 @@ export function getUnseenMessages(sender, userConversations) {
 // ----------------------------------------------------------------------
 
 //GET MESSAGES OF SPECIFIC CONVERSATION.
-export function getConversation(conversationKey , page) {
+export function getConversation(conversationKey, page) {
   return async (dispatch) => {
     dispatch(slice.actions.startLoading());
     try {
@@ -204,6 +244,20 @@ export function createNewMessage(value, messages) {
       const response = await chatService.createMessage(value);
       const newMessages = [...messages, response.data];
       dispatch(slice.actions.createMessageSuccess(newMessages));
+    } catch (error) {
+      dispatch(slice.actions.hasError(error));
+    }
+  };
+}
+
+
+//UPDATE ORDER MESSAGE.
+export function updateOrderMessage(orderValue) {
+  return async (dispatch) => {
+    dispatch(slice.actions.startLoading());
+    try {
+      await chatService.updateMessage(orderValue);
+      dispatch(slice.actions.updateRecivedOrderMessages(orderValue));
     } catch (error) {
       dispatch(slice.actions.hasError(error));
     }

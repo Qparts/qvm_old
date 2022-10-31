@@ -3,13 +3,12 @@ import { useSelector } from 'react-redux';
 import {
     Grid,
     Box,
-    Typography,
-    Hidden
+    Typography
 } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
-import { Info, Grid as GridIcon, ListIcon } from '../../../icons/icons';
+import { Grid as GridIcon, ListIcon } from '../../../icons/icons';
 import TextField from "./../../../components/Ui/TextField";
 
 // ----------------------------------------------------------------------
@@ -20,16 +19,11 @@ const useStyles = makeStyles((theme) => ({
         paddingBottom: '10px',
         borderBottom: '1px solid #E5EBF0',
     },
-    forMoreInfo: {
-        justifyContent: 'center',
-        marginTop: '10px',
-    },
     forMoreInfoChild: {
         fontWeight: 400,
-        marginLeft: '8px',
         color: theme.palette.primary.main,
         '@media (max-width: 1096px) and (min-width: 960px)': {
-            fontSize: theme.direction === 'ltr' ? '0.9rem' :  '1rem'
+            fontSize: theme.direction === 'ltr' ? '0.9rem' : '1rem'
         },
         '@media (max-width: 410px)': {
             fontSize: '0.8825rem',
@@ -40,6 +34,11 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.down('md')]: {
             justifyContent: 'center'
         }
+    },
+    forMoreInfo: {
+        justifyContent: 'center',
+        marginTop: '10px',
+        textAlign: 'center'
     },
     forMoreInfoIcon: {
         padding: '10px 15px',
@@ -76,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
 function SpecialOfferInfoActions(props) {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { loginObject } = useSelector((state) => state.authJwt);
+    const { selectedOffer } = useSelector((state) => state.specialOffer);
 
     return (
         <Box className={classes.forMoreInfoCont}>
@@ -89,13 +88,12 @@ function SpecialOfferInfoActions(props) {
                         label={t("Search by part number")}
                         selectBg='selectBg' />
                 </Grid>
-                <Grid item xs={12} md={5}>
+                <Grid item xs={12} md={6}>
                     <Box className={clsx(classes.forMoreInfo, classes.forMoreInfoFlex)}>
-                        <Hidden smDown><Info width='24' height='24' /></Hidden>
-                        <Typography variant="subtitle1" className={classes.forMoreInfoChild}> {t("For inquiries, you can contact us at")} {loginObject.subscriber.mobile}+</Typography>
+                        <Typography variant="body3" className={classes.forMoreInfoChild}> {selectedOffer.notes} </Typography>
                     </Box>
                 </Grid>
-                <Grid item xs={12} md={3}>
+                <Grid item xs={12} md={2}>
                     <Box className={clsx(classes.forMoreInfoFlex, classes.forMoreInfoIconCont)}>
                         <Box
                             className={clsx(classes.forMoreInfoIcon, props.listView ? classes.activeClass : '')}

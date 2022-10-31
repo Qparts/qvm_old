@@ -13,13 +13,6 @@ import CloseIcon from '@material-ui/icons/Close';
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    uploadStockBtn: {
-        padding: '9px 16px',
-        boxShadow: 'none',
-        '&:hover': {
-            boxShadow: '0px 3px 1px -2px rgb(145 158 171 / 20%), 0px 2px 2px 0px rgb(145 158 171 / 14%), 0px 1px 5px 0px rgb(145 158 171 / 12%)'
-        }
-    },
     closeButton: {
         marginLeft: theme.spacing(4),
         padding: theme.spacing(1),
@@ -43,39 +36,63 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '500px',
         },
     },
+    qstockDialogWidth: { boxShadow: 'none' },
+    qstockCloseButton: {
+        color: '#9f9fa9',
+        position: 'absolute',
+        top: '10px',
+        right: '10px'
+    },
+    qstockDialogContent: { padding: '0 !important', backgroundColor: '#1f2442' }
 }));
 
 // ----------------------------------------------------------------------
 
-const UploadStockBtn = (props) => {
+const Modal = (props) => {
     const classes = useStyles();
     const theme = useTheme();
     const fullScreen = useMediaQuery(theme.breakpoints.down('sm'));
 
     return (
-        <Dialog
-            fullScreen={fullScreen}
-            fullWidth={props.fullWidth}
-            open={props.open}
-            onClose={props.handleClose}
-            aria-labelledby="responsive-dialog-title"
-            classes={{ paper: classes[props.dialogWidth] }}
-        >
-            <DialogTitle id="responsive-dialog-title" className={classes.headCol}>
-                {props.title}
+        props.Qstock ?
+            <Dialog
+                fullScreen={fullScreen}
+                fullWidth={props.fullWidth}
+                open={props.open}
+                aria-labelledby="responsive-dialog-title"
+                classes={{ paper: classes.qstockDialogWidth }}
+            >
                 {props.handleClose ? (
-                    <IconButton aria-label="close" className={classes.closeButton} onClick={props.handleClose}>
+                    <IconButton aria-label="close" className={classes.qstockCloseButton} onClick={props.handleClose}>
                         <CloseIcon />
                     </IconButton>
                 ) : null}
-            </DialogTitle>
-            <DialogContent className={classes.dialogContent}>
-                <DialogContentText style={{ margin: 0 }}>
+                <DialogContent className={classes.qstockDialogContent}>
                     {props.children}
-                </DialogContentText>
-            </DialogContent>
-        </Dialog>
+                </DialogContent>
+            </Dialog>
+            :
+            <Dialog
+                fullScreen={fullScreen}
+                fullWidth={props.fullWidth}
+                open={props.open}
+                onClose={props.handleClose}
+                aria-labelledby="responsive-dialog-title"
+                classes={{ paper: classes[props.dialogWidth] }}
+            >
+                <DialogTitle id="responsive-dialog-title" className={classes.headCol}>
+                    {props.title}
+                    {props.handleClose ? (
+                        <IconButton aria-label="close" className={classes.closeButton} onClick={props.handleClose}>
+                            <CloseIcon />
+                        </IconButton>
+                    ) : null}
+                </DialogTitle>
+                <DialogContent className={classes.dialogContent}>
+                    {props.children}
+                </DialogContent>
+            </Dialog>
     )
 }
 
-export default UploadStockBtn
+export default Modal

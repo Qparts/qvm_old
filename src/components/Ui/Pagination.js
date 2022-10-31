@@ -60,7 +60,7 @@ export default function Pagination(props) {
                 rowsPerPageOptions={[]}
                 component="div"
                 count={props.size}
-                rowsPerPage={constants.MAX}
+                rowsPerPage={props.rowsPerPage ? props.rowsPerPage : constants.MAX}
                 page={props.state.page}
                 onPageChange={changePagehandler}
                 className={classes.tablePagination}

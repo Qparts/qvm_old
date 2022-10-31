@@ -7,8 +7,8 @@ import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
     customAvatar: {
-        width: 40,
-        height: 40,
+        width: 34,
+        height: 34,
         flexShrink: 0,
         display: 'flex',
         borderRadius: "50%",

@@ -8,6 +8,7 @@ import Datatable from 'src/components/table/DataTable';
 import constants from 'src/utils/constants';
 import Accordion from '../../../components/Ui/Accordion';
 import { Vector } from '../../../icons/icons';
+import { useSelector } from 'react-redux';
 
 // ----------------------------------------------------------------------
 
@@ -98,20 +99,21 @@ function ReplacementItemSection({ replacementItem }) {
     const [page, setPage] = useState(0);
     const [imageData, setImageData] = useState([]);
     const [rowsPerPage, setRowsPerPage] = useState(constants.MAX);
+    const { themeDirection } = useSelector((state) => state.settings);
 
-    useEffect(() => {
-        let itemimageData = [];
-        for (let image of replacementItem.images) {
-            itemimageData.push({ src: image.imageURL200 });
-        }
-        setImageData(itemimageData);
-    }, []);
+    // useEffect(() => {
+    //     let itemimageData = [];
+    //     for (let image of replacementItem.images) {
+    //         itemimageData.push({ src: image.imageURL200 });
+    //     }
+    //     setImageData(itemimageData);
+    // }, []);
 
     return (
 
         <Box>
             <Card className={classes.replacementsCard}>
-                {imageData.length > 0 &&
+                {/* {imageData.length > 0 &&
                     <Box className={clsx(classes.slider, classes.replacementsFlex)}>
                         <ImageSlider
                             height='200px'
@@ -124,23 +126,26 @@ function ReplacementItemSection({ replacementItem }) {
                             leftArrowComponent={<Vector className={classes.sliderIconLeft} width='14' height='14' fill='#FFF' />}
                             rightArrowComponent={<Vector className={classes.sliderIconRight} width='14' height='14' fill='#FFF' />} />
                     </Box>
-                }
+                } */}
 
                 <Box className={classes.replacementsInfo}>
                     <Box className={classes.replacementsFlex} sx={{ marginBottom: '10px' }}>
                         <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Part Number")}:</Typography>
-                        <Typography variant="body3" className={classes.replacementsValues}> {replacementItem.articleNumber} </Typography>
+                        <Typography variant="body3" className={classes.replacementsValues}> {replacementItem.productNumber} </Typography>
                     </Box>
-                    <Box className={clsx(classes.replacementsFlex, classes.replacementsFlexSapceBet)}>
-                        <Box className={classes.replacementsFlex}>
-                            <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Brand")}:</Typography>
-                            <Typography variant="body3" className={classes.replacementsValues}> {replacementItem.mfrName} </Typography>
-                        </Box>
-                        <Box className={classes.replacementsFlex}>
-                            <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Description")}:</Typography>
-                            <Typography variant="body3" className={classes.replacementsValues}> {replacementItem.genericArticles[0].genericArticleDescription} </Typography>
-                        </Box>
+
+                    <Box className={classes.replacementsFlex} sx={{ marginBottom: '10px' }}>
+                        <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Brand")}:</Typography>
+                        <Typography variant="body3" className={classes.replacementsValues}> {themeDirection == 'ltr' ? replacementItem.brand.name : replacementItem.brand.nameAr} </Typography>
                     </Box>
+
+                    <Box className={classes.replacementsFlex} sx={{ marginBottom: '10px' }}>
+                        <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Description")}:</Typography>
+                        <Typography variant="body3" className={classes.replacementsValues}>
+                            {themeDirection == 'ltr' ? replacementItem.details : replacementItem.detailsAr}
+                        </Typography>
+                    </Box>
+
                 </Box>
 
                 <Accordion
@@ -151,14 +156,14 @@ function ReplacementItemSection({ replacementItem }) {
                         header={[
                             {
                                 name: t("Part Number"),
-                                attr: 'articleNumber',
+                                attr: 'productNumber',
                             },
                             {
                                 name: t("Brand"),
-                                attr: 'mfrName'
+                                attr:themeDirection == 'ltr' ? 'brand.name':'brand.nameAr'
                             }
                         ]}
-                        datatable={replacementItem.oemNumbers}
+                        datatable={replacementItem.replacementList}
                         page={page}
                         isLazy={false}
                         rowsPerPage={rowsPerPage}

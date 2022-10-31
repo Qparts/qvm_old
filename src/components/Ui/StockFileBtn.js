@@ -43,6 +43,11 @@ const useStyles = makeStyles((theme) => ({
             background: '#FFEDED',
             boxShadow: '0px 3px 1px -2px rgb(145 158 171 / 20%), 0px 2px 2px 0px rgb(145 158 171 / 14%), 0px 1px 5px 0px rgb(145 158 171 / 12%)'
         }
+    },
+    xsFontEdit: {
+        '@media (max-width: 353px) and (min-width: 300px)': {
+            fontSize: theme.direction === 'ltr' ? '0.77rem' : '0.9375rem'
+        },
     }
 }));
 
@@ -71,7 +76,7 @@ export default function CustomInput(props) {
                     color="primary"
                     round
                     component="span"
-                    className={clsx(classes.uploadbtn, classes.uploadStockMainBtn)}
+                    className={clsx(classes.uploadbtn, classes.uploadStockMainBtn, props.responsive && classes.xsFontEdit)}
                 >
                     {props.value ? props.value.name : props.title}
                     {props.upload ? <Upload width='20' height='20' fill={theme.palette.primary.main} /> : null}

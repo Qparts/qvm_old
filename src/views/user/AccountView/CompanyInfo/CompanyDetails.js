@@ -1,11 +1,12 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import { Box, Typography } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import { useTranslation } from 'react-i18next';
 import clsx from 'clsx';
 import helper from 'src/utils/helper';
 import { Company, Location, Parts, Calender } from '../../../../icons/icons';
+import { getDashboardMetrics } from 'src/redux/slices/dashboard';
 
 // ----------------------------------------------------------------------
 
@@ -33,18 +34,18 @@ const useStyles = makeStyles((theme) => ({
     },
     companyDetailsChild: {
         marginLeft: theme.spacing(1.25),
-        '@media (max-width: 645px) and (min-width: 600px)': {
+        '@media (max-width: 715px) and (min-width: 600px)': {
             margin: theme.spacing(0.75, 0, 0)
         },
-        '@media (max-width: 333px)': {
+        '@media (max-width: 370px)': {
             margin: theme.spacing(0.75, 0, 0)
         },
     },
     companyInfo: {
-        '@media (max-width: 645px) and (min-width: 600px)': {
+        '@media (max-width: 715px) and (min-width: 600px)': {
             display: 'block !important',
         },
-        '@media (max-width: 333px)': {
+        '@media (max-width: 370px)': {
             display: 'block !important',
         },
     },
@@ -68,9 +69,17 @@ const useStyles = makeStyles((theme) => ({
 function CompanyDetails() {
     const classes = useStyles();
     const { t } = useTranslation();
-    const { user } = useSelector((state) => state.authJwt);
+    const dispatch = useDispatch();
+    const { user, loginObject, countries } = useSelector((state) => state.authJwt);
     const { themeDirection } = useSelector((state) => state.settings);
-    const { numOfStockParts } = useSelector((state) => state.dashboard);
+    const { numOfStockParts, numOfParts } = useSelector((state) => state.dashboard);
+    const userCountry = countries.find((e) => e.id === loginObject.company.countryId);
+
+    useEffect(() => {
+        if (numOfParts === 0) {
+            dispatch(getDashboardMetrics());
+        }
+    }, []);
 
     return (
         <Box className={clsx(classes.companyDetailsFlex, classes.companyDetailsFlexStart)}>
@@ -91,7 +100,7 @@ function CompanyDetails() {
                 <Box className={clsx(classes.companyInfo, classes.companyDetailsFlex)}>
                     <Box className={classes.companyDetailsFlex}>
                         <Location width='16' height='16' fill='#7E8D99' style={{ margin: themeDirection === 'ltr' ? '0 5px 0 0' : '0 0 0 5px' }} />
-                        <Typography variant="subtitle2"> السعودية</Typography>
+                        <Typography variant="subtitle2"> {themeDirection == 'ltr' ? userCountry.name : userCountry.nameAr} </Typography>
                     </Box>
                     <Box className={clsx(classes.companyDetailsFlex, classes.companyDetailsChild)}>
                         <Calender width='16' height='16' fill='#7E8D99' />

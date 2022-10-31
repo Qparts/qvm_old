@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
+    },
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { zIndex: 1101 }
     }
 }));
 
@@ -39,7 +42,7 @@ function ReplacementsView() {
     const { t } = useTranslation();
     const dispatch = useDispatch();
     const history = useHistory();
-    const { partReplacements = [], isLoading, error } = useSelector((state) => state.replacements);
+    const { partReplacements = [], isLoading, error, partReplacementStatus } = useSelector((state) => state.replacements);
 
     useEffect(() => {
         return () => {
@@ -60,6 +63,7 @@ function ReplacementsView() {
                         height: "100%",
                     },
                 }}
+                className={classes.overlayFullPage}
                 spinner={
                     <LoadingScreen />
                 }
@@ -87,7 +91,12 @@ function ReplacementsView() {
                                     })
                                 }
                             </Grid>
-                        </SecContainer> : null
+                        </SecContainer> : partReplacements.length === 0 && partReplacementStatus === true ?
+                            <EmptyContent
+                                btnHome
+                                title={t("Unable to receive your order")}
+                                description={t("look like there are no results for the item you were looking for")}
+                            /> : null
                 }
             </LoadingOverlay>
         </Page>

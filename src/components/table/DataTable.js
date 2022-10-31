@@ -21,6 +21,7 @@ import Collapse from '@material-ui/core/Collapse';
 import IconButton from '@material-ui/core/IconButton';
 import Pagination from '../Ui/Pagination';
 import TextField from '../Ui/TextField';
+import { useTranslation } from 'react-i18next';
 
 // ----------------------------------------------------------------------
 
@@ -38,13 +39,13 @@ const useStyles = makeStyles((theme) => ({
     dataTableBankTrans: { minWidth: '505px' },
     dataTableReplacementItem: { minWidth: '340px' },
     dataTableGeneral: {
-        '@media (max-width: 655px)': {
-            minWidth: '582px',
+        '@media (max-width: 665px)': {
+            minWidth: '592px',
         },
     },
     dataTableGeneralDashboard: {
-        '@media (max-width: 405px)': {
-            minWidth: '334px',
+        '@media (max-width: 413px)': {
+            minWidth: '341px',
         },
     },
     dataTableChat: {
@@ -58,6 +59,7 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '600px',
         },
     },
+    dataTablePurchaseOrder: { minWidth: '579px' },
     dataTablePartSearch: {
         '@media (max-width: 915px)': {
             minWidth: '844px',
@@ -68,12 +70,22 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '735px',
         },
     },
-    dataTableSetting: {
-        '@media (max-width: 970px) and (min-width: 960px)': {
-            minWidth: '659px',
+    dataTableQuotationsReport: {
+        '@media (max-width: 550px)': {
+            minWidth: '478px',
         },
-        '@media (max-width: 740px)': {
-            minWidth: '666px',
+    },
+    dataTableQuotationsReportDetail: {
+        '@media (max-width: 487px)': {
+            minWidth: '447px',
+        },
+    },
+    dataTableSetting: {
+        // '@media (max-width: 970px) and (min-width: 960px)': {
+        //     minWidth: '659px',
+        // },
+        '@media (max-width: 607px)': {
+            minWidth: '535px',
         },
     },
     dataTablePad: {
@@ -116,8 +128,9 @@ const getValue = (object, path) => {
         .reduce((o, k) => (o || {})[k], object);
 };
 
-const getCellValue = (item, headerItem, maps) => {
-    const offersLength = item.offers === undefined ? null : item.offers.length
+const getCellValue = (item, headerItem, maps, t) => {
+    const offersLength = item.offers === undefined ? null : item.offers.length;
+    const purchaseOrderLength = item.order ? item.order.offers.length : null;
 
     let value = maps != null && maps.length && headerItem.isMapped ?
         maps[headerItem.mapIndex].get(getValue(item, headerItem.attr)) ?
@@ -129,31 +142,56 @@ const getCellValue = (item, headerItem, maps) => {
             :
             (getValue(item, headerItem.attr));
 
+    if (headerItem.getValue) {
+        value = headerItem.getValue(item);
+    }
+
     if (offersLength > 0 && headerItem.num === 'num') {
         value = helper.ccyFormat(getValue(item, 'offers[0].offerPrice'));
     } else if (offersLength == 0 && headerItem.num === 'num') {
         value = getValue(item, 'retailPrice');
     }
 
+    if (purchaseOrderLength > 0 && headerItem.po === 'po') {
+        value = helper.ccyFormat(getValue(item, 'order.offers[0].offerPrice'));
+    } else if (purchaseOrderLength == 0 && headerItem.po === 'po') {
+        value = getValue(item, 'order.retailPrice');
+    }
+
+    if (item.specialOffer && headerItem.type == 'number') {
+        value = helper.ccyFormat(getValue(item, 'specialOfferPrice'));
+    } else if (!item.specialOffer && headerItem.type == 'number') {
+        value = getValue(item, 'retailPrice');
+    }
+
     if (headerItem.type == 'number') {
         value = helper.ccyFormat(value);
     }
-
+    if (headerItem.type == 'date') {
+        value = helper.toDate(new Date(value));
+    }
     if (headerItem.label)
         value = value + ' ' + headerItem.label;
 
-    if (headerItem.badge && offersLength > 0) {
-        value = <> {value} {headerItem.badge} </>
+    if ((headerItem.badge && offersLength > 0) || (headerItem.badge && item.specialOffer)) {
+        value = <> {value} {headerItem.badge(JSON.stringify(item))} </>
+    }
+
+    if (headerItem.isTrans) {
+        value = t(value);
     }
 
     return value;
 }
+
+
 
 // ----------------------------------------------------------------------
 
 function Row({ header, title, item, maps, childData = [], childHeader, showChildNumbers, noChildComponent }) {
     const [open, setOpen] = React.useState(false);
     const classes = useStyles();
+    const { t } = useTranslation();
 
     return (
         <React.Fragment>
@@ -161,7 +199,7 @@ function Row({ header, title, item, maps, childData = [], childHeader, showChild
                 {header.map((headerItem, j) => {
                     return (
                         <TableCell key={j}>
-                            {getCellValue(item, headerItem, maps)}
+                            {getCellValue(item, headerItem, maps, t)}
                         </TableCell>
                     );
                 })}
@@ -206,16 +244,42 @@ function Row({ header, title, item, maps, childData = [], childHeader, showChild
 }
 // ----------------------------------------------------------------------
 
-function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.MAX,
-    actions = [], error, onSelectedPage, onRowSelect,
-    maps, size = datatable.length, isLazy = true, hasPagination = false,
-    onRowsPerPageChange, hasChild = false, childData, childHeader,
-    showChildNumbers, childTitle, noChildComponent, dataTablePad, dataTableCata, dataTableSetting,
-    dataTableGeneral, dataTableChat, dataTablePartSearch, dataTableBankTrans, dataTableReplacementItem,
-    dataTableGeneralDashboard }) {
+function Datatable({
+    header,
+    datatable = [],
+    page = 1,
+    rowsPerPage = constants.MAX,
+    actions = [],
+    error,
+    onSelectedPage,
+    onRowSelect,
+    maps,
+    size = datatable.length,
+    isLazy = true,
+    hasPagination = false,
+    onRowsPerPageChange,
+    hasChild = false,
+    childData,
+    childHeader,
+    showChildNumbers,
+    childTitle,
+    noChildComponent,
+    dataTablePad,
+    dataTableCata,
+    dataTableSetting,
+    dataTableGeneral,
+    dataTableChat,
+    dataTablePartSearch,
+    dataTableBankTrans,
+    dataTableReplacementItem,
+    dataTableGeneralDashboard,
+    dataTablePurchaseOrder,
+    dataTableQuotationsReport,
+    dataTableQuotationsReportDetail
+}) {
 
     const classes = useStyles();
-
+    const { t } = useTranslation();
     const [open, setOpen] = React.useState(false);
 
 
@@ -241,7 +305,10 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                 classes[dataTablePartSearch],
                                 classes[dataTableBankTrans],
                                 classes[dataTableReplacementItem],
-                                classes[dataTableGeneralDashboard]
+                                classes[dataTableGeneralDashboard],
+                                classes[dataTablePurchaseOrder],
+                                classes[dataTableQuotationsReport],
+                                classes[dataTableQuotationsReportDetail]
                             )}
                             aria-label="simple table">
                             <TableHead className={classes.dataTableHead}>
@@ -293,17 +360,18 @@ function Datatable({ header, datatable = [], page = 1, rowsPerPage = constants.M
                                                                                 if (event.target.value != "") {
                                                                                     headerItem.onchange(event.target.value, item, headerItem.attr)
                                                                                 } else
-                                                                                    event.target.value = getCellValue(item, headerItem, maps);
+                                                                                    event.target.value = getCellValue(item, headerItem, maps, t);
                                                                             }}
-                                                                            defaultValue={getCellValue(item, headerItem, maps)}
-                                                                            value={getCellValue(item, headerItem, maps)}
+                                                                            defaultValue={getCellValue(item, headerItem, maps, t)}
+                                                                            value={getCellValue(item, headerItem, maps, t)}
                                                                         /> :
-                                                                        getCellValue(item, headerItem, maps)
+                                                                        getCellValue(item, headerItem, maps, t)
                                                                 }
                                                             </TableCell>
                                                         );
                                                     })}
                                                     {actions.map((actionItem, index) => {
+                                                        // const checkAction = actionItem.element(JSON.stringify(item))
                                                         return (
                                                             <TableCell key={index}>
                                                                 {actionItem.element ?

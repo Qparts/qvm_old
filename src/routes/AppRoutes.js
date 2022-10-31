@@ -81,13 +81,28 @@ const AppRoutes = {
     },
     {
       exact: true,
+      path: PATH_APP.general.requestFund,
+      component: lazy(() => import('src/views/requestFund/RequestFundView'))
+    },
+    {
+      exact: true,
       path: PATH_APP.general.upgradeSubscription,
       component: lazy(() => import('src/views/upgradeSubscription/UpgradeSubscriptionView'))
     },
     {
       exact: true,
+      path: PATH_APP.general.unactiveUser,
+      component: lazy(() => import('src/views/upgradeSubscription/UpgradeSubscriptionView/UnActiveUser'))
+    },
+    {
+      exact: true,
       path: PATH_APP.general.chat.conversation,
       component: lazy(() => import('src/views/orders/OrdersView'))
+    },
+    {
+      exact: true,
+      path: PATH_APP.general.previousOrders,
+      component: lazy(() => import('src/views/previousOrders/PreviousOrdersView'))
     },
     {
       exact: true,

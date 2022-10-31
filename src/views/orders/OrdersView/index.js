@@ -38,6 +38,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.up('lg')]: {
       height: '87.75vh',
     }
+  },
+  overlayFullPage: {
+    '& ._loading_overlay_overlay': { zIndex: 1101 }
   }
 }));
 
@@ -45,7 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 function OrdersView(_props) {
   const classes = useStyles();
-  const { isLoading } = useSelector((state) => state.quotationsReport);
+  const { isLoading } = useSelector((state) => state.chat);
   const { user, currentSocket } = useSelector((state) => state.authJwt);
   const { userConversations } = useSelector((state) => state.chat);
   const { t } = useTranslation();
@@ -73,13 +76,14 @@ function OrdersView(_props) {
     >
 
       <LoadingOverlay
-        active={isLoading}
+        active={false}
         styles={{
           wrapper: {
             width: "100%",
             height: "100%",
           },
         }}
+        className={classes.overlayFullPage}
         spinner={
           <LoadingScreen />
 
@@ -87,7 +91,7 @@ function OrdersView(_props) {
       >
         <Card className={classes.card}>
           <Sidebar />
-          {userConversations.length && <ChatWindow userConversations={userConversations} />}
+          {userConversations.length > 0 && <ChatWindow userConversations={userConversations} />}
         </Card>
       </LoadingOverlay>
 

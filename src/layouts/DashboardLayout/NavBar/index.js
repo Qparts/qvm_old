@@ -10,7 +10,7 @@ import {
   List,
   Drawer,
   Hidden,
-  ListSubheader,
+  ListSubheader
 } from '@material-ui/core';
 import { useTranslation } from 'react-i18next';
 import Logo from 'src/components/Logo';

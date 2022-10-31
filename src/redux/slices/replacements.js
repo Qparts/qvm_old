@@ -6,11 +6,10 @@ import partSearchService from 'src/services/partSearchService';
 
 const initialState = {
     isLoading: false,
-    error: '',
-    partReplacements: []
-
+    error: null,
+    partReplacements: [],
+    partReplacementStatus: false
 };
-
 
 const slice = createSlice({
     name: 'replacements',
@@ -18,6 +17,7 @@ const slice = createSlice({
     reducers: {
         startLoading(state) {
             state.isLoading = true;
+            state.partReplacementStatus = false;
         },
 
         // HAS ERROR
@@ -30,17 +30,17 @@ const slice = createSlice({
         getPartReplacementsSuccess(state, action) {
             state.isLoading = false;
             state.partReplacements = action.payload.partReplacements;
-            state.error = '';
+            state.error = null;
+            state.partReplacementStatus = true;
         },
         cleanup(state) {
             state.isLoading = false;
-            state.error = '';
-            state.partReplacements = []
+            state.error = null;
+            state.partReplacements = [];
+            state.partReplacementStatus = false;
         }
     }
-
 });
-
 
 
 // Reducer
@@ -58,7 +58,7 @@ export function getPartReplacements(query) {
         dispatch(slice.actions.startLoading());
         try {
             const { data: replacements } = await partSearchService.getPartReplacements(query);
-            dispatch(slice.actions.getPartReplacementsSuccess({ partReplacements: replacements.articles }));
+            dispatch(slice.actions.getPartReplacementsSuccess({ partReplacements: replacements.companyProducts }));
         } catch (error) {
             dispatch(slice.actions.hasError(error.response?.data));
         }

@@ -1,8 +1,8 @@
 import React from 'react';
-import Logo from 'src/components/Logo';
+import { Link as RouterLink } from 'react-router-dom';
 import Page from 'src/components/Page';
 import { motion } from 'framer-motion';
-import { Link as RouterLink } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
 import {
   MotionContainer,
   varBounce,
@@ -10,6 +10,7 @@ import {
 } from 'src/components/Animate';
 import { makeStyles } from '@material-ui/core/styles';
 import { Box, Button, Typography, Container } from '@material-ui/core';
+import LogoDark from 'src/components/LogoDark';
 
 // ----------------------------------------------------------------------
 
@@ -38,12 +39,13 @@ const useStyles = makeStyles((theme) => ({
 
 function Page404View() {
   const classes = useStyles();
+  const { t } = useTranslation();
 
   return (
-    <Page title="404 Page Not Found | Minimal-UI" className={classes.root}>
+    <Page title="404 Page Not Found" className={classes.root}>
       <header className={classes.header}>
         <RouterLink to="/">
-          <Logo />
+          <LogoDark />
         </RouterLink>
       </header>
 
@@ -51,13 +53,10 @@ function Page404View() {
         <MotionContainer initial="initial" open>
           <Box sx={{ maxWidth: 480, margin: 'auto', textAlign: 'center' }}>
             <motion.div variants={varBounce}>
-              <Typography variant="h3" gutterBottom>
-                Sorry, page not found!
-              </Typography>
+              <Typography variant="h3" gutterBottom> {t("Sorry page not found")} </Typography>
             </motion.div>
             <Typography sx={{ color: 'text.secondary' }}>
-              Sorry, we couldn’t find the page you’re looking for. Perhaps
-              you’ve mistyped the URL? Be sure to check your spelling.
+              {t("Sorry, we couldn't find the page you’re looking for Perhaps you've mistyped the URL? Be sure to check your spelling")}
             </Typography>
 
             <Box
@@ -74,7 +73,7 @@ function Page404View() {
               variant="contained"
               component={RouterLink}
             >
-              Go to Home
+              {t("Back to home")}
             </Button>
           </Box>
         </MotionContainer>

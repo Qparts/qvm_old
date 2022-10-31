@@ -45,7 +45,6 @@ export default function CatalogHead() {
                         name="catalog"
                         spaceToTop="spaceToTop"
                         onChange={(event) => {
-                            console.log(event.target.value);
                             dispatch(getModels(event.target.value, catalogs));
                         }}>
                         <MenuItem aria-label="None" value="" />
@@ -65,7 +64,6 @@ export default function CatalogHead() {
                         name="model"
                         spaceToTop="spaceToTop"
                         onChange={(event) => {
-                            console.log(event.target.value);
                             dispatch(handleModelChange(event.target.value, models, selectedCatalog));
                         }}>
                         <MenuItem aria-label="None" value="" />

@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
-import Page from 'src/components/Page';
+import { makeStyles } from '@material-ui/core/styles';
+import { Box, Container, Alert, Card, Typography } from '@material-ui/core';
+import { useTranslation } from 'react-i18next';
 import { useSnackbar } from 'notistack';
 import ContactForm from './ContactForm';
 import useIsMountedRef from 'src/hooks/useIsMountedRef';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Alert, Card, Typography } from '@material-ui/core';
+import LoadingScreen from 'src/components/LoadingScreen';
+import LoadingOverlay from "react-loading-overlay";
+import Page from 'src/components/Page';
 import helper from 'src/utils/helper';
-import { useSelector, useDispatch } from 'react-redux';
-import { useTranslation } from 'react-i18next';
 import { contactUsMessage } from 'src/redux/slices/messaging';
 
 // ----------------------------------------------------------------------
@@ -28,6 +30,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down('sm')]: {
       fontSize: theme.typography.h4.fontSize
     }
+  },
+  overlayFullPage: {
+    '& ._loading_overlay_overlay': { position: 'fixed', zIndex: 1101 }
   }
 }));
 
@@ -41,7 +46,7 @@ function ContactView() {
   const { t } = useTranslation();
   const dispatch = useDispatch();
   const { countries } = useSelector((state) => state.authJwt);
-  const { error: contactError } = useSelector((state) => state.messaging);
+  const { error: contactError, isLoading } = useSelector((state) => state.messaging);
 
   useEffect(() => {
     setLoaded(false);
@@ -51,7 +56,7 @@ function ContactView() {
     companyName: Yup.string().required(t("Company Name Is Required")),
     name: Yup.string().required(t("Name Is Required")),
     phone: Yup.string().trim().matches('^[0-9]*$', t('Phone number is not valid'))
-      .length(11, t('Phone number must be 11')).required(t("Mobile Is Required")),
+      .required(t("Mobile Is Required")),
     email: Yup.string()
       .email(t("Email Is Invalid"))
       .required(t("Email Is Required")),
@@ -104,22 +109,33 @@ function ContactView() {
 
   return (
     <Page title={t("contactUs")} className={classes.root}>
-      <Container maxWidth="sm">
-        <Box sx={{ mx: 'auto', textAlign: 'center' }}>
-          <Typography variant="h4" gutterBottom className={classes.heading}>
-            {t('Contact Our Team')}
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>
-            {t('Fill the form and we will contact you as soon as possible')}
-          </Typography>
-        </Box>
-        <Card sx={{ px: 2, py: 3, my: 3 }}>
-          {contactError != null && <Alert severity="error" sx={{ mb: 3 }}>
-            {contactError.data ? contactError.data : contactError.status}
-          </Alert>}
-          <ContactForm formik={formik} />
-        </Card>
-      </Container>
+      <LoadingOverlay
+        active={isLoading}
+        styles={{
+          wrapper: {
+            width: "100%",
+            height: "100%",
+          },
+        }}
+        className={classes.overlayFullPage}
+        spinner={<LoadingScreen />}>
+        <Container maxWidth="sm">
+          <Box sx={{ mx: 'auto', textAlign: 'center' }}>
+            <Typography variant="h4" gutterBottom className={classes.heading}>
+              {t('Contact Our Team')}
+            </Typography>
+            <Typography sx={{ color: 'text.secondary' }}>
+              {t('Fill the form and we will contact you as soon as possible')}
+            </Typography>
+          </Box>
+          <Card sx={{ px: 2, py: 3, my: 3 }}>
+            {contactError != null && <Alert severity="error" sx={{ mb: 3 }}>
+              {contactError.data ? contactError.data : contactError.status}
+            </Alert>}
+            <ContactForm formik={formik} />
+          </Card>
+        </Container>
+      </LoadingOverlay>
     </Page>
   );
 }

@@ -50,7 +50,7 @@ function Notifications() {
         color={isOpen ? 'primary' : 'default'}
       >
         <Badge badgeContent={unseenMessages.length > 0 ? unseenMessages.length : null} color="error">
-          <Mail width='24' height='24' fill='#7E8D99' fillArr='#F20505' />
+          <Mail width='24' height='24' fill='#7E8D99' />
         </Badge>
       </MIconButton>
 

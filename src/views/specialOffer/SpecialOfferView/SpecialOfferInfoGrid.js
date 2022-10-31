@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
         textAlign: 'left',
         '&:hover': {
             borderRight: `3px solid ${theme.palette.primary.main}`,
-            '& $a span': {
+            '& $div span': {
                 color: theme.palette.secondary.darker,
             },
             '& $svg path': {
@@ -43,22 +43,7 @@ const useStyles = makeStyles((theme) => ({
     offerDetailsGridInfo: {
         marginLeft: theme.spacing(2)
     },
-    offerDetailsGridQuantityCont: {
-        margin: '2px 0 5px',
-        '@media (max-width: 327px)': {
-            display: 'block !important',
-        },
-    },
-    offerDetailsGridBorder: {
-        paddingRight: '10px',
-        marginRight: '10px',
-        borderRight: '1px solid #CED5D8',
-        '@media (max-width: 327px)': {
-            border: 0,
-            marginRight: 0,
-            paddingRight: 0
-        },
-    },
+    offerDetailsGridQuantityCont: { margin: '2px 0 5px' },
     offerDetailsGridFlex: {
         display: 'flex',
         alignItems: 'center',
@@ -68,7 +53,8 @@ const useStyles = makeStyles((theme) => ({
 // ----------------------------------------------------------------------
 
 function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = constants.MAX,
-    onSelectedPage, size = offerProducts.length, isLazy = true, hasPagination = false }) {
+    onSelectedPage, size = offerProducts.length, isLazy = true, hasPagination = false, searchElementGrid,
+    addToCompanyCartGrid }) {
 
     const classes = useStyles();
     const theme = useTheme();
@@ -96,11 +82,7 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
                                         <Box className={classes.offerDetailsGridInfo}>
                                             <Typography variant="subtitle1" sx={{ color: theme.palette.secondary.main }}> {offerPro.partNumber} </Typography>
                                             <Box>
-                                                <Box className={clsx(classes.offerDetailsGridQuantityCont, classes.offerDetailsGridFlex)}>
-                                                    <Box className={classes.offerDetailsGridBorder}>
-                                                        <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Quantity")}</Typography>
-                                                        <Typography variant="body3"> {offerPro.stock.length} </Typography>
-                                                    </Box>
+                                                <Box className={classes.offerDetailsGridQuantityCont}>
                                                     <Box>
                                                         <Typography variant="body4" sx={{ color: '#7F929C' }}>{t("Brand")}</Typography>
                                                         <Typography variant="body3"> {offerPro.brandName} </Typography>
@@ -119,8 +101,8 @@ function SpecialOfferInfoGrid({ offerProducts = [], page = 1, rowsPerPage = cons
                                         textIcon={<OrdersArrow width='17' height='17' fill='#CED5D8' fillArr={theme.palette.primary.main} />}
                                         icon={<Search width='15' height='15' fill='#CED5D8' />}
                                         TableActionBorder='TableActionBorder'
-                                        link='/app/dashboard'
-                                        linkSearch='/app/dashboard' />
+                                        SearchEvent={() => searchElementGrid(offerPro.partNumber)}
+                                        addItemEvent={() => addToCompanyCartGrid(offerPro)} />
                                 </CardContent>
                             </Card>
                         </Grid>

@@ -6,13 +6,12 @@ import { useSnackbar } from 'notistack';
 import VerifyCodeForm from './VerifyCodeForm';
 import { useHistory } from 'react-router-dom';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Typography, Hidden } from '@material-ui/core';
+import { Box, Typography } from '@material-ui/core';
 import useAuth from 'src/hooks/useAuth';
 import { useSelector } from 'react-redux';
 import { PATH_PAGE } from 'src/routes/paths';
 import { useTranslation } from 'react-i18next';
-import Languages from 'src/layouts/DashboardLayout/TopBar/Languages';
-
+import TopBar from './../../../layouts/HomeLayout/TopBar';
 
 // ----------------------------------------------------------------------
 
@@ -44,9 +43,8 @@ function VerifyCodeView(props) {
   const { verify } = useAuth();
   const [loaded, setLoaded] = useState(false);
   const { t } = useTranslation();
-  const { error: verifyError } = useSelector(
-    (state) => state.authJwt
-  );
+  const { error: verifyError } = useSelector((state) => state.authJwt);
+  const { themeDirection } = useSelector((state) => state.settings);
 
 
   useLayoutEffect(() => {
@@ -80,7 +78,9 @@ function VerifyCodeView(props) {
     },
     validationSchema: VerifyCodeSchema,
     onSubmit: async (values) => {
-      let code = values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4;
+      // let code = values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4;
+      let code = themeDirection == 'ltr' ? values.code1 + '' + values.code2 + '' + values.code3 + '' + values.code4
+      : values.code4 + '' + values.code3 + '' + values.code2 + '' + values.code1;
       await verify({ code: code, email: props.location.state.email })
       // enqueueSnackbar('Verify success', { variant: 'success' });
       setLoaded(true);
@@ -89,26 +89,18 @@ function VerifyCodeView(props) {
 
   return (
     <Page title={t("Verify")} className={classes.root}>
-
-      <header className={classes.header}>
-        <Hidden smDown>
-          <Typography variant="body2" sx={{ mt: { md: -4 } }}>
-            <Languages />
-          </Typography>
-        </Hidden>
-      </header>
-
-        <Box sx={{ maxWidth: 480, mx: 'auto' }}>
-          <Typography variant="h3" gutterBottom>
-            {t("Please check your email!")}
-          </Typography>
-          <Typography sx={{ color: 'text.secondary' }}>
-            {t("We have emailed a 4-digit confirmation code to {{email}}, please enter the code in below box to verify your email.", { email: props.location.state.email })}
-          </Typography>
-          <Box sx={{ mt: 5, mb: 3 }}>
-            <VerifyCodeForm formik={formik} />
-          </Box>
+      <TopBar className={classes.header} />
+      <Box sx={{ maxWidth: 480, mx: 'auto' }}>
+        <Typography variant="h3" gutterBottom>
+          {t("Please check your phone or email!")}
+        </Typography>
+        <Typography sx={{ color: 'text.secondary' }}>
+          {t("please enter the code in below box to verify your email")}
+        </Typography>
+        <Box sx={{ mt: 5, mb: 3 }}>
+          <VerifyCodeForm formik={formik} />
         </Box>
+      </Box>
     </Page>
   );
 }

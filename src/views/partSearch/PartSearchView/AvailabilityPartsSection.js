@@ -1,45 +1,27 @@
 import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router";
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import { Box, Typography } from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import PartDetails from './PartDetails';
 import Datatable from 'src/components/table/DataTable';
-import { handleChangePage, setSelectedPart, partSearch, setFilter } from '../../../redux/slices/partSearch';
+import { handleChangePage, setSelectedPart, partSearch, setFilter } from 'src/redux/slices/partSearch';
+import { getSpecialOffersLive } from 'src/redux/slices/specialOffer';
+import { setSelectedOffer } from 'src/redux/slices/specialOffer';
 import constants from 'src/utils/constants';
 import LocationFilterSection from './LocationFilterSection';
-import TableAction from '../../../components/Ui/TableAction';
+import Label from "src/components/Ui/Label";
+import TableAction from 'src/components/Ui/TableAction';
 import TextField from 'src/components/Ui/TextField';
-import SecContainer from '../../../components/Ui/SecContainer';
-import CustomDialog from '../../../components/Ui/Dialog';
-import CustomButton from '../../../components/Ui/Button';
-import { Plus, OrdersArrow } from "../../../icons/icons";
-import PurchaseOrderSection from './PurchaseOrderSection';
-import SendPurchaseOrderSection from './SendPurchaseOrderSection';
+import SecContainer from 'src/components/Ui/SecContainer';
+import CustomDialog from 'src/components/Ui/Dialog';
+import { Plus, OrdersArrow } from "src/icons/icons";
+import PurchaseOrderSection from 'src/layouts/DashboardLayout/TopBar/AddToPurchaseOrder/PurchaseOrderSection';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
-    availabilityCont: {
-        position: 'relative',
-        '& .MuiTypography-h5': {
-            height: '60px',
-            lineHeight: '37px',
-        }
-    },
-    sendPo: {
-        position: 'absolute',
-        right: theme.spacing(2),
-        top: theme.spacing(1.25),
-        '& button': {
-            '@media (max-width: 320px) and (min-width: 300px)': {
-                padding: theme.spacing(0.875, 1.25),
-            },
-            '& svg': {
-                marginRight: theme.spacing(1)
-            }
-        },
-    },
     availabilityActionsCont: {
         display: 'flex',
         justifyContent: 'space-between',
@@ -61,13 +43,6 @@ const useStyles = makeStyles((theme) => ({
             minWidth: '100%',
             marginBottom: theme.spacing(2)
         },
-    },
-    specialOfferBadge: {
-        backgroundColor: '#FEE6E6',
-        color: theme.palette.primary.main,
-        borderRadius: '5px 0 5px 5px',
-        padding: '4px 7px',
-        marginLeft: '5px'
     }
 }));
 
@@ -77,11 +52,12 @@ function AvailabilityPartsSection() {
     const classes = useStyles();
     const theme = useTheme();
     const dispatch = useDispatch();
+    const history = useHistory();
     const { t } = useTranslation();
     const [openAddToPO, setOpenAddToPO] = useState(false);
-    const [openSendPO, setOpenSendPO] = useState(false);
     const { productResult = [], searchSize = 0, companies, selectedPart, page,
-        rowsPerPage, error, query, locationFilters, filter, orders } = useSelector((state) => state.PartSearch);
+        rowsPerPage, error, query, locationFilters, filter } = useSelector((state) => state.PartSearch);
+    const { specialOffers = [], latest } = useSelector((state) => state.specialOffer);
     const { themeDirection } = useSelector((state) => state.settings);
     const [searchTerm, setSearchTerm] = useState('');
 
@@ -97,6 +73,12 @@ function AvailabilityPartsSection() {
     const addToCompanyCart = (item) => {
         dispatch(setSelectedPart({ selectedPart: JSON.parse(item) }));
         setOpenAddToPO(true);
+    }
+
+    const partSpecialOffer = (item) => {
+        const companyFiltered = specialOffers.filter(c => c.id == JSON.parse(item).offers[0].offerRequestId);
+        history.push(`/app/special-offer/${companyFiltered[0].id}`);
+        dispatch(setSelectedOffer({ selectedOffer: companyFiltered[0] }));
     }
 
     const showDetailsElement = (item) => {
@@ -130,26 +112,17 @@ function AvailabilityPartsSection() {
             if (query != "") {
                 dispatch(handleChangePage({ newPage: 0 }));
                 dispatch(partSearch(query, 0, 0, searchTerm, locationFilters));
+                if (specialOffers.length === 0 || latest === true) {
+                    dispatch(getSpecialOffersLive());
+                }
             }
         }, 300)
 
         return () => clearTimeout(delayDebounceFn)
     }, [searchTerm]);
 
-    // <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>
-
     return (
-        <Box className={orders.length > 0 ? classes.availabilityCont : null}>
-            {orders.length > 0 ?
-                <Box className={classes.sendPo}>
-                    <CustomButton
-                        btnWidth='btnWidth'
-                        onClick={() => setOpenSendPO(true)}
-                    >
-                        <OrdersArrow width='17' height='17' fill={theme.palette.grey[0]} fillArr={theme.palette.grey[0]} className={classes.orderOffer} />
-                        {t("Send PO")}
-                    </CustomButton>
-                </Box> : null}
+        <Box>
             <SecContainer
                 header={t('Search Results')}
                 secContainerMt='secContainerMt'>
@@ -162,7 +135,7 @@ function AvailabilityPartsSection() {
                                 dispatch(setFilter({ filter: e.target.value }));
                                 setSearchTerm(e.target.value);
                             }}
-                            label={t("Search by part number")}
+                            label={t("Search in search results")}
                             selectBg='selectBg' />
                     </Box>
 
@@ -175,7 +148,11 @@ function AvailabilityPartsSection() {
                         {
                             name: t("Part Number"),
                             attr: 'partNumber',
-                            badge: <Typography variant="caption" className={classes.specialOfferBadge}>{t("Special offer")}</Typography>
+                            badge: (item) => <Label
+                                click={() => partSpecialOffer(item)}
+                                specialOffer="specialOffer"
+                                cursorStyl='cursorStyl'
+                                label={t("Special offer")} />
                         },
                         {
                             name: t("Brand"),
@@ -213,7 +190,8 @@ function AvailabilityPartsSection() {
             <CustomDialog
                 open={selectedPart != null && openAddToPO == false}
                 handleClose={() => dispatch(setSelectedPart({ selectedPart: null }))}
-                title={t("Availability details")}>
+                title={t("Availability details")}
+                dialogWidth='dialogWidth'>
                 <PartDetails />
             </CustomDialog>
 
@@ -224,16 +202,8 @@ function AvailabilityPartsSection() {
                 dialogWidth='dialogWidth'>
                 {selectedPart != null &&
                     <PurchaseOrderSection
-                        closeOrderDailog={closeOrderDailog} />
+                        closeOrderDailog={closeOrderDailog} itemData={selectedPart} />
                 }
-            </CustomDialog>
-
-            <CustomDialog
-                fullWidth={true}
-                open={openSendPO}
-                handleClose={() => setOpenSendPO(false)}
-                title={t("Send PO")}>
-                <SendPurchaseOrderSection setOpenSendPO={setOpenSendPO} orders={orders} />
             </CustomDialog>
         </Box >
     );

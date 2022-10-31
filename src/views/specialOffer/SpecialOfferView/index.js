@@ -21,6 +21,9 @@ const useStyles = makeStyles((theme) => ({
             alignItems: 'center',
             justifyContent: 'space-between'
         },
+    },
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { position: 'fixed', zIndex: 1101 }
     }
 }));
 
@@ -45,6 +48,7 @@ function SpecialOfferView(props) {
                         height: "100%",
                     },
                 }}
+                className={classes.overlayFullPage}
                 spinner={
                     <LoadingScreen />
                 }>

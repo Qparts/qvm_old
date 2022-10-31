@@ -75,7 +75,8 @@ function ProductInfoSection() {
             <CustomDialog
                 open={selectedProduct != null}
                 handleClose={() => dispatch(setSelectedProduct({ selectedProduct: null }))}
-                title={t("Product Details")}>
+                title={t("Product Details")}
+                dialogWidth='dialogWidth'>
                 <ProductDetails />
             </CustomDialog>
         </Box>

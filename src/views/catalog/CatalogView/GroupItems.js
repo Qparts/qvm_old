@@ -73,7 +73,7 @@ function GroupItems() {
                                     src={
                                         groupItem.img != null
                                             ? groupItem.img
-                                            : "https://s3.eu-central-1.amazonaws.com/q-product/na.png"
+                                            : "https://q-product.ams3.digitaloceanspaces.com/na.png"
                                     }
                                     alt={groupItem.name}
                                 />

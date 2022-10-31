@@ -44,9 +44,10 @@ function LoginForm({ formik }) {
 
   return (
     <FormikProvider value={formik}>
-      <Form autoComplete="off" noValidate onSubmit={handleSubmit}>
+      <Form autoComplete="off" noValidate >
         <TextField
           fullWidth
+          required
           type="email"
           label={t("Email Address")}
           {...getFieldProps('email')}
@@ -62,6 +63,7 @@ function LoginForm({ formik }) {
         <Box sx={{ mb: 3 }} />
         <TextField
           fullWidth
+          required
           type={showPassword ? 'text' : 'password'}
           label={t("Password")}
           {...getFieldProps('password')}
@@ -111,7 +113,8 @@ function LoginForm({ formik }) {
         </Box>
 
         <Button
-          type="submit"
+          // type="submit"
+          onClick={handleSubmit}
           homeBtn='homeBtn'
           pending={isSubmitting}
         >

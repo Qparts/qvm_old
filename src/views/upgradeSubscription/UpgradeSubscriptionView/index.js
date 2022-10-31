@@ -5,18 +5,20 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
-import PremiumPlanDurationSection from './PremiumPlanDurationSection';
+import PremiumPlanSubscription from './PremiumPlanSubscription';
 import { useLocation, useHistory } from 'react-router-dom';
 import { useSnackbar } from 'notistack';
 import { PATH_APP } from 'src/routes/paths';
-import paymentService from 'src/services/paymentService';
 import helper from 'src/utils/helper';
-import { updateCurrentPlan, updateLoginObject } from 'src/redux/slices/authJwt';
+import Card from 'src/components/Ui/Card';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles(() => ({
-    root: {}
+    root: {},
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { zIndex: 1101 }
+    }
 }));
 
 // ----------------------------------------------------------------------
@@ -39,23 +41,9 @@ function UpgradeSubscriptionView() {
         }
 
         if (tapId) {
-            updatePaymentOrder();
+            helper.updatePaymentOrder(history, PATH_APP.management.user.account, tapId, loginObject, dispatch, enqueueSnackbar, closeSnackbar, t);
         }
-    }, [])
-
-    const updatePaymentOrder = async () => {
-        try {
-            history.push(PATH_APP.management.user.account);
-            const { data: company } = await paymentService.updatePaymentOrder({ chargeId: tapId });
-            let newLoginObject = Object.assign({}, loginObject);
-            newLoginObject.company = company;
-            dispatch(updateLoginObject({ 'loginObject': newLoginObject }));
-            dispatch(updateCurrentPlan());
-            helper.enqueueSnackbarMessage(enqueueSnackbar, t("transaction successful"), 'success', closeSnackbar)
-        } catch (error) {
-            helper.enqueueSnackbarMessage(enqueueSnackbar, t("Transaction Declined"), 'error', closeSnackbar)
-        }
-    }
+    }, []);
 
     return (
         <Page
@@ -70,12 +58,15 @@ function UpgradeSubscriptionView() {
                         height: "100%",
                     },
                 }}
+                className={classes.overlayFullPage}
                 spinner={
                     <LoadingScreen />
 
                 }
             >
-                <PremiumPlanDurationSection />
+                <Card cardUnActivPad="cardUnActivPad">
+                    <PremiumPlanSubscription />
+                </Card>
             </LoadingOverlay>
         </Page>
     );

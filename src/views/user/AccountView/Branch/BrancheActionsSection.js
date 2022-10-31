@@ -2,21 +2,22 @@ import React, { useState, useEffect } from 'react';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { useSelector } from 'react-redux';
 import { useTranslation } from 'react-i18next';
-import Button from "src/components/Ui/Button";
+import { Box, Typography } from '@material-ui/core';
+import { useSnackbar } from 'notistack';
 import AddBranch from './AddBranch';
 import AddUser from './addUser/AddUser';
-import { Box, Typography } from '@material-ui/core';
 import AddUserVerification from './addUser/AddUserVerification';
-import { useSnackbar } from 'notistack';
+import Button from "src/components/Ui/Button";
+import Subscription from "src/views/upgradeSubscription/UpgradeSubscriptionView/PremiumPlanSubscription";
+import helper from 'src/utils/helper';
 import CustomDialog from '../../../../components/Ui/Dialog';
 import { Branch, User } from '../../../../icons/icons';
-import helper from 'src/utils/helper';
 
 // ----------------------------------------------------------------------
 
 const useStyles = makeStyles((theme) => ({
     branchesActions: {
-        paddingBottom: '10px',
+        padding: theme.spacing(1.25, 0, 1.25, 1.875),
         borderBottom: '1px solid #CED5D8',
     },
     branchesActionBtnCont: {
@@ -38,17 +39,22 @@ const useStyles = makeStyles((theme) => ({
 
 // ----------------------------------------------------------------------
 
-function BrancheActionsSection() {
+function BrancheActionsSection({
+    addUserIsOpen,
+    setAddUserIsOpen,
+    addBranchIsOpen,
+    setAddBranchIsOpen,
+    openAddUserModel,
+    openAddBranchModel,
+    usersNum,
+    branchesNum
+}) {
     const classes = useStyles();
     const { t } = useTranslation();
     const theme = useTheme();
-    const [addBranchIsOpen, setAddBranchIsOpen] = useState(false)
-    const [addUserIsOpen, setAddUserIsOpen] = useState(false)
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const { verificationMode, verifiedEmail } = useSelector((state) => state.branches);
     const { error } = useSelector((state) => state.branches);
-    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-
-
 
     useEffect(() => {
         if (error != null) {
@@ -59,7 +65,15 @@ function BrancheActionsSection() {
                 closeSnackbar
             )
         }
-    }, [error])
+    }, [error]);
+
+    const upgradeSubscription = (setStat) => {
+        return <Subscription
+            settings={true}
+            close={() => setStat(false)}
+            addUserCheck={usersNum > 0}
+            addBranchCheck={branchesNum > 0} />
+    }
 
     return (
 
@@ -68,13 +82,13 @@ function BrancheActionsSection() {
                 <Button
                     btnBg="btnBg"
                     btnWidth="btnWidth"
-                    onClick={() => setAddUserIsOpen(true)}
+                    onClick={openAddUserModel}
                 >
                     <User width="18px" height="18px" fill={theme.palette.primary.main} className={classes.branchesIconMr} />
                     {t("Add User")}
                 </Button>
                 <Button
-                    onClick={() => setAddBranchIsOpen(true)}
+                    onClick={openAddBranchModel}
                     btnWidth="btnWidth"
                 >
                     <Branch width="14px" height="18px" fill={theme.palette.grey[0]} className={classes.branchesIconMr} />
@@ -88,7 +102,9 @@ function BrancheActionsSection() {
                 title={t("Add New Branch")}
                 dialogWidth='dialogWidth'
             >
-                <AddBranch setAddBranchIsOpen={setAddBranchIsOpen} />
+                {branchesNum > 0 ?
+                    <AddBranch setAddBranchIsOpen={setAddBranchIsOpen} /> :
+                    upgradeSubscription(setAddBranchIsOpen)}
             </CustomDialog>
 
             <CustomDialog
@@ -96,7 +112,9 @@ function BrancheActionsSection() {
                 handleClose={() => setAddUserIsOpen(false)}
                 title={t("Add New User")}>
                 {verificationMode == null || verifiedEmail == null ?
-                    <AddUser setAddUserIsOpen={setAddUserIsOpen} />
+                    usersNum > 0 ?
+                        <AddUser setAddUserIsOpen={setAddUserIsOpen} /> :
+                        upgradeSubscription(setAddUserIsOpen)
                     :
                     <>
                         {

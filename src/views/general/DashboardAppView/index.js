@@ -36,11 +36,16 @@ function DashboardAppView() {
   const classes = useStyles();
   const { t } = useTranslation();
   const { numOfParts, partsSearchCount } = useSelector((state) => state.dashboard);
+  const { specialOffers = [], latest } = useSelector((state) => state.specialOffer);
   const { currentPlan } = useSelector((state) => state.authJwt);
 
   useEffect(() => {
-    dispatch(getSpecialOffersLive(true));
-    dispatch(getDashboardMetrics());
+    if (specialOffers.length === 0 || latest === false) {
+      dispatch(getSpecialOffersLive(true));
+    }
+    if (numOfParts === 0) {
+      dispatch(getDashboardMetrics());
+    }
   }, []);
 
   return (

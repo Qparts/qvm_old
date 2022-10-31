@@ -22,7 +22,7 @@ import {
   Toolbar,
   MenuItem,
   Container,
-  ListItemText,
+  ListItemText
 } from '@material-ui/core';
 import { MIconButton } from 'src/theme';
 import Languages from '../DashboardLayout/TopBar/Languages';
@@ -165,7 +165,7 @@ function TopBar() {
   const offset = useOffSetTop(100);
   const [openMenu, setOpenMenu] = useState(false);
   const isHome = pathname === '/';
-  const isLogo = (pathname === '/' || pathname === '/auth/login' || pathname === '/auth/register');
+  const isLogo = (pathname === '/' || pathname === 'signin' || pathname === 'signup');
 
 
   const registeration = (
@@ -175,7 +175,6 @@ function TopBar() {
       widthAuto='widthAuto'
       whiteBtn={isHome ? 'whiteBtn' : null}
       component={Link}
-      target="_blank"
       href={PATH_PAGE.auth.register}
     >
       {t("registeration")}
@@ -189,7 +188,6 @@ function TopBar() {
           exact
           to={link.href}
           key={link.title}
-          target={link.title === 'login' ? "_blank" : null}
           underline="none"
           variant="subtitle1"
           component={RouterLink}

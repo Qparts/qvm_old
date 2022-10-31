@@ -4,19 +4,9 @@ import links from "../constants/links";
 const planUrl = links.plan;
 const invoiceUrl = links.invoice;
 
-
-
 function getPlans() {
   return http.get(planUrl.getPlans);
 }
-
-const getPlansFeatures = () => {
-  return http.get(planUrl.getPlansFeatures);
-};
-
-const getBancks = () => {
-  return http.get(invoiceUrl.getBanks);
-};
 
 const activePromtion = (code, plan, duration) => {
   let serviceUrl = planUrl.getPromtion;
@@ -25,6 +15,10 @@ const activePromtion = (code, plan, duration) => {
   serviceUrl = duration != null ? serviceUrl + 'duration=' + duration : serviceUrl;
   return http.get(serviceUrl);
 }
+
+const getBancks = () => {
+  return http.get(invoiceUrl.getBanks);
+};
 
 const paymentOrder = (data) => {
   return http.post(invoiceUrl.paymentOrder, data);
@@ -39,6 +33,7 @@ function wirePaymentOrder(data) {
   return http.post(invoiceUrl.wirepaymentOrder, data, config);
 }
 
+
 const updatePaymentOrder = (data) => {
   return http.put(invoiceUrl.paymentOrder, data);
 };
@@ -47,13 +42,27 @@ const getPendingSubscription = () => {
   return http.get(invoiceUrl.pendingSubscription);
 };
 
+const getfundRequests = () => {
+  return http.get(invoiceUrl.getFundRequests);
+};
+
+function fundRequestUpload(data) {
+  const config = {
+    headers: {
+      'content-type': 'application/x-www-form-urlencoded'
+    }
+  };
+  return http.post(invoiceUrl.postFundRequest, data, config);
+}
+
 export default {
   getPlans,
-  getPlansFeatures,
   activePromtion,
   getBancks,
   paymentOrder,
   updatePaymentOrder,
   wirePaymentOrder,
-  getPendingSubscription
+  getPendingSubscription,
+  fundRequestUpload,
+  getfundRequests,
 };

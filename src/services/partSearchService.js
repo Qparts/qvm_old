@@ -52,6 +52,10 @@ const getDashboardMetrics = () => {
   return http.get(productUrl.getDashboardMetrics);
 };
 
+const getQuotationReport = (year , month)=>{
+  return http.get(productUrl.getQuotationReport(year,month));
+}
+
 export default {
   productSearch,
   productInfoSearch,
@@ -60,5 +64,6 @@ export default {
   getSpecialOffersLive,
   qvmStockUpload,
   qvmSpecialOfferUpload,
-  getDashboardMetrics
+  getDashboardMetrics,
+  getQuotationReport
 };

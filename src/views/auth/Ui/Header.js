@@ -38,7 +38,7 @@ function HeaderAuth(props) {
         <header className={classes.header}>
             <RouterLink to="/">
                 <Hidden mdDown><Logo /></Hidden>
-                <Hidden mdUp><LogoDark /></Hidden>
+                <Hidden mdUp> <LogoDark /> </Hidden>
             </RouterLink>
             <Hidden smDown>
                 <Typography variant="body2" sx={{ mt: { md: -2 } }}>
@@ -48,13 +48,14 @@ function HeaderAuth(props) {
                         variant="subtitle2"
                         component={RouterLink}
                         to={props.url}
+                        onClick={props.onClick}
                     >
                         {props.title}
                     </Link>
                     <Languages />
                 </Typography>
             </Hidden>
-        </header>
+        </header >
     );
 }
 

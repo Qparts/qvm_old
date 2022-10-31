@@ -29,6 +29,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
+    },
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { zIndex: 1101 }
     }
 }));
 
@@ -61,11 +64,12 @@ function PartSearchView() {
                         height: "100%",
                     },
                 }}
+                className={classes.overlayFullPage}
                 spinner={
                     <LoadingScreen />
 
                 }>
-
+                <SearchBar searchPartStyl='searchPartStyl' />
                 {error != null && error === "Search limit exceeded!" ?
                     <EmptyContent
                         btnTitle={t("Upgrade to Premium")}
@@ -82,7 +86,6 @@ function PartSearchView() {
                         />
                         :
                         <>
-                            {productResult.length > 0 && <SearchBar searchPartStyl='searchPartStyl' />}
                             {productResult.length > 0 ? <AvailabilityPartsSection /> : null}
                             {productInfoResult.length > 0 ?
                                 <>

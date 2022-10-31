@@ -20,6 +20,11 @@ const useStyles = makeStyles((theme) => ({
   root: {
     background: theme.palette.secondary.main,
     padding: theme.spacing(1, 0),
+    '& p': {
+      '@media (max-width: 985px) and (min-width: 960px)': {
+        fontSize: '0.968rem',
+      }
+    }
 
   },
   headingDisc: {
@@ -39,6 +44,12 @@ const useStyles = makeStyles((theme) => ({
       marginLeft: 10,
       paddingLeft: 10,
     }
+  },
+  rightsReserved: {
+    color: theme.palette.grey[0],
+    display: 'block',
+    textAlign: 'left',
+    margin: theme.spacing(1.625, 0, 0),
   }
 }));
 
@@ -76,20 +87,14 @@ function Footer({ className }) {
             </Grid>
           </Hidden>
 
-          <Grid item md={4} display="flex" alignItems="center">
-            <Typography
-              gutterBottom
-              align="center"
-              sx={{ color: 'common.white', display: 'block' }}
-              variant="body1"
-              mb={0}
-            >
-              <span className={classes.headingDisc}>2020@ {t("All rights reserved to")} </span> q.parts
+          <Grid item xs={12} md={6}>
+            <Typography className={classes.rightsReserved} variant="body1">
+              <span className={classes.headingDisc}> {t("All rights reserved for company")} </span>  Tatbiq Qata' <span className={classes.headingDisc}> {t("for trading")} </span> @ 2021
             </Typography>
           </Grid>
           <Hidden only={['sm', 'xs']}>
-            <Grid item md={4} display="flex" alignItems="center" justifyContent="flex-end">
-              <Logo width={80} />
+            <Grid item md={2}>
+              <Logo width={80} ml='auto' />
             </Grid>
           </Hidden>
 

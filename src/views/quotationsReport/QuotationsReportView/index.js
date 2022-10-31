@@ -1,15 +1,11 @@
 import Page from 'src/components/Page';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
-import { useSelector } from 'react-redux';
-import {
-    Box,
-    Container,
-    Typography
-} from '@material-ui/core';
+import { useSelector, useDispatch } from 'react-redux';
 import { useTranslation } from 'react-i18next';
 import LoadingScreen from 'src/components/LoadingScreen';
 import LoadingOverlay from "react-loading-overlay";
+import { cleanup } from 'src/redux/slices/quotationsReport';
 import QuotationSearchSection from './searchSection/QuotationSearchSection';
 
 // ----------------------------------------------------------------------
@@ -27,6 +23,9 @@ const useStyles = makeStyles((theme) => ({
         [theme.breakpoints.up('xl')]: {
             height: 320
         }
+    },
+    overlayFullPage: {
+        '& ._loading_overlay_overlay': { zIndex: 1101 }
     }
 }));
 
@@ -34,16 +33,19 @@ const useStyles = makeStyles((theme) => ({
 
 function QuotationsReportView() {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const { isLoading } = useSelector((state) => state.quotationsReport);
     const { t } = useTranslation();
 
+    useEffect(() => {
+        return () => { dispatch(cleanup()) }
+    }, []);
 
     return (
         <Page
-            title={t("Quotations Report")}
+            title={t("reports")}
             className={classes.root}
         >
-
             <LoadingOverlay
                 active={isLoading}
                 styles={{
@@ -52,22 +54,14 @@ function QuotationsReportView() {
                         height: "100%",
                     },
                 }}
+                className={classes.overlayFullPage}
                 spinner={
                     <LoadingScreen />
-
                 }
             >
-                <Container >
-                    <Box sx={{ pb: 5 }}>
-                        <Typography variant="h4">{t("Quotations Report")}</Typography>
-                        <hr />
-                    </Box>
-                    
-                    <QuotationSearchSection />
+                <QuotationSearchSection />
 
-                </Container>
             </LoadingOverlay>
-
         </Page>
     );
 }
