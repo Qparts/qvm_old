@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { Container, Typography, Box, Grid } from '@material-ui/core';
-import { Phone, Mail, Location, Company } from 'src/icons/icons';
+import { Phone, Location, Company } from 'src/icons/icons';
 
 // ----------------------------------------------------------------------
 
@@ -17,7 +17,7 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        "& svg": { marginRight: theme.spacing(1) },
+        "& svg, & img": { marginRight: theme.spacing(1) },
         '& span': {
             '@media (max-width: 1095px) and (min-width: 960px)': {
                 fontSize: '0.77rem',
@@ -59,13 +59,13 @@ function ContactSocial({ className }) {
                     <Grid item xs={12} md={2} sm={6}>
                         <Box className={classes.contactSocialItem}>
                             <Phone width='20' height='20' fill='#7E8D99' className={classes.Phone} />
-                            <Typography variant="body3"> 966582702017 </Typography>
+                            <Typography variant="body3"> 966115201339+ </Typography>
                         </Box>
                     </Grid>
                     <Grid item xs={12} md={2} sm={6}>
                         <Box className={classes.contactSocialItem}>
-                            <Mail width='20' height='20' fill='#7E8D99' />
-                            <Typography variant="body3"> info@qetaa.parts </Typography>
+                            <img src='/static/images/whatsapp.svg' alt='WhatsAppIcon' width="22" height="22" />
+                            <Typography variant="body3"> 966536014655+ </Typography>
                         </Box>
                     </Grid>
                 </Grid>

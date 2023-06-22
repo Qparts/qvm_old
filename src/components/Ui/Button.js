@@ -63,6 +63,10 @@ const useStyles = makeStyles((theme) => ({
     mainBorderBtn: {
         borderColor: theme.palette.primary.main,
     },
+    darkBtn: {
+        background: theme.palette.grey[1100] + '!important',
+        color: theme.palette.grey[0],
+    },
     whiteBtn: {
         background: theme.palette.grey[0] + '!important',
         color: theme.palette.primary.main,
@@ -119,6 +123,7 @@ export default function CustomButton(props) {
                 classes[props.flatBtn],
                 classes[props.mainBorderBtn],
                 classes[props.whiteBtn],
+                classes[props.darkBtn],
                 classes[props.widthAuto],
                 classes[props.btnM],
                 classes[props.chatBtn],

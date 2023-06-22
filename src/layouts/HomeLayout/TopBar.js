@@ -10,9 +10,8 @@ import roundSpeed from '@iconify-icons/ic/round-speed';
 import menu2Fill from '@iconify-icons/eva/menu-2-fill';
 import { PATH_PAGE } from 'src/routes/paths';
 import bookOpenFill from '@iconify-icons/eva/book-open-fill';
-import roundStreetview from '@iconify-icons/ic/round-streetview';
 import { NavLink as RouterLink, useLocation } from 'react-router-dom';
-import { makeStyles, alpha } from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import {
   Box,
   List,
@@ -33,17 +32,17 @@ import Button from '../../components/Ui/Button';
 // ----------------------------------------------------------------------
 const MENU_LINKS = [
   { title: 'home', icon: homeFill, href: PATH_PAGE.common.home },
-  { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.prices },
-  { title: 'contactUs', icon: roundSpeed, href: PATH_PAGE.common.contactUs },
-  { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login }
+  // { title: 'prices', icon: roundStreetview, href: PATH_PAGE.common.prices },
+  { title: 'contactUs', icon: roundSpeed, href: 'https://qvm.qparts.co/contact-us' },
+  { title: 'login', icon: bookOpenFill, href: 'https://qvm.qparts.co/signin' }
 ];
 const MENU_LINKS_MOB = [
   { title: 'home', href: PATH_PAGE.common.home },
-  { title: 'prices', href: PATH_PAGE.common.prices },
-  { title: 'contactUs', href: PATH_PAGE.common.contactUs },
+  // { title: 'prices', href: PATH_PAGE.common.prices },
+  { title: 'contactUs', href: 'https://qvm.qparts.co/contact-us' },
   { title: 'Privacy Policy', href: PATH_PAGE.common.privacy },
   { title: 'Terms of Use', href: PATH_PAGE.common.termsView },
-  { title: 'login', icon: bookOpenFill, href: PATH_PAGE.auth.login },
+  { title: 'login', icon: bookOpenFill, href: 'https://qvm.qparts.co/signin' },
 ];
 const APP_BAR_MOBILE = 64;
 const APP_BAR_DESKTOP = 70;
@@ -59,12 +58,17 @@ const useStyles = makeStyles((theme) => ({
       height: APP_BAR_DESKTOP
     }
   },
-  navColor: { color: theme.palette.secondary.darker },
+  navColor: { color: theme.palette.grey[1100] },
   isHome: {
     color: theme.palette.common.white,
     '&:hover': {
       color: theme.palette.text.disabled,
     }
+  },
+  loginLink: {
+    fontSize: '1.0625rem',
+    marginRight: theme.spacing(5),
+    fontWeight: theme.typography.fontWeightMedium,
   },
   isDesktopActive: {
     color: theme.palette.secondary.lighter
@@ -165,40 +169,59 @@ function TopBar() {
   const offset = useOffSetTop(100);
   const [openMenu, setOpenMenu] = useState(false);
   const isHome = pathname === '/';
-  const isLogo = (pathname === '/' || pathname === 'signin' || pathname === 'signup');
-
+  const isLogo = (pathname === 'signin' || pathname === 'signup');
 
   const registeration = (
     <Button
       homeBtn='homeBtn'
       btnWidth='btnWidth'
       widthAuto='widthAuto'
-      whiteBtn={isHome ? 'whiteBtn' : null}
       component={Link}
-      href={PATH_PAGE.auth.register}
+      target="_blank"
+      href='https://qvm.qparts.co/signup'
+      darkBtn={isHome ? 'darkBtn' : null}
+      whiteBtn={(offset && isHome) ? 'whiteBtn' : null}
     >
       {t("registeration")}
     </Button>
   )
 
+  const redirectUrl = (link) => (
+    <a
+      href={link.href}
+      key={link.title}
+      underline="none"
+      target="_blank"
+      rel="noopener noreferrer"
+      className={clsx((offset && isHome) ? classes.isHome : classes.navColor, classes.loginLink)}
+    >
+      {t(link.title)}
+    </a>
+  )
+
   const renderMenuDesktop = (
     <div>
-      {MENU_LINKS.map((link) => (
-        <Link
-          exact
-          to={link.href}
-          key={link.title}
-          underline="none"
-          variant="subtitle1"
-          component={RouterLink}
-          activeClassName={classes.isDesktopActive}
-          className={isHome ? classes.isHome : classes.navColor}
-          sx={{ mr: 5, color: 'text.primary' }}
-        >
-          {t(link.title)}
-        </Link>
-      ))
-      }
+      {MENU_LINKS.map((link) => {
+        if (link.title === 'login' || link.title === 'contactUs')
+          return redirectUrl(link)
+
+        else {
+          return <Link
+            exact
+            to={link.href}
+            key={link.title}
+            underline="none"
+            variant="subtitle1"
+            component={RouterLink}
+            rel="noopener noreferrer"
+            activeClassName={!isHome && classes.isDesktopActive}
+            className={(offset && isHome) ? classes.isHome : classes.navColor}
+            sx={{ mr: 5, color: 'text.primary' }}
+          >
+            {t(link.title)}
+          </Link>
+        }
+      })}
 
     </div >
   );
@@ -211,19 +234,23 @@ function TopBar() {
       className={isHome ? clsx(classes.navMobile, classes.navMobileHome) : classes.navMobile}
     >
       <List>
-        {MENU_LINKS_MOB.map((link) => (
-          <MenuItem
-            exact
-            to={link.href}
-            key={link.title}
-            component={RouterLink}
-            onClick={() => setOpenMenu(false)}
-            activeClassName={classes.isMobileActive}
-            sx={{ color: 'text.secondary' }}
-          >
-            <ListItemText>{t(link.title)}</ListItemText>
-          </MenuItem>
-        ))}
+        {MENU_LINKS_MOB.map((link) => {
+          if (link.title === 'login' || link.title === 'contactUs')
+            return redirectUrl(link)
+          else {
+            return <MenuItem
+              exact
+              to={link.href}
+              key={link.title}
+              component={RouterLink}
+              onClick={() => setOpenMenu(false)}
+              activeClassName={classes.isMobileActive}
+              sx={{ color: 'text.secondary' }}
+            >
+              <ListItemText>{t(link.title)}</ListItemText>
+            </MenuItem>
+          }
+        })}
         <MenuItem> {registeration} </MenuItem>
       </List>
     </PopoverMenu>
@@ -246,7 +273,7 @@ function TopBar() {
           }}
         >
           <RouterLink to="/">
-            {isLogo ? <Logo /> : <LogoDark />}
+            {isLogo || (offset && isHome) ? <Logo /> : <LogoDark />}
           </RouterLink>
           <Box sx={{ flexGrow: 1 }} />
 

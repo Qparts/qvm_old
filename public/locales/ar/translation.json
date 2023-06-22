@@ -658,7 +658,7 @@
   "No more time wasting in sending emails, faxes, and phone calls to find required spare parts The item might be available at the vendor next door Through QVM you can find the items you want within seconds and order them directly": "لن يضيع المزيد من الوقت في المكالمات والفاكسات والايميلات للبحث عن القطع التي تريدها ومعرفة سعرها ، قد تكون موجوده عند التاجر الذي يبعد عنك امتار!! عن طريق QVM تستطيع خلال ثواني مقارنة السعر والتواصل مباشرة مع المورد لحجزها.",
   "Even auto spare parts experts cannot perform daily businesses without auto spare parts catalog That's why we have provided this feature to browse variety of available catalogs, and to find the required item as easy as possible and without unintentional errors": "خبير قطع الغيار لا يمكنه الاستغناء عن الكتالوج ولذلك تم توفير هذه الميزه ليتمكن من تصفح العديد من كتالوجات السيارات المتاحة لدينا، والوصول للقطع المطلوبة بشكل أسهل والتأكد من شكلها، لتجاوز حدوث خطأ اثناء الطلب!!",
   "We provide different types of services to facilitate your daily tasks": "لدينا مجموعة متنوعة من الخدمات التي تسهل اعمالك اليومية.",
-  "The largest gathering of spare parts dealers in the Middle East": "أكبر تجمع لتجار قطع الغيار بالشرق الأوسط",
+  "header subtitle": "احصل على قطع الغيار في محلك بأقل الأسعار وبضغطة زر",
   "As the QVM platform seeks to maintain the quality of the work of stores, and improve the quality of their work, it is constantly informed of the number of consumers of the system, their customers and their segments": "حيث أن منصة QVM تسعى إلى الحفاظ على جودة عمل المتاجر، وتحسين جودة أعمالهم، فإنها تطلع باستمرار على عدد مستهلكي النظام وعملائهم وشرائحهم.",
   "Information of shop consumers or customers or customers of merchants": "معلومات مستهلكي المتاجر أو عملاء أو زبائن التجار:",
   "User performance, in case there is a need to direct support or advice and guidance to merchants or users to help them and improve their performance": "أداء المستخدمين وذلك في حال استدعت الحاجة إلى توجيه الدعم أو النصح والإرشاد للتُجّار أو المستخدمين لمساعدتهم وتحسين أدائهم.",
@@ -761,5 +761,6 @@
   "User already exist": "المستخدم موجود بالفعل",
   "Success": "تمت العملية بنجاح",
   "You must have at least a branch to be able to upload the offer": "يجب ان يكون لديك على الاقل فرع لتتمكن من رفع العرض",
-  "The end date of the offer must be greater than the date of the start of the offer": "يجب ان يكون تاريخ نهاية العرض اكبر من تاريخ بداية العرض"
+  "The end date of the offer must be greater than the date of the start of the offer": "يجب ان يكون تاريخ نهاية العرض اكبر من تاريخ بداية العرض",
+  "in its new look": "فى ثوبها الجديد"
 }

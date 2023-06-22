@@ -1,20 +1,16 @@
 import clsx from 'clsx';
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { motion } from 'framer-motion';
-import { BASE_IMG } from 'src/utils/getImages';
 import { useTranslation } from 'react-i18next';
-import { PATH_PAGE } from 'src/routes/paths';
-import LazySize from 'src/components/LazySize';
 import {
   varFadeIn,
   varWrapEnter,
   varFadeInUp
 } from 'src/components/Animate';
 import { makeStyles } from '@material-ui/core/styles';
-import { Box, Container, Typography, Hidden } from '@material-ui/core';
-import Logo from 'src/components/Logo';
+import { Box, Container, Typography, Hidden, Link } from '@material-ui/core';
+import LogoDark from 'src/components/LogoDark';
 import { pxToRem } from 'src/utils/formatFontSize';
 import Button from '../../../components/Ui/Button';
 
@@ -37,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
   },
   content: {
     zIndex: 10,
-    maxWidth: 650,
+    maxWidth: 700,
     margin: 'auto',
     textAlign: 'center',
     position: 'relative',
@@ -63,16 +59,6 @@ const useStyles = makeStyles((theme) => ({
     position: 'absolute',
     borderBottomRightRadius: 300,
   },
-  heroImg: {
-    top: 0,
-    left: '50%',
-    bottom: 0,
-    zIndex: 10,
-    margin: 'auto',
-    position: 'absolute',
-    width: 640,
-    transform: 'translateX(-50%)',
-  },
   link: {
     display: 'flex',
     alignItems: 'center',
@@ -95,20 +81,24 @@ const useStyles = makeStyles((theme) => ({
     }
   },
   title: {
-    fontSize: pxToRem(48),
+    // fontSize: pxToRem(48),
     lineHeight: 1,
+    display: "flex",
+    alignItems: "flex-end",
+    justifyContent: "center",
+    color: theme.palette.grey[1100],
   },
   description: {
-    fontSize: pxToRem(26),
-    color: theme.palette.secondary.light,
+    fontSize: pxToRem(20),
+    padding: theme.spacing(3, 0, 5),
+    color: theme.palette.grey[1100],
     [theme.breakpoints.down('sm')]: {
       fontSize: pxToRem(20),
     },
   },
 }));
 // ----------------------------------------------------------------------
-const getImg = (width) =>
-  `${BASE_IMG}w_${width}/v1611472901/upload_minimal/home/hero.png`;
+
 Hero.propTypes = {
   className: PropTypes.string
 };
@@ -126,49 +116,43 @@ function Hero({ className }) {
       >
         <motion.img
           alt="overlay"
-          src="/static/images/hero-bg.jpg"
+          src="/static/images/home-banner.jpeg"
           variants={varFadeIn}
           className={classes.heroOverlay}
-        />
-        <LazySize
-          component={motion.img}
-          noBlur
-          noPlaceholder
-          alt="hero"
-          src="/static/images/hero-artical.svg"
-
-          className={classes.heroImg}
         />
         <Container maxWidth="lg">
           <div className={classes.content}>
             <motion.div variants={varFadeInUp}>
-              <Typography variant="h1" sx={{ color: 'common.white' }} display="flex" justifyContent="center" alignItems="flex-end" className={classes.title}>
+              <Typography variant="h3" className={classes.title}>
                 {t("Vendor marketplace")}
-                <Hidden smDown><Logo width={170} ml={2} /></Hidden>
+                <Hidden smDown><LogoDark width={170} ml={2} /></Hidden>
+                {t("in its new look")}
               </Typography>
             </motion.div>
             <motion.div variants={varFadeInUp}>
-              <Box component="p" sx={{ padding: (theme) => theme.spacing(3, 0, 5) }} className={classes.description}>
-                {t("The largest gathering of spare parts dealers in the Middle East")}
+              <Box component="p" className={classes.description}>
+                {t("header subtitle")}
               </Box>
             </motion.div>
 
             <motion.div variants={varFadeInUp}>
               <Button
-                btnWidth="btnWidth"
-                homeBtn="homeBtn"
                 btnM="btnM"
-                component={RouterLink}
-                to={PATH_PAGE.auth.login}
+                target="_blank"
+                homeBtn="homeBtn"
+                btnWidth="btnWidth"
+                component={Link}
+                href='https://qvm.qparts.co/signin'
               >
                 {t("login")}
               </Button>
               <Button
-                btnWidth="btnWidth"
+                target="_blank"
                 homeBtn="homeBtn"
-                whiteBtn="whiteBtn"
-                component={RouterLink}
-                to={PATH_PAGE.auth.register}
+                darkBtn="darkBtn"
+                btnWidth="btnWidth"
+                component={Link}
+                href='https://qvm.qparts.co/signup'
               >
                 {t("registeration")}
               </Button>

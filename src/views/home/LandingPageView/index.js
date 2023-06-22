@@ -1,11 +1,11 @@
 import React from 'react';
 import Hero from './Hero';
-import Catalog from './Catalog';
-import PartAvailability from './PartAvailability';
+// import Catalog from './Catalog';
+// import PartAvailability from './PartAvailability';
 import Page from 'src/components/Page';
 import { makeStyles } from '@material-ui/core/styles';
-import Benefits from './Benefits';
-import NewsLetter from './NewsLetter';
+// import Benefits from './Benefits';
+// import NewsLetter from './NewsLetter';
 import Brands from './Brands';
 // ----------------------------------------------------------------------
 
@@ -31,10 +31,10 @@ function LandingPageView() {
     >
       <Hero />
       <div className={classes.content}>
-        <Catalog />
+        {/* <Catalog />
         <PartAvailability />
         <Benefits />
-        <NewsLetter />
+        <NewsLetter /> */}
         <Brands />
       </div>
     </Page>
