@@ -14,14 +14,14 @@ const HomeRoutes = {
       path: PATH_PAGE.common.home,
       component: lazy(() => import('src/views/home/LandingPageView'))
     },
-    {
-      path: PATH_PAGE.common.contactUs,
-      component: lazy(() => import('src/views/contact'))
-    },
-    {
-      path: PATH_PAGE.common.prices,
-      component: lazy(() => import('src/views/price'))
-    },
+    // {
+    //   path: PATH_PAGE.common.contactUs,
+    //   component: lazy(() => import('src/views/contact'))
+    // },
+    // {
+    //   path: PATH_PAGE.common.prices,
+    //   component: lazy(() => import('src/views/price'))
+    // },
     {
       path: PATH_PAGE.common.termsView,
       component: lazy(() => import('src/views/TermsView'))
@@ -31,7 +31,7 @@ const HomeRoutes = {
       component: lazy(() => import('src/views/PrivacyPolicy'))
     },
     {
-      component: () => <Redirect to="/404" />
+      component: () => <Redirect to="/" />
     }
   ]
 };

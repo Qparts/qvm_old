@@ -1,11 +1,11 @@
 import NProgress from 'nprogress';
-import AppRoutes from './AppRoutes';
-import { PATH_PAGE } from './paths';
+// import AppRoutes from './AppRoutes';
+// import { PATH_PAGE } from './paths';
 import HomeRoutes from './HomeRoutes';
 import LoadingScreen from 'src/components/LoadingScreen';
-import GuestProtect from 'src/components/Auth/GuestProtect';
+// import GuestProtect from 'src/components/Auth/GuestProtect';
 import { Switch, Route } from 'react-router-dom';
-import React, { Suspense, Fragment, lazy, useEffect } from 'react';
+import React, { Suspense, Fragment, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 // ----------------------------------------------------------------------
@@ -91,61 +91,61 @@ export function renderRoutes(routes = []) {
 
 const routes = [
   // Others Routes
-  {
-    exact: true,
-    guard: GuestProtect,
-    path: PATH_PAGE.auth.login,
-    component: lazy(() => import('src/views/auth/LoginView'))
-  },
-  {
-    exact: true,
-    path: PATH_PAGE.auth.loginUnprotected,
-    component: lazy(() => import('src/views/auth/LoginView'))
-  },
-  {
-    exact: true,
-    guard: GuestProtect,
-    path: PATH_PAGE.auth.register,
-    component: lazy(() => import('src/views/auth/RegisterView'))
-  },
-  {
-    exact: true,
-    path: PATH_PAGE.auth.registerUnprotected,
-    component: lazy(() => import('src/views/auth/RegisterView'))
-  },
-  {
-    exact: true,
-    path: PATH_PAGE.auth.forgotPassword,
-    component: lazy(() => import('src/views/auth/ForgotPasswordView'))
-  },
-  {
-    exact: true,
-    path: PATH_PAGE.auth.resetPassword,
-    component: lazy(() => import('src/views/auth/ResetPasswordView'))
-  },
-  {
-    exact: true,
-    path: PATH_PAGE.auth.verify,
-    component: lazy(() => import('src/views/auth/VerifyCodeView'))
-  },
-  {
-    exact: true,
-    path: PATH_PAGE.auth.confirm,
-    component: lazy(() => import('src/views/auth/ConfirmView'))
-  },
-  {
-    exact: true,
-    path: '/404',
-    component: lazy(() => import('src/views/errors/Page404View'))
-  },
-  {
-    exact: true,
-    path: '/500',
-    component: lazy(() => import('src/views/errors/Page500View'))
-  },
+  // {
+  //   exact: true,
+  //   guard: GuestProtect,
+  //   path: PATH_PAGE.auth.login,
+  //   component: lazy(() => import('src/views/auth/LoginView'))
+  // },
+  // {
+  //   exact: true,
+  //   path: PATH_PAGE.auth.loginUnprotected,
+  //   component: lazy(() => import('src/views/auth/LoginView'))
+  // },
+  // {
+  //   exact: true,
+  //   guard: GuestProtect,
+  //   path: PATH_PAGE.auth.register,
+  //   component: lazy(() => import('src/views/auth/RegisterView'))
+  // },
+  // {
+  //   exact: true,
+  //   path: PATH_PAGE.auth.registerUnprotected,
+  //   component: lazy(() => import('src/views/auth/RegisterView'))
+  // },
+  // {
+  //   exact: true,
+  //   path: PATH_PAGE.auth.forgotPassword,
+  //   component: lazy(() => import('src/views/auth/ForgotPasswordView'))
+  // },
+  // {
+  //   exact: true,
+  //   path: PATH_PAGE.auth.resetPassword,
+  //   component: lazy(() => import('src/views/auth/ResetPasswordView'))
+  // },
+  // {
+  //   exact: true,
+  //   path: PATH_PAGE.auth.verify,
+  //   component: lazy(() => import('src/views/auth/VerifyCodeView'))
+  // },
+  // {
+  //   exact: true,
+  //   path: PATH_PAGE.auth.confirm,
+  //   component: lazy(() => import('src/views/auth/ConfirmView'))
+  // },
+  // {
+  //   exact: true,
+  //   path: '/404',
+  //   component: lazy(() => import('src/views/errors/Page404View'))
+  // },
+  // {
+  //   exact: true,
+  //   path: '/500',
+  //   component: lazy(() => import('src/views/errors/Page500View'))
+  // },
 
   // App Routes
-  AppRoutes,
+  // AppRoutes,
 
 
   // Home Routes
