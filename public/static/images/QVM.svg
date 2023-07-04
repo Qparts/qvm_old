@@ -1,0 +1,26 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="197.8" height="96.131" viewBox="0 0 197.8 96.131">
+  <defs>
+    <linearGradient id="linear-gradient" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#061419"/>
+      <stop offset="0.528" stop-color="#14455b"/>
+      <stop offset="1" stop-color="#07171d"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#061419"/>
+      <stop offset="0.46" stop-color="#14455b"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" y1="0.5" x2="1" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#700c09"/>
+      <stop offset="0.528" stop-color="#ee4036"/>
+      <stop offset="1" stop-color="#f20505"/>
+    </linearGradient>
+  </defs>
+  <g id="QVM" transform="translate(-2 -2)">
+    <path id="Path_2256" data-name="Path 2256" d="M359.768,148.9h-21.3l-2.749,4.083-10.632,15.523L313.4,185.646h21.385Z" transform="translate(-185.516 -87.516)" fill="url(#linear-gradient)"/>
+    <path id="Path_2264" data-name="Path 2264" d="M249.9,148.9h21.3l2.749,4.083,10.632,15.523,11.683,17.14H274.883Z" transform="translate(-147.686 -87.516)" fill="url(#linear-gradient-2)"/>
+    <path id="Path_2265" data-name="Path 2265" d="M376.6,148.9h21.3l2.749,4.083,10.632,15.523,11.683,17.14H401.583Z" transform="translate(-223.168 -87.516)" fill="#14455b"/>
+    <path id="Path_2266" data-name="Path 2266" d="M86.852,80.991A48.106,48.106,0,1,0,50.025,98.05a49.065,49.065,0,0,0,17.949-3.436L58.029,79.333A30.466,30.466,0,1,1,76.18,65.467l-2.749-4.083h-21.3L63.446,78l10.025,14.8,3.679,5.336H98.535Z" transform="translate(0 0)" fill="#14455b"/>
+    <path id="Path_2267" data-name="Path 2267" d="M234.208,148.9H212.9l-2.749,4.083-10.672,15.523L187.8,185.646h21.385Z" transform="translate(-110.69 -87.516)" fill="url(#linear-gradient-3)"/>
+    <path id="Path_2268" data-name="Path 2268" d="M126,148.9h21.344l2.708,4.083,10.672,15.523,11.683,17.14H151.023Z" transform="translate(-73.873 -87.516)" fill="#f20505"/>
+  </g>
+</svg>
